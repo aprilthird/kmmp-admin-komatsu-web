@@ -108,6 +108,7 @@
         <div class="flex sm:flex-col md:flex-row justify-between">
           <h1 class="prose">Status por flota 1/2</h1>
           <mat-tab-group
+            (selectedTabChange)="allFlotas($event)"
             class="sm:px-2 flex sm:items-center md:items-end"
             [animationDuration]="'0'"
           >
@@ -120,7 +121,77 @@
           </mat-tab-group>
         </div>
 
-        <app-status-flota></app-status-flota>
+        <app-status-flota *ngIf="_allFlotas"></app-status-flota>
+        <status-flota-single *ngIf="!_allFlotas"></status-flota-single>
+      </div>
+
+      <div
+        class="
+          sm:col-span-2
+          md:col-span-4
+          flex flex-col flex-auto
+          p-6
+          bg-card
+          shadow
+          rounded-2xl
+          mt-4
+        "
+      >
+        <div class="flex sm:flex-col md:flex-row justify-between">
+          <h1 class="prose">Actividades no ejecutadas</h1>
+          <mat-tab-group
+            (selectedTabChange)="allNoExecuted($event)"
+            class="sm:px-2 flex sm:items-center md:items-end"
+            [animationDuration]="'0'"
+          >
+            <!-- Home -->
+            <mat-tab label="Todas"> </mat-tab>
+            <mat-tab label="Postergadas"> </mat-tab>
+            <mat-tab label="No ejecutadas"> </mat-tab>
+          </mat-tab-group>
+        </div>
+
+        <no-execute-activities *ngIf="_allNoExecuted"></no-execute-activities>
+        <no-execute-activities-single
+          *ngIf="!_allNoExecuted"
+        ></no-execute-activities-single>
+      </div>
+
+      <div
+        class="
+          sm:col-span-2
+          md:col-span-4
+          flex flex-col flex-auto
+          items-center
+          justify-center
+          p-6
+          bg-card
+          shadow
+          rounded-2xl
+          mt-4
+        "
+      >
+        <div class="flex sm:flex-col md:flex-row justify-between">
+          <h1 class="prose">Código de demoras</h1>
+        </div>
+        <deleyed-code></deleyed-code>
+      </div>
+
+      <div
+        class="
+          sm:col-span-2
+          md:col-span-4
+          flex flex-col flex-auto
+          items-center
+          justify-center
+          p-6
+          bg-card
+          shadow
+          rounded-2xl
+          mt-4
+        "
+      >
+        <app-adhesion></app-adhesion>
       </div>
     </div>
   </div>

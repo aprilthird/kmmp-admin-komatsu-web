@@ -14,7 +14,7 @@ import {
 } from "ng-apexcharts";
 
 //CONFIG
-import { ChartOptions, chartOptionsData } from "../../config";
+import { GroupBarChartOptions, AllStatusXFlota } from "../../config";
 
 @Component({
   selector: "app-status-flota",
@@ -23,10 +23,10 @@ import { ChartOptions, chartOptionsData } from "../../config";
 })
 export class StatusFlotaComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
+  public chartOptions: Partial<GroupBarChartOptions>;
 
   constructor() {
-    this.chartOptions = chartOptionsData;
+    this.chartOptions = AllStatusXFlota;
   }
 
   ngOnInit(): void {}

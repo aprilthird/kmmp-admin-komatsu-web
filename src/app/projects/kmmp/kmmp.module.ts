@@ -20,11 +20,18 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatTabsModule } from "@angular/material/tabs";
-
+import { StatusFlotaComponent } from "./dashboard/charts/status-flota/status-flota.component";
+import { SummaryCardsComponent } from "./dashboard/summary-cards/summary-cards.component";
+import { StatusFlotaSingleComponent } from "./dashboard/charts/status-flota-single/status-flota-single.component";
 //FUSE
 import { FuseDateRangeModule } from "@fuse/components/date-range";
-import { StatusFlotaComponent } from './dashboard/charts/status-flota/status-flota.component';
-import { SummaryCardsComponent } from './dashboard/summary-cards/summary-cards.component';
+import { NoExecuteActivitiesComponent } from "./dashboard/charts/no-execute-activities/no-execute-activities.component";
+import { NoExecuteActivitiesSingleComponent } from "./dashboard/charts/no-execute-activities-single/no-execute-activities-single.component";
+import { DeleyedCodeComponent } from "./dashboard/charts/deleyed-code/deleyed-code.component";
+import { AdhesionComponent } from "./dashboard/charts/adhesion/adhesion.component";
+
+//DEV-EXTREME
+import { DxChartModule } from "devextreme-angular";
 
 @NgModule({
   declarations: [
@@ -34,6 +41,11 @@ import { SummaryCardsComponent } from './dashboard/summary-cards/summary-cards.c
     FiltersComponent,
     StatusFlotaComponent,
     SummaryCardsComponent,
+    StatusFlotaSingleComponent,
+    NoExecuteActivitiesComponent,
+    NoExecuteActivitiesSingleComponent,
+    DeleyedCodeComponent,
+    AdhesionComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +68,7 @@ import { SummaryCardsComponent } from './dashboard/summary-cards/summary-cards.c
     MatCheckboxModule,
     MatMenuModule,
     MatTabsModule,
+    DxChartModule,
   ],
 })
 export class KmmpModule {}

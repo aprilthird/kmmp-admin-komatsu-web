@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { MatTabChangeEvent } from "@angular/material/tabs";
 import { Router } from "@angular/router";
 import { UserService } from "app/core/user/user.service";
 import { User } from "app/core/user/user.types";
@@ -46,6 +47,8 @@ export class DashboardComponent implements OnInit {
   user: User;
   isLoading: boolean;
   data = filter;
+  _allFlotas = true;
+  _allNoExecuted = true;
 
   constructor(private _router: Router, private _userService: UserService) {
     this._userService.user$;
@@ -71,6 +74,22 @@ export class DashboardComponent implements OnInit {
     this._userService.user$.subscribe((user: User) => {
       this.user = user;
     });
+  }
+
+  allFlotas(event: MatTabChangeEvent): void {
+    if (event.index === 0) {
+      this._allFlotas = true;
+    } else {
+      this._allFlotas = false;
+    }
+  }
+
+  allNoExecuted(event: MatTabChangeEvent): void {
+    if (event.index === 0) {
+      this._allNoExecuted = true;
+    } else {
+      this._allNoExecuted = false;
+    }
   }
 
   /**
