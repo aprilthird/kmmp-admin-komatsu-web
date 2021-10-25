@@ -1,0 +1,181 @@
+<div
+  class="
+    sm:inset-0
+    flex flex-col flex-auto
+    min-w-0
+    sm:overflow-hidden
+    bg-card
+    dark:bg-transparent
+  "
+>
+  <!-- Header -->
+  <div
+    class="
+      relative
+      flex flex-col
+      sm:flex-row
+      flex-0
+      sm:items-center sm:justify-between
+      py-8
+      px-6
+      md:px-8
+      border-b
+    "
+  >
+    <!-- Loader -->
+    <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+      <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+    </div>
+    <!-- Title -->
+    <div class="text-4xl font-extrabold tracking-tight">Actividades</div>
+  </div>
+
+  <!-- Main -->
+  <div class="flex flex-auto overflow-hidden">
+    <!-- Products list -->
+    <div
+      class="
+        flex flex-col flex-auto
+        sm:mb-18
+        overflow-hidden
+        sm:overflow-y-auto
+      "
+    >
+      <ng-container *ngIf="asignaciones">
+        <ng-container *ngIf="asignaciones.length > 0; else empty">
+          <div class="grid overflow-x-auto">
+            <!-- Header -->
+            <div
+              class="
+                inventory-grid
+                z-10
+                sticky
+                top-0
+                grid
+                gap-4
+                py-4
+                px-6
+                md:px-8
+                shadow
+                text-md
+                font-semibold
+                text-secondary
+                bg-gray-50
+                dark:bg-black dark:bg-opacity-5
+                justify-between
+              "
+              matSort
+              matSortDisableClear
+            >
+              <div>
+                <mat-checkbox></mat-checkbox>
+              </div>
+              <div class="">Cliente</div>
+              <div class="hidden lg:block">Equipo</div>
+              <div class="hidden lg:block">Modelo</div>
+              <div class="hidden lg:block">Actividad</div>
+              <div class="hidden lg:block">Tipo Mnto</div>
+              <div class="hidden lg:block">Bahía asignada</div>
+              <div class="hidden lg:block">Estado</div>
+              <div class="hidden lg:block">Tipo de solicitud</div>
+              <div></div>
+            </div>
+
+            <!-- Rows -->
+            <ng-container *ngIf="asignaciones">
+              <ng-container *ngFor="let asignacion of asignaciones">
+                <div
+                  class="
+                    inventory-grid
+                    grid
+                    items-center
+                    gap-4
+                    py-3
+                    px-6
+                    md:px-8
+                    border-b
+                    justify-between
+                  "
+                >
+                  <div>
+                    <mat-checkbox></mat-checkbox>
+                  </div>
+                  <div class="truncate">
+                    {{ asignacion?.cliente }}
+                  </div>
+
+                  <div class="hidden lg:block truncate">
+                    {{ asignacion?.equipo }}
+                  </div>
+
+                  <div class="hidden lg:block truncate">
+                    {{ asignacion?.modelo }}
+                  </div>
+
+                  <div class="hidden lg:block truncate">
+                    {{ asignacion?.actividad }}
+                  </div>
+
+                  <div class="hidden lg:block truncate">
+                    {{ asignacion?.tipo_mantenimiento }}
+                  </div>
+                  <div class="hidden lg:block truncate">
+                    {{ asignacion?.bahia_asignada }}
+                  </div>
+                  <div class="hidden lg:block truncate">
+                    {{ asignacion?.estado }}
+                  </div>
+                  <div class="hidden lg:block truncate">
+                    {{ asignacion?.tipo_solicitud }}
+                  </div>
+                  <div>
+                    <button mat-icon-button>
+                      <mat-icon
+                        svgIcon="heroicons_outline:dots-vertical"
+                      ></mat-icon>
+                    </button>
+                  </div>
+
+                  <!-- Acciones -->
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+          <!-- <mat-paginator
+            class="
+              sm:absolute sm:inset-x-0 sm:bottom-0
+              border-b
+              sm:border-t sm:border-b-0
+              z-10
+              bg-gray-50
+              dark:bg-transparent
+            "
+            [ngClass]="{ 'pointer-events-none': isLoading }"
+            [length]="(pagination$ | async).length"
+            [pageIndex]="(pagination$ | async).page"
+            [pageSize]="(pagination$ | async)?.size || 10"
+            [pageSizeOptions]="[5, 10, 25, 100]"
+            [showFirstLastButtons]="true"
+            (page)="changePage($event)"
+          ></mat-paginator>-->
+        </ng-container>
+      </ng-container>
+
+      <ng-template #empty>
+        <div
+          class="
+            p-8
+            sm:p-16
+            border-t
+            text-4xl
+            font-semibold
+            tracking-tight
+            text-center
+          "
+        >
+          No hay formatos registrados
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
