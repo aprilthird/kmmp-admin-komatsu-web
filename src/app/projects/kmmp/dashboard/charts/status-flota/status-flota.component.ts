@@ -14,7 +14,10 @@ import {
 } from "ng-apexcharts";
 
 //CONFIG
-import { GroupBarChartOptions, AllStatusXFlota } from "../../config";
+import { GroupBarChartOptions } from "../../chart-model";
+
+//SERVICES
+import { DashboardService } from "../../dashboard.service";
 
 @Component({
   selector: "app-status-flota",
@@ -25,8 +28,8 @@ export class StatusFlotaComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<GroupBarChartOptions>;
 
-  constructor() {
-    this.chartOptions = AllStatusXFlota;
+  constructor(private dashboardServices: DashboardService) {
+    this.chartOptions = this.dashboardServices.getAllStatusFlota();
   }
 
   ngOnInit(): void {}

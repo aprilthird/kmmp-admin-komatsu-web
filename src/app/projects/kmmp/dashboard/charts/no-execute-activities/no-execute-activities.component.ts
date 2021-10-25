@@ -2,7 +2,10 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { ChartComponent } from "ng-apexcharts";
 
 //CONFIG
-import { StackedBarChartOptions, NoCompletedActvBarChart } from "../../config";
+import { StackedBarChartOptions } from "../../chart-model";
+
+//SERVICES
+import { DashboardService } from "../../dashboard.service";
 
 @Component({
   selector: "no-execute-activities",
@@ -12,8 +15,9 @@ import { StackedBarChartOptions, NoCompletedActvBarChart } from "../../config";
 export class NoExecuteActivitiesComponent implements OnInit {
   @ViewChild("stackedChartNoActv") stackedChartNoActv: ChartComponent;
   public noActivitiesExec: Partial<StackedBarChartOptions>;
-  constructor() {
-    this.noActivitiesExec = NoCompletedActvBarChart;
+  constructor(private dashboardservices: DashboardService) {
+    //this.noActivitiesExec = NoCompletedActvBarChart;
+    this.noActivitiesExec = this.dashboardservices.getAllNoExecutedActv();
   }
 
   ngOnInit(): void {}

@@ -38,10 +38,10 @@
         <mat-icon svgIcon="heroicons_outline:chevron-down"></mat-icon>
       </button>
       <mat-menu #projectsMenu="matMenu">
-        <button mat-menu-item>ACME Corp. Backend App</button>
-        <button mat-menu-item>ACME Corp. Frontend App</button>
-        <button mat-menu-item>Creapond</button>
-        <button mat-menu-item>Withinpixels</button>
+        <button mat-menu-item>Cliente 1</button>
+        <button mat-menu-item>Cliente 2</button>
+        <button mat-menu-item>Cliente 3</button>
+        <button mat-menu-item>Cliente 4</button>
       </mat-menu>
     </div>
   </div>
@@ -121,7 +121,10 @@
           </mat-tab-group>
         </div>
 
-        <app-status-flota *ngIf="_allFlotas"></app-status-flota>
+        <app-status-flota
+          *ngIf="_allFlotas"
+          class="overflow-x-auto"
+        ></app-status-flota>
         <status-flota-single *ngIf="!_allFlotas"></status-flota-single>
       </div>
 
@@ -162,19 +165,20 @@
           sm:col-span-2
           md:col-span-4
           flex flex-col flex-auto
-          items-center
-          justify-center
+          xl:items-center
+          md:items-start
           p-6
           bg-card
           shadow
           rounded-2xl
           mt-4
+          overflow-x-auto
         "
       >
         <div class="flex sm:flex-col md:flex-row justify-between">
           <h1 class="prose">Código de demoras</h1>
         </div>
-        <deleyed-code></deleyed-code>
+        <deleyed-code class="sm:max-w-sm xl:max-w-none"></deleyed-code>
       </div>
 
       <div
@@ -183,15 +187,16 @@
           md:col-span-4
           flex flex-col flex-auto
           items-center
-          justify-center
+          justify-center justify-start
           p-6
           bg-card
           shadow
           rounded-2xl
           mt-4
+          overflow-x-auto
         "
       >
-        <app-adhesion></app-adhesion>
+        <app-adhesion class="sm:max-w-sm xl:max-w-none"></app-adhesion>
       </div>
     </div>
   </div>

@@ -2,11 +2,10 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { ChartComponent } from "ng-apexcharts";
 
 //CONFIG
-import {
-  BasiBarChartNoExec,
-  BasicBarChartOptions,
-  BasiBarChartNoExecCausas,
-} from "../../config";
+import { BasicBarChartOptions } from "../../chart-model";
+
+//SERVICES
+import { DashboardService } from "../../dashboard.service";
 
 @Component({
   selector: "no-execute-activities-single",
@@ -27,9 +26,9 @@ export class NoExecuteActivitiesSingleComponent implements OnInit {
     text: "Causas",
   };
 
-  constructor() {
-    this.basicBarChartData = BasiBarChartNoExec;
-    this.basicBarCharHortData = BasiBarChartNoExecCausas;
+  constructor(private dashboardService: DashboardService) {
+    this.basicBarChartData = this.dashboardService.getPosponedNoExecutedActv();
+    this.basicBarCharHortData = this.dashboardService.getCausesNoExecutedActv();
   }
 
   ngOnInit(): void {}
