@@ -31,7 +31,8 @@
             truncate
           "
         >
-          Editar Perfil
+          <span *ngIf="isEdit"> Editar Perfil</span>
+          <span *ngIf="!isEdit"> Crear Perfil</span>
         </h2>
       </div>
       <div class="flex w-2/4 justify-end"></div>

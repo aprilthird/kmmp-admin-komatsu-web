@@ -27,7 +27,29 @@
       <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
     </div>
     <!-- Title -->
-    <div class="text-4xl font-extrabold tracking-tight">Actividades</div>
+    <div class="flex flex-row flex-wrap justify-between items-center w-full">
+      <div class="flex flex-col activities-container">
+        <div class="text-4xl font-extrabold tracking-tight">Actividades</div>
+        <a class="prose font-bold">De {{ start }} al {{ end }}</a>
+      </div>
+      <div
+        class="flex flex-wrap gap-5 mt-5 xl:my-none"
+        *ngIf="!assignToBay; else assign"
+      >
+        <app-filter (range)="daterange($event)"></app-filter>
+        <upload-print-activities class="pr-8"></upload-print-activities>
+      </div>
+      <ng-template #assign>
+        <button
+          class="mr-8"
+          mat-raised-button
+          [color]="'primary'"
+          (click)="openAssignment()"
+        >
+          <span class="ml-2 mr-1">Asignar bahía</span>
+        </button>
+      </ng-template>
+    </div>
   </div>
 
   <!-- Main -->
@@ -41,8 +63,8 @@
         sm:overflow-y-auto
       "
     >
-      <ng-container *ngIf="asignaciones">
-        <ng-container *ngIf="asignaciones.length > 0; else empty">
+      <ng-container *ngIf="activities">
+        <ng-container *ngIf="activities.length > 0; else empty">
           <div class="grid overflow-x-auto">
             <!-- Header -->
             <div
@@ -68,7 +90,8 @@
               matSortDisableClear
             >
               <div>
-                <mat-checkbox></mat-checkbox>
+                <mat-checkbox color="primary" (change)="selectActivity($event)">
+                </mat-checkbox>
               </div>
               <div class="">Cliente</div>
               <div class="hidden lg:block">Equipo</div>
@@ -78,12 +101,13 @@
               <div class="hidden lg:block">Bahía asignada</div>
               <div class="hidden lg:block">Estado</div>
               <div class="hidden lg:block">Tipo de solicitud</div>
+              <div>Detalles</div>
               <div></div>
             </div>
 
             <!-- Rows -->
-            <ng-container *ngIf="asignaciones">
-              <ng-container *ngFor="let asignacion of asignaciones">
+            <ng-container *ngIf="activities">
+              <ng-container *ngFor="let actividad of activities; let i = index">
                 <div
                   class="
                     inventory-grid
@@ -98,68 +122,121 @@
                   "
                 >
                   <div>
-                    <mat-checkbox></mat-checkbox>
+                    <mat-checkbox
+                      color="primary"
+                      (change)="selectActivity($event, i)"
+                      [checked]="actividad.checked"
+                    ></mat-checkbox>
                   </div>
                   <div class="truncate">
-                    {{ asignacion?.cliente }}
+                    {{ actividad?.cliente }}
                   </div>
 
                   <div class="hidden lg:block truncate">
-                    {{ asignacion?.equipo }}
+                    {{ actividad?.equipo }}
                   </div>
 
                   <div class="hidden lg:block truncate">
-                    {{ asignacion?.modelo }}
+                    {{ actividad?.modelo }}
                   </div>
 
                   <div class="hidden lg:block truncate">
-                    {{ asignacion?.actividad }}
+                    {{ actividad?.actividad }}
                   </div>
 
                   <div class="hidden lg:block truncate">
-                    {{ asignacion?.tipo_mantenimiento }}
+                    {{ actividad?.tipo_mantenimiento }}
                   </div>
                   <div class="hidden lg:block truncate">
-                    {{ asignacion?.bahia_asignada }}
+                    {{ actividad?.bahia_asignada }}
                   </div>
                   <div class="hidden lg:block truncate">
-                    {{ asignacion?.estado }}
+                    <span
+                      class="
+                        inline-flex
+                        items-center
+                        font-bold
+                        text-xs
+                        px-2.5
+                        py-0.5
+                        rounded-full
+                        tracking-wide
+                        uppercase
+                        bg-green-200
+                        text-green-800
+                        dark:bg-green-600 dark:text-green-50
+                      "
+                    >
+                      <span class="leading-relaxed whitespace-nowrap">
+                        {{ actividad?.estado }}</span
+                      ></span
+                    >
                   </div>
                   <div class="hidden lg:block truncate">
-                    {{ asignacion?.tipo_solicitud }}
+                    {{ actividad?.tipo_solicitud }}
                   </div>
                   <div>
-                    <button mat-icon-button>
+                    <button
+                      class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                      mat-stroked-button
+                      (click)="toggleDetails(actividad)"
+                    >
+                      <mat-icon
+                        class="icon-size-5"
+                        [svgIcon]="
+                          selectedActivity?.id === actividad.id
+                            ? 'heroicons_solid:chevron-up'
+                            : 'heroicons_solid:chevron-down'
+                        "
+                      ></mat-icon>
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      mat-icon-button
+                      [matMenuTriggerFor]="menu"
+                      aria-label="Toggle menu"
+                    >
                       <mat-icon
                         svgIcon="heroicons_outline:dots-vertical"
                       ></mat-icon>
                     </button>
+                    <mat-menu #menu="matMenu" xPosition="before">
+                      <button mat-menu-item (click)="toggleDetails(actividad)">
+                        Ver formatos
+                      </button>
+                      <button
+                        mat-menu-item
+                        routerLink="/admin/actividades/edit/{{ actividad.id }}"
+                      >
+                        Editar actividad
+                      </button>
+                    </mat-menu>
                   </div>
-
-                  <!-- Acciones -->
+                  <ng-container *ngIf="selectedActivity?.id === actividad.id">
+                    <ng-container
+                      *ngTemplateOutlet="
+                        rowDetailsTemplate;
+                        context: { $implicit: actividad }
+                      "
+                    >
+                      <div>
+                        <!--<app-activity [isEdit]="isEdit"></app-activity>-->
+                      </div>
+                    </ng-container></ng-container
+                  >
                 </div>
               </ng-container>
             </ng-container>
           </div>
-          <!-- <mat-paginator
-            class="
-              sm:absolute sm:inset-x-0 sm:bottom-0
-              border-b
-              sm:border-t sm:border-b-0
-              z-10
-              bg-gray-50
-              dark:bg-transparent
-            "
-            [ngClass]="{ 'pointer-events-none': isLoading }"
-            [length]="(pagination$ | async).length"
-            [pageIndex]="(pagination$ | async).page"
-            [pageSize]="(pagination$ | async)?.size || 10"
-            [pageSizeOptions]="[5, 10, 25, 100]"
-            [showFirstLastButtons]="true"
-            (page)="changePage($event)"
-          ></mat-paginator>-->
         </ng-container>
       </ng-container>
+      <ng-template #rowDetailsTemplate
+        ><app-activity
+          [isEdit]="isEdit"
+          [activityData]="selectedActivity"
+        ></app-activity
+      ></ng-template>
 
       <ng-template #empty>
         <div

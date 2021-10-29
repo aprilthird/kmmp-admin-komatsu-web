@@ -43,11 +43,12 @@ export class CrearUsuarioComponent implements OnInit {
   form: FormGroup = this.fb.group({
     usr: ["", [Validators.required, Validators.pattern("[a-zA-Z0-9s]+")]],
     psw: [
+      /*
       "",
       [
         Validators.required,
         Validators.pattern(/(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{6,20}/),
-      ],
+      ],*/
     ],
     nombres: ["", Validators.required],
     apellidos: ["", Validators.required],
@@ -117,7 +118,9 @@ export class CrearUsuarioComponent implements OnInit {
     //if (!this.isEdit) this.form.get("psw").setValidators([Validators.required]);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.passwordPattern();
+  }
 
   /**
    * On destroy
@@ -127,6 +130,15 @@ export class CrearUsuarioComponent implements OnInit {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+
+  passwordPattern(): void {
+    if (!this.isEdit) {
+      this.form.controls["psw"].setValidators([
+        Validators.required,
+        Validators.pattern(/(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{6,20}/),
+      ]);
+    }
   }
 
   generateRoles(roles) {
@@ -204,7 +216,7 @@ export class CrearUsuarioComponent implements OnInit {
     if (control.hasError("pattern")) {
       if (input === "psw") {
         if (!this.isEdit) {
-          return "Al menos 6 caracteres alfanuméricos, mayúscula y miniscula";
+          return "Al menos 6 caracteres alfanuméricos, mayúscula y minúscula";
         }
       } else if (input === "usr") {
         return "Campo solo alfanumérico y sin espacios";

@@ -1,7 +1,7 @@
 .inventory-grid {
-    grid-template-columns: 120px 120px 180px;
+    grid-template-columns: 5px 120px 180px;
     @screen sm {
-      grid-template-columns: 250px 250px 180px;
+      grid-template-columns: 50px 250px 180px;
     }
   
     @screen md {
@@ -9,10 +9,10 @@
     }
   
     @screen lg {
-      grid-template-columns: 50px 120px 120px 120px 120px 120px 120px 120px 120px 500px;
+      grid-template-columns: 40px 120px 120px 120px 120px 120px 120px 120px 120px 30px 20px;
     }
   
     @screen xl {
-        grid-template-columns: 500px 120px 120px 120px 120px 120px 120px 120px 120px 500px;
+        grid-template-columns: 50px 125px 125px 125px 125px 125px 125px 125px 125px 40px 20px;
     }        
   }

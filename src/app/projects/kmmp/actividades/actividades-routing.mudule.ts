@@ -2,6 +2,8 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { MenuPermissionGuard } from "app/core/permission/guards/menu-permission.guard";
 import { ActividadesComponent } from "./actividades.component";
+import { MassiveUploadComponent } from "./dialogs/massive-upload/massive-upload.component";
+import { ActivityAddEditComponent } from "./list/activity-add-edit/activity-add-edit.component";
 import { ListComponent } from "./list/list.component";
 
 const routes: Routes = [
@@ -13,6 +15,20 @@ const routes: Routes = [
         path: "list",
         component: ListComponent,
         //canActivate: [MenuPermissionGuard],
+      },
+      {
+        path: "add",
+        component: ActivityAddEditComponent,
+      },
+
+      {
+        path: "edit/:id",
+        component: ActivityAddEditComponent,
+      },
+
+      {
+        path: "upload",
+        component: MassiveUploadComponent,
       },
     ],
   },
