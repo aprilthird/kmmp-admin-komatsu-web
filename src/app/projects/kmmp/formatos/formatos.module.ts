@@ -37,6 +37,7 @@ import { MAT_DATE_LOCALE } from "@angular/material/core";
 import { AsignacionesComponent } from "./asignaciones/asignaciones.component";
 import { MatChipsModule } from "@angular/material/chips";
 import { AperturaAsignacionComponent } from "./asignaciones/apertura-asignacion/apertura-asignacion.component";
+import { ValidationFormatosComponent } from './validation-formatos/validation-formatos.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AperturaAsignacionComponent } from "./asignaciones/apertura-asignacion/
     DialogPrevisualizarComponent,
     AsignacionesComponent,
     AperturaAsignacionComponent,
+    ValidationFormatosComponent,
   ],
   imports: [
     CommonModule,

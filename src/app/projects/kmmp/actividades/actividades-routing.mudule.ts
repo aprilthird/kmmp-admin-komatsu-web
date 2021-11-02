@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { MenuPermissionGuard } from "app/core/permission/guards/menu-permission.guard";
+import { ValidationFormatosComponent } from "../formatos/validation-formatos/validation-formatos.component";
 import { ActividadesComponent } from "./actividades.component";
 import { MassiveUploadComponent } from "./dialogs/massive-upload/massive-upload.component";
 import { ActivityAddEditComponent } from "./list/activity-add-edit/activity-add-edit.component";
@@ -24,6 +25,11 @@ const routes: Routes = [
       {
         path: "edit/:id",
         component: ActivityAddEditComponent,
+      },
+
+      {
+        path: "validation",
+        component: ValidationFormatosComponent,
       },
 
       {
