@@ -65,14 +65,14 @@
                 class="d-flex mb-3"
                 *ngFor="let seccion of data?.secciones; let i = index"
               >
-                <h5 class="text-xl text-primary-500 font-bold">
+                <h5 class="text-3xl text-primary-500 font-bold">
                   {{ seccion?.nombre }}
                 </h5>
                 <ng-container
                   *ngFor="let grupo of seccion.grupos; let j = index"
                 >
                   <div class="mb-5" *ngIf="grupo.parametros.length > 0">
-                    <p class="font-medium mb-3" *ngIf="grupo.visible">
+                    <p class="text-2xl font-medium mb-3" *ngIf="grupo.visible">
                       {{ grupo?.nombre }}
                     </p>
                     <!--<div
