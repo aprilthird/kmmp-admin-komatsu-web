@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { DialogAddPerfilService } from './dialog-add-perfil.service';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { MatDialogRef } from "@angular/material/dialog";
+import { Router } from "@angular/router";
+import { DialogAddPerfilService } from "./dialog-add-perfil.service";
 
 @Component({
-  selector: 'app-dialog-add-perfil',
-  templateUrl: './dialog-add-perfil.component.html',
-  styleUrls: ['./dialog-add-perfil.component.scss']
+  selector: "app-dialog-add-perfil",
+  templateUrl: "./dialog-add-perfil.component.html",
+  styleUrls: ["./dialog-add-perfil.component.scss"],
 })
 export class DialogAddPerfilComponent implements OnInit {
-
-  loading:boolean = false;
+  loading: boolean = false;
 
   form: FormGroup = this.fb.group({
     nombre: "",
@@ -20,8 +19,8 @@ export class DialogAddPerfilComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<DialogAddPerfilComponent>,
-    private router:Router,
-    private dialogAddUsuarioService: DialogAddPerfilService,
+    private router: Router,
+    private dialogAddUsuarioService: DialogAddPerfilService
   ) {}
 
   ngOnInit(): void {}
@@ -29,12 +28,17 @@ export class DialogAddPerfilComponent implements OnInit {
   onSubmit() {
     if (!this.loading && this.form.valid) {
       this.loading = true;
-      this.dialogAddUsuarioService.addUsuario(this.form.value).subscribe((response) => {
-        this.loading = false;
-        this.router.navigateByUrl('/admin/ajustes/perfiles/'  + response.body.id ).then(() => {
-          this.dialogRef.close();
-        })
-      })
+      this.dialogAddUsuarioService
+        .addUsuario(this.form.value)
+        .subscribe((response) => {
+          localStorage.setItem("nuevo_perfil", "1");
+          this.loading = false;
+          this.router
+            .navigateByUrl("/admin/ajustes/perfiles/" + response.body.id)
+            .then(() => {
+              this.dialogRef.close();
+            });
+        });
     }
   }
 
@@ -47,5 +51,4 @@ export class DialogAddPerfilComponent implements OnInit {
 
     return control.hasError("email") ? "Formato de correo incorrecto" : "";
   }
-
 }

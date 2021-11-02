@@ -29,7 +29,10 @@ export class EditarPerfilComponent implements OnInit {
     private fb: FormBuilder
   ) {
     if (this._activatedRoute.snapshot.params.id) {
-      this.isEdit = true;
+      if (!localStorage.getItem("nuevo_perfil")) {
+        this.isEdit = true;
+      }
+
       this._editarPerfilService
         .getObtenerPerfil(this._activatedRoute.snapshot.params.id)
         .subscribe((response) => {
@@ -119,6 +122,7 @@ export class EditarPerfilComponent implements OnInit {
           };
 
           setTimeout(() => {
+            localStorage.removeItem("nuevo_perfil");
             this.alert = null;
             this._router.navigateByUrl("/admin/ajustes/perfiles");
           }, 2500);

@@ -126,7 +126,7 @@
                       <!-- Acciones -->
                       <div>
                         <a
-                          routerLink="/admin/ajustes/perfiles/{{ perfil?.id }}"
+                          (click)="editProfile(perfil?.id)"
                           class="min-w-7 w-7 min-h-7 h-7 mr-1"
                           mat-icon-button
                           matTooltip="Editar"

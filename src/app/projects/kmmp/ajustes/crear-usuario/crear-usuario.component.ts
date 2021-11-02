@@ -77,6 +77,10 @@ export class CrearUsuarioComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private _router: Router
   ) {
+    this.init();
+  }
+
+  init(): void {
     this.loading$ = this.crearUsuarioService.loading$.pipe(
       takeUntil(this._unsubscribeAll)
     );
@@ -114,8 +118,6 @@ export class CrearUsuarioComponent implements OnInit {
           );
         });
     }
-
-    //if (!this.isEdit) this.form.get("psw").setValidators([Validators.required]);
   }
 
   ngOnInit(): void {
@@ -134,10 +136,13 @@ export class CrearUsuarioComponent implements OnInit {
 
   passwordPattern(): void {
     if (!this.isEdit) {
+      this.form.controls["usr"].enable();
       this.form.controls["psw"].setValidators([
         Validators.required,
         Validators.pattern(/(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{6,20}/),
       ]);
+    } else {
+      this.form.controls["usr"].disable();
     }
   }
 
@@ -154,6 +159,7 @@ export class CrearUsuarioComponent implements OnInit {
   }
 
   onSubmit() {
+    this.form.controls["usr"].enable();
     if (this.form.valid) {
       const { psw, ...body }: any = { ...this.form.value };
       const { plataformas } = body;

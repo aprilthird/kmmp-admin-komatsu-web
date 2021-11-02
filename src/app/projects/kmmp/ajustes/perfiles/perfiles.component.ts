@@ -1,20 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FuseConfirmationService } from '@fuse/services/confirmation';
-import { Pagination } from 'app/core/types/list.types';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { DialogAddPerfilComponent } from '../components/dialog-add-perfil/dialog-add-perfil.component';
-import { PerfilesService } from './perfiles.services';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FuseConfirmationService } from "@fuse/services/confirmation";
+import { Pagination } from "app/core/types/list.types";
+import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import { DialogAddPerfilComponent } from "../components/dialog-add-perfil/dialog-add-perfil.component";
+import { PerfilesService } from "./perfiles.services";
 
 @Component({
-  selector: 'app-perfiles',
-  templateUrl: './perfiles.component.html',
-  styleUrls: ['./perfiles.component.scss']
+  selector: "app-perfiles",
+  templateUrl: "./perfiles.component.html",
+  styleUrls: ["./perfiles.component.scss"],
 })
 export class PerfilesComponent implements OnInit, OnDestroy {
-
   isLoading = false;
   perfiles$: Observable<any>;
   pagination$: Observable<Pagination>;
@@ -24,7 +23,7 @@ export class PerfilesComponent implements OnInit, OnDestroy {
   constructor(
     private _perfilesServices: PerfilesService,
     private _activatedRoute: ActivatedRoute,
-    private _router:Router,
+    private _router: Router,
     private _matDialog: MatDialog,
     private _fuseConfirmationService: FuseConfirmationService
   ) {
@@ -80,18 +79,18 @@ export class PerfilesComponent implements OnInit, OnDestroy {
   /**
    * Delete product
    */
-   deleteUsuario(perfil): void {
+  deleteUsuario(perfil): void {
     const dialogRef = this._fuseConfirmationService.open({
       title: "Eliminar perfil",
       message: "¿Estás seguro que deseas eliminar este perfil?",
       icon: {
         name: "heroicons_outline:trash",
-        color: 'primary',
+        color: "primary",
       },
       actions: {
         confirm: {
           label: "Sí, eliminar",
-          color: 'primary',
+          color: "primary",
         },
         cancel: {
           label: "No",
@@ -104,12 +103,19 @@ export class PerfilesComponent implements OnInit, OnDestroy {
       console.log(result);
       if (result === "confirmed") {
         this.isLoading = true;
-        this._perfilesServices.deletePerfil({id: perfil.id, activo: false }).subscribe(() => {
-          this.loadData();
-        });
+        this._perfilesServices
+          .deletePerfil({ id: perfil.id, activo: false })
+          .subscribe(() => {
+            this.loadData();
+          });
       }
     });
   }
 
-
+  editProfile(idProfile): void {
+    localStorage.removeItem("nuevo_perfil");
+    setTimeout(() => {
+      this._router.navigate([`/admin/ajustes/perfiles/${idProfile}`]);
+    }, 100);
+  }
 }
