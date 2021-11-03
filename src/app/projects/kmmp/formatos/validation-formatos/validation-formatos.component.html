@@ -1,5 +1,4 @@
 <div class="flex flex-col flex-auto min-w-0">
-  <!-- Header -->
   <div
     class="
       flex flex-col
@@ -14,27 +13,25 @@
     "
   >
     <div class="flex-1 min-w-0">
-      <!-- Breadcrumbs -->
       <div class="flex flex-wrap items-center font-medium">
         <div>
-          <a class="whitespace-nowrap text-primary-500">Documentation</a>
+          <a class="whitespace-nowrap text-primary-500">Actividades</a>
         </div>
         <div class="flex items-center ml-1 whitespace-nowrap">
           <mat-icon
             class="icon-size-5 text-secondary"
             [svgIcon]="'heroicons_solid:chevron-right'"
           ></mat-icon>
-          <a class="ml-1 text-primary-500">Fuse Components</a>
+          <a class="ml-1 text-primary-500">Ver informe</a>
         </div>
         <div class="flex items-center ml-1 whitespace-nowrap">
           <mat-icon
             class="icon-size-5 text-secondary"
             [svgIcon]="'heroicons_solid:chevron-right'"
           ></mat-icon>
-          <span class="ml-1 text-secondary">Libraries</span>
+          <span class="ml-1 text-secondary">ID 3333</span>
         </div>
       </div>
-      <!-- Title -->
       <div class="mt-2">
         <h2
           class="
@@ -47,9 +44,33 @@
             truncate
           "
         >
-          Mock API
+          Preventivo
         </h2>
       </div>
     </div>
   </div>
+  <mat-drawer-container class="flex-auto h-full min-h-70">
+    <!-- Drawer -->
+    <mat-drawer
+      class="w-60 dark:bg-gray-900"
+      [autoFocus]="false"
+      [mode]="drawerMode"
+      [opened]="drawerOpened"
+      #matDrawer
+    >
+      <fuse-vertical-navigation
+        [navigation]="menuData"
+        [inner]="true"
+        [mode]="'side'"
+        [name]="'docs-core-features-navigation'"
+        [opened]="true"
+      ></fuse-vertical-navigation>
+    </mat-drawer>
+
+    <!-- Drawer content -->
+    <mat-drawer-content class="flex flex-col settings-users" fuseScrollReset>
+      <!-- Main -->
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
 </div>

@@ -31,6 +31,14 @@ const routes: Routes = [
         path: "validation",
         component: ValidationFormatosComponent,
       },
+      {
+        path: "validation/:idFormat",
+        component: ValidationFormatosComponent,
+      },
+      {
+        path: "validation/:idFormat/:idSection",
+        component: ValidationFormatosComponent,
+      },
 
       {
         path: "upload",
