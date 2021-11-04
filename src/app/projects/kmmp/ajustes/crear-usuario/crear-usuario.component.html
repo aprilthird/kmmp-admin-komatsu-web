@@ -57,7 +57,10 @@
             w-full
           "
         >
-          <div class="flex-auto user-info-container">
+          <div
+            class="flex-auto user-info-container"
+            [ngClass]="{ 'mb-15': submitted }"
+          >
             <!-- Alerta -->
             <div class="w-full mb-8 px-8" *ngIf="alert">
               <fuse-alert

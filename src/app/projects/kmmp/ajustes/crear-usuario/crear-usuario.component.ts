@@ -62,6 +62,7 @@ export class CrearUsuarioComponent implements OnInit {
   });
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  submitted: boolean;
 
   get rolesFormArray() {
     return this.form.controls.usuarioRoles as FormArray;
@@ -199,6 +200,7 @@ export class CrearUsuarioComponent implements OnInit {
           psw: this.isEdit ? "0000" : psw, // Se envia 0000 por defecto pero esto no actualiza la contraseña
         })
         .subscribe((response) => {
+          this.submitted = true;
           this.alert = {
             type: response.success ? "success" : "error",
             message: response.success

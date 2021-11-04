@@ -21,6 +21,8 @@ export class EditarPerfilComponent implements OnInit {
   public list: any[] = [];
   loadingCheckbox: boolean;
   validTree = false;
+  currentParentSelected: number;
+  activeCurrentParentSelected: boolean;
 
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -84,7 +86,6 @@ export class EditarPerfilComponent implements OnInit {
       if (this.validTree) {
         break;
       }
-      console.log(data[i].title);
       if (data[i].children.length > 0) {
         this.loopData(data[i].children);
       } else {
@@ -132,6 +133,12 @@ export class EditarPerfilComponent implements OnInit {
 
   clickCheckbox(value) {
     value.activo = !value.activo;
+
+    if (value.level === 1 && value.activo) {
+      this.currentParentSelected = value.id;
+      this.activeCurrentParentSelected = true;
+    }
+
     this.sendCheckRequest(value);
 
     if (value.activo) {
@@ -152,26 +159,38 @@ export class EditarPerfilComponent implements OnInit {
 
   private sendCheckRequest(value): void {
     this.loadingCheckbox = true;
-    this._editarPerfilService
-      .updateOpcion(
-        value.id,
-        value.id === 0
-          ? {
-              id: Number(this._activatedRoute.snapshot.params.id),
-              idOpcion: value.idOpcion,
-              activo: false,
-            }
-          : {
-              id: Number(this._activatedRoute.snapshot.params.id),
-              idOpcion: value.idOpcion,
-              activo: value.activo,
-            }
-      )
-      .subscribe((response) => {
-        if (value.id === 0) value.activo = true;
-        value.id = response.body;
-        this.loadingCheckbox = false;
-      });
+    let enable = true;
+
+    if (
+      this.currentParentSelected === value.id &&
+      this.activeCurrentParentSelected
+    ) {
+      this.activeCurrentParentSelected = false;
+      enable = false;
+    }
+
+    if (enable) {
+      this._editarPerfilService
+        .updateOpcion(
+          value.id,
+          value.id === 0
+            ? {
+                id: Number(this._activatedRoute.snapshot.params.id),
+                idOpcion: value.idOpcion,
+                activo: false,
+              }
+            : {
+                id: Number(this._activatedRoute.snapshot.params.id),
+                idOpcion: value.idOpcion,
+                activo: value.activo,
+              }
+        )
+        .subscribe((response) => {
+          if (value.id === 0) value.activo = true;
+          value.id = response.body;
+          this.loadingCheckbox = false;
+        });
+    }
   }
 
   private selectAll(value, all): void {
