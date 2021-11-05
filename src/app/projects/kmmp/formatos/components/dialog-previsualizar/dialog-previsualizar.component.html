@@ -206,9 +206,9 @@
                         [preview]="dataDialog?.previsualizar"
                         [type]="'imagen'"
                         [image]="
-                          parametro.dato !== '' && parametro.dato !== null
-                            ? setImage(parametro.dato)
-                            : ''
+                          parametro.valor !== '' && parametro.valor !== null
+                            ? setImage(parametro.valor)
+                            : setImage(parametro.valor)
                         "
                         [loading]="filesLoading[getParametroControl({i, j, k})]"
                         (sourceFile)="onChageFile($event, getParametroControl({i, j, k}))"
@@ -240,7 +240,7 @@
                         {{ parametro.label | uppercase }}
                       </p>
                     </div>
-
+                    <!-- CHECKBOX -->
                     <div *ngSwitchCase="9" class="w-full">
                       <div class="flex flex-col">
                         <mat-label *ngIf="parametro.visible">{{

@@ -202,7 +202,12 @@
                       ></mat-icon>
                     </button>
                     <mat-menu #menu="matMenu" xPosition="before">
-                      <button mat-menu-item (click)="toggleDetails(actividad)">
+                      <button
+                        mat-menu-item
+                        routerLink="/admin/actividades/validation/{{
+                          actividad.id
+                        }}"
+                      >
                         Ver formatos
                       </button>
                       <button

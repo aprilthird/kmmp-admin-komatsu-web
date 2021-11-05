@@ -61,22 +61,31 @@ export class AperturaAsignacionComponent implements OnInit {
             ) {
               this.filesLoading[`${i}-${j}-${k}`] = false;
             }
-
-            this.form.addControl(
-              `${this.getParametroControl({ i, j, k })}`,
-              new FormControl(
-                {
-                  value: parametro.valor,
+            if (parametro.idParametro === TipoParametro.CHECKBOX) {
+              this.form.addControl(
+                `${this.getParametroControl({ i, j, k })}`,
+                new FormControl({
+                  value: parametro.valor === "true" ? true : false,
                   disabled: true ? !parametro.editable : false,
-                }
+                })
+              );
+            } else {
+              this.form.addControl(
+                `${this.getParametroControl({ i, j, k })}`,
+                new FormControl(
+                  {
+                    value: parametro.valor,
+                    disabled: true ? !parametro.editable : false,
+                  }
 
-                //[parametro.valor, { disabled: true }]
-                /*? parametro.dato === null
-                    : parametro.dato,
-                  disabled: true ? !parametro.editable : false,*/
-                //this.getValidatorByParametro(parametro)
-              )
-            );
+                  //[parametro.valor, { disabled: true }]
+                  /*? parametro.dato === null
+                      : parametro.dato,
+                    disabled: true ? !parametro.editable : false,*/
+                  //this.getValidatorByParametro(parametro)
+                )
+              );
+            }
           }
         });
       });
@@ -117,7 +126,17 @@ export class AperturaAsignacionComponent implements OnInit {
         seccion.grupos.forEach((grupo, j) => {
           grupo.parametros.forEach((parametro, k) => {
             if (parametro.activo) {
-              parametro.valor = parametro.dato = String(
+              if (
+                parametro.idParametro === TipoParametro.UPLOAD ||
+                parametro.idParametro === TipoParametro.IMAGEN
+              ) {
+                if (parametro.valor === null || parametro.valor === "") {
+                  this.form
+                    .get(this.getParametroControl({ i, j, k }))
+                    .setValue(parametro.dato);
+                }
+              }
+              parametro.valor = String(
                 this.form.get(this.getParametroControl({ i, j, k })).value
               );
             }

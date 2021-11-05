@@ -248,10 +248,10 @@
                                 [editable]="parametro.editable"
                                 [type]="'imagen'"
                                 [image]="
-                                  parametro.dato !== '' &&
-                                  parametro.dato !== null
-                                    ? setImage(parametro.dato)
-                                    : ''
+                                  parametro.valor !== '' &&
+                                  parametro.valor !== null
+                                    ? setImage(parametro.valor)
+                                    : setImage(parametro.dato)
                                 "
                                 [loading]="filesLoading[getParametroControl({i, j, k})]"
                                 (sourceFile)="onChageFile($event, getParametroControl({i, j, k}))"
@@ -286,11 +286,12 @@
                               </p>
                             </div>
 
+                            <!--checkbox-->
                             <div *ngSwitchCase="9" class="w-full">
                               <div class="flex flex-col">
-                                <mat-label *ngIf="parametro.visible">{{
-                                  parametro.label
-                                }}</mat-label>
+                                <mat-label *ngIf="parametro.visible"
+                                  >{{ parametro.label }}
+                                </mat-label>
                                 <mat-slide-toggle
                                   [color]="'primary'"
                                   formControlName="{{ getParametroControl({i, j, k})}}"

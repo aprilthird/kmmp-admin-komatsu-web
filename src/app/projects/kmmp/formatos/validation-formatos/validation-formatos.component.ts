@@ -1,4 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { DialogAddCommentComponent } from "../components/dialog-add-comment/dialog-add-comment.component";
+import { DialogValidateFormatComponent } from "../components/dialog-validate-format/dialog-validate-format.component";
 
 @Component({
   selector: "app-validation-formatos",
@@ -10,8 +13,9 @@ export class ValidationFormatosComponent implements OnInit {
   drawerMode: "side" | "over";
   drawerOpened: boolean;
   menuData: any[];
+  commented: boolean;
 
-  constructor() {
+  constructor(private matDialog: MatDialog) {
     this.menuData = [
       {
         id: "formatos",
@@ -67,4 +71,14 @@ export class ValidationFormatosComponent implements OnInit {
     this.drawerMode = "side";
     this.drawerOpened = true;
   }
+
+  validate(): void {
+    this.matDialog.open(DialogValidateFormatComponent, { width: "500px" });
+  }
+
+  addComment(): void {
+    this.matDialog.open(DialogAddCommentComponent, { width: "500px" });
+  }
+
+  deleteComment(): void {}
 }

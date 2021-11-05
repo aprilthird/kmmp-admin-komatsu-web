@@ -1,3 +1,373 @@
+interface ParamsFake {
+  type: string;
+  title: string;
+  created_by: string;
+  placeholder: string;
+}
+
+interface GroupsFake {
+  id: number;
+  name: string;
+  comments: string;
+  params: ParamsFake[];
+}
+
+interface SectionsFake {
+  id: number;
+  name: string;
+  groups: GroupsFake[];
+}
+
+export interface FormatosFake {
+  id: number;
+  name: string;
+  porcentage: string;
+  sections: SectionsFake[];
+  complete: boolean;
+}
+
+export const FormatosData: FormatosFake[] = [
+  {
+    id: 1,
+    name: "FM01",
+    complete: true,
+    porcentage: "75%",
+    sections: [
+      {
+        id: 1,
+        name: "section1",
+        groups: [
+          {
+            id: 1,
+            name: "Mantenimiento frontal",
+            comments: "",
+            params: [
+              {
+                type: "input",
+                title: "Dato",
+                created_by: "jlecca",
+                placeholder: "Herramienta",
+              },
+              {
+                type: "input",
+                title: "Dato 2",
+                created_by: "jlecca",
+                placeholder: "Herramienta 2",
+              },
+              {
+                type: "input",
+                title: "Dato 3",
+                created_by: "jlecca",
+                placeholder: "Herramienta 3",
+              },
+              {
+                type: "input",
+                title: "Dato 4",
+                created_by: "jlecca",
+                placeholder: "Herramienta 4",
+              },
+              {
+                type: "input",
+                title: "Dato 5",
+                created_by: "jlecca",
+                placeholder: "Herramienta 5",
+              },
+            ],
+          },
+          {
+            id: 2,
+            name: "Mantenimiento frontal 2",
+            comments: "",
+            params: [
+              {
+                type: "input",
+                title: "Dato",
+                created_by: "jlecca",
+                placeholder: "Herramienta",
+              },
+              {
+                type: "input",
+                title: "Dato 2",
+                created_by: "jlecca",
+                placeholder: "Herramienta 2",
+              },
+              {
+                type: "input",
+                title: "Dato 3",
+                created_by: "jlecca",
+                placeholder: "Herramienta 3",
+              },
+              {
+                type: "input",
+                title: "Dato 4",
+                created_by: "jlecca",
+                placeholder: "Herramienta 4",
+              },
+              {
+                type: "input",
+                title: "Dato 5",
+                created_by: "jlecca",
+                placeholder: "Herramienta 5",
+              },
+            ],
+          },
+        ],
+      },
+
+      {
+        id: 2,
+        name: "section1",
+        groups: [
+          {
+            id: 1,
+            name: "Mantenimiento frontal 1",
+            comments: "",
+            params: [
+              {
+                type: "input",
+                title: "Dato",
+                created_by: "jlecca",
+                placeholder: "Herramienta",
+              },
+              {
+                type: "input",
+                title: "Dato 2",
+                created_by: "jlecca",
+                placeholder: "Herramienta 2",
+              },
+              {
+                type: "input",
+                title: "Dato 3",
+                created_by: "jlecca",
+                placeholder: "Herramienta 3",
+              },
+              {
+                type: "input",
+                title: "Dato 4",
+                created_by: "jlecca",
+                placeholder: "Herramienta 4",
+              },
+              {
+                type: "input",
+                title: "Dato 5",
+                created_by: "jlecca",
+                placeholder: "Herramienta 5",
+              },
+            ],
+          },
+          {
+            id: 2,
+            name: "Mantenimiento frontal 2",
+            comments: "",
+            params: [
+              {
+                type: "input",
+                title: "Dato",
+                created_by: "jlecca",
+                placeholder: "Herramienta",
+              },
+              {
+                type: "input",
+                title: "Dato 2",
+                created_by: "jlecca",
+                placeholder: "Herramienta 2",
+              },
+              {
+                type: "input",
+                title: "Dato 3",
+                created_by: "jlecca",
+                placeholder: "Herramienta 3",
+              },
+              {
+                type: "input",
+                title: "Dato 4",
+                created_by: "jlecca",
+                placeholder: "Herramienta 4",
+              },
+              {
+                type: "input",
+                title: "Dato 5",
+                created_by: "jlecca",
+                placeholder: "Herramienta 5",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "FM02",
+    complete: true,
+    porcentage: "75%",
+    sections: [
+      {
+        id: 1,
+        name: "section1",
+        groups: [
+          {
+            id: 1,
+            name: "Mantenimiento frontal",
+            comments: "",
+            params: [
+              {
+                type: "input",
+                title: "Dato",
+                created_by: "jlecca",
+                placeholder: "Herramienta",
+              },
+              {
+                type: "input",
+                title: "Dato 2",
+                created_by: "jlecca",
+                placeholder: "Herramienta 2",
+              },
+              {
+                type: "input",
+                title: "Dato 3",
+                created_by: "jlecca",
+                placeholder: "Herramienta 3",
+              },
+              {
+                type: "input",
+                title: "Dato 4",
+                created_by: "jlecca",
+                placeholder: "Herramienta 4",
+              },
+              {
+                type: "input",
+                title: "Dato 5",
+                created_by: "jlecca",
+                placeholder: "Herramienta 5",
+              },
+            ],
+          },
+          {
+            id: 2,
+            name: "Mantenimiento frontal",
+            comments: "",
+            params: [
+              {
+                type: "input",
+                title: "Dato",
+                created_by: "jlecca",
+                placeholder: "Herramienta",
+              },
+              {
+                type: "input",
+                title: "Dato 2",
+                created_by: "jlecca",
+                placeholder: "Herramienta 2",
+              },
+              {
+                type: "input",
+                title: "Dato 3",
+                created_by: "jlecca",
+                placeholder: "Herramienta 3",
+              },
+              {
+                type: "input",
+                title: "Dato 4",
+                created_by: "jlecca",
+                placeholder: "Herramienta 4",
+              },
+              {
+                type: "input",
+                title: "Dato 5",
+                created_by: "jlecca",
+                placeholder: "Herramienta 5",
+              },
+            ],
+          },
+        ],
+      },
+
+      {
+        id: 2,
+        name: "section1",
+
+        groups: [
+          {
+            id: 1,
+            name: "Mantenimiento frontal 1",
+            comments: "",
+            params: [
+              {
+                type: "input",
+                title: "Dato",
+                created_by: "jlecca",
+                placeholder: "Herramienta",
+              },
+              {
+                type: "input",
+                title: "Dato 2",
+                created_by: "jlecca",
+                placeholder: "Herramienta 2",
+              },
+              {
+                type: "input",
+                title: "Dato 3",
+                created_by: "jlecca",
+                placeholder: "Herramienta 3",
+              },
+              {
+                type: "input",
+                title: "Dato 4",
+                created_by: "jlecca",
+                placeholder: "Herramienta 4",
+              },
+              {
+                type: "input",
+                title: "Dato 5",
+                created_by: "jlecca",
+                placeholder: "Herramienta 5",
+              },
+            ],
+          },
+          {
+            id: 2,
+            name: "Mantenimiento frontal 2",
+            comments: "",
+            params: [
+              {
+                type: "input",
+                title: "Dato",
+                created_by: "jlecca",
+                placeholder: "Herramienta",
+              },
+              {
+                type: "input",
+                title: "Dato 2",
+                created_by: "jlecca",
+                placeholder: "Herramienta 2",
+              },
+              {
+                type: "input",
+                title: "Dato 3",
+                created_by: "jlecca",
+                placeholder: "Herramienta 3",
+              },
+              {
+                type: "input",
+                title: "Dato 4",
+                created_by: "jlecca",
+                placeholder: "Herramienta 4",
+              },
+              {
+                type: "input",
+                title: "Dato 5",
+                created_by: "jlecca",
+                placeholder: "Herramienta 5",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
+
 export let Asignaciones: Activity[] = [
   {
     cliente: "Juan Pérez",
@@ -37,6 +407,7 @@ export let Asignaciones: Activity[] = [
     fecha_hora_fin: new Date(),
     duracion_2: "12",
     comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
   },
   {
     cliente: "Oscar Fernández",
@@ -76,6 +447,7 @@ export let Asignaciones: Activity[] = [
     fecha_hora_fin: new Date(),
     duracion_2: "12",
     comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
   },
   {
     cliente: "Juan Pérez",
@@ -115,6 +487,7 @@ export let Asignaciones: Activity[] = [
     fecha_hora_fin: new Date(),
     duracion_2: "12",
     comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
   },
   {
     cliente: "Raúl Jimenez",
@@ -154,6 +527,7 @@ export let Asignaciones: Activity[] = [
     fecha_hora_fin: new Date(),
     duracion_2: "12",
     comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
   },
   {
     cliente: "Mario Pérez",
@@ -193,6 +567,7 @@ export let Asignaciones: Activity[] = [
     fecha_hora_fin: new Date(),
     duracion_2: "12",
     comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
   },
   {
     cliente: "Cesar Tovar",
@@ -233,6 +608,7 @@ export let Asignaciones: Activity[] = [
     fecha_hora_fin: new Date(),
     duracion_2: "12",
     comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
   },
 ];
 
@@ -260,4 +636,5 @@ export interface Activity {
   fecha_hora_fin?: Date;
   duracion_2?: string;
   comentarios_tecnico?: string;
+  formatos?: any;
 }

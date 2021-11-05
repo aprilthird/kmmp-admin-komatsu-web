@@ -70,6 +70,12 @@ export class GruposComponent implements OnInit {
         return "Imagen";
       case TipoParametro.SELECCION:
         return "Selección";
+      case TipoParametro.CHECKBOX:
+        return "Checkbox";
+      case TipoParametro.LABEL:
+        return "Label";
+      case TipoParametro.SELECCION:
+        return "Selección";
       default:
         "";
     }
