@@ -3,6 +3,7 @@ import { MatDialog } from "@angular/material/dialog";
 
 import { DialogAddCommentComponent } from "../components/dialog-add-comment/dialog-add-comment.component";
 import { DialogValidateFormatComponent } from "../components/dialog-validate-format/dialog-validate-format.component";
+import { ActivatedRoute } from "@angular/router";
 
 //SERVICES
 import { ActivitiesService } from "../../actividades/activities.service";
@@ -24,11 +25,61 @@ export class ValidationFormatosComponent implements OnInit {
   drawerOpened: boolean;
   menuData: any[];
   commented: boolean;
+  currentIdActivity: any;
+  currentActivity: ActivityFake;
+  sectionSelected: any;
+  sectionId: any;
+  formatoId: any;
 
   constructor(
     private matDialog: MatDialog,
-    private activityServices: ActivitiesService
+    private activityServices: ActivitiesService,
+    private routerActive: ActivatedRoute
   ) {
+    this.getActivityId();
+    this.getActivities();
+    this.setCollapsableNav();
+    this.setSectionData();
+  }
+
+  ngOnInit(): void {
+    this.drawerMode = "side";
+    this.drawerOpened = true;
+  }
+
+  private getActivityId(): void {
+    this.routerActive.paramMap.subscribe((params: any) => {
+      this.currentIdActivity = params.params["idActivity"];
+      this.sectionId = params.params["idSection"];
+      this.formatoId = params.params["idFormat"];
+    });
+  }
+
+  private getActivities(): void {
+    this.activityServices.activities$.subscribe(
+      (activities: ActivityFake[]) => {
+        this.currentActivity = activities.find(
+          (activity) => activity.id === Number(this.currentIdActivity)
+        );
+
+        console.log(this.currentActivity);
+      }
+    );
+  }
+
+  setSectionData(id?): void {
+    if (id) {
+      this.sectionId = id;
+    }
+
+    this.sectionSelected = this.currentActivity.formatos
+      .find((formato) => formato.id === Number(this.formatoId))
+      .sections.find((section) => section.id === Number(this.sectionId));
+
+    console.log("console.log(this.sectionSelected)-", this.sectionSelected);
+  }
+
+  private setCollapsableNav(): void {
     this.menuData = [
       {
         id: "formatos",
@@ -37,61 +88,24 @@ export class ValidationFormatosComponent implements OnInit {
         children: [],
       },
     ];
+    this.currentActivity.formatos.forEach((formato, index) => {
+      this.menuData[0].children.push({
+        id: formato.id,
+        title: formato.name,
+        type: "collapsable",
+        link: `/admin/actividades/validation/${this.currentIdActivity}/${formato.id}`,
+        children: [],
+      });
 
-    this.menuData[0].children.push({
-      id: "formatos.formato1",
-      title: "FM01",
-      type: "collapsable",
-      link: "/admin/actividades/validation/1/FM01",
-      children: [
-        {
-          id: "formatos.formato1.section1",
-          title: "section1",
+      formato.sections.forEach((section) => {
+        this.menuData[0].children[index].children.push({
+          id: section.id,
+          title: section.name,
           type: "basic",
-          link: "/admin/actividades/validation/1/FM01/section1",
-        },
-        {
-          id: "formatos.formato1.section2",
-          title: "section1",
-          type: "basic",
-          link: "/admin/actividades/validation/1/FM01/section2",
-        },
-        {
-          id: "formatos.formato1.section3",
-          title: "section1",
-          type: "basic",
-          link: "/admin/actividades/validation/1/FM01/section3",
-        },
-      ],
+          link: `/admin/actividades/validation/${this.currentIdActivity}/${formato.id}/${section.id}`,
+        });
+      });
     });
-
-    this.menuData[0].children.push({
-      id: "formatos.formato2",
-      title: "FM02",
-      type: "collapsable",
-      link: "/admin/actividades/validation/1/FM02",
-    });
-
-    this.menuData[0].children.push({
-      id: "formatos.formato3",
-      title: "FM03",
-      type: "collapsable",
-      link: "/admin/actividades/validation/1/FM03",
-    });
-  }
-
-  ngOnInit(): void {
-    this.drawerMode = "side";
-    this.drawerOpened = true;
-    this.getActivities();
-  }
-
-  private getActivities(): void {
-    this.activityServices.activities$.subscribe(
-      (activities: ActivityFake[]) => {
-        console.log(activities);
-      }
-    );
   }
 
   validate(): void {

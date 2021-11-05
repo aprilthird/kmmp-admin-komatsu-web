@@ -32,7 +32,7 @@ const routes: Routes = [
         component: ValidationFormatosComponent,
       },
       {
-        path: "validation/:idFormat",
+        path: "validation/:idActivity",
         component: ValidationFormatosComponent,
       },
       {

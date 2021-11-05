@@ -37,7 +37,5 @@ export class ActivitiesService {
   addNewActivity(newData) {
     let data: any = this._activities.asObservable();
     this._activities.next([newData, ...data.source.value]);
-
-    console.log(this._activities);
   }
 }

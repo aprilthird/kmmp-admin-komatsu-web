@@ -110,12 +110,6 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   createActivity(): void {
-    /*Asignaciones.push({
-      id: Asignaciones.length,
-      estado: "Sin empezar",
-      ...this.form.value,
-    });*/
-
     this.activitiesService.addNewActivity({
       id: Asignaciones.length,
       estado: "Sin empezar",
