@@ -6,6 +6,9 @@ import {
   Asignaciones,
 } from "app/projects/kmmp/fake-db/activities/activity-fake-db";
 
+//SERVICES
+import { ActivitiesService } from "../../activities.service";
+
 @Component({
   selector: "activity-add-edit",
   templateUrl: "./activity-add-edit.component.html",
@@ -51,7 +54,8 @@ export class ActivityAddEditComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private activitiesService: ActivitiesService
   ) {}
 
   ngOnInit(): void {
@@ -106,7 +110,13 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   createActivity(): void {
-    Asignaciones.push({
+    /*Asignaciones.push({
+      id: Asignaciones.length,
+      estado: "Sin empezar",
+      ...this.form.value,
+    });*/
+
+    this.activitiesService.addNewActivity({
       id: Asignaciones.length,
       estado: "Sin empezar",
       ...this.form.value,

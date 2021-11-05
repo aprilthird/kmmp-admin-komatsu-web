@@ -2,11 +2,15 @@ import { Component, OnChanges, OnInit, SimpleChange } from "@angular/core";
 import { MatCheckbox } from "@angular/material/checkbox";
 import { MatDialog } from "@angular/material/dialog";
 import { Pagination } from "app/core/types/list.types";
+import { activities } from "app/mock-api/pages/activities/data";
 import { Observable, Subject } from "rxjs";
 import {
   Activity,
   Asignaciones,
+  ActivitiesData,
+  ActivityFake,
 } from "../../fake-db/activities/activity-fake-db";
+import { ActivitiesService } from "../activities.service";
 import { AssignBayComponent } from "../dialogs/assign-bay/assign-bay.component";
 
 @Component({
@@ -19,7 +23,8 @@ export class ListComponent implements OnInit {
   pagination$: Observable<Pagination>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   isLoading = false;
-  activities: Activity[] = Asignaciones;
+  //activities: Activity[] = Asignaciones;
+  activities: ActivityFake[] = ActivitiesData;
   assignToBay: boolean;
   isEdit: boolean;
   selectedActivity: any;
@@ -27,11 +32,24 @@ export class ListComponent implements OnInit {
   start = new Date().toLocaleDateString("en-US");
   end = new Date().toLocaleDateString("en-US");
 
-  constructor(private matDialog: MatDialog) {}
+  constructor(
+    private matDialog: MatDialog,
+    private activitiesService: ActivitiesService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAsignations();
+  }
 
   changePage(): void {}
+
+  getAsignations(): void {
+    this.activitiesService.activities$.subscribe(
+      (_activities: ActivityFake[]) => {
+        this.activities = _activities;
+      }
+    );
+  }
 
   openAssignment(): void {
     this.matDialog.open(AssignBayComponent, {
@@ -45,12 +63,14 @@ export class ListComponent implements OnInit {
       this.activities[index].checked = event.checked;
     } else {
       this.activities.map(
-        (activity: Activity) => (activity.checked = event.checked)
+        (activity: ActivityFake) => (activity.checked = event.checked)
       );
     }
 
     if (
-      this.activities.find((activity: Activity) => activity.checked === true)
+      this.activities.find(
+        (activity: ActivityFake) => activity.checked === true
+      )
     ) {
       this.assignToBay = true;
     } else this.assignToBay = false;

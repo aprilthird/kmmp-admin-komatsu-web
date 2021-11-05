@@ -13,7 +13,10 @@ import { AssignBayComponent } from "../../dialogs/assign-bay/assign-bay.componen
 import { ActivitiesService } from "../../activities.service";
 
 //MODELS
-import { Activity } from "app/projects/kmmp/fake-db/activities/activity-fake-db";
+import {
+  Activity,
+  ActivityFake,
+} from "app/projects/kmmp/fake-db/activities/activity-fake-db";
 
 @Component({
   selector: "app-activity",
@@ -25,7 +28,7 @@ export class ActivityComponent implements OnInit, OnChanges {
   preloadedFormatsData = [];
 
   @Input() isEdit: boolean = false;
-  @Input() activityData: Activity;
+  @Input() activityData: ActivityFake;
   constructor(
     private dialog: MatDialog,
     private activitiesService: ActivitiesService
@@ -42,6 +45,7 @@ export class ActivityComponent implements OnInit, OnChanges {
 
     if ("activityData" in changes) {
       this.activityData = changes["activityData"].currentValue;
+      console.log(this.activityData.formatos);
     }
   }
 
@@ -59,7 +63,7 @@ export class ActivityComponent implements OnInit, OnChanges {
   }
 
   removeFormat(index: number) {
-    this.activityData.formats.splice(index, 1);
+    this.activityData.formatos.splice(index, 1);
   }
 }
 

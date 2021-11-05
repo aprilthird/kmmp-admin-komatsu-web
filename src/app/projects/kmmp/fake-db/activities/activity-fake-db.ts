@@ -26,6 +26,42 @@ export interface FormatosFake {
   complete: boolean;
 }
 
+export interface ActivityFake {
+  cliente: string;
+  equipo: string;
+  modelo: string;
+  actividad: string;
+  tipo_mantenimiento: string;
+  bahia_asignada: string;
+  estado: string;
+  tipo_solicitud: string;
+  id: number;
+  formatos: FormatosFake[];
+  flota: string;
+  tipo_equipo: string;
+  descripcion_actividad: string;
+  numero_bl: string;
+  numero_pe: [
+    {
+      value: string;
+      id: number;
+    }
+  ];
+  numero_os: [
+    {
+      value: string;
+      id: number;
+    }
+  ];
+  fecha_estimada: string;
+  duracion: string;
+  fecha_hora_inicio: string;
+  fecha_hora_fin: string;
+  duracion_2: string;
+  comentarios_tecnico: string;
+  checked?: boolean;
+}
+
 export const FormatosData: FormatosFake[] = [
   {
     id: 1,
@@ -606,6 +642,213 @@ export let Asignaciones: Activity[] = [
     duracion: "12",
     fecha_hora_inicio: new Date(),
     fecha_hora_fin: new Date(),
+    duracion_2: "12",
+    comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
+  },
+];
+
+export let ActivitiesData: ActivityFake[] = [
+  {
+    cliente: "Juan Pérez",
+    equipo: "Pala hidráulica",
+    modelo: "FF541-0",
+    actividad: "Preventivo",
+    tipo_mantenimiento: "PS01",
+    bahia_asignada: "120-A",
+    estado: "Sin empezar",
+    tipo_solicitud: "Plan",
+    id: 1,
+    flota: "SH01",
+    tipo_equipo: "Pala hidráulica",
+    descripcion_actividad: "Mantenimeinto preventivo",
+    numero_bl: "767YGUYTY",
+    numero_pe: [
+      {
+        value: "F4UH4G5",
+        id: 1,
+      },
+    ],
+    numero_os: [
+      {
+        value: "987DFDF",
+        id: 1,
+      },
+    ],
+    fecha_estimada: "",
+    duracion: "12",
+    fecha_hora_inicio: "",
+    fecha_hora_fin: "",
+    duracion_2: "12",
+    comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
+  },
+  {
+    cliente: "Oscar Fernández",
+    equipo: "Pala hidráulica",
+    modelo: "FF541-0",
+    actividad: "Peventivo",
+    tipo_mantenimiento: "PS02",
+    bahia_asignada: "120-A",
+    estado: "Sin empezar",
+    tipo_solicitud: "Plan",
+    id: 2,
+    flota: "SH01",
+    tipo_equipo: "Pala hidráulica",
+    descripcion_actividad: "Mantenimeinto preventivo",
+    numero_bl: "767YGUYTY",
+    numero_pe: [
+      {
+        value: "F4UH4G5",
+        id: 1,
+      },
+    ],
+    numero_os: [
+      {
+        value: "987DFDF",
+        id: 1,
+      },
+    ],
+    fecha_estimada: "",
+    duracion: "12",
+    fecha_hora_inicio: "",
+    fecha_hora_fin: "",
+    duracion_2: "12",
+    comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
+  },
+  {
+    cliente: "Juan Pérez",
+    equipo: "Pala hidráulica",
+    modelo: "FF541-0",
+    actividad: "Peventivo",
+    tipo_mantenimiento: "PS02",
+    bahia_asignada: "120-A",
+    estado: "Sin empezar",
+    tipo_solicitud: "Plan",
+    id: 3,
+    flota: "SH01",
+    tipo_equipo: "Pala hidráulica",
+    descripcion_actividad: "Mantenimeinto preventivo",
+    numero_bl: "767YGUYTY",
+    numero_pe: [
+      {
+        value: "F4UH4G5",
+        id: 1,
+      },
+    ],
+    numero_os: [
+      {
+        value: "987DFDF",
+        id: 1,
+      },
+    ],
+    fecha_estimada: "",
+    duracion: "12",
+    fecha_hora_inicio: "",
+    fecha_hora_fin: "",
+    duracion_2: "12",
+    comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
+  },
+  {
+    cliente: "Raúl Jimenez",
+    equipo: "Pala hidráulica",
+    modelo: "FF541-0",
+    actividad: "Peventivo",
+    tipo_mantenimiento: "PS02",
+    bahia_asignada: "120-A",
+    estado: "Sin empezar",
+    tipo_solicitud: "Plan",
+    id: 4,
+    flota: "SH01",
+    tipo_equipo: "Pala hidráulica",
+    descripcion_actividad: "Mantenimeinto preventivo",
+    numero_bl: "767YGUYTY",
+    numero_pe: [
+      {
+        value: "F4UH4G5",
+        id: 1,
+      },
+    ],
+    numero_os: [
+      {
+        value: "987DFDF",
+        id: 1,
+      },
+    ],
+    fecha_estimada: "",
+    duracion: "12",
+    fecha_hora_inicio: "",
+    fecha_hora_fin: "",
+    duracion_2: "12",
+    comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
+  },
+  {
+    cliente: "Mario Pérez",
+    equipo: "Pala hidráulica",
+    modelo: "FF541-0",
+    actividad: "Peventivo",
+    tipo_mantenimiento: "PS02",
+    bahia_asignada: "120-A",
+    estado: "Sin empezar",
+    tipo_solicitud: "Plan",
+    id: 5,
+    flota: "SH01",
+    tipo_equipo: "Pala hidráulica",
+    descripcion_actividad: "Mantenimeinto preventivo",
+    numero_bl: "767YGUYTY",
+    numero_pe: [
+      {
+        value: "F4UH4G5",
+        id: 1,
+      },
+    ],
+    numero_os: [
+      {
+        value: "987DFDF",
+        id: 1,
+      },
+    ],
+    fecha_estimada: "",
+    duracion: "12",
+    fecha_hora_inicio: "",
+    fecha_hora_fin: "",
+    duracion_2: "12",
+    comentarios_tecnico: "Demora leve. Observación HT03 ",
+    formatos: FormatosData,
+  },
+  {
+    cliente: "Cesar Tovar",
+    equipo: "Pala hidráulica",
+    modelo: "FF541-0",
+    actividad: "Peventivo",
+    tipo_mantenimiento: "PS02",
+    bahia_asignada: "120-A",
+    estado: "Sin empezar",
+    tipo_solicitud: "Plan",
+    id: 5,
+    flota: "SH01",
+    tipo_equipo: "Pala hidráulica",
+    descripcion_actividad: "Mantenimeinto preventivo",
+    numero_bl: "767YGUYTY",
+    numero_pe: [
+      {
+        value: "F4UH4G5",
+        id: 1,
+      },
+    ],
+    numero_os: [
+      {
+        value: "987DFDF",
+        id: 1,
+      },
+    ],
+    fecha_estimada: "",
+    duracion: "12",
+    fecha_hora_inicio: "",
+    fecha_hora_fin: "",
     duracion_2: "12",
     comentarios_tecnico: "Demora leve. Observación HT03 ",
     formatos: FormatosData,

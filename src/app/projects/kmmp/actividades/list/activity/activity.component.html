@@ -80,7 +80,7 @@
   </div>
 
   <div
-    *ngIf="activityData.formats && activityData.formats.length > 0"
+    *ngIf="activityData.formatos && activityData.formatos.length > 0"
     class="flex flex-col justify-between lg:pl-8"
   >
     <div class="format h-3/4 w-3/4">
@@ -88,7 +88,7 @@
       <div class="flex flex-col lg:flex-row lg:flex-wrap gap-4">
         <div
           class="flex flex-row items-center"
-          *ngFor="let format of activityData.formats; let i = index"
+          *ngFor="let format of activityData.formatos; let i = index"
         >
           <button
             mat-button
@@ -96,7 +96,7 @@
           >
             <div class="flex flex-row justify-between items-center w-52">
               <div>
-                <span>{{ format.title }}</span>
+                <span>{{ format.name }}</span>
               </div>
               <div class="flex flex-row items-center gap-1">
                 <span>{{ format.porcentage }}</span

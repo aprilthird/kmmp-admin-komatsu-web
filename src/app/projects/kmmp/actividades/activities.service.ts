@@ -5,6 +5,8 @@ import { BehaviorSubject, Observable } from "rxjs";
 import {
   FormatosFake,
   FormatosData,
+  ActivitiesData,
+  ActivityFake,
 } from "../fake-db/activities/activity-fake-db";
 
 @Injectable({
@@ -12,9 +14,7 @@ import {
 })
 export class ActivitiesService {
   preloadedFormats: BehaviorSubject<any> = new BehaviorSubject(null);
-  _activities: BehaviorSubject<FormatosFake[]> = new BehaviorSubject(
-    FormatosData
-  );
+  _activities: BehaviorSubject<any> = new BehaviorSubject(ActivitiesData);
 
   constructor() {}
 
@@ -26,11 +26,18 @@ export class ActivitiesService {
     this.preloadedFormats.next(data);
   }
 
-  get acttivities$(): Observable<FormatosFake[]> {
+  get activities$(): Observable<any> {
     return this._activities.asObservable();
   }
 
   set activities$(data) {
     this._activities.next(data);
+  }
+
+  addNewActivity(newData) {
+    let data: any = this._activities.asObservable();
+    this._activities.next([newData, ...data.source.value]);
+
+    console.log(this._activities);
   }
 }
