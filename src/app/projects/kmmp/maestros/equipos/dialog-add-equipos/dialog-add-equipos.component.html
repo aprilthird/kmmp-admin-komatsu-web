@@ -1,0 +1,119 @@
+<form [formGroup]="form" class="">
+  <div mat-dialog-title class="flex justify-between items-center">
+    <h4>Agregar equipo</h4>
+    <button mat-icon-button type="button" (click)="matdialigRef.close()">
+      <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content class="pb-6">
+    <div class="flex flex-col w-full">
+      <!-- Nombre -->
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="nombre"
+          placeholder="Ingrese nombre"
+        />
+        <mat-error *ngIf="form.controls['nombre'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>TAG</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="tag"
+          placeholder="Ingrese RUC"
+        />
+        <mat-error *ngIf="form.controls['tag'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Modelo</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="modelo"
+          placeholder="Ingrese razón social"
+        />
+        <mat-error *ngIf="form.controls['modelo'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Flota</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="flota"
+          placeholder="Ingrese Ubicación/Dirección"
+        />
+        <mat-error *ngIf="form.controls['flota'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Cliente</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="cliente"
+          placeholder="Ingrese Ubicación/Dirección"
+        />
+        <mat-error *ngIf="form.controls['cliente'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Horómetro</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="horometro"
+          placeholder="Ingrese Ubicación/Dirección"
+        />
+        <mat-error *ngIf="form.controls['horometro'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-slide-toggle color="primary" formControlName="estado">
+        Estado
+      </mat-slide-toggle>
+    </div>
+  </div>
+  <div mat-dialog-actions class="flex justify-center px-6 gap-5">
+    <button
+      (click)="matdialigRef.close()"
+      mat-button
+      class="
+        ml-4
+        bg-gray-50
+        border-solid border border-accent-300
+        text-gray-700
+        shadow-none
+      "
+    >
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      [color]="'primary'"
+      class="w-32"
+      (click)="submit()"
+      [disabled]="form.invalid"
+    >
+      <span>Crear</span>
+    </button>
+  </div>
+</form>

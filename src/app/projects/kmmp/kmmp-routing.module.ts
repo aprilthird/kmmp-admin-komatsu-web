@@ -28,6 +28,11 @@ const routes: Routes = [
           ),
       },
       {
+        path: "maestros",
+        loadChildren: () =>
+          import("./maestros/maestros.module").then((m) => m.MaestrosModule),
+      },
+      {
         path: "",
         component: DashboardComponent,
         canActivate: [MenuPermissionGuard],
