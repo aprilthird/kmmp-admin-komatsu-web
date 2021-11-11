@@ -5,9 +5,11 @@ import {
   ParamsPagination,
 } from "app/core/types/http.types";
 import { Pagination } from "app/core/types/list.types";
+import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
-import { FlotaI, FlotaResponse, FlotaResponseI } from "./flota-model";
+import { getInboxParams } from "../maestro-model";
+import { FlotaI } from "./flota-model";
 
 @Injectable({
   providedIn: "root",
@@ -38,9 +40,9 @@ export class FlotasService {
   }
 
   postFlota(equipo): Observable<any> {
-    const endpoint = "/Administracion/Flotas/" + 0;
+    const endpoint = "/Administracion/CrudFlotas";
     return this.http.post<PaginationResponse<FlotaI[]>>(
-      "https://development-kmp.ws.solera.pe" + endpoint,
+      environment.apiUrl + endpoint,
       equipo
     );
   }
@@ -51,10 +53,22 @@ export class FlotasService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<FlotaI[]>> {
+    let currentFilter;
+    getInboxParams.filter.tipo = 6;
+
+    if (!page) {
+      currentFilter = { ...getInboxParams };
+    } else {
+      currentFilter = {
+        ...getInboxParams,
+        page,
+        pageSize,
+      };
+    }
     return this.http
-      .get<PaginationResponse<FlotaI[]>>(
-        "https://development-kmp.ws.solera.pe" +
-          "/Administracion/ObtenerGenerales/5"
+      .post<PaginationResponse<FlotaI[]>>(
+        environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
+        { page, pageSize, ...currentFilter }
       )
       .pipe(
         tap((response) => {
@@ -70,24 +84,5 @@ export class FlotasService {
           this.flotas.next(response.body.data);
         })
       );
-  }
-
-  getFlotasFake(
-    { page, pageSize }: ParamsPagination | any = {
-      page: 0,
-      pageSize: 10,
-    }
-  ): PaginationResponse<FlotaResponseI[]> {
-    this._pagination.next({
-      ...this._pagination.getValue(),
-      page,
-      size: pageSize,
-      length: FlotaResponse.body.length,
-      lastPage: Math.ceil(
-        FlotaResponse.body.length / this._pagination.getValue().size
-      ),
-    });
-    this.flotas.next(FlotaResponse.body);
-    return FlotaResponse;
   }
 }

@@ -101,7 +101,7 @@
                   >
                     <!-- Usuario -->
                     <div class="truncate">
-                      {{ bahia.nombre }}
+                      {{ bahia?.nombre }}
                     </div>
 
                     <div class="hidden lg:block truncate">
@@ -118,24 +118,13 @@
                         class="min-w-7 w-7 min-h-7 h-7 mr-1"
                         mat-icon-button
                         matTooltip="Editar"
-                        (click)="toggleDetails(usuario)"
+                        (click)="edit(bahia)"
                       >
                         <mat-icon
                           class="icon-size-5 text-primary-500"
                           [svgIcon]="'heroicons_outline:pencil'"
                         ></mat-icon>
                       </a>
-                      <button
-                        class="min-w-7 w-7 min-h-7 h-7 mr-1"
-                        mat-icon-button
-                        matTooltip="Eliminar"
-                        (click)="deleteBahia(usuario)"
-                      >
-                        <mat-icon
-                          class="icon-size-5 text-primary-500"
-                          [svgIcon]="'heroicons_outline:trash'"
-                        ></mat-icon>
-                      </button>
                     </div>
                   </div>
                 </ng-container>

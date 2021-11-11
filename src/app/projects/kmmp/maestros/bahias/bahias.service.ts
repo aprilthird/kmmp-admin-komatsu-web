@@ -5,9 +5,11 @@ import {
   ParamsPagination,
 } from "app/core/types/http.types";
 import { Pagination } from "app/core/types/list.types";
+import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
-import { BahiaI, BahiaResponse, BahiaResponseI } from "./bahia-model";
+import { getInboxParams } from "../maestro-model";
+import { BahiaI } from "./bahia-model";
 
 @Injectable({
   providedIn: "root",
@@ -38,9 +40,9 @@ export class BahiasService {
   }
 
   postBahia(equipo): Observable<any> {
-    const endpoint = "/Administracion/CrudBahias/" + 0;
+    const endpoint = "/Administracion/CrudBahias";
     return this.http.post<PaginationResponse<BahiaI[]>>(
-      "https://development-kmp.ws.solera.pe" + endpoint,
+      environment.apiUrl + endpoint,
       equipo
     );
   }
@@ -51,10 +53,22 @@ export class BahiasService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<BahiaI[]>> {
+    let currentFilter;
+    getInboxParams.filter.tipo = 4;
+
+    if (!page) {
+      currentFilter = { ...getInboxParams };
+    } else {
+      currentFilter = {
+        ...getInboxParams,
+        page,
+        pageSize,
+      };
+    }
     return this.http
-      .get<PaginationResponse<BahiaI[]>>(
-        "https://development-kmp.ws.solera.pe" +
-          "/Administracion/ObtenerGenerales/4"
+      .post<PaginationResponse<BahiaI[]>>(
+        environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
+        { page, pageSize, ...currentFilter }
       )
       .pipe(
         tap((response) => {
@@ -70,24 +84,5 @@ export class BahiasService {
           this.bahias.next(response.body.data);
         })
       );
-  }
-
-  getBahiasFake(
-    { page, pageSize }: ParamsPagination | any = {
-      page: 0,
-      pageSize: 10,
-    }
-  ): PaginationResponse<BahiaResponseI[]> {
-    this._pagination.next({
-      ...this._pagination.getValue(),
-      page,
-      size: pageSize,
-      length: BahiaResponse.body.length,
-      lastPage: Math.ceil(
-        BahiaResponse.body.length / this._pagination.getValue().size
-      ),
-    });
-    this.bahias.next(BahiaResponse.body);
-    return BahiaResponse;
   }
 }

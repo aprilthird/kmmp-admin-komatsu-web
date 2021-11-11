@@ -7,12 +7,9 @@ import {
 import { Pagination } from "app/core/types/list.types";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
-import {
-  ClientResponse,
-  ClientResponseI,
-  ClientI,
-} from "./clientes/client-model";
+import { ClientI } from "./clientes/client-model";
 import { environment } from "environments/environment";
+import { getInboxParams } from "./maestro-model";
 
 @Injectable({
   providedIn: "root",
@@ -45,23 +42,32 @@ export class MaestrosService {
   }
 
   postClient(client): Observable<any> {
-    const endpoint = "/Administracion/CrudClientes/" + 0;
+    const endpoint = `/Administracion/CrudClientes`;
     return this.http.post<PaginationResponse<ClientI[]>>(
-      "https://development-kmp.ws.solera.pe" + endpoint,
+      environment.apiUrl + endpoint,
       client
     );
   }
 
   getClients(
-    { page, pageSize }: ParamsPagination | any = {
+    { page, pageSize, ...filter }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<ClientI[]>> {
+    let currentFilter;
+    getInboxParams.filter.tipo = 1;
+
+    if (!page) {
+      currentFilter = { ...getInboxParams };
+    } else {
+      currentFilter = { ...getInboxParams, page, pageSize };
+    }
+
     return this.http
-      .get<PaginationResponse<ClientI[]>>(
-        "https://development-kmp.ws.solera.pe" +
-          "/Administracion/ObtenerGenerales/1"
+      .post<PaginationResponse<any[]>>(
+        environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
+        { page, pageSize, ...currentFilter }
       )
       .pipe(
         tap((response) => {
@@ -78,25 +84,4 @@ export class MaestrosService {
         })
       );
   }
-
-  getClientsFake(
-    { page, pageSize }: ParamsPagination | any = {
-      page: 0,
-      pageSize: 10,
-    }
-  ): PaginationResponse<ClientResponseI[]> {
-    this._pagination.next({
-      ...this._pagination.getValue(),
-      page,
-      size: pageSize,
-      length: ClientResponse.body.length,
-      lastPage: Math.ceil(
-        ClientResponse.body.length / this._pagination.getValue().size
-      ),
-    });
-    this.clients.next(ClientResponse.body);
-    return ClientResponse;
-  }
-
-  /********************EQUIPOS********************/
 }

@@ -44,6 +44,9 @@ export class UsuariosService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<Usuario[]>> {
+    console.log(page);
+    console.log(pageSize);
+    console.log(filter);
     return this._httpClient
       .post<PaginationResponse<Usuario[]>>(
         environment.apiUrl + "/Seguridad/BandejaUsuariosPaginado",

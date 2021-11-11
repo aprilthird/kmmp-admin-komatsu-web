@@ -49,8 +49,11 @@ export class ClaseActividadComponent implements OnInit {
 
   loadData() {
     this.isLoading = true;
-    this.claseActividadService.getClaseActidadFake();
-    this.isLoading = false;
+    this.claseActividadService
+      .getClaseActividad(this._routeActived.snapshot.queryParams)
+      .subscribe(() => {
+        this.isLoading = false;
+      });
   }
 
   ngOnDestroy(): void {
@@ -98,9 +101,22 @@ export class ClaseActividadComponent implements OnInit {
   }
 
   createTipoMantenimeinto(): void {
-    this.matDialog.open(DialogAddTipoMtmtoComponent, {
-      width: "400px",
-      maxHeight: "100vh",
-    });
+    this.matDialog
+      .open(DialogAddTipoMtmtoComponent, {
+        width: "400px",
+        maxHeight: "100vh",
+      })
+      .afterClosed()
+      .subscribe(() => this.loadData());
+  }
+
+  edit(equipo): void {
+    this.matDialog
+      .open(DialogAddClaseActividadComponent, {
+        width: "400px",
+        data: equipo,
+      })
+      .afterClosed()
+      .subscribe(() => this.loadData());
   }
 }

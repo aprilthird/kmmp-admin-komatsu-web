@@ -102,11 +102,11 @@
                   >
                     <!-- Usuario -->
                     <div class="truncate">
-                      {{ modelo.nombre }}
+                      {{ modelo?.nombre }}
                     </div>
 
                     <div class="hidden lg:block truncate">
-                      {{ modelo?.cliente }}
+                      {{ modelo?.estado }}
                     </div>
 
                     <!-- Acciones -->
@@ -115,24 +115,13 @@
                         class="min-w-7 w-7 min-h-7 h-7 mr-1"
                         mat-icon-button
                         matTooltip="Editar"
-                        (click)="toggleDetails(usuario)"
+                        (click)="edit(modelo)"
                       >
                         <mat-icon
                           class="icon-size-5 text-primary-500"
                           [svgIcon]="'heroicons_outline:pencil'"
                         ></mat-icon>
                       </a>
-                      <button
-                        class="min-w-7 w-7 min-h-7 h-7 mr-1"
-                        mat-icon-button
-                        matTooltip="Eliminar"
-                        (click)="deleteModelo(usuario)"
-                      >
-                        <mat-icon
-                          class="icon-size-5 text-primary-500"
-                          [svgIcon]="'heroicons_outline:trash'"
-                        ></mat-icon>
-                      </button>
                     </div>
                   </div>
                 </ng-container>

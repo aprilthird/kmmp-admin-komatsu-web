@@ -5,19 +5,19 @@ import { PermissionService } from "app/core/permission/permission.service";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { BahiaI } from "./bahia-model";
-import { BahiasService } from "./bahias.service";
-import { DialogAddBahiasComponent } from "./dialog-add-bahias/dialog-add-bahias.component";
+import { DialogAddTipoEquipoComponent } from "./dialog-add-tipo-equipo/dialog-add-tipo-equipo.component";
+import { TipoEquipoI } from "./model-tipo-equipo";
+import { TipoEquiposService } from "./tipo-equipos.service";
 
 @Component({
-  selector: "app-bahias",
-  templateUrl: "./bahias.component.html",
-  styleUrls: ["./bahias.component.scss"],
+  selector: "app-tipo-equipos",
+  templateUrl: "./tipo-equipos.component.html",
+  styleUrls: ["./tipo-equipos.component.scss"],
 })
-export class BahiasComponent implements OnInit {
+export class TipoEquiposComponent implements OnInit {
   isLoading = true;
 
-  bahias$: Observable<BahiaI[]>;
+  tipo_equipos$: Observable<TipoEquipoI[]>;
 
   pagination$: Observable<Pagination>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -27,31 +27,30 @@ export class BahiasComponent implements OnInit {
     private _routeActived: ActivatedRoute,
     private _router: Router,
     private matDialog: MatDialog,
-    private bahiasService: BahiasService
+    private tipoEquipoService: TipoEquiposService
   ) {
-    this.getBabias();
+    this.getTipoEquipo();
   }
 
   ngOnInit(): void {
     this.loadData();
   }
 
-  getBabias(): void {
-    this.bahias$ = this.bahiasService.bahias$.pipe(
+  getTipoEquipo(): void {
+    this.tipo_equipos$ = this.tipoEquipoService.tipo_equipos$.pipe(
       takeUntil(this._unsubscribeAll)
     );
 
-    this.pagination$ = this.bahiasService.pagination$;
+    this.pagination$ = this.tipoEquipoService.pagination$;
   }
 
   loadData() {
     this.isLoading = true;
-    this.bahiasService
-      .getBahias(this._routeActived.snapshot.queryParams)
+    this.tipoEquipoService
+      .getTipoEquipos(this._routeActived.snapshot.queryParams)
       .subscribe(() => {
         this.isLoading = false;
       });
-    this.isLoading = false;
   }
 
   ngOnDestroy(): void {
@@ -67,7 +66,7 @@ export class BahiasComponent implements OnInit {
     this._router.onSameUrlNavigation = "reload";
 
     const params = this._routeActived.snapshot.params;
-    this._router.navigate(["/admin/maestros/bahias"], {
+    this._router.navigate(["/admin/maestros/modelos"], {
       queryParams: {
         ...params,
         pageSize: pagination.pageSize,
@@ -76,18 +75,23 @@ export class BahiasComponent implements OnInit {
     });
   }
 
-  createBahia(): void {
+  deleteModelo(): void {}
+
+  createModelo(): void {
     this.matDialog
-      .open(DialogAddBahiasComponent, { width: "400px", maxHeight: "100vh" })
+      .open(DialogAddTipoEquipoComponent, {
+        width: "400px",
+        maxHeight: "100vh",
+      })
       .afterClosed()
       .subscribe(() => this.loadData());
   }
 
-  edit(equipo): void {
+  edit(modelo): void {
     this.matDialog
-      .open(DialogAddBahiasComponent, {
+      .open(DialogAddTipoEquipoComponent, {
         width: "400px",
-        data: equipo,
+        data: modelo,
       })
       .afterClosed()
       .subscribe(() => this.loadData());

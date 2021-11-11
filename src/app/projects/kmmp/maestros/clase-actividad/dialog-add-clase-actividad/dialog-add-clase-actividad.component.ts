@@ -1,11 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { ClaseActividadI } from "../clase-actividad-model";
 import { ClaseActividadService } from "../clase-actividad.service";
 
 @Component({
@@ -17,24 +18,45 @@ export class DialogAddClaseActividadComponent implements OnInit {
   form: FormGroup;
   matErrorMsg = "Dato obligatorio";
 
+  initData: ClaseActividadI;
+  isEdit: boolean;
+  claseActividadId: number;
+  isLoading: boolean;
+
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private claseActividadService: ClaseActividadService,
     private fb: FormBuilder,
     public matdialigRef: MatDialogRef<DialogAddClaseActividadComponent>
   ) {
+    if (this.data) {
+      this.isEdit = true;
+      this.initData = this.data;
+      this.claseActividadId = this.data.id;
+    }
     this.form = this.fb.group({
-      nombre: new FormControl("", Validators.required),
-      estado: new FormControl(""),
+      nombre: new FormControl(this.initData?.nombre, Validators.required),
+      estado: new FormControl(this.initData?.estado),
     });
   }
 
   ngOnInit(): void {}
 
-  submit(): void {
+  submit(isEdit): void {
+    this.isLoading = true;
+
+    if (isEdit) {
+      this.form.addControl("id", new FormControl(this.claseActividadId));
+    }
+    const state = this.form.controls["estado"].value ? 1 : 0;
+    this.form.controls["estado"].setValue(state);
     this.claseActividadService
       .postClaseActivida(this.form.value)
-      .subscribe((resp) => {
-        console.log(resp);
+      .subscribe(() => {
+        setTimeout(() => {
+          this.isLoading = false;
+          this.matdialigRef.close();
+        }, 1000);
       });
   }
 }

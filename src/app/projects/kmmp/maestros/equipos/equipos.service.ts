@@ -5,10 +5,11 @@ import {
   ParamsPagination,
 } from "app/core/types/http.types";
 import { Pagination } from "app/core/types/list.types";
-import { environment } from "environments/environment.kmmp";
+import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
-import { tap } from "rxjs/operators";
-import { EquipoI, EquipoResponse, EquipoResponseI } from "./equipo-model";
+import { filter, tap } from "rxjs/operators";
+import { getInboxParams } from "../maestro-model";
+import { EquipoI } from "./equipo-model";
 
 @Injectable({
   providedIn: "root",
@@ -38,10 +39,10 @@ export class EquiposService {
     return this._pagination.asObservable();
   }
 
-  postClient(equipo): Observable<any> {
-    const endpoint = "/Administracion/CrudEquipos/" + 0;
+  postEquipo(equipo): Observable<any> {
+    const endpoint = "/Administracion/CrudEquipos";
     return this.http.post<PaginationResponse<EquipoI[]>>(
-      "https://development-kmp.ws.solera.pe" + endpoint,
+      environment.apiUrl + endpoint,
       equipo
     );
   }
@@ -52,10 +53,22 @@ export class EquiposService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<EquipoI[]>> {
+    let currentFilter;
+    getInboxParams.filter.tipo = 2;
+
+    if (!page) {
+      currentFilter = { ...getInboxParams };
+    } else {
+      currentFilter = {
+        ...getInboxParams,
+        page,
+        pageSize,
+      };
+    }
     return this.http
-      .get<PaginationResponse<EquipoI[]>>(
-        "https://development-kmp.ws.solera.pe" +
-          "/Administracion/ObtenerGenerales/2"
+      .post<PaginationResponse<EquipoI[]>>(
+        environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
+        { page, pageSize, ...currentFilter }
       )
       .pipe(
         tap((response) => {
@@ -71,24 +84,5 @@ export class EquiposService {
           this.equipos.next(response.body.data);
         })
       );
-  }
-
-  getEquiposFake(
-    { page, pageSize }: ParamsPagination | any = {
-      page: 0,
-      pageSize: 10,
-    }
-  ): PaginationResponse<EquipoResponseI[]> {
-    this._pagination.next({
-      ...this._pagination.getValue(),
-      page,
-      size: pageSize,
-      length: EquipoResponse.body.length,
-      lastPage: Math.ceil(
-        EquipoResponse.body.length / this._pagination.getValue().size
-      ),
-    });
-    this.equipos.next(EquipoResponse.body);
-    return EquipoResponse;
   }
 }

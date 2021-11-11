@@ -46,8 +46,11 @@ export class ModelosComponent implements OnInit {
 
   loadData() {
     this.isLoading = true;
-    this.modelosService.getModelosFake();
-    this.isLoading = false;
+    this.modelosService
+      .getModelos(this._routeActived.snapshot.queryParams)
+      .subscribe(() => {
+        this.isLoading = false;
+      });
   }
 
   ngOnDestroy(): void {
@@ -75,9 +78,22 @@ export class ModelosComponent implements OnInit {
   deleteModelo(): void {}
 
   createModelo(): void {
-    this.matDialog.open(DialogAddModelosComponent, {
-      width: "400px",
-      maxHeight: "100vh",
-    });
+    this.matDialog
+      .open(DialogAddModelosComponent, {
+        width: "400px",
+        maxHeight: "100vh",
+      })
+      .afterClosed()
+      .subscribe(() => this.loadData());
+  }
+
+  edit(modelo): void {
+    this.matDialog
+      .open(DialogAddModelosComponent, {
+        width: "400px",
+        data: modelo,
+      })
+      .afterClosed()
+      .subscribe(() => this.loadData());
   }
 }

@@ -137,24 +137,13 @@
                         class="min-w-7 w-7 min-h-7 h-7 mr-1"
                         mat-icon-button
                         matTooltip="Editar"
-                        (click)="toggleDetails(usuario)"
+                        (click)="edit(clase_actividad)"
                       >
                         <mat-icon
                           class="icon-size-5 text-primary-500"
                           [svgIcon]="'heroicons_outline:pencil'"
                         ></mat-icon>
                       </a>
-                      <button
-                        class="min-w-7 w-7 min-h-7 h-7 mr-1"
-                        mat-icon-button
-                        matTooltip="Eliminar"
-                        (click)="deleteClaseActividad(usuario)"
-                      >
-                        <mat-icon
-                          class="icon-size-5 text-primary-500"
-                          [svgIcon]="'heroicons_outline:trash'"
-                        ></mat-icon>
-                      </button>
                     </div>
 
                     <ng-container

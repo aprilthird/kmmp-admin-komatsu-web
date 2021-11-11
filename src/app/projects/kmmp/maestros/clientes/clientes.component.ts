@@ -50,8 +50,11 @@ export class ClientesComponent implements OnInit {
 
   loadData() {
     this.isLoading = true;
-    this.maestroServices.getClientsFake();
-    this.isLoading = false;
+    this.maestroServices
+      .getClients(this._routeActived.snapshot.queryParams)
+      .subscribe(() => {
+        this.isLoading = false;
+      });
   }
 
   ngOnDestroy(): void {
@@ -60,7 +63,16 @@ export class ClientesComponent implements OnInit {
     this._unsubscribeAll.complete();
   }
 
-  toggleDetails(e): void {}
+  edit(cliente): void {
+    console.log(cliente);
+    this.matDialog
+      .open(DialogAddClientComponent, {
+        width: "400px",
+        data: cliente,
+      })
+      .afterClosed()
+      .subscribe(() => this.loadData());
+  }
 
   deleteCliente(): void {}
 
@@ -81,6 +93,9 @@ export class ClientesComponent implements OnInit {
   }
 
   createClient(): void {
-    this.matDialog.open(DialogAddClientComponent, { width: "400px" });
+    this.matDialog
+      .open(DialogAddClientComponent, { width: "400px" })
+      .afterClosed()
+      .subscribe(() => this.loadData());
   }
 }

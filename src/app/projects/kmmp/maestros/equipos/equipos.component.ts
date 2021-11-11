@@ -46,8 +46,11 @@ export class EquiposComponent implements OnInit {
 
   loadData() {
     this.isLoading = true;
-    this.equipoServices.getEquiposFake();
-    this.isLoading = false;
+    this.equipoServices
+      .getEquipos(this._routeActived.snapshot.queryParams)
+      .subscribe(() => {
+        this.isLoading = false;
+      });
   }
 
   ngOnDestroy(): void {
@@ -75,9 +78,19 @@ export class EquiposComponent implements OnInit {
   deleteEquipo(): void {}
 
   createEquipo(): void {
-    this.matDialog.open(DialogAddEquiposComponent, {
-      width: "400px",
-      maxHeight: "100vh",
-    });
+    this.matDialog
+      .open(DialogAddEquiposComponent, { width: "400px" })
+      .afterClosed()
+      .subscribe(() => this.loadData());
+  }
+
+  edit(equipo): void {
+    this.matDialog
+      .open(DialogAddEquiposComponent, {
+        width: "400px",
+        data: equipo,
+      })
+      .afterClosed()
+      .subscribe(() => this.loadData());
   }
 }

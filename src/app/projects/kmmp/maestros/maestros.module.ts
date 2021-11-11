@@ -30,21 +30,25 @@ import { FuseConfirmationModule } from "@fuse/services/confirmation";
 import { FuseAlertModule } from "@fuse/components/alert";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { DialogAddClientComponent } from "./clientes/dialog-add-client/dialog-add-client.component";
-import { EquiposComponent } from './equipos/equipos.component';
-import { DialogAddEquiposComponent } from './equipos/dialog-add-equipos/dialog-add-equipos.component';
-import { BahiasComponent } from './bahias/bahias.component';
-import { DialogAddBahiasComponent } from './bahias/dialog-add-bahias/dialog-add-bahias.component';
-import { ModelosComponent } from './modelos/modelos.component';
-import { DialogAddModelosComponent } from './modelos/dialog-add-modelos/dialog-add-modelos.component';
-import { FlotasComponent } from './flotas/flotas.component';
-import { DialogAddFlotasComponent } from './flotas/dialog-add-flotas/dialog-add-flotas.component';
-import { ClaseActividadComponent } from './clase-actividad/clase-actividad.component';
-import { DialogAddClaseActividadComponent } from './clase-actividad/dialog-add-clase-actividad/dialog-add-clase-actividad.component';
-import { DialogAddTipoMtmtoComponent } from './clase-actividad/dialog-add-tipo-mtmto/dialog-add-tipo-mtmto.component';
-import { DispositivosComponent } from './dispositivos/dispositivos.component';
-import { DialogAddDispositivosComponent } from './dispositivos/dialog-add-dispositivos/dialog-add-dispositivos.component';
-import { DocumentosComponent } from './documentos/documentos.component';
-import { DialogAddDocumentosComponent } from './documentos/dialog-add-documentos/dialog-add-documentos.component';
+import { EquiposComponent } from "./equipos/equipos.component";
+import { DialogAddEquiposComponent } from "./equipos/dialog-add-equipos/dialog-add-equipos.component";
+import { BahiasComponent } from "./bahias/bahias.component";
+import { DialogAddBahiasComponent } from "./bahias/dialog-add-bahias/dialog-add-bahias.component";
+import { ModelosComponent } from "./modelos/modelos.component";
+import { DialogAddModelosComponent } from "./modelos/dialog-add-modelos/dialog-add-modelos.component";
+import { FlotasComponent } from "./flotas/flotas.component";
+import { DialogAddFlotasComponent } from "./flotas/dialog-add-flotas/dialog-add-flotas.component";
+import { ClaseActividadComponent } from "./clase-actividad/clase-actividad.component";
+import { DialogAddClaseActividadComponent } from "./clase-actividad/dialog-add-clase-actividad/dialog-add-clase-actividad.component";
+import { DialogAddTipoMtmtoComponent } from "./clase-actividad/dialog-add-tipo-mtmto/dialog-add-tipo-mtmto.component";
+import { DispositivosComponent } from "./dispositivos/dispositivos.component";
+import { DialogAddDispositivosComponent } from "./dispositivos/dialog-add-dispositivos/dialog-add-dispositivos.component";
+import { DocumentosComponent } from "./documentos/documentos.component";
+import { DialogAddDocumentosComponent } from "./documentos/dialog-add-documentos/dialog-add-documentos.component";
+import { InnerHeaderComponent } from "./inner-header/inner-header.component";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { TipoEquiposComponent } from './tipo-equipos/tipo-equipos.component';
+import { DialogAddTipoEquipoComponent } from './tipo-equipos/dialog-add-tipo-equipo/dialog-add-tipo-equipo.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +70,9 @@ import { DialogAddDocumentosComponent } from './documentos/dialog-add-documentos
     DialogAddDispositivosComponent,
     DocumentosComponent,
     DialogAddDocumentosComponent,
+    InnerHeaderComponent,
+    TipoEquiposComponent,
+    DialogAddTipoEquipoComponent,
   ],
   imports: [
     CommonModule,
@@ -88,6 +95,7 @@ import { DialogAddDocumentosComponent } from './documentos/dialog-add-documentos
     FuseConfirmationModule,
     FuseAlertModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
     SharedModule,
   ],
 })

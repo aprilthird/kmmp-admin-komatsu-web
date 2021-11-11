@@ -5,9 +5,11 @@ import {
   ParamsPagination,
 } from "app/core/types/http.types";
 import { Pagination } from "app/core/types/list.types";
+import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
-import { ModeloI, ModeloResponse, ModeloResponseI } from "./modelo-model";
+import { getInboxParams } from "../maestro-model";
+import { ModeloI } from "./modelo-model";
 
 @Injectable({
   providedIn: "root",
@@ -38,9 +40,9 @@ export class ModelosService {
   }
 
   postModelo(equipo): Observable<any> {
-    const endpoint = "/Administracion/CrudModelos/" + 0;
+    const endpoint = "/Administracion/CrudModelos";
     return this.http.post<PaginationResponse<ModeloI[]>>(
-      "https://development-kmp.ws.solera.pe" + endpoint,
+      environment.apiUrl + endpoint,
       equipo
     );
   }
@@ -51,10 +53,22 @@ export class ModelosService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<ModeloI[]>> {
+    let currentFilter;
+    getInboxParams.filter.tipo = 5;
+
+    if (!page) {
+      currentFilter = { ...getInboxParams };
+    } else {
+      currentFilter = {
+        ...getInboxParams,
+        page,
+        pageSize,
+      };
+    }
     return this.http
-      .get<PaginationResponse<ModeloI[]>>(
-        "https://development-kmp.ws.solera.pe" +
-          "/Administracion/ObtenerGenerales/5"
+      .post<PaginationResponse<ModeloI[]>>(
+        environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
+        { page, pageSize, ...currentFilter }
       )
       .pipe(
         tap((response) => {
@@ -70,24 +84,5 @@ export class ModelosService {
           this.modelos.next(response.body.data);
         })
       );
-  }
-
-  getModelosFake(
-    { page, pageSize }: ParamsPagination | any = {
-      page: 0,
-      pageSize: 10,
-    }
-  ): PaginationResponse<ModeloResponseI[]> {
-    this._pagination.next({
-      ...this._pagination.getValue(),
-      page,
-      size: pageSize,
-      length: ModeloResponse.body.length,
-      lastPage: Math.ceil(
-        ModeloResponse.body.length / this._pagination.getValue().size
-      ),
-    });
-    this.modelos.next(ModeloResponse.body);
-    return ModeloResponse;
   }
 }

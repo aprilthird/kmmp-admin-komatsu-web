@@ -9,6 +9,7 @@ import { EquiposComponent } from "./equipos/equipos.component";
 import { FlotasComponent } from "./flotas/flotas.component";
 import { MaestrosComponent } from "./maestros.component";
 import { ModelosComponent } from "./modelos/modelos.component";
+import { TipoEquiposComponent } from "./tipo-equipos/tipo-equipos.component";
 
 const routes: Routes = [
   {
@@ -52,6 +53,12 @@ const routes: Routes = [
       {
         path: "dispositivos",
         component: DispositivosComponent,
+        //canActivate: [MenuPermissionGuard],
+      },
+
+      {
+        path: "tipo_equipos",
+        component: TipoEquiposComponent,
         //canActivate: [MenuPermissionGuard],
       },
     ],

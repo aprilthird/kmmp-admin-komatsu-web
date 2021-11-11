@@ -33,7 +33,7 @@
               truncate
             "
           >
-            Equipos
+            Modelos
           </h2>
         </div>
         <div class="flex w-2/4 justify-end"></div>
@@ -51,8 +51,8 @@
           bg-white
         "
       >
-        <ng-container *ngIf="equipos$ | async as equipos">
-          <ng-container *ngIf="equipos.length > 0; else empty">
+        <ng-container *ngIf="tipo_equipos$ | async as tipo_equipos">
+          <ng-container *ngIf="tipo_equipos.length > 0; else empty">
             <div class="grid overflow-x-auto cont-scroll-y">
               <!-- Header -->
               <div
@@ -77,20 +77,16 @@
                 matSort
                 matSortDisableClear
               >
+                <div>ID</div>
                 <div>Nombre</div>
-                <div class="">TAG</div>
-                <div class="hidden lg:block">Modelo</div>
-                <div class="hidden lg:block">Flota</div>
-                <div class="hidden lg:block">Cliente</div>
-                <div class="hidden lg:block">Horómetro</div>
                 <div class="hidden lg:block">Estado</div>
                 <div>Acciones</div>
               </div>
 
               <!-- Rows -->
-              <ng-container *ngIf="equipos$ | async as equipos">
+              <ng-container *ngIf="tipo_equipos$ | async as tipo_equipos">
                 <ng-container
-                  *ngFor="let equipo of equipos; trackBy: trackByFn"
+                  *ngFor="let tipo_equipo of tipo_equipos; trackBy: trackByFn"
                 >
                   <div
                     class="
@@ -105,30 +101,16 @@
                       justify-between
                     "
                   >
+                    <div class="truncate">
+                      {{ tipo_equipo?.id }}
+                    </div>
                     <!-- Usuario -->
                     <div class="truncate">
-                      {{ equipo?.nombre }}
-                    </div>
-                    <!-- Nombres -->
-                    <div class="truncate">
-                      {{ equipo?.tag }}
-                    </div>
-                    <!-- Apellidos -->
-                    <div class="hidden lg:block truncate">
-                      {{ equipo?.modelo }}
-                    </div>
-                    <div class="hidden lg:block truncate">
-                      {{ equipo?.flota }}
-                    </div>
-                    <div class="hidden lg:block truncate">
-                      {{ equipo?.cliente }}
+                      {{ tipo_equipo?.nombre }}
                     </div>
 
                     <div class="hidden lg:block truncate">
-                      {{ equipo?.horometro }}
-                    </div>
-                    <div class="hidden lg:block truncate">
-                      {{ equipo?.estado }}
+                      {{ tipo_equipo?.estado }}
                     </div>
 
                     <!-- Acciones -->
@@ -137,7 +119,7 @@
                         class="min-w-7 w-7 min-h-7 h-7 mr-1"
                         mat-icon-button
                         matTooltip="Editar"
-                        (click)="edit(equipo)"
+                        (click)="edit(tipo_equipo)"
                       >
                         <mat-icon
                           class="icon-size-5 text-primary-500"
@@ -182,9 +164,9 @@
               "
             >
               <span class="font-medium text-secondary">
-                <a mat-button color="primary" (click)="createEquipo()">
+                <a mat-button color="primary" (click)="createModelo()">
                   <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-                  Nuevo Equipo
+                  Nuevo modelo
                 </a>
               </span>
             </div>

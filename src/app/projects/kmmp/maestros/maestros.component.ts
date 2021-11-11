@@ -39,6 +39,13 @@ export class MaestrosComponent implements OnInit {
     });
 
     this.menuData[0].children.push({
+      id: "maestros.equipos",
+      title: "Tipo de Equipos",
+      type: "basic",
+      link: "/admin/maestros/tipo_equipos",
+    });
+
+    this.menuData[0].children.push({
       id: "maestros.bahias",
       title: "bahias",
       type: "basic",

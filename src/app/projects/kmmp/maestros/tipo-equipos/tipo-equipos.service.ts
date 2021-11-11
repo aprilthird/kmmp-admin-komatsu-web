@@ -9,15 +9,13 @@ import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { getInboxParams } from "../maestro-model";
-import { ClaseActividadI } from "./clase-actividad-model";
+import { TipoEquipoI } from "./model-tipo-equipo";
 
 @Injectable({
   providedIn: "root",
 })
-export class ClaseActividadService {
-  clase_actividades: BehaviorSubject<ClaseActividadI[]> = new BehaviorSubject(
-    null
-  );
+export class TipoEquiposService {
+  tipo_equipos: BehaviorSubject<TipoEquipoI[]> = new BehaviorSubject(null);
   _pagination: BehaviorSubject<any> = new BehaviorSubject({
     length: 0,
     size: 10,
@@ -29,40 +27,32 @@ export class ClaseActividadService {
 
   constructor(private http: HttpClient) {}
 
-  get clase_actividades$(): Observable<ClaseActividadI[]> {
-    return this.clase_actividades.asObservable();
+  get tipo_equipos$(): Observable<TipoEquipoI[]> {
+    return this.tipo_equipos.asObservable();
   }
 
-  set clase_actividades$(clase_actividad: any) {
-    this.clase_actividades.next(clase_actividad);
+  set tipo_equipos$(client: any) {
+    this.tipo_equipos.next(client);
   }
 
   get pagination$(): Observable<Pagination> {
     return this._pagination.asObservable();
   }
 
-  postClaseActivida(equipo): Observable<any> {
-    const endpoint = "/Administracion/CrudClaseActividad";
-    return this.http.post<PaginationResponse<ClaseActividadI[]>>(
+  postTipoEquipo(equipo): Observable<any> {
+    const endpoint = "/Administracion/CrudTipoEquipos";
+    return this.http.post<PaginationResponse<TipoEquipoI[]>>(
       environment.apiUrl + endpoint,
       equipo
     );
   }
 
-  postTipoMantenimeinto(data): Observable<any> {
-    const endpoint = "/api/Administracion/CrudTipoMantenimiento";
-    return this.http.post<PaginationResponse<ClaseActividadI[]>>(
-      environment.apiUrl + endpoint,
-      data
-    );
-  }
-
-  getClaseActividad(
+  getTipoEquipos(
     { page, pageSize }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
-  ): Observable<PaginationResponse<ClaseActividadI[]>> {
+  ): Observable<PaginationResponse<TipoEquipoI[]>> {
     let currentFilter;
     getInboxParams.filter.tipo = 7;
 
@@ -76,13 +66,9 @@ export class ClaseActividadService {
       };
     }
     return this.http
-      .post<PaginationResponse<ClaseActividadI[]>>(
+      .post<PaginationResponse<TipoEquipoI[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
-        {
-          page,
-          pageSize,
-          ...currentFilter,
-        }
+        { page, pageSize, ...currentFilter }
       )
       .pipe(
         tap((response) => {
@@ -95,7 +81,7 @@ export class ClaseActividadService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
-          this.clase_actividades.next(response.body.data);
+          this.tipo_equipos.next(response.body.data);
         })
       );
   }

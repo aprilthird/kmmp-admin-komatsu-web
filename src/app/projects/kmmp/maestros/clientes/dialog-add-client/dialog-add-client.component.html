@@ -16,6 +16,7 @@
           type="text"
           formControlName="nombre"
           placeholder="Ingrese nombre"
+          autocomplete="off"
         />
         <mat-error *ngIf="form.controls['nombre'].invalid">{{
           matErrorMsg
@@ -29,6 +30,7 @@
           type="text"
           formControlName="ruc"
           placeholder="Ingrese RUC"
+          autocomplete="off"
         />
         <mat-error *ngIf="form.controls['ruc'].invalid">{{
           matErrorMsg
@@ -40,10 +42,11 @@
         <input
           matInput
           type="text"
-          formControlName="razon_social"
+          formControlName="razon"
           placeholder="Ingrese razón social"
+          autocomplete="off"
         />
-        <mat-error *ngIf="form.controls['razon_social'].invalid">{{
+        <mat-error *ngIf="form.controls['razon'].invalid">{{
           matErrorMsg
         }}</mat-error>
       </mat-form-field>
@@ -55,13 +58,18 @@
           type="text"
           formControlName="ubicacion"
           placeholder="Ingrese Ubicación/Dirección"
+          autocomplete="off"
         />
         <mat-error *ngIf="form.controls['ubicacion'].invalid">{{
           matErrorMsg
         }}</mat-error>
       </mat-form-field>
 
-      <mat-slide-toggle color="primary" formControlName="estado">
+      <mat-slide-toggle
+        color="primary"
+        value="form.controls['estado'].value === 1 ? true : false"
+        formControlName="estado"
+      >
         Estado
       </mat-slide-toggle>
     </div>
@@ -81,13 +89,35 @@
       Cancelar
     </button>
     <button
+      *ngIf="!isEdit"
       mat-raised-button
       [color]="'primary'"
       class="w-32"
       (click)="submit()"
       [disabled]="form.invalid"
     >
+      <mat-progress-spinner
+        *ngIf="isLoading"
+        [diameter]="24"
+        [mode]="'indeterminate'"
+      ></mat-progress-spinner>
       <span>Crear</span>
+    </button>
+
+    <button
+      *ngIf="isEdit"
+      mat-raised-button
+      [color]="'primary'"
+      class="w-32"
+      (click)="submit('edit')"
+      [disabled]="form.invalid"
+    >
+      <mat-progress-spinner
+        *ngIf="isLoading"
+        [diameter]="24"
+        [mode]="'indeterminate'"
+      ></mat-progress-spinner>
+      <span>Editar</span>
     </button>
   </div>
 </form>

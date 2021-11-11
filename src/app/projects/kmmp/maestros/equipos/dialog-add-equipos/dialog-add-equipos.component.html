@@ -107,13 +107,35 @@
       Cancelar
     </button>
     <button
+      *ngIf="!isEdit"
       mat-raised-button
       [color]="'primary'"
       class="w-32"
       (click)="submit()"
       [disabled]="form.invalid"
     >
+      <mat-progress-spinner
+        *ngIf="isLoading"
+        [diameter]="24"
+        [mode]="'indeterminate'"
+      ></mat-progress-spinner>
       <span>Crear</span>
+    </button>
+
+    <button
+      *ngIf="isEdit"
+      mat-raised-button
+      [color]="'primary'"
+      class="w-32"
+      (click)="submit('edit')"
+      [disabled]="form.invalid"
+    >
+      <mat-progress-spinner
+        *ngIf="isLoading"
+        [diameter]="24"
+        [mode]="'indeterminate'"
+      ></mat-progress-spinner>
+      <span>Editar</span>
     </button>
   </div>
 </form>

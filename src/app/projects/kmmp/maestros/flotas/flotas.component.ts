@@ -46,8 +46,11 @@ export class FlotasComponent implements OnInit {
 
   loadData() {
     this.isLoading = true;
-    this.flotasService.getFlotasFake();
-    this.isLoading = false;
+    this.flotasService
+      .getFlotas(this._routeActived.snapshot.queryParams)
+      .subscribe(() => {
+        this.isLoading = false;
+      });
   }
 
   ngOnDestroy(): void {
@@ -75,9 +78,22 @@ export class FlotasComponent implements OnInit {
   deleteFlota(): void {}
 
   createFlota(): void {
-    this.matDialog.open(DialogAddFlotasComponent, {
-      width: "400px",
-      maxHeight: "100vh",
-    });
+    this.matDialog
+      .open(DialogAddFlotasComponent, {
+        width: "400px",
+        maxHeight: "100vh",
+      })
+      .afterClosed()
+      .subscribe(() => this.loadData());
+  }
+
+  edit(modelo): void {
+    this.matDialog
+      .open(DialogAddFlotasComponent, {
+        width: "400px",
+        data: modelo,
+      })
+      .afterClosed()
+      .subscribe(() => this.loadData());
   }
 }

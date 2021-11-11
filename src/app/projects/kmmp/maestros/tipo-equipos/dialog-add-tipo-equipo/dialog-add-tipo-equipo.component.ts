@@ -6,38 +6,40 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { FlotaI } from "../flota-model";
-import { FlotasService } from "../flotas.service";
+import { TipoEquipoI } from "../model-tipo-equipo";
+import { TipoEquiposService } from "../tipo-equipos.service";
 
 @Component({
-  selector: "app-dialog-add-flotas",
-  templateUrl: "./dialog-add-flotas.component.html",
-  styleUrls: ["./dialog-add-flotas.component.scss"],
+  selector: "app-dialog-add-tipo-equipo",
+  templateUrl: "./dialog-add-tipo-equipo.component.html",
+  styleUrls: ["./dialog-add-tipo-equipo.component.scss"],
 })
-export class DialogAddFlotasComponent implements OnInit {
+export class DialogAddTipoEquipoComponent implements OnInit {
   form: FormGroup;
   matErrorMsg = "Dato obligatorio";
-
-  initData: FlotaI;
+  initData: TipoEquipoI;
   isEdit: boolean;
-  flotaId: number;
+  tipoEquipoId: number;
   isLoading: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private flotaService: FlotasService,
+    private tipoEuipoService: TipoEquiposService,
     private fb: FormBuilder,
-    public matdialigRef: MatDialogRef<DialogAddFlotasComponent>
+    public matdialigRef: MatDialogRef<DialogAddTipoEquipoComponent>
   ) {
     if (this.data) {
       this.isEdit = true;
       this.initData = this.data;
-      this.flotaId = this.data.id;
+      this.tipoEquipoId = this.data.id;
+      this.form.addControl(
+        "",
+        new FormControl([this.initData?.id, { disabled: true }])
+      );
     }
     this.form = this.fb.group({
       nombre: new FormControl(this.initData?.nombre, Validators.required),
-      cliente: new FormControl(this.initData?.cliente, Validators.required),
-      estado: new FormControl(""),
+      estado: new FormControl(this.initData?.estado),
     });
   }
 
@@ -47,11 +49,11 @@ export class DialogAddFlotasComponent implements OnInit {
     this.isLoading = true;
 
     if (isEdit) {
-      this.form.addControl("id", new FormControl(this.flotaId));
+      this.form.addControl("id", new FormControl(this.tipoEquipoId));
     }
     const state = this.form.controls["estado"].value ? 1 : 0;
     this.form.controls["estado"].setValue(state);
-    this.flotaService.postFlota(this.form.value).subscribe(() => {
+    this.tipoEuipoService.postTipoEquipo(this.form.value).subscribe(() => {
       setTimeout(() => {
         this.isLoading = false;
         this.matdialigRef.close();

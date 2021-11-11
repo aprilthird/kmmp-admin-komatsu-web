@@ -1,11 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { ModeloI } from "../modelo-model";
 import { ModelosService } from "../modelos.service";
 
 @Component({
@@ -16,23 +17,43 @@ import { ModelosService } from "../modelos.service";
 export class DialogAddModelosComponent implements OnInit {
   form: FormGroup;
   matErrorMsg = "Dato obligatorio";
+  initData: ModeloI;
+  isEdit: boolean;
+  modeloId: number;
+  isLoading: boolean;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private modeloService: ModelosService,
     private fb: FormBuilder,
     public matdialigRef: MatDialogRef<DialogAddModelosComponent>
   ) {
+    if (this.data) {
+      this.isEdit = true;
+      this.initData = this.data;
+      this.modeloId = this.data.id;
+    }
     this.form = this.fb.group({
-      nombre: new FormControl("", Validators.required),
-      estado: new FormControl(""),
+      nombre: new FormControl(this.initData?.nombre, Validators.required),
+      estado: new FormControl(this.initData?.estado),
     });
   }
 
   ngOnInit(): void {}
 
-  submit(): void {
-    this.modeloService.postModelo(this.form.value).subscribe((resp) => {
-      console.log(resp);
+  submit(isEdit): void {
+    this.isLoading = true;
+
+    if (isEdit) {
+      this.form.addControl("id", new FormControl(this.modeloId));
+    }
+    const state = this.form.controls["estado"].value ? 1 : 0;
+    this.form.controls["estado"].setValue(state);
+    this.modeloService.postModelo(this.form.value).subscribe(() => {
+      setTimeout(() => {
+        this.isLoading = false;
+        this.matdialigRef.close();
+      }, 1000);
     });
   }
 }

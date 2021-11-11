@@ -4,8 +4,8 @@
     <!-- Header -->
     <div
       class="
-        flex flex-col
-        sm:flex-row
+        flex flex-row
+        sm:flex-col
         flex-0
         sm:items-center sm:justify-between
         p-6
@@ -15,7 +15,16 @@
         dark:bg-transparent
       "
     >
-      <div class="flex w-full items-center min-w-0">
+      <div
+        class="
+          flex flex-col
+          sm:flex-row
+          w-full
+          justify-between
+          items-center
+          min-w-0
+        "
+      >
         <!-- Loader -->
         <div class="absolute inset-x-0 top-0" *ngIf="isLoading">
           <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
@@ -36,7 +45,9 @@
             Clientes
           </h2>
         </div>
-        <div class="flex w-2/4 justify-end"></div>
+        <div class="flex w-2/4 justify-end">
+          <app-inner-header></app-inner-header>
+        </div>
       </div>
     </div>
 
@@ -113,13 +124,13 @@
                     </div>
                     <!-- Apellidos -->
                     <div class="hidden lg:block truncate">
-                      {{ cliente?.razon_social }}
+                      {{ cliente?.razon }}
                     </div>
                     <div class="hidden lg:block truncate">
                       {{ cliente?.ubicacion }}
                     </div>
                     <div class="hidden lg:block truncate">
-                      {{ cliente?.estado }}
+                      {{ cliente?.estado === 0 ? "Activo" : "Inactivo" }}
                     </div>
 
                     <!-- Acciones -->
@@ -128,24 +139,13 @@
                         class="min-w-7 w-7 min-h-7 h-7 mr-1"
                         mat-icon-button
                         matTooltip="Editar"
-                        (click)="toggleDetails(usuario)"
+                        (click)="edit(cliente)"
                       >
                         <mat-icon
                           class="icon-size-5 text-primary-500"
                           [svgIcon]="'heroicons_outline:pencil'"
                         ></mat-icon>
                       </a>
-                      <button
-                        class="min-w-7 w-7 min-h-7 h-7 mr-1"
-                        mat-icon-button
-                        matTooltip="Eliminar"
-                        (click)="deleteCliente(usuario)"
-                      >
-                        <mat-icon
-                          class="icon-size-5 text-primary-500"
-                          [svgIcon]="'heroicons_outline:trash'"
-                        ></mat-icon>
-                      </button>
                     </div>
                   </div>
                 </ng-container>

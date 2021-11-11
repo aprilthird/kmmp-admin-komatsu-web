@@ -101,7 +101,7 @@
                   >
                     <!-- Usuario -->
                     <div class="truncate">
-                      {{ flota.nombre }}
+                      {{ flota?.nombre }}
                     </div>
 
                     <div class="hidden lg:block truncate">
@@ -118,7 +118,7 @@
                         class="min-w-7 w-7 min-h-7 h-7 mr-1"
                         mat-icon-button
                         matTooltip="Editar"
-                        (click)="toggleDetails(usuario)"
+                        (click)="edit(flota)"
                       >
                         <mat-icon
                           class="icon-size-5 text-primary-500"

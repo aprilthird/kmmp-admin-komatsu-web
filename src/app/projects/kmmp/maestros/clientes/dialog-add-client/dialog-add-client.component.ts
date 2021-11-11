@@ -1,11 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
+
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 //MODELS
 import { ClientI } from "./../client-model";
@@ -21,25 +22,47 @@ import { MaestrosService } from "../../maestros.service";
 export class DialogAddClientComponent implements OnInit {
   form: FormGroup;
   matErrorMsg = "Dato obligatorio";
+  isEdit: boolean;
+  clientId: number;
+  initData: ClientI;
+  isLoading: boolean;
+
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public matdialigRef: MatDialogRef<DialogAddClientComponent>,
     private maestroService: MaestrosService
   ) {
+    if (this.data) {
+      this.isEdit = true;
+      this.initData = this.data;
+      this.clientId = this.data.id;
+      console.log(this.data);
+    }
     this.form = this.fb.group({
-      nombre: new FormControl("", Validators.required),
-      ruc: new FormControl("", Validators.required),
-      razon_social: new FormControl("", Validators.required),
-      ubicacion: new FormControl("", Validators.required),
-      estado: new FormControl(""),
+      nombre: new FormControl(this.initData?.nombre, Validators.required),
+      ruc: new FormControl(this.initData?.ruc, Validators.required),
+      razon: new FormControl(this.initData?.razon, Validators.required),
+      ubicacion: new FormControl(this.initData?.ubicacion, Validators.required),
+      estado: new FormControl(this.initData?.estado),
     });
   }
 
   ngOnInit(): void {}
 
-  submit(): void {
+  submit(isEdit): void {
+    this.isLoading = true;
+
+    if (isEdit) {
+      this.form.addControl("id", new FormControl(this.clientId));
+    }
+    const state = this.form.controls["estado"].value ? 1 : 0;
+    this.form.controls["estado"].setValue(state);
     this.maestroService.postClient(this.form.value).subscribe((resp) => {
-      console.log(resp);
+      setTimeout(() => {
+        this.isLoading = false;
+        this.matdialigRef.close();
+      }, 1000);
     });
   }
 }
