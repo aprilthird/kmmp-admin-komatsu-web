@@ -45,8 +45,29 @@
             Clientes
           </h2>
         </div>
-        <div class="flex w-2/4 justify-end">
-          <app-inner-header></app-inner-header>
+        <div class="flex w-2/4 justify-end master-filter gap-5">
+          <!-- <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript min-w-50">
+            <mat-icon
+              matPrefix
+              [svgIcon]="'heroicons_outline:search'"
+            ></mat-icon>
+            <input
+              matInput
+              [formControl]="searchInputControl"
+              [autocomplete]="'off'"
+              [placeholder]="'Search products'"
+            />
+          </mat-form-field>
+          <button mat-raised-button [color]="'secondary'">
+            <mat-icon
+              [svgIcon]="'heroicons_outline:document-download'"
+            ></mat-icon>
+            <span class="ml-2 mr-1">Exportar</span>
+          </button>-->
+          <app-inner-header
+            [type]="'clientes'"
+            (isLoading)="setLoading($event)"
+          ></app-inner-header>
         </div>
       </div>
     </div>

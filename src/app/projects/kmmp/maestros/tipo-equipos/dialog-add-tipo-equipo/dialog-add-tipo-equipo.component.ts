@@ -28,19 +28,19 @@ export class DialogAddTipoEquipoComponent implements OnInit {
     private fb: FormBuilder,
     public matdialigRef: MatDialogRef<DialogAddTipoEquipoComponent>
   ) {
+    this.form = this.fb.group({
+      nombre: new FormControl(this.initData?.nombre, Validators.required),
+      estado: new FormControl(this.initData?.estado),
+    });
     if (this.data) {
       this.isEdit = true;
       this.initData = this.data;
       this.tipoEquipoId = this.data.id;
       this.form.addControl(
-        "",
-        new FormControl([this.initData?.id, { disabled: true }])
+        "id",
+        this.fb.control({ value: this.initData?.id, disabled: true })
       );
     }
-    this.form = this.fb.group({
-      nombre: new FormControl(this.initData?.nombre, Validators.required),
-      estado: new FormControl(this.initData?.estado),
-    });
   }
 
   ngOnInit(): void {}

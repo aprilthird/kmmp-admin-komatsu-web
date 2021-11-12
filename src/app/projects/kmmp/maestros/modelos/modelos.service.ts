@@ -48,13 +48,14 @@ export class ModelosService {
   }
 
   getModelos(
-    { page, pageSize }: ParamsPagination | any = {
+    { page, pageSize, nombre }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<ModeloI[]>> {
     let currentFilter;
     getInboxParams.filter.tipo = 5;
+    getInboxParams.filter.nombre = nombre;
 
     if (!page) {
       currentFilter = { ...getInboxParams };

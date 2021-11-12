@@ -8,6 +8,8 @@ import { MaestrosRoutingModule } from "./maestros-routing.module";
 import { ClientesComponent } from "./clientes/clientes.component";
 import { MaestrosComponent } from "./maestros.component";
 
+//PIPES
+import { TextFilterPipe } from "./../../../shared/pipes/text-filter.pipe";
 //FUSE MODULES
 import { FuseNavigationModule } from "@fuse/components/navigation";
 
@@ -47,8 +49,8 @@ import { DocumentosComponent } from "./documentos/documentos.component";
 import { DialogAddDocumentosComponent } from "./documentos/dialog-add-documentos/dialog-add-documentos.component";
 import { InnerHeaderComponent } from "./inner-header/inner-header.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { TipoEquiposComponent } from './tipo-equipos/tipo-equipos.component';
-import { DialogAddTipoEquipoComponent } from './tipo-equipos/dialog-add-tipo-equipo/dialog-add-tipo-equipo.component';
+import { TipoEquiposComponent } from "./tipo-equipos/tipo-equipos.component";
+import { DialogAddTipoEquipoComponent } from "./tipo-equipos/dialog-add-tipo-equipo/dialog-add-tipo-equipo.component";
 
 @NgModule({
   declarations: [

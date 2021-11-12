@@ -53,6 +53,10 @@ export class EquiposComponent implements OnInit {
       });
   }
 
+  setLoading(loading): void {
+    this.isLoading = loading;
+  }
+
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();

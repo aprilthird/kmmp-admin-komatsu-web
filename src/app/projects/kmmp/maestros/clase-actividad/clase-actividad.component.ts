@@ -62,6 +62,10 @@ export class ClaseActividadComponent implements OnInit {
     this._unsubscribeAll.complete();
   }
 
+  setLoading(loading): void {
+    this.isLoading = loading;
+  }
+
   changePage(pagination: any): void {
     this._router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;

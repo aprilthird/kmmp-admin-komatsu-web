@@ -50,20 +50,20 @@ export class MaestrosService {
   }
 
   getClients(
-    { page, pageSize, ...filter }: ParamsPagination | any = {
+    { page, pageSize, nombre, ...filter }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<ClientI[]>> {
     let currentFilter;
     getInboxParams.filter.tipo = 1;
+    getInboxParams.filter.nombre = nombre;
 
     if (!page) {
       currentFilter = { ...getInboxParams };
     } else {
       currentFilter = { ...getInboxParams, page, pageSize };
     }
-
     return this.http
       .post<PaginationResponse<any[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",

@@ -48,13 +48,14 @@ export class BahiasService {
   }
 
   getBahias(
-    { page, pageSize }: ParamsPagination | any = {
+    { page, pageSize, nombre }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<BahiaI[]>> {
     let currentFilter;
     getInboxParams.filter.tipo = 4;
+    getInboxParams.filter.nombre = nombre;
 
     if (!page) {
       currentFilter = { ...getInboxParams };

@@ -48,13 +48,14 @@ export class EquiposService {
   }
 
   getEquipos(
-    { page, pageSize }: ParamsPagination | any = {
+    { page, pageSize, nombre, ...filter }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<EquipoI[]>> {
     let currentFilter;
     getInboxParams.filter.tipo = 2;
+    getInboxParams.filter.nombre = nombre;
 
     if (!page) {
       currentFilter = { ...getInboxParams };

@@ -52,7 +52,9 @@ export class ModelosComponent implements OnInit {
         this.isLoading = false;
       });
   }
-
+  setLoading(loading): void {
+    this.isLoading = loading;
+  }
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();

@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   project: "kmmp",
   title: "KMMP",
-  apiUrl: "https://development-kmp.ws.solera.pe/api",
+  apiUrl: "https://development-dcp.ws.solera.pe/api",
   azureAccountName: "appinformes",
   azureContaineName: "dcp",
   azureSas:

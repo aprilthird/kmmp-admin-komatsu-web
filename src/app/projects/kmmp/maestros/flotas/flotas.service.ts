@@ -48,13 +48,14 @@ export class FlotasService {
   }
 
   getFlotas(
-    { page, pageSize }: ParamsPagination | any = {
+    { page, pageSize, nombre }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<FlotaI[]>> {
     let currentFilter;
     getInboxParams.filter.tipo = 6;
+    getInboxParams.filter.nombre = nombre;
 
     if (!page) {
       currentFilter = { ...getInboxParams };

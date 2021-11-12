@@ -58,13 +58,14 @@ export class ClaseActividadService {
   }
 
   getClaseActividad(
-    { page, pageSize }: ParamsPagination | any = {
+    { page, pageSize, nombre }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<ClaseActividadI[]>> {
     let currentFilter;
     getInboxParams.filter.tipo = 7;
+    getInboxParams.filter.nombre = nombre;
 
     if (!page) {
       currentFilter = { ...getInboxParams };

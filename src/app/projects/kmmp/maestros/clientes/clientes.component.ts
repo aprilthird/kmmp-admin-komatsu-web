@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
-import { takeUntil } from "rxjs/operators";
+import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { MatDialog } from "@angular/material/dialog";
 
 import { ClientI } from "./client-model";
@@ -12,6 +12,8 @@ import { DialogAddClientComponent } from "./dialog-add-client/dialog-add-client.
 import { MaestrosService } from "../maestros.service";
 
 import { PermissionService } from "app/core/permission/permission.service";
+import { FormControl } from "@angular/forms";
+import { filter } from "lodash";
 
 @Component({
   selector: "app-clientes",
@@ -25,6 +27,7 @@ export class ClientesComponent implements OnInit {
   clientes$: Observable<ClientI[]>;
   pagination$: Observable<Pagination>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  searchInputControl: FormControl = new FormControl();
 
   constructor(
     private maestroServices: MaestrosService,
@@ -38,6 +41,7 @@ export class ClientesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+    //this.searchFilter();
   }
 
   getClients(): void {
@@ -55,6 +59,28 @@ export class ClientesComponent implements OnInit {
       .subscribe(() => {
         this.isLoading = false;
       });
+  }
+
+  setLoading(loading): void {
+    this.isLoading = loading;
+  }
+
+  /***Filtro en el request ***/
+  searchFilter(): void {
+    this.searchInputControl.valueChanges
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        debounceTime(300),
+        switchMap((query) => {
+          //this.closeDetails();
+          this.isLoading = true;
+          return this.maestroServices.getClients({ nombre: query });
+        }),
+        map(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {
