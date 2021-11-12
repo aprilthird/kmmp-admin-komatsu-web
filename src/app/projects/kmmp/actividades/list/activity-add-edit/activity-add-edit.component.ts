@@ -5,6 +5,8 @@ import {
   Activity,
   Asignaciones,
 } from "app/projects/kmmp/fake-db/activities/activity-fake-db";
+import { forkJoin } from "rxjs";
+import { map } from "rxjs/operators";
 
 //SERVICES
 import { ActivitiesService } from "../../activities.service";
@@ -19,14 +21,7 @@ export class ActivityAddEditComponent implements OnInit {
   pe_items = PE;
   isEdit: boolean;
   idActivity: any;
-  clientes = clientes;
-  equipos = equipos;
-  modelos = modelos;
   tipo_mantenimientos = tipo_mantenimientos;
-  bahias_asignadas = bahias_asignadas;
-  flotas = flotas;
-  tipo_equipos = tipo_equipos;
-  actividades = actividades;
   tipo_solicitudes = tipo_solicitudes;
 
   form: FormGroup = this.fb.group({
@@ -50,16 +45,54 @@ export class ActivityAddEditComponent implements OnInit {
     duracion_2: new FormControl(""),
     comentarios_tecnico: new FormControl(""),
   });
+  clientsOpt: any[];
+  equiposOpt: any[];
+  bahiasOpt: any[];
+  clase_actividadesOpt: any[];
+  modelosOpt: any[];
+  tipo_equiposOpt: any[];
+  flotasOpt: any[];
+  tipo_mttoOpt: any[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
-    private activitiesService: ActivitiesService
+    private serviceAct: ActivitiesService
   ) {}
 
   ngOnInit(): void {
     this.getData();
+    this.getInboxes();
+  }
+
+  getInboxes(): void {
+    let clients = this.serviceAct.getList(1).pipe(map((x: any) => x.body.data));
+    let equipos = this.serviceAct.getList(2).pipe(map((x: any) => x.body.data));
+    let t_e = this.serviceAct.getList(3).pipe(map((x: any) => x.body.data));
+    let bahias = this.serviceAct.getList(4).pipe(map((x: any) => x.body.data));
+    let modelos = this.serviceAct.getList(5).pipe(map((x: any) => x.body.data));
+    let flotas = this.serviceAct.getList(6).pipe(map((x: any) => x.body.data));
+    let c_act = this.serviceAct.getList(7).pipe(map((x: any) => x.body.data));
+
+    forkJoin([clients, equipos, c_act, bahias, modelos, flotas, t_e]).subscribe(
+      (result: any) => {
+        this.clientsOpt = result[0];
+        this.equiposOpt = result[1];
+        this.clase_actividadesOpt = result[2];
+        this.bahiasOpt = result[3];
+        this.modelosOpt = result[4];
+        this.flotasOpt = result[5];
+        this.tipo_equiposOpt = result[6];
+      }
+    );
+  }
+
+  getTipoMtto(idClaseActividad): void {
+    this.serviceAct.getTipoMtto(8, idClaseActividad).subscribe((resp: any) => {
+      console.log(resp);
+      this.tipo_mttoOpt = resp.body.data;
+    });
   }
 
   private getData(): void {
@@ -73,6 +106,7 @@ export class ActivityAddEditComponent implements OnInit {
         );
 
         Object.keys(this.form.value).forEach((x) => {
+          console.log(this.form.value);
           this.form.controls[x].setValue(currentActivity[x]);
         });
       }
@@ -110,7 +144,7 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   createActivity(): void {
-    this.activitiesService.addNewActivity({
+    this.serviceAct.addNewActivity({
       id: Asignaciones.length,
       estado: "Sin empezar",
       ...this.form.value,
@@ -134,39 +168,6 @@ const PE = [
   },
 ];
 
-const clientes = [
-  {
-    id: 1,
-    name: "Juan Pérez",
-  },
-  {
-    id: 2,
-    name: "Oscar Ramírez",
-  },
-];
-
-const equipos = [
-  {
-    id: 1,
-    name: "Pala hidráulica",
-  },
-  {
-    id: 2,
-    name: "Rastrillo",
-  },
-];
-
-const modelos = [
-  {
-    id: 1,
-    name: "FF541-0",
-  },
-  {
-    id: 2,
-    name: "FDD41-2",
-  },
-];
-
 const tipo_mantenimientos = [
   {
     id: 1,
@@ -175,50 +176,6 @@ const tipo_mantenimientos = [
   {
     id: 2,
     name: "PS02",
-  },
-];
-
-const bahias_asignadas = [
-  {
-    id: 1,
-    name: "PS01",
-  },
-  {
-    id: 2,
-    name: "PS02",
-  },
-];
-
-const flotas = [
-  {
-    id: 1,
-    name: "SH01",
-  },
-  {
-    id: 2,
-    name: "SH02",
-  },
-];
-
-const tipo_equipos = [
-  {
-    id: 1,
-    name: "Pala hidráulica",
-  },
-  {
-    id: 2,
-    name: "Rastrillo",
-  },
-];
-
-const actividades = [
-  {
-    id: 1,
-    name: "Preventivo",
-  },
-  {
-    id: 2,
-    name: "Correctivo",
   },
 ];
 

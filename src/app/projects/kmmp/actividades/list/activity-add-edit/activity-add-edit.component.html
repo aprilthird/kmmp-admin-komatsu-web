@@ -70,9 +70,9 @@
                 [value]="form.controls['cliente'].value"
               >
                 <mat-option
-                  *ngFor="let cliente of clientes"
-                  [value]="cliente.name"
-                  >{{ cliente.name }}</mat-option
+                  *ngFor="let cliente of clientsOpt"
+                  [value]="cliente.nombre"
+                  >{{ cliente.nombre }}</mat-option
                 >
               </mat-select>
             </mat-form-field>
@@ -84,9 +84,9 @@
                 [value]="form.controls['equipo'].value"
               >
                 <mat-option
-                  *ngFor="let equipo of equipos"
-                  [value]="equipo.name"
-                  >{{ equipo.name }}</mat-option
+                  *ngFor="let equipo of equiposOpt"
+                  [value]="equipo.nombre"
+                  >{{ equipo.nombre }}</mat-option
                 >
               </mat-select>
             </mat-form-field>
@@ -100,9 +100,9 @@
                 [value]="form.controls['modelo'].value"
               >
                 <mat-option
-                  *ngFor="let modelo of modelos"
-                  [value]="modelo.name"
-                  >{{ modelo.name }}</mat-option
+                  *ngFor="let modelo of modelosOpt"
+                  [value]="modelo.nombre"
+                  >{{ modelo.nombre }}</mat-option
                 >
               </mat-select>
             </mat-form-field>
@@ -113,9 +113,11 @@
                 formControlName="flota"
                 [value]="form.controls['flota'].value"
               >
-                <mat-option *ngFor="let flota of flotas" [value]="flota.name">{{
-                  flota.name
-                }}</mat-option>
+                <mat-option
+                  *ngFor="let flota of flotasOpt"
+                  [value]="flota.nombre"
+                  >{{ flota.nombre }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
 
@@ -126,9 +128,9 @@
                 [value]="form.controls['tipo_equipo'].value"
               >
                 <mat-option
-                  *ngFor="let tipo_equipo of tipo_equipos"
-                  [value]="tipo_equipo.name"
-                  >{{ tipo_equipo.name }}</mat-option
+                  *ngFor="let tipo_equipo of tipo_equiposOpt"
+                  [value]="tipo_equipo.nombre"
+                  >{{ tipo_equipo.nombre }}</mat-option
                 >
               </mat-select>
             </mat-form-field>
@@ -141,11 +143,12 @@
               <mat-select
                 formControlName="actividad"
                 [value]="form.controls['actividad'].value"
+                (selectionChange)="getTipoMtto($event.value)"
               >
                 <mat-option
-                  *ngFor="let actividad of actividades"
-                  [value]="actividad.name"
-                  >{{ actividad.name }}</mat-option
+                  *ngFor="let actividad of clase_actividadesOpt"
+                  [value]="actividad.id"
+                  >{{ actividad.nombre }}</mat-option
                 >
               </mat-select>
             </mat-form-field>
@@ -155,11 +158,12 @@
               <mat-select
                 formControlName="tipo_mantenimiento"
                 [value]="form.controls['tipo_mantenimiento'].value"
+                [disabled]="form.controls['actividad'].value === ''"
               >
                 <mat-option
-                  *ngFor="let tipo_mantenimiento of tipo_mantenimientos"
-                  [value]="tipo_mantenimiento.name"
-                  >{{ tipo_mantenimiento.name }}</mat-option
+                  *ngFor="let tipo_mantenimiento of tipo_mttoOpt"
+                  [value]="tipo_mantenimiento.nombre"
+                  >{{ tipo_mantenimiento.nombre }}</mat-option
                 >
               </mat-select>
             </mat-form-field>
@@ -171,9 +175,9 @@
                 [value]="form.controls['bahia_asignada'].value"
               >
                 <mat-option
-                  *ngFor="let bahia_asignada of bahias_asignadas"
-                  [value]="bahia_asignada.name"
-                  >{{ bahia_asignada.name }}</mat-option
+                  *ngFor="let bahia_asignada of bahiasOpt"
+                  [value]="bahia_asignada.nombre"
+                  >{{ bahia_asignada.nombre }}</mat-option
                 >
               </mat-select>
             </mat-form-field>
