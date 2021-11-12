@@ -9,7 +9,7 @@
     />
   </mat-form-field>
 
-  <button mat-raised-button [color]="'secondary'">
+  <button mat-raised-button [color]="'secondary'" (click)="exportToExcel()">
     <mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
     <span class="ml-2 mr-1">Exportar</span>
   </button>

@@ -23,6 +23,8 @@ export class ClaseActividadComponent implements OnInit {
 
   pagination$: Observable<Pagination>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  tipoMttos: any[] = [];
+  idClaseActv: any;
 
   constructor(
     public _permissonService: PermissionService,
@@ -31,14 +33,14 @@ export class ClaseActividadComponent implements OnInit {
     private matDialog: MatDialog,
     private claseActividadService: ClaseActividadService
   ) {
-    this.getBabias();
+    this.getClaseActividades();
   }
 
   ngOnInit(): void {
     this.loadData();
   }
 
-  getBabias(): void {
+  getClaseActividades(): void {
     this.clase_actividades$ =
       this.claseActividadService.clase_actividades$.pipe(
         takeUntil(this._unsubscribeAll)
@@ -92,7 +94,14 @@ export class ClaseActividadComponent implements OnInit {
   }
 
   toggleDetails(actividad): void {
-    console.log(actividad);
+    this.tipoMttos = [];
+    this.idClaseActv = actividad.id;
+    this.claseActividadService
+      .getTipoMantenimiento(actividad.id)
+      .subscribe((tipoMttos) => {
+        console.log(tipoMttos);
+        this.tipoMttos = tipoMttos.body.data;
+      });
     console.log(this.selectedActivity);
     if (
       this.selectedActivity &&
@@ -109,6 +118,7 @@ export class ClaseActividadComponent implements OnInit {
       .open(DialogAddTipoMtmtoComponent, {
         width: "400px",
         maxHeight: "100vh",
+        data: { idClase: this.idClaseActv },
       })
       .afterClosed()
       .subscribe(() => this.loadData());

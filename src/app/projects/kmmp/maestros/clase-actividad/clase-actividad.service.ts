@@ -9,6 +9,7 @@ import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { getInboxParams } from "../maestro-model";
+import { MaestrosService } from "../maestros.service";
 import { ClaseActividadI } from "./clase-actividad-model";
 
 @Injectable({
@@ -27,7 +28,10 @@ export class ClaseActividadService {
     endIndex: 0,
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private maestroService: MaestrosService
+  ) {}
 
   get clase_actividades$(): Observable<ClaseActividadI[]> {
     return this.clase_actividades.asObservable();
@@ -50,11 +54,26 @@ export class ClaseActividadService {
   }
 
   postTipoMantenimeinto(data): Observable<any> {
-    const endpoint = "/api/Administracion/CrudTipoMantenimiento";
+    const endpoint = "/Administracion/CrudTipoMantenimiento";
     return this.http.post<PaginationResponse<ClaseActividadI[]>>(
       environment.apiUrl + endpoint,
       data
     );
+  }
+
+  getTipoMantenimiento(idClaseActividad): Observable<any> {
+    const filter = {
+      filter: {
+        id: 0,
+        idUsuario: 0,
+        estado: 0,
+        tipo: 8,
+        idClaseActividad: idClaseActividad,
+      },
+    };
+    const endpoint =
+      environment.apiUrl + "/Administracion/BandejaMaestrosPaginado";
+    return this.http.post(endpoint, filter);
   }
 
   getClaseActividad(
@@ -97,6 +116,7 @@ export class ClaseActividadService {
             ),
           });
           this.clase_actividades.next(response.body.data);
+          this.maestroService.currentTableData.next(response.body.data);
         })
       );
   }

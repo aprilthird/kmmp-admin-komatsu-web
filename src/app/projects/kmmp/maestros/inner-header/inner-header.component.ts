@@ -1,14 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 import { BahiasService } from "../bahias/bahias.service";
 import { ClaseActividadService } from "../clase-actividad/clase-actividad.service";
 import { EquiposService } from "../equipos/equipos.service";
 import { FlotasService } from "../flotas/flotas.service";
-import { MaestrosService } from "../maestros.service";
+
 import { ModelosService } from "../modelos/modelos.service";
 import { TipoEquiposService } from "../tipo-equipos/tipo-equipos.service";
+
+//SERVICES
+import { ExportExcelService } from "app/shared/utils/export-excel.ts.service";
+import { MaestrosService } from "../maestros.service";
 
 @Component({
   selector: "app-inner-header",
@@ -23,6 +27,7 @@ export class InnerHeaderComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   selectedUser = null;
+  currentTableData: any[];
 
   constructor(
     private cliente: MaestrosService,
@@ -31,11 +36,13 @@ export class InnerHeaderComponent implements OnInit {
     private claseActividadService: ClaseActividadService,
     private flotasService: FlotasService,
     private modelosService: ModelosService,
-    private tipoEquiposService: TipoEquiposService
+    private tipoEquiposService: TipoEquiposService,
+    private exportExcelService: ExportExcelService
   ) {}
 
   ngOnInit(): void {
     this.searchFilter();
+    this.getCurrentTableData();
   }
   filterByQuery(e): void {}
 
@@ -56,6 +63,16 @@ export class InnerHeaderComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  private getCurrentTableData(): void {
+    this.cliente.currentTableData$.subscribe((data) => {
+      this.currentTableData = data;
+    });
+  }
+
+  exportToExcel(): void {
+    this.exportExcelService.exportAsExcelFile(this.currentTableData, "data");
   }
 
   setFilterData(param, query) {

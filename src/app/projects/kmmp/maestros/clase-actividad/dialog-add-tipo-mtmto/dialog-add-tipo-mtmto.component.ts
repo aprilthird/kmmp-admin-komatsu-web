@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ClaseActividadService } from "../clase-actividad.service";
 
 @Component({
@@ -17,7 +17,12 @@ export class DialogAddTipoMtmtoComponent implements OnInit {
   form: FormGroup;
   matErrorMsg = "Dato obligatorio";
 
+  isEdit: boolean;
+  claseActividadId: number;
+  isLoading: boolean;
+
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private claseActividadService: ClaseActividadService,
     private fb: FormBuilder,
     public matdialigRef: MatDialogRef<DialogAddTipoMtmtoComponent>
@@ -32,10 +37,27 @@ export class DialogAddTipoMtmtoComponent implements OnInit {
   ngOnInit(): void {}
 
   submit(): void {
+    this.isLoading = true;
+    const params = {
+      estado: this.form.controls["estado"].value ? 1 : 0,
+      codido: this.form.controls["codigo"].value,
+      descripcion: this.form.controls["descripcion"].value,
+      nombre: this.form.controls["codigo"].value,
+      idClaseActividad: this.data.idClase,
+      filter: {
+        idClaseActividad: this.data.idClase,
+        tipo: 8,
+        nombre: this.form.controls["codigo"].value,
+        estado: this.form.controls["estado"].value ? 1 : 0,
+        descripcion: this.form.controls["descripcion"].value,
+      },
+    };
     this.claseActividadService
-      .postTipoMantenimeinto(this.form.value)
+      .postTipoMantenimeinto(params)
       .subscribe((resp) => {
         console.log(resp);
+        this.isLoading = false;
+        this.matdialigRef.close();
       });
   }
 }

@@ -159,21 +159,18 @@
                         ></mat-icon>
                       </a>
                     </div>
-
+                  </div>
+                  <ng-container
+                    *ngIf="selectedActivity?.nombre === clase_actividad.nombre"
+                  >
                     <ng-container
-                      *ngIf="
-                        selectedActivity?.nombre === clase_actividad.nombre
+                      *ngTemplateOutlet="
+                        rowDetailsTemplate;
+                        context: { $implicit: clase_actividad }
                       "
                     >
-                      <ng-container
-                        *ngTemplateOutlet="
-                          rowDetailsTemplate;
-                          context: { $implicit: clase_actividad }
-                        "
-                      >
-                      </ng-container
-                    ></ng-container>
-                  </div>
+                    </ng-container
+                  ></ng-container>
                 </ng-container>
               </ng-container>
             </div>
@@ -221,10 +218,10 @@
         <ng-template #rowDetailsTemplate>
           <div
             class="
-              flex flex-row
+              flex flex-col
               min-w-max
               items-center
-              justify-end
+              justify-center
               px-4
               bottom-0
               z-49
@@ -232,7 +229,41 @@
               print:hidden
             "
           >
-            <span class="font-medium text-secondary">
+            <ng-container *ngIf="tipoMttos.length > 0">
+              <div
+                *ngFor="let tipoMtto of tipoMttos"
+                class="flex justify-between w-full px-5"
+              >
+                <div class="w-1/4 mb-5">
+                  <div class="mt-4 text-lg font-medium">Nombre</div>
+                  <div class="mt-0.5 line-clamp-2 text-secondary">
+                    {{ tipoMtto?.nombre }}
+                  </div>
+                </div>
+
+                <div class="w-1/4 mb-5">
+                  <div class="mt-4 text-lg font-medium">Descripción</div>
+                  <div class="mt-0.5 line-clamp-2 text-secondary">
+                    {{
+                      tipoMtto?.descripcion === null ||
+                      tipoMtto?.descripcion === ""
+                        ? "No hay descripción"
+                        : "tipoMtto?.descripcion"
+                    }}
+                  </div>
+                </div>
+
+                <div class="w-1/4 mb-5">
+                  <div class="mt-4 text-lg font-medium">estado</div>
+                  <div class="mt-0.5 line-clamp-2 text-secondary">
+                    {{ tipoMtto?.estado === 0 ? "Inactivo" : "Activo" }}
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <span
+              class="font-medium text-secondary flex justify-end w-full mt-5"
+            >
               <a mat-button color="primary" (click)="createTipoMantenimeinto()">
                 <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
                 Crear tipo de mantenimeinto

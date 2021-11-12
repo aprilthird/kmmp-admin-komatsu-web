@@ -6,6 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TextFilterPipe } from "./pipes/text-filter.pipe";
+import { ExportExcelService } from "./utils/export-excel.ts.service";
 
 @NgModule({
   imports: [
@@ -24,5 +25,6 @@ import { TextFilterPipe } from "./pipes/text-filter.pipe";
     TextFilterPipe,
   ],
   declarations: [UploadFileComponent, TextFilterPipe],
+  providers: [ExportExcelService],
 })
 export class SharedModule {}

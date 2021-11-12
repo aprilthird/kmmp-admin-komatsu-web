@@ -9,6 +9,7 @@ import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { filter, tap } from "rxjs/operators";
 import { getInboxParams } from "../maestro-model";
+import { MaestrosService } from "../maestros.service";
 import { EquipoI } from "./equipo-model";
 
 @Injectable({
@@ -25,7 +26,10 @@ export class EquiposService {
     endIndex: 0,
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private maestroService: MaestrosService
+  ) {}
 
   get equipos$(): Observable<EquipoI[]> {
     return this.equipos.asObservable();
@@ -83,6 +87,7 @@ export class EquiposService {
             ),
           });
           this.equipos.next(response.body.data);
+          this.maestroService.currentTableData.next(response.body.data);
         })
       );
   }

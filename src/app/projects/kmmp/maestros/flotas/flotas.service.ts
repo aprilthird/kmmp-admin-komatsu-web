@@ -9,6 +9,7 @@ import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { getInboxParams } from "../maestro-model";
+import { MaestrosService } from "../maestros.service";
 import { FlotaI } from "./flota-model";
 
 @Injectable({
@@ -25,7 +26,10 @@ export class FlotasService {
     endIndex: 0,
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private maestroService: MaestrosService
+  ) {}
 
   get flotas$(): Observable<FlotaI[]> {
     return this.flotas.asObservable();
@@ -83,6 +87,7 @@ export class FlotasService {
             ),
           });
           this.flotas.next(response.body.data);
+          this.maestroService.currentTableData.next(response.body.data);
         })
       );
   }

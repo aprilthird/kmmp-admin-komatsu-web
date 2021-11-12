@@ -24,6 +24,7 @@ export class MaestrosService {
     startIndex: 0,
     endIndex: 0,
   });
+  currentTableData: BehaviorSubject<any[]> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) {}
 
@@ -39,6 +40,14 @@ export class MaestrosService {
 
   get pagination$(): Observable<Pagination> {
     return this._pagination.asObservable();
+  }
+
+  get currentTableData$(): Observable<any[]> {
+    return this.currentTableData.asObservable();
+  }
+
+  set currentTableData$(data: any) {
+    this.currentTableData.next(data);
   }
 
   postClient(client): Observable<any> {
@@ -71,6 +80,7 @@ export class MaestrosService {
       )
       .pipe(
         tap((response) => {
+          console.log(response);
           this._pagination.next({
             ...this._pagination.getValue(),
             page,
@@ -81,6 +91,7 @@ export class MaestrosService {
             ),
           });
           this.clients.next(response.body.data);
+          this.currentTableData.next(response.body.data);
         })
       );
   }
