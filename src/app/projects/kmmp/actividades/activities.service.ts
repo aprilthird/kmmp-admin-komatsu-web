@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Response } from "app/shared/models/general-model";
 import { environment } from "environments/environment";
 import { filter } from "lodash";
 import { type } from "os";
@@ -7,6 +8,9 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 
 import { ActivitiesData } from "../fake-db/activities/activity-fake-db";
+import { Activity } from "./models/activities-model";
+
+import { Activity as ActivityI } from "./models/activities-model";
 
 //FILTER CONFIG
 
@@ -101,6 +105,13 @@ export class ActivitiesService {
           idClaseActividad: idClaseActividad,
         },
       }
+    );
+  }
+
+  postCargaIndividual(data: ActivityI): Observable<Response[]> {
+    return this.http.post<Response[]>(
+      environment.apiUrl + "/Actividades/CargaIndividual",
+      data
     );
   }
 }

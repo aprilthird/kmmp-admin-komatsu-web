@@ -24,7 +24,10 @@
   >
     <!-- Loader -->
     <div class="absolute inset-x-0 bottom-0">
-      <!--<mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>-->
+      <mat-progress-bar
+        *ngIf="isLoading"
+        [mode]="'indeterminate'"
+      ></mat-progress-bar>
     </div>
     <!-- Title -->
     <div class="flex flex-row justify-start items-center w-full">
@@ -71,7 +74,7 @@
               >
                 <mat-option
                   *ngFor="let cliente of clientsOpt"
-                  [value]="cliente.nombre"
+                  [value]="cliente.id"
                   >{{ cliente.nombre }}</mat-option
                 >
               </mat-select>
@@ -85,7 +88,7 @@
               >
                 <mat-option
                   *ngFor="let equipo of equiposOpt"
-                  [value]="equipo.nombre"
+                  [value]="equipo.id"
                   >{{ equipo.nombre }}</mat-option
                 >
               </mat-select>
@@ -101,7 +104,7 @@
               >
                 <mat-option
                   *ngFor="let modelo of modelosOpt"
-                  [value]="modelo.nombre"
+                  [value]="modelo.id"
                   >{{ modelo.nombre }}</mat-option
                 >
               </mat-select>
@@ -115,7 +118,7 @@
               >
                 <mat-option
                   *ngFor="let flota of flotasOpt"
-                  [value]="flota.nombre"
+                  [value]="flota.id"
                   >{{ flota.nombre }}</mat-option
                 >
               </mat-select>
@@ -162,7 +165,7 @@
               >
                 <mat-option
                   *ngFor="let tipo_mantenimiento of tipo_mttoOpt"
-                  [value]="tipo_mantenimiento.nombre"
+                  [value]="tipo_mantenimiento.id"
                   >{{ tipo_mantenimiento.nombre }}</mat-option
                 >
               </mat-select>
@@ -176,7 +179,7 @@
               >
                 <mat-option
                   *ngFor="let bahia_asignada of bahiasOpt"
-                  [value]="bahia_asignada.nombre"
+                  [value]="bahia_asignada.id"
                   >{{ bahia_asignada.nombre }}</mat-option
                 >
               </mat-select>
@@ -190,7 +193,7 @@
               >
                 <mat-option
                   *ngFor="let tipo_solicitud of tipo_solicitudes"
-                  [value]="tipo_solicitud.name"
+                  [value]="tipo_solicitud.id"
                   >{{ tipo_solicitud.name }}</mat-option
                 >
               </mat-select>
@@ -387,6 +390,7 @@
               mat-raised-button
               [color]="'primary'"
               (click)="createActivity()"
+              (click)="addSingleActivity()"
             >
               <span class="ml-2 mr-1">Crear</span>
             </button>

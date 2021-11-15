@@ -11,6 +11,8 @@ import { map } from "rxjs/operators";
 //SERVICES
 import { ActivitiesService } from "../../activities.service";
 
+import { Activity as ActivityI } from "./../../models/activities-model";
+
 @Component({
   selector: "activity-add-edit",
   templateUrl: "./activity-add-edit.component.html",
@@ -21,6 +23,7 @@ export class ActivityAddEditComponent implements OnInit {
   pe_items = PE;
   isEdit: boolean;
   idActivity: any;
+  isLoading: boolean = true;
   tipo_mantenimientos = tipo_mantenimientos;
   tipo_solicitudes = tipo_solicitudes;
 
@@ -36,8 +39,8 @@ export class ActivityAddEditComponent implements OnInit {
     tipo_solicitud: new FormControl(""),
     descripcion_actividad: new FormControl(""),
     numero_bl: new FormControl(""),
-    /*os: new FormControl(""),
-    pe: new FormControl(""),*/
+    os: new FormControl(""),
+    pe: new FormControl(""),
     fecha_estimada: new FormControl(""),
     duracion: new FormControl(""),
     fecha_real_inicio: new FormControl(""),
@@ -84,6 +87,7 @@ export class ActivityAddEditComponent implements OnInit {
         this.modelosOpt = result[4];
         this.flotasOpt = result[5];
         this.tipo_equiposOpt = result[6];
+        this.isLoading = false;
       }
     );
   }
@@ -110,6 +114,28 @@ export class ActivityAddEditComponent implements OnInit {
           this.form.controls[x].setValue(currentActivity[x]);
         });
       }
+    });
+  }
+
+  addSingleActivity(): void {
+    const params: ActivityI = {
+      cliente: JSON.stringify(this.form.controls["cliente"].value),
+      idEquipo: this.form.controls["equipo"].value,
+      flota: Number(this.form.controls["flota"].value),
+      equipo: this.form.controls["tipo_equipo"].value,
+      idTipoMantenimiento: this.form.controls["tipo_mantenimiento"].value,
+      idBahia: this.form.controls["bahia_asignada"].value,
+      idTipoSolicitud: this.form.controls["tipo_solicitud"].value,
+      descripcion: this.form.controls["descripcion_actividad"].value,
+      nbl: this.form.controls["numero_bl"].value,
+      nos: "xxx",
+      npe: "yyy",
+      idCliente: 0,
+      idActividad: this.form.controls["actividad"].value,
+      modelo: 10,
+    };
+    this.serviceAct.postCargaIndividual(params).subscribe((resp) => {
+      console.log(resp);
     });
   }
 
