@@ -31,7 +31,7 @@ import { DeleyedCodeComponent } from "./dashboard/charts/deleyed-code/deleyed-co
 import { AdhesionComponent } from "./dashboard/charts/adhesion/adhesion.component";
 
 //DEV-EXTREME
-import { DxChartModule } from "devextreme-angular";
+//import { DxChartModule } from "devextreme-angular";
 
 @NgModule({
   declarations: [
@@ -68,7 +68,7 @@ import { DxChartModule } from "devextreme-angular";
     MatCheckboxModule,
     MatMenuModule,
     MatTabsModule,
-    DxChartModule,
+    //DxChartModule,
   ],
 })
 export class KmmpModule {}

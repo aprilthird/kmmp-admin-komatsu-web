@@ -61,7 +61,7 @@ export class EditarPerfilComponent implements OnInit {
           index: index,
         };
 
-        if (currentMenu.subMenu.length > 0) {
+        if (currentMenu.subMenu && currentMenu.subMenu.length > 0) {
           currentMenu.subMenu.forEach((element) => {
             response["children"].push(
               generateSubMenu(element, level + 1, index)

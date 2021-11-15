@@ -83,15 +83,17 @@ export class AuthSignInComponent implements OnInit {
           setTimeout(() => {
             const permissions = JSON.parse(localStorage.getItem("permissions"));
             const firstURL = Object.keys(permissions)[0];
-            const redirectURL =
-              firstURL ||
-              "/signed-in-redirect";
+            const redirectURL = firstURL || "/signed-in-redirect";
             // Navigate to the redirect url
             this._router.navigateByUrl(redirectURL);
           }, 100);
         });
       },
       (error: HttpErrorResponse) => {
+        if (!error.error["error"]) {
+          error.error["error"] =
+            "Por favor, revisa tu conexión a internet y vuelve a intentarlo";
+        }
         // Re-enable the form
         this.signInForm.enable();
 

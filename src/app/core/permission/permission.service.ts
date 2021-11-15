@@ -18,27 +18,29 @@ export class PermissionService {
     return this._permissions.asObservable();
   }
 
-  set updatPermissions$(next:Permission) {
+  set updatPermissions$(next: Permission) {
     this._permissions.next(next);
   }
 
-  loadLocalStorage():Observable<Boolean> {
-    
-    this._permissions.next(JSON.parse(localStorage.getItem('permissions')))
+  loadLocalStorage(): Observable<Boolean> {
+    console.log(
+      "get nav bar ",
+      JSON.parse(localStorage.getItem("permissions"))
+    );
+    this._permissions.next(JSON.parse(localStorage.getItem("permissions")));
     return of(true);
   }
 
-  hasPermission(url:string):Boolean {
-    const permissons = JSON.parse(localStorage.getItem('permissions'))
+  hasPermission(url: string): Boolean {
+    const permissons = JSON.parse(localStorage.getItem("permissions"));
     return Boolean(permissons[url]);
   }
 
-  hasPermissonAccion(url: string, accion:string):Boolean {
+  hasPermissonAccion(url: string, accion: string): Boolean {
     const permissons = this._permissions.getValue();
 
     if (!permissons[url]) return false;
 
     return permissons[url][accion];
   }
-
 }

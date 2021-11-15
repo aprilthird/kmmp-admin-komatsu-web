@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { DxChartModule } from "devextreme-angular";
+//import { DxChartModule } from "devextreme-angular";
 
 @Component({
   selector: "app-adhesion",
@@ -7,13 +7,13 @@ import { DxChartModule } from "devextreme-angular";
   styleUrls: ["./adhesion.component.scss"],
 })
 export class AdhesionComponent implements OnInit {
-  dataSource: ComplaintsWithPercent[] = this.getComplaintsData();
+  //dataSource: ComplaintsWithPercent[] = this.getComplaintsData();
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  getComplaintsData(): ComplaintsWithPercent[] {
+  /*getComplaintsData(): ComplaintsWithPercent[] {
     var data = complaintsData.sort(function (a, b) {
         return b.count - a.count;
       }),
@@ -59,7 +59,7 @@ export class AdhesionComponent implements OnInit {
 
   customizeLabelText = (info: any) => {
     return info.valueText + "%";
-  };
+  };*/
 }
 
 export class ComplaintsWithPercent {
