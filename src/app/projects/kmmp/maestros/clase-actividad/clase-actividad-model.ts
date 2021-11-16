@@ -1,6 +1,7 @@
 export interface ClaseActividadI {
   nombre: string;
   estado: boolean;
+  nestado?: string;
 }
 
 export interface TipoActividadResponseI {

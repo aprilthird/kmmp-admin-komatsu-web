@@ -5,6 +5,10 @@
       <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
     </button>
   </div>
+  <div class="inset-x-0 bottom-0 w-full" *ngIf="loading">
+    <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+  </div>
+
   <div mat-dialog-content class="pb-6">
     <div class="flex flex-col w-full">
       <!-- Nombre -->
@@ -12,22 +16,18 @@
       <mat-form-field floatLabel="always" class="w-100-p">
         <mat-label>Modelo</mat-label>
         <mat-select formControlName="modelo" placeholder="Ingrese un modelo">
-          <mat-option
-            *ngFor="let modelo of filters.modelo"
-            [value]="modelo.id"
-            >{{ modelo.name }}</mat-option
-          >
+          <mat-option *ngFor="let modelo of modelosOpt" [value]="modelo.id">{{
+            modelo.nombre
+          }}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field floatLabel="always" class="w-100-p">
         <mat-label class="font-bold">Equipo</mat-label>
         <mat-select formControlName="equipo" placeholder="Ingrese un equipo">
-          <mat-option
-            *ngFor="let equipo of filters.equipo"
-            [value]="equipo.id"
-            >{{ equipo.name }}</mat-option
-          >
+          <mat-option *ngFor="let equipo of equipoOpt" [value]="equipo.id">{{
+            equipo.nombre
+          }}</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -38,14 +38,14 @@
           placeholder="Ingrese una actividad"
         >
           <mat-option
-            *ngFor="let actividad of filters.actividad"
+            *ngFor="let actividad of actividadOpt"
             [value]="actividad.id"
-            >{{ actividad.name }}</mat-option
+            >{{ actividad.nombre }}</mat-option
           >
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" class="w-100-p">
+      <!--<mat-form-field floatLabel="always" class="w-100-p">
         <mat-label class="font-bold">Tipo de solicitud</mat-label>
         <mat-select
           formControlName="tipo_solicitud"
@@ -57,7 +57,7 @@
             >{{ solicitud.name }}</mat-option
           >
         </mat-select>
-      </mat-form-field>
+      </mat-form-field>-->
 
       <mat-form-field floatLabel="always" class="w-100-p">
         <mat-label class="font-bold">Estado</mat-label>

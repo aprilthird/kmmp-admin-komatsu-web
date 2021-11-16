@@ -36,7 +36,6 @@ export class DialogAddEquiposComponent implements OnInit {
     if (this.data) {
       this.isEdit = true;
       this.initData = this.data;
-      console.log(this.data);
       this.equipoId = this.data.id;
     }
     this.form = this.fb.group({
@@ -46,7 +45,7 @@ export class DialogAddEquiposComponent implements OnInit {
       flota: new FormControl(this.initData?.flota, Validators.required),
       cliente: new FormControl(this.initData?.cliente, Validators.required),
       horometro: new FormControl(this.initData?.horometro, Validators.required),
-      estado: new FormControl(this.initData?.estado),
+      estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
     });
   }
 
@@ -55,16 +54,21 @@ export class DialogAddEquiposComponent implements OnInit {
   submit(isEdit): void {
     this.isLoading = true;
 
-    if (isEdit) {
+    /*if (isEdit) {
       this.form.addControl("id", new FormControl(this.equipoId));
-    }
-    const state = this.form.controls["estado"].value ? 1 : 0;
-    this.form.controls["estado"].setValue(state);
+    }*/
+
     this.equiposService.postEquipo(this.form.value).subscribe((resp) => {
       setTimeout(() => {
         this.isLoading = false;
         this.matdialigRef.close();
       }, 1000);
     });
+  }
+
+  check(event): void {
+    setTimeout(() => {
+      this.form.controls["estado"].setValue(event.checked ? 1 : 0);
+    }, 200);
   }
 }

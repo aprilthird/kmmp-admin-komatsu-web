@@ -28,19 +28,21 @@ export class DialogAddTipoEquipoComponent implements OnInit {
     private fb: FormBuilder,
     public matdialigRef: MatDialogRef<DialogAddTipoEquipoComponent>
   ) {
-    this.form = this.fb.group({
-      nombre: new FormControl(this.initData?.nombre, Validators.required),
-      estado: new FormControl(this.initData?.estado),
-    });
     if (this.data) {
       this.isEdit = true;
       this.initData = this.data;
       this.tipoEquipoId = this.data.id;
-      this.form.addControl(
-        "id",
-        this.fb.control({ value: this.initData?.id, disabled: true })
-      );
     }
+
+    this.form = this.fb.group({
+      nombre: new FormControl(this.initData?.nombre, Validators.required),
+      estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
+    });
+
+    this.form.addControl(
+      "id",
+      this.fb.control({ value: this.initData?.id, disabled: true })
+    );
   }
 
   ngOnInit(): void {}
@@ -51,13 +53,18 @@ export class DialogAddTipoEquipoComponent implements OnInit {
     if (isEdit) {
       this.form.addControl("id", new FormControl(this.tipoEquipoId));
     }
-    const state = this.form.controls["estado"].value ? 1 : 0;
-    this.form.controls["estado"].setValue(state);
+
     this.tipoEuipoService.postTipoEquipo(this.form.value).subscribe(() => {
       setTimeout(() => {
         this.isLoading = false;
         this.matdialigRef.close();
       }, 1000);
     });
+  }
+
+  check(event): void {
+    setTimeout(() => {
+      this.form.controls["estado"].setValue(event.checked ? 1 : 0);
+    }, 200);
   }
 }

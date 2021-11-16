@@ -6,4 +6,5 @@ export interface EquipoI {
   cliente: string;
   horometro: string;
   estado: boolean;
+  nestado?: string;
 }

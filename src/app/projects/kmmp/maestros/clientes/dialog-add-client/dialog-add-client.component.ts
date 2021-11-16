@@ -37,14 +37,14 @@ export class DialogAddClientComponent implements OnInit {
       this.isEdit = true;
       this.initData = this.data;
       this.clientId = this.data.id;
-      console.log(this.data);
     }
+
     this.form = this.fb.group({
       nombre: new FormControl(this.initData?.nombre, Validators.required),
       ruc: new FormControl(this.initData?.ruc, Validators.required),
       razon: new FormControl(this.initData?.razon, Validators.required),
       ubicacion: new FormControl(this.initData?.ubicacion, Validators.required),
-      estado: new FormControl(this.initData?.estado),
+      estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
     });
   }
 
@@ -56,13 +56,18 @@ export class DialogAddClientComponent implements OnInit {
     if (isEdit) {
       this.form.addControl("id", new FormControl(this.clientId));
     }
-    const state = this.form.controls["estado"].value ? 1 : 0;
-    this.form.controls["estado"].setValue(state);
+
     this.maestroService.postClient(this.form.value).subscribe((resp) => {
       setTimeout(() => {
         this.isLoading = false;
         this.matdialigRef.close();
       }, 1000);
     });
+  }
+
+  check(event): void {
+    setTimeout(() => {
+      this.form.controls["estado"].setValue(event.checked ? 1 : 0);
+    }, 200);
   }
 }

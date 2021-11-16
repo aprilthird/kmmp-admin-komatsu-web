@@ -3,5 +3,6 @@ export interface ClientI {
   ruc: string | "";
   razon: string | "";
   ubicacion: string | "";
-  estado: boolean | false;
+  estado?: number;
+  nestado?: string;
 }

@@ -67,8 +67,8 @@
 
       <mat-slide-toggle
         color="primary"
-        value="form.controls['estado'].value === 1 ? true : false"
-        formControlName="estado"
+        (change)="check($event)"
+        [checked]="form.controls['estado'].value === 1 ? true : false"
       >
         Estado
       </mat-slide-toggle>

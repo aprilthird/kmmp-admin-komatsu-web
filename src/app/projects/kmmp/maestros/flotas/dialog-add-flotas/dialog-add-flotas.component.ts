@@ -37,7 +37,7 @@ export class DialogAddFlotasComponent implements OnInit {
     this.form = this.fb.group({
       nombre: new FormControl(this.initData?.nombre, Validators.required),
       cliente: new FormControl(this.initData?.cliente, Validators.required),
-      estado: new FormControl(""),
+      estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
     });
   }
 
@@ -49,13 +49,18 @@ export class DialogAddFlotasComponent implements OnInit {
     if (isEdit) {
       this.form.addControl("id", new FormControl(this.flotaId));
     }
-    const state = this.form.controls["estado"].value ? 1 : 0;
-    this.form.controls["estado"].setValue(state);
+
     this.flotaService.postFlota(this.form.value).subscribe(() => {
       setTimeout(() => {
         this.isLoading = false;
         this.matdialigRef.close();
       }, 1000);
     });
+  }
+
+  check(event): void {
+    setTimeout(() => {
+      this.form.controls["estado"].setValue(event.checked ? 1 : 0);
+    }, 200);
   }
 }

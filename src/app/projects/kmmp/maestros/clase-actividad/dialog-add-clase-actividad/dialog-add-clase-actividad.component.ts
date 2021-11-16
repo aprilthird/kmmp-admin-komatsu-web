@@ -36,7 +36,7 @@ export class DialogAddClaseActividadComponent implements OnInit {
     }
     this.form = this.fb.group({
       nombre: new FormControl(this.initData?.nombre, Validators.required),
-      estado: new FormControl(this.initData?.estado),
+      estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
     });
   }
 
@@ -48,8 +48,7 @@ export class DialogAddClaseActividadComponent implements OnInit {
     if (isEdit) {
       this.form.addControl("id", new FormControl(this.claseActividadId));
     }
-    const state = this.form.controls["estado"].value ? 1 : 0;
-    this.form.controls["estado"].setValue(state);
+
     this.claseActividadService
       .postClaseActivida(this.form.value)
       .subscribe(() => {
@@ -58,5 +57,11 @@ export class DialogAddClaseActividadComponent implements OnInit {
           this.matdialigRef.close();
         }, 1000);
       });
+  }
+
+  check(event): void {
+    setTimeout(() => {
+      this.form.controls["estado"].setValue(event.checked ? 1 : 0);
+    }, 200);
   }
 }

@@ -9,12 +9,14 @@ import { Pagination } from "app/core/types/list.types";
 import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
+import { FilterI } from "./../../../../shared/models/filters-model";
 
 @Injectable({
   providedIn: "root",
 })
 export class ListadoService {
   _formatos: BehaviorSubject<any[]> = new BehaviorSubject(null);
+  _filter: BehaviorSubject<FilterI> = new BehaviorSubject(null);
   _pagination: BehaviorSubject<any> = new BehaviorSubject({
     length: 0,
     size: 10,
@@ -34,22 +36,36 @@ export class ListadoService {
     return this._pagination.asObservable();
   }
 
+  get filters$(): Observable<FilterI> {
+    return this._filter.asObservable();
+  }
+
   /**
    * Obtener el listado de usuarios
    */
   getFormatos(
-    { page, pageSize, ...filter }: ParamsPagination | any = {
+    {
+      page,
+      pageSize,
+      idClaseActividad,
+      estado,
+      ...filter
+    }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<Formato[]>> {
+    console.log("filter - ", filter);
     return this._httpClient
       .post<PaginationResponse<Formato[]>>(
         environment.apiUrl + "/Core/ObtenerFormatosPaginado",
         {
-            page,
-            pageSize,
-            filter,
+          page,
+          pageSize,
+          filter: {
+            idClaseActividad,
+            estado,
+          },
         }
       )
       .pipe(
