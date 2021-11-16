@@ -39,10 +39,9 @@
               tracking-tight
               leading-7
               sm:leading-10
-              truncate
             "
           >
-            Clase de actividades
+            Clase de actividad
           </h2>
         </div>
         <div class="flex w-2/4 justify-end master-filter gap-5">
@@ -125,7 +124,9 @@
                     </div>
 
                     <div class="hidden lg:block truncate">
-                      {{ clase_actividad?.estado }}
+                      {{
+                        clase_actividad?.estado === 1 ? "Activo" : "Inactivo"
+                      }}
                     </div>
 
                     <div>

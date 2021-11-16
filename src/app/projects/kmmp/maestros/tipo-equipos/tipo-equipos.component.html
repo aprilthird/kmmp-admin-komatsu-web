@@ -15,7 +15,16 @@
         dark:bg-transparent
       "
     >
-      <div class="flex w-full items-center min-w-0">
+      <div
+        class="
+          flex flex-col
+          sm:flex-row
+          w-full
+          justify-between
+          items-center
+          min-w-0
+        "
+      >
         <!-- Loader -->
         <div class="absolute inset-x-0 top-0" *ngIf="isLoading">
           <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
@@ -33,10 +42,15 @@
               truncate
             "
           >
-            Modelos
+            Tipo de equipo
           </h2>
         </div>
-        <div class="flex w-2/4 justify-end"></div>
+        <div class="flex w-2/4 justify-end master-filter gap-5">
+          <app-inner-header
+            [type]="'tipos_equipos'"
+            (isLoading)="setLoading($event)"
+          ></app-inner-header>
+        </div>
       </div>
     </div>
 
@@ -110,7 +124,7 @@
                     </div>
 
                     <div class="hidden lg:block truncate">
-                      {{ tipo_equipo?.estado }}
+                      {{ tipo_equipo?.estado === 1 ? "Activo" : "Inactivo" }}
                     </div>
 
                     <!-- Acciones -->

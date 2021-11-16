@@ -1,19 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { Observable, Subject } from "rxjs";
-import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
-import { BahiasService } from "../bahias/bahias.service";
-import { ClaseActividadService } from "../clase-actividad/clase-actividad.service";
-import { EquiposService } from "../equipos/equipos.service";
-import { FlotasService } from "../flotas/flotas.service";
-import { ModelosService } from "../modelos/modelos.service";
-import { TipoEquiposService } from "../tipo-equipos/tipo-equipos.service";
+import { UsuariosService } from "app/projects/kmmp/ajustes/usuarios/usuario.service";
+import { BahiasService } from "app/projects/kmmp/maestros/bahias/bahias.service";
+import { ClaseActividadService } from "app/projects/kmmp/maestros/clase-actividad/clase-actividad.service";
+import { EquiposService } from "app/projects/kmmp/maestros/equipos/equipos.service";
+import { FlotasService } from "app/projects/kmmp/maestros/flotas/flotas.service";
+import { MaestrosService } from "app/projects/kmmp/maestros/maestros.service";
+import { ModelosService } from "app/projects/kmmp/maestros/modelos/modelos.service";
+import { TipoEquiposService } from "app/projects/kmmp/maestros/tipo-equipos/tipo-equipos.service";
+import { SharedService } from "app/shared/shared.service";
 import { ExportExcelService } from "app/shared/utils/export-excel.ts.service";
-import { MaestrosService } from "../maestros.service";
-import { UsuariosService } from "../../ajustes/usuarios/usuario.service";
+import { Subject } from "rxjs";
+import { debounceTime, map, switchMap, takeUntil } from "rxjs/operators";
 
 @Component({
-  selector: "app-inner-header",
+  selector: "shared-inner-header",
   templateUrl: "./inner-header.component.html",
   styleUrls: ["./inner-header.component.scss"],
 })
@@ -36,7 +37,8 @@ export class InnerHeaderComponent implements OnInit {
     private flotasService: FlotasService,
     private modelosService: ModelosService,
     private tipoEquiposService: TipoEquiposService,
-    private exportExcelService: ExportExcelService
+    private exportExcelService: ExportExcelService,
+    private shared: SharedService
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +65,7 @@ export class InnerHeaderComponent implements OnInit {
   }
 
   private getCurrentTableData(): void {
-    this.cliente.currentTableData$.subscribe((data) => {
+    this.shared.currentTableData.subscribe((data) => {
       this.currentTableData = data;
     });
   }

@@ -106,7 +106,7 @@
         "
       >
         <div class="flex sm:flex-col md:flex-row justify-between">
-          <h1 class="prose">Status por flota 1/2</h1>
+          <h1 class="prose font-bold">Status por flota 1/2</h1>
           <mat-tab-group
             (selectedTabChange)="allFlotas($event)"
             class="sm:px-2 flex sm:items-center md:items-end"
@@ -141,7 +141,7 @@
         "
       >
         <div class="flex sm:flex-col md:flex-row justify-between">
-          <h1 class="prose">Actividades no ejecutadas</h1>
+          <h1 class="prose font-bold">Actividades no ejecutadas</h1>
           <mat-tab-group
             (selectedTabChange)="allNoExecuted($event)"
             class="sm:px-2 flex sm:items-center md:items-end"
@@ -175,8 +175,8 @@
           overflow-x-auto
         "
       >
-        <div class="flex sm:flex-col md:flex-row justify-between">
-          <h1 class="prose">Código de demoras</h1>
+        <div class="flex sm:flex-col md:flex-row w-full justify-start">
+          <h1 class="prose font-bold">Código de demoras</h1>
         </div>
         <deleyed-code class="sm:max-w-sm xl:max-w-none"></deleyed-code>
       </div>

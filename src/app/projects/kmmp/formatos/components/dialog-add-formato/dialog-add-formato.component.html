@@ -13,23 +13,54 @@
         <input matInput formControlName="nombre" />
         <mat-error> {{ getErrorMessage("nombre") }} </mat-error>
       </mat-form-field>
-      <!--<KMMP>
       <mat-form-field class="w-full">
-        <mat-label>Modelo</mat-label>
-        <input matInput formControlName="nombre" />
-        <mat-error> {{ getErrorMessage("modelo") }} </mat-error>
+        <mat-label class="font-bold">Cliente</mat-label>
+        <mat-select
+          formControlName="cliente"
+          [value]="form.controls['cliente'].value"
+        >
+          <mat-option *ngFor="let cliente of clientsOpt" [value]="cliente.id">{{
+            cliente.nombre
+          }}</mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field class="w-full">
-        <mat-label>Actividad</mat-label>
-        <input matInput formControlName="nombre" />
-        <mat-error> {{ getErrorMessage("actividad") }} </mat-error>
+        <mat-label class="font-bold">Modelo</mat-label>
+        <mat-select
+          formControlName="modelo"
+          [value]="form.controls['modelo'].value"
+        >
+          <mat-option *ngFor="let modelo of modelosOpt" [value]="modelo.id">{{
+            modelo.nombre
+          }}</mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field class="w-full">
-        <mat-label>Tipo de mantenimiento</mat-label>
-        <input matInput formControlName="nombre" />
-        <mat-error> {{ getErrorMessage("tipo") }} </mat-error>
+        <mat-label class="font-bold">Tipo de actividad</mat-label>
+        <mat-select
+          formControlName="actividad"
+          [value]="form.controls['actividad'].value"
+        >
+          <mat-option
+            *ngFor="let actividad of actividadOpt"
+            [value]="actividad.id"
+            >{{ actividad.nombre }}</mat-option
+          >
+        </mat-select>
       </mat-form-field>
-      </KMMP>-->
+      <mat-form-field class="w-full">
+        <mat-label class="font-bold">Tipo de mantenimiento</mat-label>
+        <mat-select
+          formControlName="tipo_mantenimiento"
+          [value]="form.controls['tipo_mantenimiento'].value"
+        >
+          <mat-option
+            *ngFor="let tipo_mantenimiento of tipo_mttoOpt"
+            [value]="tipo_mantenimiento.id"
+            >{{ tipo_mantenimiento.nombre }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
   <div mat-dialog-actions class="flex justify-end px-6 bg-gray-100">

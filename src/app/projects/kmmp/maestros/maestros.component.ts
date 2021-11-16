@@ -18,7 +18,7 @@ export class MaestrosComponent implements OnInit {
     this.menuData = [
       {
         id: "maestros",
-        title: "Maestros",
+        title: "Tipo de Maestro",
         type: "group",
         children: [],
       },
@@ -47,7 +47,7 @@ export class MaestrosComponent implements OnInit {
 
     this.menuData[0].children.push({
       id: "maestros.bahias",
-      title: "bahias",
+      title: "Bahias",
       type: "basic",
       link: "/admin/maestros/bahias",
     });

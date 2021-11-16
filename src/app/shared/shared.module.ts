@@ -7,6 +7,10 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { TextFilterPipe } from "./pipes/text-filter.pipe";
 import { ExportExcelService } from "./utils/export-excel.ts.service";
+import { InnerHeaderComponent } from "./ui/inner-header/inner-header.component";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatButtonModule } from "@angular/material/button";
+import { MatInputModule } from "@angular/material/input";
 
 @NgModule({
   imports: [
@@ -16,6 +20,9 @@ import { ExportExcelService } from "./utils/export-excel.ts.service";
     MatIconModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
   ],
   exports: [
     CommonModule,
@@ -23,8 +30,9 @@ import { ExportExcelService } from "./utils/export-excel.ts.service";
     ReactiveFormsModule,
     UploadFileComponent,
     TextFilterPipe,
+    InnerHeaderComponent,
   ],
-  declarations: [UploadFileComponent, TextFilterPipe],
+  declarations: [UploadFileComponent, TextFilterPipe, InnerHeaderComponent],
   providers: [ExportExcelService],
 })
 export class SharedModule {}

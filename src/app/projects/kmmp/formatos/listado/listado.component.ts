@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { FilterDialogComponent } from "../../actividades/filter/filter-dialog/filter-dialog.component";
 import { DialogAddFormatoComponent } from "../components/dialog-add-formato/dialog-add-formato.component";
 import { ListadoService } from "./listado.services";
 
@@ -21,16 +22,15 @@ export class ListadoComponent implements OnInit, OnDestroy {
 
   constructor(
     private _router: Router,
-    private _routeActived:ActivatedRoute,
+    private _routeActived: ActivatedRoute,
     private _listadoService: ListadoService,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {
     this.formatos$ = this._listadoService.formatos$.pipe(
       takeUntil(this._unsubscribeAll)
     );
 
     this.pagination$ = this._listadoService.pagination$;
-
   }
 
   ngOnInit(): void {
@@ -49,10 +49,9 @@ export class ListadoComponent implements OnInit, OnDestroy {
   clickNewFormato() {
     const dialogRef = this.dialog.open(DialogAddFormatoComponent, {
       autoFocus: false,
-      width: '376px',
+      width: "376px",
     });
   }
-
 
   /**
    * On destroy
@@ -77,5 +76,9 @@ export class ListadoComponent implements OnInit, OnDestroy {
         page: pagination.pageIndex,
       },
     });
+  }
+
+  openFilter(): void {
+    this.dialog.open(FilterDialogComponent, { width: "370px" });
   }
 }

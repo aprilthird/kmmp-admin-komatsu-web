@@ -96,4 +96,8 @@ export class TipoEquiposComponent implements OnInit {
       .afterClosed()
       .subscribe(() => this.loadData());
   }
+
+  setLoading(loading): void {
+    this.isLoading = loading;
+  }
 }

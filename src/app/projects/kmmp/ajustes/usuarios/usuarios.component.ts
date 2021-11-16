@@ -115,4 +115,8 @@ export class UsuariosComponent implements OnInit {
       },
     });
   }
+
+  setLoading(loading): void {
+    this.isLoading = loading;
+  }
 }

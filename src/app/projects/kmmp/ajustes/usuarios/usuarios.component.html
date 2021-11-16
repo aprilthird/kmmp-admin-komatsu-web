@@ -1,5 +1,5 @@
 <!-- Drawer content -->
-<div class="flex-auto">
+<div class="flex-auto w-full">
   <div class="flex flex-col flex-auto min-w-0">
     <!-- Header -->
     <div
@@ -15,7 +15,16 @@
         dark:bg-transparent
       "
     >
-      <div class="flex w-full items-center min-w-0">
+      <div
+        class="
+          flex flex-col
+          sm:flex-row
+          w-full
+          justify-between
+          items-center
+          min-w-0
+        "
+      >
         <!-- Loader -->
         <div class="absolute inset-x-0 top-0" *ngIf="isLoading">
           <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
@@ -36,7 +45,12 @@
             Usuarios
           </h2>
         </div>
-        <div class="flex w-2/4 justify-end"></div>
+        <div class="flex w-2/4 justify-end master-filter gap-5">
+          <shared-inner-header
+            [type]="'usuarios'"
+            (isLoading)="setLoading($event)"
+          ></shared-inner-header>
+        </div>
       </div>
     </div>
 
@@ -79,8 +93,8 @@
               >
                 <div>Usuario</div>
                 <div class="">Perfil</div>
-                <div class="hidden lg:block">Creado</div>
-                <div class="hidden lg:block">Modificado</div>
+                <div class="">Creado</div>
+                <div class="">Modificado</div>
                 <div>Acciones</div>
               </div>
 
@@ -111,10 +125,10 @@
                       {{ usuario.rol | slice: 0:-1 }}
                     </div>
                     <!-- Apellidos -->
-                    <div class="hidden lg:block truncate">
+                    <div class="truncate">
                       {{ usuario?.fechaReg | date: "dd/MM/yy h:mma" }}
                     </div>
-                    <div class="hidden lg:block truncate">
+                    <div class="truncate">
                       {{ usuario?.usuarioMod }}
                     </div>
 

@@ -30,6 +30,7 @@ import { MatListModule } from "@angular/material/list";
 import { SharedModule } from "app/shared/shared.module";
 import { EditarPerfilComponent } from "./editar-perfil/editar-perfil.component";
 import { CrearUsuarioComponent } from "./crear-usuario/crear-usuario.component";
+//import { InnerHeaderComponent } from "app/shared/ui/inner-header/inner-header.component";
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { CrearUsuarioComponent } from "./crear-usuario/crear-usuario.component";
     FuseAlertModule,
     FuseConfirmationModule,
     MatListModule,
+    //InnerHeaderComponent,
     SharedModule,
   ],
 })

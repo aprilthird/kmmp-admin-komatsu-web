@@ -7,6 +7,7 @@ import {
 } from "app/core/types/http.types";
 import { Pagination } from "app/core/types/list.types";
 import { Usuario } from "app/core/types/user.types";
+import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
@@ -25,7 +26,7 @@ export class UsuariosService {
     endIndex: 0,
   });
 
-  constructor(private _httpClient: HttpClient) {}
+  constructor(private _httpClient: HttpClient, private shared: SharedService) {}
 
   get usuarios$(): Observable<Usuario[]> {
     return this._usuarios.asObservable();
@@ -44,9 +45,6 @@ export class UsuariosService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<Usuario[]>> {
-    console.log(page);
-    console.log(pageSize);
-    console.log(filter);
     return this._httpClient
       .post<PaginationResponse<Usuario[]>>(
         environment.apiUrl + "/Seguridad/BandejaUsuariosPaginado",
@@ -68,6 +66,7 @@ export class UsuariosService {
             ),
           });
           this._usuarios.next(response.body.data);
+          this.shared.currentTableData.next(response.body.data);
         })
       );
   }

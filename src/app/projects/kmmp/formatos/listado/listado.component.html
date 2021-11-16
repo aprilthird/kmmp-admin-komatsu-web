@@ -28,12 +28,16 @@
     </div>
     <!-- Title -->
     <div class="text-4xl font-extrabold tracking-tight">
-      Administrador de Actividades
+      Administrador de formatos
     </div>
 
     <!-- Actions -->
-    <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+    <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4 gap-5">
       <!-- Add product button -->
+      <button mat-raised-button [color]="'secondary'" (click)="openFilter()">
+        <mat-icon svgIcon="heroicons_outline:filter"></mat-icon>
+        <span class="ml-2 mr-1">Filtrar</span>
+      </button>
       <button mat-raised-button [color]="'primary'" (click)="clickNewFormato()">
         <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
         <span class="ml-2 mr-1">Nuevo formato</span>
@@ -78,10 +82,14 @@
               matSort
               matSortDisableClear
             >
+              <div>ID</div>
+              <div>Cliente</div>
               <div>Nombre</div>
-              <div class="">Descripción</div>
-              <div class="hidden lg:block">Modificado</div>
-              <div class="hidden lg:block">Modificado por</div>
+              <div>Modelo</div>
+              <div>Actividad</div>
+              <div class="">Tipo de mantenimiento</div>
+              <div class="">Creado por</div>
+              <div class="">Fecha por</div>
               <div>Acciones</div>
             </div>
 
@@ -103,24 +111,39 @@
                     justify-between
                   "
                 >
+                  <!-- ID -->
+                  <div class="truncate">
+                    {{ formato?.id }}
+                  </div>
+
+                  <!-- Cliente -->
+                  <div class="truncate">
+                    {{ formato?.cliente }}
+                  </div>
                   <!-- Nombres -->
                   <div class="truncate">
                     {{ formato.nombre }}
                   </div>
-                  <!-- Apellidos -->
+                  <!-- ID -->
                   <div class="truncate">
-                    {{ formato.descripcion }}
+                    {{ formato?.modelo }}
+                  </div>
+                  <!-- Actividad -->
+                  <div class="truncate">
+                    {{ formato?.actividad }}
+                  </div>
+                  <!-- tipo mtto -->
+                  <div class="truncate">
+                    {{ formato?.tipo_mantenimiento }}
                   </div>
 
-                  <!-- Modificado -->
-                  <div class="hidden lg:block truncate">
-                    {{ (formato.fechaMod | date: "dd/MM/yy h:mma") || "-" }}
+                  <!-- creado Por -->
+                  <div class="">
+                    {{ formato?.usuarioReg }}
                   </div>
 
-                  <!-- Modificado Por -->
-                  <div class="hidden lg:block truncate">
-                    {{ formato.usuarioMod !== null ? formato.usuarioMod : "" }}
-                  </div>
+                  <!-- fecha reg -->
+                  <div class=""></div>
 
                   <!-- Acciones -->
                   <div>

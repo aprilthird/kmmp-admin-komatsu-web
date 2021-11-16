@@ -1,6 +1,6 @@
 <form [formGroup]="form" class="">
   <div mat-dialog-title class="flex justify-between items-center">
-    <h4>Agregar bahia</h4>
+    <h4>Agregar nueva bahia</h4>
     <button mat-icon-button type="button" (click)="matdialigRef.close()">
       <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
     </button>
@@ -28,7 +28,7 @@
           matInput
           type="text"
           formControlName="cliente"
-          placeholder="Ingrese Ubicación/Dirección"
+          placeholder="Ingrese cliente"
         />
         <mat-error *ngIf="form.controls['cliente'].invalid">{{
           matErrorMsg
