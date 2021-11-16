@@ -111,9 +111,9 @@
               >
                 <div>Nombre</div>
                 <div class="">RUC</div>
-                <div class="hidden lg:block">Razón social</div>
-                <div class="hidden lg:block">Ubicación</div>
-                <div class="hidden lg:block">Estado</div>
+                <div class="">Razón social</div>
+                <div class="">Ubicación</div>
+                <div class="">Estado</div>
                 <div>Acciones</div>
               </div>
 
@@ -144,13 +144,13 @@
                       {{ cliente.ruc }}
                     </div>
                     <!-- Apellidos -->
-                    <div class="hidden lg:block truncate">
+                    <div class="truncate">
                       {{ cliente?.razon }}
                     </div>
-                    <div class="hidden lg:block truncate">
+                    <div class="truncate">
                       {{ cliente?.ubicacion }}
                     </div>
-                    <div class="hidden lg:block truncate">
+                    <div class="truncate">
                       {{ cliente?.estado === 0 ? "Activo" : "Inactivo" }}
                     </div>
 

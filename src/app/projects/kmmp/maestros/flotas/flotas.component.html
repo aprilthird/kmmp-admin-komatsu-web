@@ -92,8 +92,8 @@
                 matSortDisableClear
               >
                 <div>Nombre</div>
-                <div class="hidden lg:block">Cliente</div>
-                <div class="hidden lg:block">Estado</div>
+                <div class="">Cliente</div>
+                <div class="">Estado</div>
                 <div>Acciones</div>
               </div>
 
@@ -118,11 +118,11 @@
                       {{ flota?.nombre }}
                     </div>
 
-                    <div class="hidden lg:block truncate">
+                    <div class="truncate">
                       {{ flota?.cliente }}
                     </div>
 
-                    <div class="hidden lg:block truncate">
+                    <div class="truncate">
                       {{ flota?.estado === 1 ? "Activo" : "Inactivo" }}
                     </div>
 

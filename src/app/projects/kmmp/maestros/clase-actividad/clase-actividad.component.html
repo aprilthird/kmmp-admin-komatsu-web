@@ -91,7 +91,7 @@
                 matSortDisableClear
               >
                 <div>Nombre</div>
-                <div class="hidden lg:block">Estado</div>
+                <div class="">Estado</div>
                 <div>Acciones</div>
               </div>
 
@@ -123,13 +123,25 @@
                       {{ clase_actividad.nombre }}
                     </div>
 
-                    <div class="hidden lg:block truncate">
+                    <div class="truncate">
                       {{
                         clase_actividad?.estado === 1 ? "Activo" : "Inactivo"
                       }}
                     </div>
 
                     <div>
+                      <!-- Acciones -->
+                      <a
+                        class="min-w-7 w-7 min-h-7 h-7 mr-3"
+                        mat-icon-button
+                        matTooltip="Editar"
+                        (click)="edit(clase_actividad)"
+                      >
+                        <mat-icon
+                          class="icon-size-5 text-primary-500"
+                          [svgIcon]="'heroicons_outline:pencil'"
+                        ></mat-icon>
+                      </a>
                       <button
                         class="min-w-10 min-h-7 h-7 px-2 leading-6"
                         mat-stroked-button
@@ -144,21 +156,6 @@
                           "
                         ></mat-icon>
                       </button>
-                    </div>
-
-                    <!-- Acciones -->
-                    <div class="flex flex-row justify-between">
-                      <a
-                        class="min-w-7 w-7 min-h-7 h-7 mr-1"
-                        mat-icon-button
-                        matTooltip="Editar"
-                        (click)="edit(clase_actividad)"
-                      >
-                        <mat-icon
-                          class="icon-size-5 text-primary-500"
-                          [svgIcon]="'heroicons_outline:pencil'"
-                        ></mat-icon>
-                      </a>
                     </div>
                   </div>
                   <ng-container

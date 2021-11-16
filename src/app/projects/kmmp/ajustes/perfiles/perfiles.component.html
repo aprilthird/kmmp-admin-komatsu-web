@@ -80,8 +80,8 @@
                 >
                   <div>Perfil</div>
                   <div class="">Nro. Usuarios</div>
-                  <div class="hidden lg:block">Modificado</div>
-                  <div class="hidden lg:block">Modificado por</div>
+                  <div class="">Modificado</div>
+                  <div class="">Modificado por</div>
                   <div>Acciones</div>
                 </div>
                 <!-- Rows -->
@@ -112,7 +112,7 @@
                       </div>
 
                       <!-- Modificado -->
-                      <div class="hidden lg:block truncate">
+                      <div class="truncate">
                         {{
                           perfil?.fechaMod || perfil?.fechaReg
                             | date: "dd/MM/yy  h:mma"
@@ -120,7 +120,7 @@
                       </div>
 
                       <!-- Modificado -->
-                      <div class="hidden lg:block truncate">
+                      <div class="truncate">
                         {{ perfil?.usuarioMod }}
                       </div>
                       <!-- Acciones -->
