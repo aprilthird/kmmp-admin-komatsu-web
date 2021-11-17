@@ -60,4 +60,10 @@ export class DialogAddTipoMtmtoComponent implements OnInit {
         this.matdialigRef.close();
       });
   }
+
+  check(event): void {
+    setTimeout(() => {
+      this.form.controls["estado"].setValue(event.checked ? 1 : 0);
+    }, 200);
+  }
 }

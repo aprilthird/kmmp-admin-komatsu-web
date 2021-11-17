@@ -16,7 +16,16 @@
           dark:bg-transparent
         "
       >
-        <div class="flex w-full items-center min-w-0">
+        <div
+          class="
+            flex flex-col
+            sm:flex-row
+            w-full
+            justify-between
+            items-center
+            min-w-0
+          "
+        >
           <!-- Loader -->
           <div class="absolute inset-x-0 top-0" *ngIf="isLoading">
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
@@ -31,13 +40,25 @@
                 tracking-tight
                 leading-7
                 sm:leading-10
-                truncate
               "
             >
               Perfiles
             </h2>
           </div>
-          <div class="flex w-2/4 justify-end"></div>
+          <div class="flex w-2/4 justify-end">
+            <div class="flex justify-end">
+              <button
+                mat-raised-button
+                [color]="'secondary'"
+                (click)="exportToExcel()"
+              >
+                <mat-icon
+                  [svgIcon]="'heroicons_outline:document-download'"
+                ></mat-icon>
+                <span class="ml-2 mr-1">Exportar</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

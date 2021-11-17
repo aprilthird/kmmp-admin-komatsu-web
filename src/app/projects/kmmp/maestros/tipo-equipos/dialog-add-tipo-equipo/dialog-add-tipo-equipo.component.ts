@@ -48,6 +48,7 @@ export class DialogAddTipoEquipoComponent implements OnInit {
   ngOnInit(): void {}
 
   submit(isEdit): void {
+    this.form.controls["id"].enable();
     this.isLoading = true;
 
     if (isEdit) {

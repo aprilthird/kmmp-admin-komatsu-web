@@ -100,9 +100,9 @@ export class NavigationService {
             getNavigation(e)
           );
           this._permissionsServices.updatPermissions$ = permissions;
-          nextNavigation.default.reverse();
-          nextNavigation.horizontal.reverse();
-          this._navigation.next(nextNavigation);
+
+          //nextNavigation.default.reverse();
+          //nextNavigation.horizontal.reverse();
 
           localStorage.setItem("navigation", JSON.stringify(nextNavigation));
           localStorage.setItem("permissions", JSON.stringify(permissions));

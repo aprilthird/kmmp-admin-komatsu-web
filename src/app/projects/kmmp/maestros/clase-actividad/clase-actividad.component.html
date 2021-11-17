@@ -240,19 +240,14 @@
                 <div class="w-1/4 mb-5">
                   <div class="mt-4 text-lg font-medium">Descripción</div>
                   <div class="mt-0.5 line-clamp-2 text-secondary">
-                    {{
-                      tipoMtto?.descripcion === null ||
-                      tipoMtto?.descripcion === ""
-                        ? "No hay descripción"
-                        : "tipoMtto?.descripcion"
-                    }}
+                    {{ tipoMtto?.descripcion }}
                   </div>
                 </div>
 
                 <div class="w-1/4 mb-5">
                   <div class="mt-4 text-lg font-medium">estado</div>
                   <div class="mt-0.5 line-clamp-2 text-secondary">
-                    {{ tipoMtto?.estado === 0 ? "Inactivo" : "Activo" }}
+                    {{ tipoMtto?.nestado }}
                   </div>
                 </div>
               </div>

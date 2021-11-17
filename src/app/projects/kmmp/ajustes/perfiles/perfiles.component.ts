@@ -3,6 +3,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { Pagination } from "app/core/types/list.types";
+import { SharedService } from "app/shared/shared.service";
+import { ExportExcelService } from "app/shared/utils/export-excel.ts.service";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { DialogAddPerfilComponent } from "../components/dialog-add-perfil/dialog-add-perfil.component";
@@ -17,6 +19,7 @@ export class PerfilesComponent implements OnInit, OnDestroy {
   isLoading = false;
   perfiles$: Observable<any>;
   pagination$: Observable<Pagination>;
+  currentTableData: any[];
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -25,7 +28,9 @@ export class PerfilesComponent implements OnInit, OnDestroy {
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
     private _matDialog: MatDialog,
-    private _fuseConfirmationService: FuseConfirmationService
+    private _fuseConfirmationService: FuseConfirmationService,
+    private exportExcelService: ExportExcelService,
+    private shared: SharedService
   ) {
     this.perfiles$ = this._perfilesServices.perfiles$.pipe(
       takeUntil(this._unsubscribeAll)
@@ -36,6 +41,7 @@ export class PerfilesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadData();
+    this.getCurrentTableData();
   }
 
   /**
@@ -73,7 +79,9 @@ export class PerfilesComponent implements OnInit, OnDestroy {
   }
 
   clickAddPerfil() {
-    const dialogRef = this._matDialog.open(DialogAddPerfilComponent);
+    const dialogRef = this._matDialog.open(DialogAddPerfilComponent, {
+      width: "450px",
+    });
   }
 
   /**
@@ -117,5 +125,14 @@ export class PerfilesComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this._router.navigate([`/admin/ajustes/perfiles/${idProfile}`]);
     }, 100);
+  }
+
+  private getCurrentTableData(): void {
+    this.shared.currentTableData.subscribe((data) => {
+      this.currentTableData = data;
+    });
+  }
+  exportToExcel(): void {
+    this.exportExcelService.exportAsExcelFile(this.currentTableData, "data");
   }
 }

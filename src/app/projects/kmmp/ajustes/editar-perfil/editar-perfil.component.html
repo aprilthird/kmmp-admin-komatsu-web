@@ -85,16 +85,7 @@
           <div class="flex flex-col md:flex-row w-full md:pl-8">
             <div class="font-semibold mb-2">Permisos</div>
           </div>
-          <div
-            class="
-              flex flex-col
-              md:flex-row
-              w-full
-              md:pl-8
-              h-80
-              overflow-y-auto
-            "
-          >
+          <div class="flex flex-col md:flex-row w-full md:pl-8 overflow-y-auto">
             <ul>
               <ng-container
                 *ngTemplateOutlet="recursiveListTmpl; context: { list: list }"
@@ -171,7 +162,7 @@
           mat-flat-button
           [color]="'primary'"
           (click)="onSubmit()"
-          [disabled]="loadingCheckbox"
+          [disabled]="loadingCheckbox || !form.valid"
         >
           <mat-progress-spinner
             *ngIf="loading"

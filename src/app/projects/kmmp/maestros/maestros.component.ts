@@ -73,7 +73,7 @@ export class MaestrosComponent implements OnInit {
       link: "/admin/maestros/clase_actividades",
     });
 
-    /*this.menuData[0].children.push({
+    this.menuData[0].children.push({
       id: "maestros.dispositivos",
       title: "Dispositivos",
       type: "basic",
@@ -85,7 +85,7 @@ export class MaestrosComponent implements OnInit {
       title: "Agregar documentos",
       type: "basic",
       link: "/admin/maestros/agregar_documentos",
-    });*/
+    });
   }
 
   ngOnInit(): void {

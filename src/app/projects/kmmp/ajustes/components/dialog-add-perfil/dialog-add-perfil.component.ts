@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { DialogAddPerfilService } from "./dialog-add-perfil.service";
@@ -13,7 +13,7 @@ export class DialogAddPerfilComponent implements OnInit {
   loading: boolean = false;
 
   form: FormGroup = this.fb.group({
-    nombre: "",
+    nombre: ["", Validators.required],
   });
 
   constructor(

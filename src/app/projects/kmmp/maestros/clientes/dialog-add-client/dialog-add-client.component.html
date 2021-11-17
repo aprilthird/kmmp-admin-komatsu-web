@@ -27,14 +27,16 @@
         <mat-label>RUC</mat-label>
         <input
           matInput
-          type="text"
+          type="number"
+          (keypress)="maxLengValidator()"
           formControlName="ruc"
           placeholder="Ingrese RUC"
           autocomplete="off"
         />
-        <mat-error *ngIf="form.controls['ruc'].invalid">{{
-          matErrorMsg
-        }}</mat-error>
+
+        <mat-error *ngIf="form.controls['ruc'].invalid">
+          RUC debe tener 11 caracteres
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field floatLabel="always" class="w-100-p">

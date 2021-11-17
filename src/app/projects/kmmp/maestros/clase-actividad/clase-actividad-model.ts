@@ -3,6 +3,12 @@ export interface ClaseActividadI {
   estado: boolean;
   nestado?: string;
 }
+export interface TipoMttoI {
+  nombre?: string;
+  estado: boolean;
+  nestado?: string;
+  codigo?: string;
+}
 
 export interface TipoActividadResponseI {
   nombre: string;

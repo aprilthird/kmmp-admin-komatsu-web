@@ -47,6 +47,9 @@ export class DialogAddEquiposComponent implements OnInit {
       horometro: new FormControl(this.initData?.horometro, Validators.required),
       estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
     });
+
+    this.form.controls["cliente"].disable();
+    this.form.controls["horometro"].disable();
   }
 
   ngOnInit(): void {}

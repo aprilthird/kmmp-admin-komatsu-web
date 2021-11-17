@@ -40,8 +40,11 @@ export class DialogAddClientComponent implements OnInit {
     }
 
     this.form = this.fb.group({
-      nombre: new FormControl(this.initData?.nombre, Validators.required),
-      ruc: new FormControl(this.initData?.ruc, Validators.required),
+      nombre: new FormControl(this.initData?.nombre, [Validators.required]),
+      ruc: new FormControl(this.initData?.ruc, [
+        Validators.required,
+        Validators.pattern("^[0-9]{11}$"),
+      ]),
       razon: new FormControl(this.initData?.razon, Validators.required),
       ubicacion: new FormControl(this.initData?.ubicacion, Validators.required),
       estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
@@ -69,5 +72,13 @@ export class DialogAddClientComponent implements OnInit {
     setTimeout(() => {
       this.form.controls["estado"].setValue(event.checked ? 1 : 0);
     }, 200);
+  }
+
+  maxLengValidator(): boolean {
+    if (this.form.controls["ruc"].value) {
+      if (this.form.controls["ruc"].value.toString().length > 10) return false;
+    }
+
+    return true;
   }
 }

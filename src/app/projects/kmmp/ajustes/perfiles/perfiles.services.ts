@@ -1,15 +1,18 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Perfil } from 'app/core/types/perfil.types';
-import { Pagination } from 'app/core/types/list.types';
-import { PaginationResponse, ParamsPagination } from 'app/core/types/http.types';
-import { environment } from 'environments/environment';
-import { tap } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, Observable } from "rxjs";
+import { Perfil } from "app/core/types/perfil.types";
+import { Pagination } from "app/core/types/list.types";
+import {
+  PaginationResponse,
+  ParamsPagination,
+} from "app/core/types/http.types";
+import { environment } from "environments/environment";
+import { tap } from "rxjs/operators";
+import { SharedService } from "app/shared/shared.service";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: "root" })
 export class PerfilesService {
-
   _perfiles: BehaviorSubject<Perfil[]> = new BehaviorSubject(null);
   _pagination: BehaviorSubject<any> = new BehaviorSubject({
     length: 0,
@@ -19,9 +22,8 @@ export class PerfilesService {
     startIndex: 0,
     endIndex: 0,
   });
-  
-  constructor(private _httpClient:HttpClient) { }
-  
+
+  constructor(private _httpClient: HttpClient, private shared: SharedService) {}
 
   get perfiles$(): Observable<Perfil[]> {
     return this._perfiles.asObservable();
@@ -34,7 +36,7 @@ export class PerfilesService {
   /**
    * Obtener el listado de perfiles
    */
-   getPerfiles(
+  getPerfiles(
     { page, pageSize, ...filter }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
@@ -42,7 +44,7 @@ export class PerfilesService {
   ): Observable<PaginationResponse<Perfil[]>> {
     return this._httpClient
       .get<PaginationResponse<Perfil[]>>(
-        environment.apiUrl + "/Seguridad/ObtenerRoles/0",
+        environment.apiUrl + "/Seguridad/ObtenerRoles/0"
       )
       .pipe(
         tap((response) => {
@@ -56,13 +58,15 @@ export class PerfilesService {
             ),
           });
           this._perfiles.next(response.body);
+          this.shared.currentTableData.next(response.body);
         })
       );
   }
 
-  deletePerfil(data):Observable<any> {
-    return this._httpClient.post<any>(environment.apiUrl + '/Seguridad/GuardarRol', data);
+  deletePerfil(data): Observable<any> {
+    return this._httpClient.post<any>(
+      environment.apiUrl + "/Seguridad/GuardarRol",
+      data
+    );
   }
-
-  
 }
