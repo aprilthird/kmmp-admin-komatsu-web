@@ -95,4 +95,17 @@ export class MaestrosService {
         })
       );
   }
+
+  getList(tipo): Observable<any[]> {
+    return this.http.post<any[]>(
+      environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
+      {
+        ...getInboxParams,
+        filter: {
+          ...getInboxParams.filter,
+          tipo: tipo,
+        },
+      }
+    );
+  }
 }

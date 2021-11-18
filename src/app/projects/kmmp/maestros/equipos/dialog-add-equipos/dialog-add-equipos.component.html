@@ -35,7 +35,7 @@
         }}</mat-error>
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" class="w-100-p">
+      <!--<mat-form-field floatLabel="always" class="w-100-p">
         <mat-label>Modelo</mat-label>
         <input
           matInput
@@ -46,9 +46,19 @@
         <mat-error *ngIf="form.controls['modelo'].invalid">{{
           matErrorMsg
         }}</mat-error>
+      </mat-form-field>-->
+      <mat-form-field class="w-100-p">
+        <mat-label class="prose">Modelo</mat-label>
+        <mat-select formControlName="modelo">
+          <mat-option
+            *ngFor="let modelo of modelosData"
+            [value]="modelo.nombre"
+            >{{ modelo.nombre }}</mat-option
+          >
+        </mat-select>
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" class="w-100-p">
+      <!--<mat-form-field floatLabel="always" class="w-100-p">
         <mat-label>Flota</mat-label>
         <input
           matInput
@@ -59,6 +69,17 @@
         <mat-error *ngIf="form.controls['flota'].invalid">{{
           matErrorMsg
         }}</mat-error>
+      </mat-form-field>-->
+      <mat-form-field class="w-100-p">
+        <mat-label class="prose">Flota</mat-label>
+        <mat-select
+          formControlName="flota"
+          (selectionChange)="flotaSelected($event)"
+        >
+          <mat-option *ngFor="let flota of flotasData" [value]="flota.nombre">{{
+            flota.nombre
+          }}</mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field floatLabel="always" class="w-100-p">

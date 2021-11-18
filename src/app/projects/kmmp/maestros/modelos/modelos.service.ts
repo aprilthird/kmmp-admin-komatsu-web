@@ -86,6 +86,7 @@ export class ModelosService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
+          console.log("modelos - ", response.body.data);
           this.modelos.next(response.body.data);
           this.maestroService.currentTableData.next(response.body.data);
         })

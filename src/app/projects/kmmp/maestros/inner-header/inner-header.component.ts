@@ -11,6 +11,7 @@ import { TipoEquiposService } from "../tipo-equipos/tipo-equipos.service";
 import { ExportExcelService } from "app/shared/utils/export-excel.ts.service";
 import { MaestrosService } from "../maestros.service";
 import { UsuariosService } from "../../ajustes/usuarios/usuario.service";
+import { DocumentosService } from "../documentos/documentos.service";
 
 @Component({
   selector: "app-inner-header",
@@ -36,6 +37,7 @@ export class InnerHeaderComponent implements OnInit {
     private flotasService: FlotasService,
     private modelosService: ModelosService,
     private tipoEquiposService: TipoEquiposService,
+    private documentoService: DocumentosService,
     private exportExcelService: ExportExcelService
   ) {}
 
@@ -93,6 +95,9 @@ export class InnerHeaderComponent implements OnInit {
 
       case "usuarios":
         return this._usuariosService.getUsuarios({ nombre: query });
+
+      case "documentos":
+        return this.documentoService.getDocumentos({ nombre: query });
 
       default:
         return [];

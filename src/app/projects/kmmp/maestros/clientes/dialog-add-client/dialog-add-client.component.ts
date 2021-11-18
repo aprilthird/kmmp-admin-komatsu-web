@@ -60,6 +60,10 @@ export class DialogAddClientComponent implements OnInit {
       this.form.addControl("id", new FormControl(this.clientId));
     }
 
+    this.form.controls["ruc"].setValue(
+      this.form.controls["ruc"].value.toString()
+    );
+
     this.maestroService.postClient(this.form.value).subscribe((resp) => {
       setTimeout(() => {
         this.isLoading = false;

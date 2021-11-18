@@ -86,6 +86,7 @@ export class FlotasService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
+          console.log("flotas - ", response.body.data);
           this.flotas.next(response.body.data);
           this.maestroService.currentTableData.next(response.body.data);
         })

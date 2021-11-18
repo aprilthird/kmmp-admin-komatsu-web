@@ -22,7 +22,7 @@
         }}</mat-error>
       </mat-form-field>
 
-      <mat-form-field floatLabel="always" class="w-100-p">
+      <!--<mat-form-field floatLabel="always" class="w-100-p">
         <mat-label>Cliente</mat-label>
         <input
           matInput
@@ -33,6 +33,17 @@
         <mat-error *ngIf="form.controls['cliente'].invalid">{{
           matErrorMsg
         }}</mat-error>
+      </mat-form-field>-->
+
+      <mat-form-field class="w-100-p">
+        <mat-label class="prose">Cliente</mat-label>
+        <mat-select formControlName="cliente">
+          <mat-option
+            *ngFor="let cliente of clienteOptions"
+            [value]="cliente.nombre"
+            >{{ cliente.nombre }}</mat-option
+          >
+        </mat-select>
       </mat-form-field>
 
       <mat-slide-toggle

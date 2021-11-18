@@ -41,18 +41,19 @@
     </div>
 
     <!-- Main -->
-    <div class="flex flex-auto w-full overflow-hidden">
-      <!-- Usuarios list -->
+    <div class="flex flex-auto overflow-hidden">
+      <!-- Products list -->
       <div
         class="
           flex flex-col flex-auto
+          sm:mb-18
           overflow-hidden
           sm:overflow-y-auto
           bg-white
         "
       >
-        <ng-container *ngIf="dispositivos$ | async as dispositivos">
-          <ng-container *ngIf="dispositivos.length > 0; else empty">
+        <ng-container *ngIf="dispositivos$ | async as formatos">
+          <ng-container *ngIf="formatos.length > 0; else empty">
             <div class="grid overflow-x-auto cont-scroll-y">
               <!-- Header -->
               <div
@@ -77,9 +78,10 @@
                 matSort
                 matSortDisableClear
               >
-                <div>Dispositivo</div>
-                <div class="hidden lg:block">Bahía asignada</div>
-                <div class="hidden lg:block">Fecha</div>
+                <div class="">Usuario</div>
+                <div class="">Instalaciones</div>
+                <div class="">Asignado</div>
+                <div class="">Fecha de registro</div>
               </div>
 
               <!-- Rows -->
@@ -100,17 +102,44 @@
                       justify-between
                     "
                   >
-                    <!-- Usuario -->
+                    <!-- Modificado Por -->
                     <div class="truncate">
-                      {{ dispositivo.dispositivo }}
+                      {{ dispositivo.usuario }}
                     </div>
 
-                    <div class="hidden lg:block truncate">
-                      {{ dispositivo?.bahia_asignada }}
+                    <!-- Modificado Por -->
+                    <div class="truncate">
+                      {{ dispositivo.instalaciones }}
                     </div>
 
-                    <div class="hidden lg:block truncate">
-                      {{ dispositivo?.fecha_creacion }}
+                    <!-- Modificado Por -->
+                    <div class="truncate">
+                      <span
+                        class="
+                          inline-flex
+                          items-center
+                          font-bold
+                          text-xs
+                          px-2.5
+                          py-0.5
+                          rounded-full
+                          tracking-wide
+                          uppercase
+                        "
+                        [ngClass]="{
+                          'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                            dispositivo.asignado,
+                          'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
+                            !dispositivo.asignado
+                        }"
+                      >
+                        {{ dispositivo.asignado ? "Asignado" : "No asignado" }}
+                      </span>
+                    </div>
+
+                    <!-- Modificado Por -->
+                    <div class="truncate">
+                      {{ dispositivo.fechaReg | date: "dd/MM/yy  h:mma" }}
                     </div>
                   </div>
                 </ng-container>
@@ -118,7 +147,7 @@
             </div>
             <mat-paginator
               class="
-                sm:inset-x-0 sm:bottom-0
+                sm:absolute sm:inset-x-0 sm:bottom-0
                 border-b
                 sm:border-t sm:border-b-0
                 z-10
@@ -133,30 +162,24 @@
               [showFirstLastButtons]="true"
               (page)="changePage($event)"
             ></mat-paginator>
-            <div
-              class="
-                absolute
-                flex flex-0
-                items-center
-                justify-end
-                h-16
-                px-4
-                bottom-0
-                z-49
-                right-0
-                dark:bg-transparent
-                print:hidden
-              "
-            >
-              <span class="font-medium text-secondary">
-                <a mat-button color="primary" (click)="createDispositivo()">
-                  <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-                  Nuevo dispositivo
-                </a>
-              </span>
-            </div>
           </ng-container>
         </ng-container>
+
+        <ng-template #empty>
+          <div
+            class="
+              p-8
+              sm:p-16
+              border-t
+              text-4xl
+              font-semibold
+              tracking-tight
+              text-center
+            "
+          >
+            No hay dispositivos registrados
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>

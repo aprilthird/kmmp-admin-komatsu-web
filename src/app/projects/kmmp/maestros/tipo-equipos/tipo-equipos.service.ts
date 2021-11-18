@@ -58,7 +58,7 @@ export class TipoEquiposService {
     }
   ): Observable<PaginationResponse<TipoEquipoI[]>> {
     let currentFilter;
-    getInboxParams.filter.tipo = 7;
+    getInboxParams.filter.tipo = 3;
     getInboxParams.filter.nombre = nombre;
 
     if (!page) {

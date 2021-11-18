@@ -6,6 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MaestrosService } from "../../maestros.service";
 import { FlotaI } from "../flota-model";
 import { FlotasService } from "../flotas.service";
 
@@ -22,12 +23,14 @@ export class DialogAddFlotasComponent implements OnInit {
   isEdit: boolean;
   flotaId: number;
   isLoading: boolean;
+  clienteOptions: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private flotaService: FlotasService,
     private fb: FormBuilder,
-    public matdialigRef: MatDialogRef<DialogAddFlotasComponent>
+    public matdialigRef: MatDialogRef<DialogAddFlotasComponent>,
+    private maestServ: MaestrosService
   ) {
     if (this.data) {
       this.isEdit = true;
@@ -39,9 +42,17 @@ export class DialogAddFlotasComponent implements OnInit {
       cliente: new FormControl(this.initData?.cliente, Validators.required),
       estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
     });
+
+    this.setCliente();
   }
 
   ngOnInit(): void {}
+
+  setCliente(): void {
+    this.maestServ.getList(1).subscribe((resp: any) => {
+      this.clienteOptions = resp.body.data;
+    });
+  }
 
   submit(isEdit): void {
     this.isLoading = true;

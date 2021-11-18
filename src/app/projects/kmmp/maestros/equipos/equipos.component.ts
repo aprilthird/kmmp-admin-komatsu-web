@@ -1,3 +1,4 @@
+import { X } from "@angular/cdk/keycodes";
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -5,6 +6,7 @@ import { PermissionService } from "app/core/permission/permission.service";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+
 import { DialogAddEquiposComponent } from "./dialog-add-equipos/dialog-add-equipos.component";
 import { EquipoI } from "./equipo-model";
 import { EquiposService } from "./equipos.service";

@@ -6,6 +6,8 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { map } from "rxjs/operators";
+import { MaestrosService } from "../../maestros.service";
 import { BahiaI } from "../bahia-model";
 import { BahiasService } from "../bahias.service";
 
@@ -21,12 +23,14 @@ export class DialogAddBahiasComponent implements OnInit {
   isEdit: boolean;
   bahiaId: number;
   isLoading: boolean;
+  clienteOptions: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private bahiaService: BahiasService,
     private fb: FormBuilder,
-    public matdialigRef: MatDialogRef<DialogAddBahiasComponent>
+    public matdialigRef: MatDialogRef<DialogAddBahiasComponent>,
+    private maestServ: MaestrosService
   ) {
     if (this.data) {
       this.isEdit = true;
@@ -38,9 +42,17 @@ export class DialogAddBahiasComponent implements OnInit {
       estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
       cliente: new FormControl(this.initData?.cliente, Validators.required),
     });
+
+    this.setCliente();
   }
 
   ngOnInit(): void {}
+
+  setCliente(): void {
+    this.maestServ.getList(1).subscribe((resp: any) => {
+      this.clienteOptions = resp.body.data;
+    });
+  }
 
   submit(isEdit): void {
     this.isLoading = true;

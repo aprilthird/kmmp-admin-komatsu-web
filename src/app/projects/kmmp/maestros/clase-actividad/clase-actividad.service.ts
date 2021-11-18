@@ -67,7 +67,7 @@ export class ClaseActividadService {
         id: 0,
         idUsuario: 0,
         estado: 0,
-        tipo: 8,
+        tipo: 9,
         idClaseActividad: idClaseActividad,
       },
     };
