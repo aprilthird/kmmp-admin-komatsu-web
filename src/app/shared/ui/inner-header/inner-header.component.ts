@@ -3,6 +3,7 @@ import { FormControl } from "@angular/forms";
 import { UsuariosService } from "app/projects/kmmp/ajustes/usuarios/usuario.service";
 import { BahiasService } from "app/projects/kmmp/maestros/bahias/bahias.service";
 import { ClaseActividadService } from "app/projects/kmmp/maestros/clase-actividad/clase-actividad.service";
+import { DocumentosService } from "app/projects/kmmp/maestros/documentos/documentos.service";
 import { EquiposService } from "app/projects/kmmp/maestros/equipos/equipos.service";
 import { FlotasService } from "app/projects/kmmp/maestros/flotas/flotas.service";
 import { MaestrosService } from "app/projects/kmmp/maestros/maestros.service";
@@ -38,7 +39,8 @@ export class InnerHeaderComponent implements OnInit {
     private modelosService: ModelosService,
     private tipoEquiposService: TipoEquiposService,
     private exportExcelService: ExportExcelService,
-    private shared: SharedService
+    private shared: SharedService,
+    private docs: DocumentosService
   ) {}
 
   ngOnInit(): void {
@@ -92,6 +94,9 @@ export class InnerHeaderComponent implements OnInit {
 
       case "clase_actividades":
         return this.claseActividadService.getClaseActividad({ nombre: query });
+
+      case "documentos":
+        return this.docs.getDocumentos({ nombre: query });
 
       case "usuarios":
         return this._usuariosService.getUsuarios({ nombre: query });

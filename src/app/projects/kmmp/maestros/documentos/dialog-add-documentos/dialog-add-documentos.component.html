@@ -1,1 +1,152 @@
-<p>dialog-add-documentos works!</p>
+<form [formGroup]="form">
+  <div mat-dialog-title class="flex justify-between items-center">
+    <h4>Agregar Documento</h4>
+    <button mat-icon-button type="button" (click)="matdialigRef.close()">
+      <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content class="pb-6">
+    <div class="flex flex-col w-full">
+      <!-- Nombre -->
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="nombre"
+          placeholder="Ingrese nombre"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="form.controls['nombre'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Cliente</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="cliente"
+          placeholder="Ingrese cliente"
+          autocomplete="off"
+        />
+
+        <mat-error **ngIf="form.controls['cliente'].invalid">
+          {{ matErrorMsg }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Modelo</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="modelo"
+          placeholder="Ingrese modelo"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="form.controls['modelo'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Actividad</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="actividad"
+          placeholder="Ingrese actividad"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="form.controls['actividad'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Tipo mantenimiento</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="tipo_mantenimiento"
+          placeholder="Ingrese tipo_mantenimiento"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="form.controls['tipo_mantenimiento'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Documento</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="documento"
+          placeholder="Ingrese Documento"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="form.controls['documento'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-slide-toggle
+        color="primary"
+        (change)="check($event)"
+        [checked]="form.controls['estado'].value === 1 ? true : false"
+      >
+        Estado
+      </mat-slide-toggle>
+    </div>
+  </div>
+  <div mat-dialog-actions class="flex justify-center px-6 gap-5">
+    <button
+      (click)="matdialigRef.close()"
+      mat-button
+      class="
+        ml-4
+        bg-gray-50
+        border-solid border border-accent-300
+        text-gray-700
+        shadow-none
+      "
+    >
+      Cancelar
+    </button>
+    <button
+      *ngIf="!isEdit"
+      mat-raised-button
+      [color]="'primary'"
+      class="w-32"
+      (click)="submit()"
+      [disabled]="form.invalid"
+    >
+      <mat-progress-spinner
+        *ngIf="isLoading"
+        [diameter]="24"
+        [mode]="'indeterminate'"
+      ></mat-progress-spinner>
+      <span>Crear</span>
+    </button>
+
+    <button
+      *ngIf="isEdit"
+      mat-raised-button
+      [color]="'primary'"
+      class="w-32"
+      (click)="submit('edit')"
+      [disabled]="form.invalid"
+    >
+      <mat-progress-spinner
+        *ngIf="isLoading"
+        [diameter]="24"
+        [mode]="'indeterminate'"
+      ></mat-progress-spinner>
+      <span>Editar</span>
+    </button>
+  </div>
+</form>

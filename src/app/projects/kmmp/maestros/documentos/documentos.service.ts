@@ -12,6 +12,9 @@ import {
   DocumentoResponse,
   DocumentoResponseI,
 } from "./documento-model";
+import { getInboxParams } from "../maestro-model";
+import { environment } from "environments/environment";
+import { MaestrosService } from "../maestros.service";
 
 @Injectable({
   providedIn: "root",
@@ -27,7 +30,10 @@ export class DocumentosService {
     endIndex: 0,
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private maestroService: MaestrosService
+  ) {}
 
   get documentos$(): Observable<DocumentoI[]> {
     return this.documentos.asObservable();
@@ -42,7 +48,7 @@ export class DocumentosService {
   }
 
   postDocumento(documento): Observable<any> {
-    const endpoint = "/Administracion/CrudAgregarDocumentos/" + 0;
+    const endpoint = "/api/Administracion/GestionDocumentaria";
     return this.http.post<PaginationResponse<DocumentoI[]>>(
       "https://development-kmp.ws.solera.pe" + endpoint,
       documento
@@ -50,15 +56,28 @@ export class DocumentosService {
   }
 
   getDocumentos(
-    { page, pageSize }: ParamsPagination | any = {
+    { page, pageSize, nombre }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<DocumentoI[]>> {
+    let currentFilter;
+    getInboxParams.filter.tipo = 8;
+    getInboxParams.filter.nombre = nombre;
+
+    if (!page) {
+      currentFilter = { ...getInboxParams };
+    } else {
+      currentFilter = {
+        ...getInboxParams,
+        page,
+        pageSize,
+      };
+    }
     return this.http
-      .get<PaginationResponse<DocumentoI[]>>(
-        "https://development-kmp.ws.solera.pe" +
-          "/Administracion/ObtenerGenerales/11"
+      .post<PaginationResponse<any[]>>(
+        environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
+        { page, pageSize, ...currentFilter }
       )
       .pipe(
         tap((response) => {
@@ -71,27 +90,10 @@ export class DocumentosService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
+
           this.documentos.next(response.body.data);
+          this.maestroService.currentTableData.next(response.body.data);
         })
       );
-  }
-
-  getDocumentosFake(
-    { page, pageSize }: ParamsPagination | any = {
-      page: 0,
-      pageSize: 10,
-    }
-  ): PaginationResponse<DocumentoResponseI[]> {
-    this._pagination.next({
-      ...this._pagination.getValue(),
-      page,
-      size: pageSize,
-      length: DocumentoResponse.body.length,
-      lastPage: Math.ceil(
-        DocumentoResponse.body.length / this._pagination.getValue().size
-      ),
-    });
-    this.documentos.next(DocumentoResponse.body);
-    return DocumentoResponse;
   }
 }

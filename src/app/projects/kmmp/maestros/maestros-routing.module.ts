@@ -5,6 +5,7 @@ import { BahiasComponent } from "./bahias/bahias.component";
 import { ClaseActividadComponent } from "./clase-actividad/clase-actividad.component";
 import { ClientesComponent } from "./clientes/clientes.component";
 import { DispositivosComponent } from "./dispositivos/dispositivos.component";
+import { DocumentosComponent } from "./documentos/documentos.component";
 import { EquiposComponent } from "./equipos/equipos.component";
 import { FlotasComponent } from "./flotas/flotas.component";
 import { MaestrosComponent } from "./maestros.component";
@@ -59,6 +60,12 @@ const routes: Routes = [
       {
         path: "tipo_equipos",
         component: TipoEquiposComponent,
+        //canActivate: [MenuPermissionGuard],
+      },
+
+      {
+        path: "agregar_documentos",
+        component: DocumentosComponent,
         //canActivate: [MenuPermissionGuard],
       },
     ],
