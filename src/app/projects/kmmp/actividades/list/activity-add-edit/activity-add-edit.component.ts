@@ -22,10 +22,11 @@ export class ActivityAddEditComponent implements OnInit {
   service_orders = ServiceOrders;
   pe_items = PE;
   isEdit: boolean;
-  idActivity: any;
+  idActivity: number;
   isLoading: boolean = true;
   tipo_mantenimientos = tipo_mantenimientos;
   tipo_solicitudes = tipo_solicitudes;
+  loadLoading: boolean;
 
   form: FormGroup = this.fb.group({
     cliente: new FormControl(""),
@@ -62,11 +63,22 @@ export class ActivityAddEditComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private serviceAct: ActivitiesService
-  ) {}
+  ) {
+    this.getActivityId();
+  }
 
   ngOnInit(): void {
-    this.getData();
+    //this.getData();
     this.getInboxes();
+  }
+
+  private getActivityId() {
+    this.activatedRoute.paramMap.subscribe((resp: any) => {
+      if (resp.params.id) {
+        this.isEdit = true;
+        this.idActivity = Number(resp.params.id);
+      }
+    });
   }
 
   getInboxes(): void {
@@ -118,7 +130,7 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   addSingleActivity(): void {
-    const params: ActivityI = {
+    /*const params: ActivityI = {
       cliente: JSON.stringify(this.form.controls["cliente"].value),
       idEquipo: this.form.controls["equipo"].value,
       flota: Number(this.form.controls["flota"].value),
@@ -130,12 +142,14 @@ export class ActivityAddEditComponent implements OnInit {
       nbl: this.form.controls["numero_bl"].value,
       nos: "xxx",
       npe: "yyy",
-      idCliente: 0,
+      idCliente: this.form.controls["cliente"].value,
       idActividad: this.form.controls["actividad"].value,
       modelo: 10,
-    };
-    this.serviceAct.postCargaIndividual(params).subscribe((resp) => {
-      console.log(resp);
+    };*/
+    this.loadLoading = true;
+    this.serviceAct.postCargaIndividual(this.getParams()).subscribe((resp) => {
+      this.loadLoading = false;
+      this.router.navigate(["/admin/actividades/list"]);
     });
   }
 
@@ -166,7 +180,12 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   saveActivity(): void {
-    this.router.navigate(["/admin/actividades/list"]);
+    this.loadLoading = true;
+    this.serviceAct.postCargaIndividual(this.getParams()).subscribe((resp) => {
+      console.log("resp post activity ", resp);
+      this.loadLoading = false;
+      this.router.navigate(["/admin/actividades/list"]);
+    });
   }
 
   createActivity(): void {
@@ -177,6 +196,30 @@ export class ActivityAddEditComponent implements OnInit {
     });
 
     this.router.navigate(["/admin/actividades/list"]);
+  }
+
+  getParams(): any {
+    const params: ActivityI = {
+      cliente: JSON.stringify(this.form.controls["cliente"].value),
+      idEquipo: this.form.controls["equipo"].value,
+      flota: Number(this.form.controls["flota"].value),
+      equipo: this.form.controls["tipo_equipo"].value,
+      idTipoMantenimiento: this.form.controls["tipo_mantenimiento"].value,
+      idBahia: this.form.controls["bahia_asignada"].value,
+      idTipoSolicitud: this.form.controls["tipo_solicitud"].value,
+      descripcion: this.form.controls["descripcion_actividad"].value,
+      nbl: this.form.controls["numero_bl"].value,
+      nos: "xxx",
+      npe: "yyy",
+      idCliente: this.form.controls["cliente"].value,
+      idActividad: this.form.controls["actividad"].value,
+      modelo: 10,
+    };
+    if ((this.isEdit = true)) {
+      params["id"] = this.idActivity;
+    }
+
+    return params;
   }
 }
 

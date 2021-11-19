@@ -94,13 +94,13 @@
                 </mat-checkbox>
               </div>
               <div class="">Cliente</div>
-              <div class="hidden lg:block">Equipo</div>
-              <div class="hidden lg:block">Modelo</div>
-              <div class="hidden lg:block">Actividad</div>
-              <div class="hidden lg:block">Tipo Mnto</div>
-              <div class="hidden lg:block">Bahía asignada</div>
-              <div class="hidden lg:block">Estado</div>
-              <div class="hidden lg:block">Tipo de solicitud</div>
+              <div class="">Equipo</div>
+              <div class="">Modelo</div>
+              <div class="">Actividad</div>
+              <div class="">Tipo Mnto</div>
+              <div class="">Bahía asignada</div>
+              <div class="">Estado</div>
+              <div class="">Tipo de solicitud</div>
               <div>Detalles</div>
               <div></div>
             </div>
@@ -132,25 +132,25 @@
                     {{ actividad?.cliente }}
                   </div>
 
-                  <div class="hidden lg:block truncate">
+                  <div class="truncate">
                     {{ actividad?.equipo }}
                   </div>
 
-                  <div class="hidden lg:block truncate">
+                  <div class="truncate">
                     {{ actividad?.modelo }}
                   </div>
 
-                  <div class="hidden lg:block truncate">
+                  <div class="truncate">
                     {{ actividad?.actividad }}
                   </div>
 
-                  <div class="hidden lg:block truncate">
+                  <div class="truncate">
                     {{ actividad?.tipo_mantenimiento }}
                   </div>
-                  <div class="hidden lg:block truncate">
+                  <div class="truncate">
                     {{ actividad?.bahia_asignada }}
                   </div>
-                  <div class="hidden lg:block truncate">
+                  <div class="truncate">
                     <span
                       class="
                         inline-flex
@@ -168,7 +168,9 @@
                       "
                     >
                       <span class="leading-relaxed whitespace-nowrap">
-                        {{ actividad?.estado }}</span
+                        {{
+                          actividad?.estado === 0 ? "Inactivo" : "Activo"
+                        }}</span
                       ></span
                     >
                   </div>

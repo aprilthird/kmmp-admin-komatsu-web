@@ -382,6 +382,11 @@
               [color]="'primary'"
               (click)="saveActivity()"
             >
+              <mat-progress-spinner
+                *ngIf="loadLoading"
+                [diameter]="24"
+                [mode]="'indeterminate'"
+              ></mat-progress-spinner>
               <span class="ml-2 mr-1">Guardar</span>
             </button>
 
@@ -389,9 +394,13 @@
               *ngIf="!isEdit"
               mat-raised-button
               [color]="'primary'"
-              (click)="createActivity()"
               (click)="addSingleActivity()"
             >
+              <mat-progress-spinner
+                *ngIf="loadLoading"
+                [diameter]="24"
+                [mode]="'indeterminate'"
+              ></mat-progress-spinner>
               <span class="ml-2 mr-1">Crear</span>
             </button>
           </div>

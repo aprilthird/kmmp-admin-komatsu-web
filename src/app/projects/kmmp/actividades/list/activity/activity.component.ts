@@ -29,6 +29,7 @@ export class ActivityComponent implements OnInit, OnChanges {
 
   @Input() isEdit: boolean = false;
   @Input() activityData: ActivityFake;
+  activityInfo: any;
   constructor(
     private dialog: MatDialog,
     private activitiesService: ActivitiesService
@@ -36,6 +37,8 @@ export class ActivityComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.preloadedFormats();
+    console.log("this.activityData.id ", this.activityData.id);
+    this.getActivityData(this.activityData.id);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -49,6 +52,12 @@ export class ActivityComponent implements OnInit, OnChanges {
     }
   }
 
+  getActivityData(id: number): void {
+    this.activitiesService.getActivity(id).subscribe((resp: any) => {
+      this.activityInfo = resp.body;
+      console.log("activityInfo, ", this.activityInfo);
+    });
+  }
   assignFormat(): void {
     this.dialog.open(AssignBayComponent, {
       width: "370px",

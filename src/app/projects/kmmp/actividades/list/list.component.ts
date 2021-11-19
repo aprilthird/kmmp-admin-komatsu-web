@@ -24,7 +24,8 @@ export class ListComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   isLoading = false;
   //activities: Activity[] = Asignaciones;
-  activities: ActivityFake[] = ActivitiesData;
+  //activities: ActivityFake[] = ActivitiesData;
+  activities: any[];
   assignToBay: boolean;
   isEdit: boolean;
   selectedActivity: any;
@@ -38,10 +39,18 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAsignations();
+    //this.getAsignations();
+    this.getActivities();
   }
 
   changePage(): void {}
+
+  getActivities(): void {
+    this.activitiesService.getActivities().subscribe((_activities: any) => {
+      console.log(_activities);
+      this.activities = _activities.body.data;
+    });
+  }
 
   getAsignations(): void {
     this.activitiesService.activities$.subscribe(

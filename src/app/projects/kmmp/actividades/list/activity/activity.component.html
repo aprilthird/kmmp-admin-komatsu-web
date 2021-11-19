@@ -9,34 +9,34 @@
       <div class="flex gap-5">
         <div class="flex flex-col">
           <span class="text-md text-secondary">Flota</span>
-          <span class="font-semibold">Palas</span>
+          <span class="font-semibold">{{ activityInfo?.flota }}</span>
         </div>
 
         <div class="flex flex-col">
           <span class="text-md text-secondary">TAG</span>
-          <span class="font-semibold">SH1</span>
+          <span class="font-semibold">{{ activityInfo?.tag }}</span>
         </div>
 
         <div class="flex flex-col">
           <span class="text-md text-secondary">OS</span>
-          <span class="font-semibold">DSDFSFE4FETEFD</span>
+          <span class="font-semibold">{{ activityInfo?.nos }}</span>
         </div>
 
         <div class="flex flex-col">
           <span class="text-md text-secondary">PE</span>
-          <span class="font-semibold">fd766767dfdf7</span>
+          <span class="font-semibold">{{ activityInfo?.npe }}</span>
         </div>
       </div>
 
       <div class="flex gap-5">
         <div class="flex flex-col">
           <span class="text-md text-secondary">Nro BL</span>
-          <span class="font-semibold">43354545</span>
+          <span class="font-semibold">{{ activityInfo?.nbl }}</span>
         </div>
 
         <div class="flex flex-col">
           <span class="text-md text-secondary">Fecha de carga</span>
-          <span class="font-semibold">31/10/2021</span>
+          <span class="font-semibold">{{ activityInfo?.fechaCarga }}</span>
         </div>
       </div>
     </div>
@@ -46,14 +46,21 @@
       <div class="flex flex-col gap-5">
         <div class="flex flex-col mr-4">
           <span class="text-md text-secondary">Fecha estimada</span>
-          <span class="font-semibold">12/11/2021 - 20/11/2021</span>
+          <span class="font-semibold"
+            >{{ activityInfo?.fechaEstimadaIni }} -
+            {{ activityInfo?.fechaEstimadaFin }}</span
+          >
         </div>
 
         <div class="flex flex-col mr-4">
           <span class="text-md text-secondary">Fecha y hora reales</span>
           <div class="flex flex-col">
-            <span class="text-red-600 font-bold">12/11/2021 8:00: AM</span>
-            <span class="text-red-600 font-bold">15/11/2021 2:00: PM</span>
+            <span class="text-red-600 font-bold">{{
+              activityInfo?.fechaRealIni
+            }}</span>
+            <span class="text-red-600 font-bold">{{
+              activityInfo?.fechaRealFin
+            }}</span>
           </div>
         </div>
       </div>
@@ -61,12 +68,14 @@
       <div class="flex flex-col gap-5">
         <div class="flex flex-col">
           <span class="text-md text-secondary">Duración estimada</span>
-          <span class="font-semibold">20h</span>
+          <span class="font-semibold">{{ activityInfo?.duracion }}</span>
         </div>
 
         <div class="flex flex-col">
           <span class="text-md text-secondary">Duración</span>
-          <span class="text-red-600 font-bold">20h</span>
+          <span class="text-red-600 font-bold">{{
+            activityInfo?.duracionReal
+          }}</span>
         </div>
       </div>
     </div>
@@ -74,7 +83,9 @@
     <div class="flex flex-col ml-1.5 gap-5">
       <div class="flex flex-col mb-2">
         <div class="text-md text-secondary">Cometarios del técnico</div>
-        <span class="font-semibold">Demora leve observaciones H303</span>
+        <span class="font-semibold">{{
+          activityInfo?.comentariosTecnico
+        }}</span>
       </div>
     </div>
   </div>

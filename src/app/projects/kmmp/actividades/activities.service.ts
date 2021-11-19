@@ -114,4 +114,20 @@ export class ActivitiesService {
       data
     );
   }
+
+  getActivities(): Observable<any[]> {
+    return this.http.post<any[]>(
+      environment.apiUrl + "/Actividades/BandejaActividades",
+      {
+        ...getInboxParams,
+        filter: {},
+      }
+    );
+  }
+
+  getActivity(id: number): Observable<any[]> {
+    return this.http.get<any[]>(
+      environment.apiUrl + `/Actividades/ObtenerActividad/${id}`
+    );
+  }
 }
