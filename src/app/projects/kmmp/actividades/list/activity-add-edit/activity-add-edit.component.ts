@@ -214,9 +214,15 @@ export class ActivityAddEditComponent implements OnInit {
       idCliente: this.form.controls["cliente"].value,
       idActividad: this.form.controls["actividad"].value,
       modelo: 10,
+      visible: true,
+      activo: true,
+      actividad: "actividad",
+      nombre: "nombre",
     };
     if ((this.isEdit = true)) {
       params["id"] = this.idActivity;
+    } else {
+      params["id"] = 0;
     }
 
     return params;

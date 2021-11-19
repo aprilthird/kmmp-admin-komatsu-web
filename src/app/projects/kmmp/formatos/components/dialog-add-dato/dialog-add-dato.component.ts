@@ -140,9 +140,18 @@ export class DialogAddDatoComponent implements OnInit {
               this.dialogRef.close();
             }, 100);
           } else {
+            let errorMessage: string;
+            if (
+              response.message === "No puede existir una fila y columna igual"
+            ) {
+              errorMessage =
+                "La posición de dicha fila y columna ya existe!, no puede ser la misma";
+            } else {
+              errorMessage = response.message;
+            }
             this.alert = {
               type: "error",
-              message: response.message,
+              message: errorMessage,
             };
           }
         },
@@ -174,13 +183,16 @@ export class DialogAddDatoComponent implements OnInit {
           visible: [values.visible],
           obligatorio: [values.obligatorio],
           editable: [values.editable],
-          minCaracteres: [values.minCaracteres, { disabled: true }],
-          maxCaracteres: [values.maxCaracteres, { disabled: true }],
+          minCaracteres: [values.minCaracteres],
+          maxCaracteres: [values.maxCaracteres],
           regex: [values.regex],
           fila: [values.fila, Validators.required],
           columna: [values.columna, Validators.required],
           dato: values.dato,
         });
+        this.form.get("regex").disable();
+        this.form.get("minCaracteres").disable();
+        this.form.get("maxCaracteres").disable();
 
         break;
 
@@ -254,6 +266,8 @@ export class DialogAddDatoComponent implements OnInit {
           columna: [values.columna, Validators.required],
         });
         this.form.get("regex").disable();
+        this.form.get("minCaracteres").disable();
+        this.form.get("maxCaracteres").disable();
         break;
 
       case TipoParametro.LABEL:
@@ -337,5 +351,14 @@ export class DialogAddDatoComponent implements OnInit {
       this.form.get("dato").setValue(null);
       this.image = "";
     }
+  }
+
+  onkeyDownEvent(event): boolean {
+    return (
+      event.keyCode !== 69 &&
+      event.keyCode !== 189 &&
+      event.keyCode !== 187 &&
+      event.keyCode !== 190
+    );
   }
 }

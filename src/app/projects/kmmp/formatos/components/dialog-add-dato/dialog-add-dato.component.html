@@ -171,6 +171,7 @@
             matInput
             type="number"
             formControlName="minCaracteres"
+            (keydown)="onkeyDownEvent($event)"
           />
           <mat-error>Ingrese un número mayor a 0 </mat-error>
         </mat-form-field>
@@ -183,6 +184,7 @@
             matInput
             type="number"
             formControlName="maxCaracteres"
+            (keydown)="onkeyDownEvent($event)"
           />
           <mat-error>Ingrese un número mayor a 0 </mat-error>
         </mat-form-field>
@@ -191,14 +193,26 @@
       <div class="flex w-full justify-space dialog-flex-separator">
         <mat-form-field class="w-full md:w-1/3 md:pr-2">
           <mat-label>Fila</mat-label>
-          <input min="0" matInput type="number" formControlName="fila" />
+          <input
+            min="0"
+            matInput
+            type="number"
+            formControlName="fila"
+            (keydown)="onkeyDownEvent($event)"
+          />
           <mat-error>Ingrese un número mayor a 0 </mat-error>
         </mat-form-field>
 
         <!-- Máximo de caracteres -->
         <mat-form-field class="w-full md:w-1/3 md:px-1">
           <mat-label>Columna</mat-label>
-          <input min="0" matInput type="number" formControlName="columna" />
+          <input
+            min="0"
+            matInput
+            type="number"
+            formControlName="columna"
+            (keydown)="onkeyDownEvent($event)"
+          />
           <mat-error>Ingrese un número mayor a 0 </mat-error>
         </mat-form-field>
       </div>

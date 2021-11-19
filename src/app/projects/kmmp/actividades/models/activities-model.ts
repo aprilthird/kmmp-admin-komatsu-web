@@ -27,4 +27,5 @@ export interface Activity {
   equipo: string;
   flota?: number;
   modelo?: number;
+  actividad?: string;
 }
