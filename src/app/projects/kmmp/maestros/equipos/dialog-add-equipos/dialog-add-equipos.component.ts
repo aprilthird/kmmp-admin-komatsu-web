@@ -11,15 +11,17 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSelectChange } from "@angular/material/select";
 import { forkJoin } from "rxjs";
 import { map } from "rxjs/operators";
+import { ClientI } from "../../clientes/client-model";
 import { FlotasService } from "../../flotas/flotas.service";
 import { MaestrosService } from "../../maestros.service";
-import { ModelosService } from "../../modelos/modelos.service";
 
 //MODELS
 import { EquipoI } from "../equipo-model";
 
 //SERVICES
 import { EquiposService } from "../equipos.service";
+import { ModelosService } from "../../modelos/modelos.service";
+import { ModeloI } from "../../modelos/modelo-model";
 
 @Component({
   selector: "app-dialog-add-equipos",
@@ -45,7 +47,8 @@ export class DialogAddEquiposComponent implements OnInit {
     private equiposService: EquiposService,
     private fb: FormBuilder,
     public matdialigRef: MatDialogRef<DialogAddEquiposComponent>,
-    private maestServ: MaestrosService
+    private maestServ: MaestrosService,
+    private modelosService: ModelosService
   ) {
     if (this.data) {
       this.isEdit = true;
@@ -56,15 +59,15 @@ export class DialogAddEquiposComponent implements OnInit {
     this.form = this.fb.group({
       nombre: new FormControl(this.initData?.nombre, Validators.required),
       tag: new FormControl(this.initData?.tag, Validators.required),
-      modelo: new FormControl(this.initData?.modelo),
+      modelo: new FormControl(this.initData?.modelo, Validators.required),
       idModelo: new FormControl(this.initData?.idModelo, Validators.required),
       flota: new FormControl(this.initData?.flota, Validators.required),
       cliente: new FormControl(this.initData?.cliente, Validators.required),
+      idCliente: new FormControl(),
       estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
     });
 
     this.form.controls["cliente"].disable();
-    this.form.controls["horometro"].disable();
   }
 
   ngOnInit(): void {}
@@ -80,27 +83,19 @@ export class DialogAddEquiposComponent implements OnInit {
       this.flotasData = await resp[1];
       this.tipo_equipos = await resp[2];
       this.isLoading = false;
-      this.setDinamycData();
-      this.setInitModelo(this.initData?.modelo);
+
+      if (this.isEdit) {
+        this.setDinamycData();
+        //this.setInitModelo(this.initData?.modelo);
+      }
     });
   }
 
-  setDinamycData(): void {
-    if (this.isEdit) {
-      const currentClient = this.flotasData.find(
-        (x: any) => x.nombre === this.initData.flota
-      ).cliente;
-
-      const currentHorometro = this.flotasData.find(
-        (x: any) => x.nombre === this.initData.flota
-      ).horometro;
-
-      this.form.controls["cliente"].setValue(currentClient);
-      this.form.controls["horometro"].setValue(currentHorometro);
-    }
-  }
-
   submit(isEdit): void {
+    this.form.controls["cliente"].enable();
+    this.form.controls["modelo"].setValue(
+      this.setModeloName(Number(this.form.controls["idModelo"].value))
+    );
     this.isLoading = true;
 
     if (isEdit) {
@@ -115,34 +110,70 @@ export class DialogAddEquiposComponent implements OnInit {
     });
   }
 
+  private setDinamycData(): void {
+    const currentClient = this.flotasData.find(
+      (x: any) => x.nombre === this.initData.flota
+    );
+
+    this.form.controls["cliente"].setValue(currentClient.cliente);
+    this.setClientId();
+    this.setModelotId();
+  }
+
+  /*private setInitModelo(nombre: string): void {
+    this.form.controls["idModelo"].setValue(
+      this.modelosData.find((x: any) => nombre === x.nombre).id
+    );
+  }*/
+
+  private setClientId(): void {
+    this.form.controls["cliente"].enable();
+    setTimeout(() => {
+      this.maestServ.getClients().subscribe((resp: any) => {
+        const test = resp.body.data;
+        const currentClient = test.find(
+          (x: ClientI) => x.nombre === this.form.controls["cliente"].value
+        );
+        this.form.controls["idCliente"].setValue(currentClient.id);
+      });
+      this.form.controls["cliente"].disable();
+    });
+  }
+
+  private setModelotId(): void {
+    setTimeout(() => {
+      this.modelosService.getModelos().subscribe((resp: any) => {
+        const test = resp.body.data;
+        const currentModel = test.find(
+          (x: ModeloI) => x.nombre === this.form.controls["modelo"].value
+        );
+        this.form.controls["idModelo"].setValue(currentModel.id);
+      });
+    });
+  }
+
   check(event): void {
     setTimeout(() => {
       this.form.controls["estado"].setValue(event.checked ? 1 : 0);
     }, 200);
   }
 
+  private setModeloName(id: number): string {
+    return this.modelosData.find((x: any) => x.id === id).nombre;
+  }
+
   flotaSelected(e: any): void {
     const currentClient = this.flotasData.find(
       (x: any) => x.nombre === e.value
-    ).cliente;
+    );
 
-    const currentHorometro = this.flotasData.find(
-      (x: any) => x.nombre === e.value
-    ).horometro;
-
-    this.form.controls["cliente"].setValue(currentClient);
-    this.form.controls["horometro"].setValue(currentHorometro);
+    this.form.controls["cliente"].setValue(currentClient.cliente);
+    this.form.controls["idCliente"].setValue(currentClient.id);
   }
 
   setModelo(event: MatSelectChange): void {
-    this.form.controls["idModelo"].setValue(
+    this.form.controls["modelo"].setValue(
       this.modelosData.find((x: any) => event.value === x.id).nombre
-    );
-  }
-
-  private setInitModelo(nombre: string): void {
-    this.form.controls["idModelo"].setValue(
-      this.modelosData.find((x: any) => nombre === x.nombre).nombre
     );
   }
 }
