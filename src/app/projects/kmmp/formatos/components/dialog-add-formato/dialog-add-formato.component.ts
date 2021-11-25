@@ -17,10 +17,10 @@ export class DialogAddFormatoComponent implements OnInit {
 
   form: FormGroup = this.fb.group({
     nombre: ["", Validators.required],
-    cliente: ["", Validators.required],
-    modelo: ["", Validators.required],
-    actividad: ["", Validators.required],
-    tipo_mantenimiento: ["", Validators.required],
+    idCliente: ["", Validators.required],
+    idModelo: ["", Validators.required],
+    idClaseActividad: ["", Validators.required],
+    idTipoMantenimiento: ["", Validators.required],
   });
   clientsOpt: any;
   modelosOpt: any;

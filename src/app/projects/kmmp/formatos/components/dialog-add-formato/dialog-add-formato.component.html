@@ -16,8 +16,8 @@
       <mat-form-field class="w-full">
         <mat-label class="font-bold">Cliente</mat-label>
         <mat-select
-          formControlName="cliente"
-          [value]="form.controls['cliente'].value"
+          formControlName="idCliente"
+          [value]="form.controls['idCliente'].value"
         >
           <mat-option *ngFor="let cliente of clientsOpt" [value]="cliente.id">{{
             cliente.nombre
@@ -27,8 +27,8 @@
       <mat-form-field class="w-full">
         <mat-label class="font-bold">Modelo</mat-label>
         <mat-select
-          formControlName="modelo"
-          [value]="form.controls['modelo'].value"
+          formControlName="idModelo"
+          [value]="form.controls['idModelo'].value"
         >
           <mat-option *ngFor="let modelo of modelosOpt" [value]="modelo.id">{{
             modelo.nombre
@@ -38,8 +38,8 @@
       <mat-form-field class="w-full">
         <mat-label class="font-bold">Tipo de actividad</mat-label>
         <mat-select
-          formControlName="actividad"
-          [value]="form.controls['actividad'].value"
+          formControlName="idClaseActividad"
+          [value]="form.controls['idClaseActividad'].value"
         >
           <mat-option
             *ngFor="let actividad of actividadOpt"
@@ -51,8 +51,8 @@
       <mat-form-field class="w-full">
         <mat-label class="font-bold">Tipo de mantenimiento</mat-label>
         <mat-select
-          formControlName="tipo_mantenimiento"
-          [value]="form.controls['tipo_mantenimiento'].value"
+          formControlName="idTipoMantenimiento"
+          [value]="form.controls['idTipoMantenimiento'].value"
         >
           <mat-option
             *ngFor="let tipo_mantenimiento of tipo_mttoOpt"
