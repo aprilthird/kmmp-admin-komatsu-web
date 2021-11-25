@@ -7,4 +7,6 @@ export interface EquipoI {
   horometro: string;
   estado: boolean;
   nestado?: string;
+  idModelo?: number;
+  idTipoEquipo?: number;
 }

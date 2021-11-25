@@ -35,41 +35,18 @@
         }}</mat-error>
       </mat-form-field>
 
-      <!--<mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label>Modelo</mat-label>
-        <input
-          matInput
-          type="text"
-          formControlName="modelo"
-          placeholder="Ingrese modelo"
-        />
-        <mat-error *ngIf="form.controls['modelo'].invalid">{{
-          matErrorMsg
-        }}</mat-error>
-      </mat-form-field>-->
       <mat-form-field class="w-100-p">
         <mat-label class="prose">Modelo</mat-label>
-        <mat-select formControlName="modelo">
-          <mat-option
-            *ngFor="let modelo of modelosData"
-            [value]="modelo.nombre"
-            >{{ modelo.nombre }}</mat-option
-          >
+        <mat-select
+          formControlName="idModelo"
+          [value]="form.controls['idModelo'].value"
+        >
+          <mat-option *ngFor="let modelo of modelosData" [value]="modelo.id">{{
+            modelo.nombre
+          }}</mat-option>
         </mat-select>
       </mat-form-field>
 
-      <!--<mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label>Flota</mat-label>
-        <input
-          matInput
-          type="text"
-          formControlName="flota"
-          placeholder="Ingrese flota"
-        />
-        <mat-error *ngIf="form.controls['flota'].invalid">{{
-          matErrorMsg
-        }}</mat-error>
-      </mat-form-field>-->
       <mat-form-field class="w-100-p">
         <mat-label class="prose">Flota</mat-label>
         <mat-select
@@ -86,14 +63,6 @@
         <mat-label>Cliente</mat-label>
         <input matInput type="text" formControlName="cliente" />
         <mat-error *ngIf="form.controls['cliente'].invalid">{{
-          matErrorMsg
-        }}</mat-error>
-      </mat-form-field>
-
-      <mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label>Horómetro</mat-label>
-        <input matInput type="text" formControlName="horometro" />
-        <mat-error *ngIf="form.controls['horometro'].invalid">{{
           matErrorMsg
         }}</mat-error>
       </mat-form-field>

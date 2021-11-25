@@ -93,7 +93,6 @@
                 <mat-checkbox color="primary" (change)="selectActivity($event)">
                 </mat-checkbox>
               </div>
-              <div class="">Cliente</div>
               <div class="">Equipo</div>
               <div class="">Modelo</div>
               <div class="">Actividad</div>
@@ -129,10 +128,6 @@
                     ></mat-checkbox>
                   </div>
                   <div class="truncate">
-                    {{ actividad?.cliente }}
-                  </div>
-
-                  <div class="truncate">
                     {{ actividad?.equipo }}
                   </div>
 
@@ -145,10 +140,10 @@
                   </div>
 
                   <div class="truncate">
-                    {{ actividad?.tipo_mantenimiento }}
+                    {{ actividad?.tipoMantenimiento }}
                   </div>
                   <div class="truncate">
-                    {{ actividad?.bahia_asignada }}
+                    {{ actividad?.bahia }}
                   </div>
                   <div class="truncate">
                     <span
@@ -206,9 +201,7 @@
                     <mat-menu #menu="matMenu" xPosition="before">
                       <button
                         mat-menu-item
-                        routerLink="/admin/actividades/validation/{{
-                          actividad.id
-                        }}/1/1"
+                        routerLink="/admin/actividades/validation/1/1/1"
                       >
                         Ver formatos
                       </button>

@@ -5,12 +5,14 @@ import {
   Activity,
   Asignaciones,
 } from "app/projects/kmmp/fake-db/activities/activity-fake-db";
+
 import { forkJoin } from "rxjs";
 import { map } from "rxjs/operators";
 
 //SERVICES
 import { ActivitiesService } from "../../activities.service";
-
+import { EquiposService } from "app/projects/kmmp/maestros/equipos/equipos.service";
+//MODELS
 import { Activity as ActivityI } from "./../../models/activities-model";
 
 @Component({
@@ -27,28 +29,8 @@ export class ActivityAddEditComponent implements OnInit {
   tipo_mantenimientos = tipo_mantenimientos;
   tipo_solicitudes = tipo_solicitudes;
   loadLoading: boolean;
+  form: FormGroup = this.fb.group({});
 
-  form: FormGroup = this.fb.group({
-    cliente: new FormControl(""),
-    equipo: new FormControl(""),
-    modelo: new FormControl(""),
-    flota: new FormControl(""),
-    tipo_equipo: new FormControl(""),
-    actividad: new FormControl(""),
-    tipo_mantenimiento: new FormControl(""),
-    bahia_asignada: new FormControl(""),
-    tipo_solicitud: new FormControl(""),
-    descripcion_actividad: new FormControl(""),
-    numero_bl: new FormControl(""),
-    os: new FormControl(""),
-    pe: new FormControl(""),
-    fecha_estimada: new FormControl(""),
-    duracion: new FormControl(""),
-    fecha_real_inicio: new FormControl(""),
-    fecha_real_fin: new FormControl(""),
-    duracion_2: new FormControl(""),
-    comentarios_tecnico: new FormControl(""),
-  });
   clientsOpt: any[];
   equiposOpt: any[];
   bahiasOpt: any[];
@@ -57,13 +39,16 @@ export class ActivityAddEditComponent implements OnInit {
   tipo_equiposOpt: any[];
   flotasOpt: any[];
   tipo_mttoOpt: any[];
+  activityInfo: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
-    private serviceAct: ActivitiesService
+    private serviceAct: ActivitiesService,
+    private equiposService: EquiposService
   ) {
+    this.setActivityData();
     this.getActivityId();
   }
 
@@ -77,8 +62,56 @@ export class ActivityAddEditComponent implements OnInit {
       if (resp.params.id) {
         this.isEdit = true;
         this.idActivity = Number(resp.params.id);
+        this.getActivityData(this.idActivity);
       }
     });
+  }
+
+  getActivityData(id: number) {
+    this.serviceAct.getActivity(id).subscribe((resp: any) => {
+      this.activityInfo = resp.body;
+      setTimeout(() => {
+        this.getEquiposData(this.activityInfo.idEquipo);
+      }, 1000);
+    });
+  }
+
+  private getEquiposData(id: number): void {
+    this.equiposService.getEquipos({ id: id }).subscribe((resp) => {
+      const currentEquipo = resp.body.data.find((x: any) => x.id === id);
+      this.form.controls["modelo"].setValue(currentEquipo.modelo);
+      this.form.controls["flota"].setValue(currentEquipo.flota);
+    });
+  }
+
+  private setActivityData(): void {
+    this.form = this.fb.group({
+      cliente: new FormControl(this.activityInfo?.idCliente),
+      equipo: new FormControl(this.activityInfo?.idEquipo),
+      modelo: new FormControl(),
+      flota: new FormControl(),
+      tipo_equipo: new FormControl(""),
+      actividad: new FormControl(this.activityInfo?.idActividad),
+      tipo_mantenimiento: new FormControl(
+        this.activityInfo?.idTipoMantenimiento
+      ),
+      bahia_asignada: new FormControl(this.activityInfo?.idBahia),
+      tipo_solicitud: new FormControl(this.activityInfo?.idTipoSolicitud),
+      descripcion_actividad: new FormControl(this.activityInfo?.descripcion),
+      numero_bl: new FormControl(this.activityInfo?.nbl),
+      os: new FormControl(this.activityInfo?.nos),
+      pe: new FormControl(this.activityInfo?.npe),
+      fecha_estimada: new FormControl(this.activityInfo?.fechaEstimadaFin),
+      duracion: new FormControl(this.activityInfo?.duracion),
+      fecha_real_inicio: new FormControl(this.activityInfo?.fechaRealIni),
+      fecha_real_fin: new FormControl(this.activityInfo?.fechaRealFin),
+      duracion_2: new FormControl(this.activityInfo?.duracionReal),
+      comentarios_tecnico: new FormControl(
+        this.activityInfo?.comentariosTecnico
+      ),
+    });
+    this.form.controls["modelo"].disable();
+    this.form.controls["flota"].disable();
   }
 
   getInboxes(): void {
@@ -100,6 +133,8 @@ export class ActivityAddEditComponent implements OnInit {
         this.flotasOpt = result[5];
         this.tipo_equiposOpt = result[6];
         this.isLoading = false;
+
+        this.setActivityData();
       }
     );
   }
@@ -130,22 +165,6 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   addSingleActivity(): void {
-    /*const params: ActivityI = {
-      cliente: JSON.stringify(this.form.controls["cliente"].value),
-      idEquipo: this.form.controls["equipo"].value,
-      flota: Number(this.form.controls["flota"].value),
-      equipo: this.form.controls["tipo_equipo"].value,
-      idTipoMantenimiento: this.form.controls["tipo_mantenimiento"].value,
-      idBahia: this.form.controls["bahia_asignada"].value,
-      idTipoSolicitud: this.form.controls["tipo_solicitud"].value,
-      descripcion: this.form.controls["descripcion_actividad"].value,
-      nbl: this.form.controls["numero_bl"].value,
-      nos: "xxx",
-      npe: "yyy",
-      idCliente: this.form.controls["cliente"].value,
-      idActividad: this.form.controls["actividad"].value,
-      modelo: 10,
-    };*/
     this.loadLoading = true;
     this.serviceAct.postCargaIndividual(this.getParams()).subscribe((resp) => {
       this.loadLoading = false;
@@ -218,6 +237,7 @@ export class ActivityAddEditComponent implements OnInit {
       activo: true,
       actividad: "actividad",
       nombre: "nombre",
+      id: 0,
     };
     if ((this.isEdit = true)) {
       params["id"] = this.idActivity;

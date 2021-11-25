@@ -8,6 +8,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSelectChange } from "@angular/material/select";
 import { forkJoin } from "rxjs";
 import { map } from "rxjs/operators";
 import { FlotasService } from "../../flotas/flotas.service";
@@ -37,6 +38,7 @@ export class DialogAddEquiposComponent implements OnInit {
 
   modelosData: any;
   flotasData: any;
+  tipo_equipos: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -54,10 +56,10 @@ export class DialogAddEquiposComponent implements OnInit {
     this.form = this.fb.group({
       nombre: new FormControl(this.initData?.nombre, Validators.required),
       tag: new FormControl(this.initData?.tag, Validators.required),
-      modelo: new FormControl(this.initData?.modelo, Validators.required),
+      modelo: new FormControl(this.initData?.modelo),
+      idModelo: new FormControl(this.initData?.idModelo, Validators.required),
       flota: new FormControl(this.initData?.flota, Validators.required),
       cliente: new FormControl(this.initData?.cliente, Validators.required),
-      horometro: new FormControl(this.initData?.horometro, Validators.required),
       estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
     });
 
@@ -71,12 +73,15 @@ export class DialogAddEquiposComponent implements OnInit {
     this.isLoading = true;
     const mod = this.maestServ.getList(5).pipe(map((x: any) => x.body.data));
     const flt = this.maestServ.getList(6).pipe(map((x: any) => x.body.data));
+    const t_e = this.maestServ.getList(3).pipe(map((x: any) => x.body.data));
 
-    forkJoin([mod, flt]).subscribe((resp) => {
-      this.modelosData = resp[0];
-      this.flotasData = resp[1];
+    forkJoin([mod, flt, t_e]).subscribe(async (resp) => {
+      this.modelosData = await resp[0];
+      this.flotasData = await resp[1];
+      this.tipo_equipos = await resp[2];
       this.isLoading = false;
       this.setDinamycData();
+      this.setInitModelo(this.initData?.modelo);
     });
   }
 
@@ -127,5 +132,17 @@ export class DialogAddEquiposComponent implements OnInit {
 
     this.form.controls["cliente"].setValue(currentClient);
     this.form.controls["horometro"].setValue(currentHorometro);
+  }
+
+  setModelo(event: MatSelectChange): void {
+    this.form.controls["idModelo"].setValue(
+      this.modelosData.find((x: any) => event.value === x.id).nombre
+    );
+  }
+
+  private setInitModelo(nombre: string): void {
+    this.form.controls["idModelo"].setValue(
+      this.modelosData.find((x: any) => nombre === x.nombre).nombre
+    );
   }
 }

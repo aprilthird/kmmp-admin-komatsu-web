@@ -52,7 +52,7 @@ export class EquiposService {
   }
 
   getEquipos(
-    { page, pageSize, nombre, ...filter }: ParamsPagination | any = {
+    { page, pageSize, nombre, id, ...filter }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
@@ -60,6 +60,7 @@ export class EquiposService {
     let currentFilter;
     getInboxParams.filter.tipo = 2;
     getInboxParams.filter.nombre = nombre;
+    getInboxParams.filter.id = id;
 
     if (!page) {
       currentFilter = { ...getInboxParams };
@@ -70,6 +71,7 @@ export class EquiposService {
         pageSize,
       };
     }
+
     return this.http
       .post<PaginationResponse<EquipoI[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",

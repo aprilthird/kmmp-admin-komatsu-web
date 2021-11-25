@@ -1,0 +1,518 @@
+
+
+
+POST https://development-kmp.ws.solera.pe/api/Core/GuardarFormato
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2OWFiNjFmNC04ODc2LTRjM2YtYTllZC04NTUzMjgyNTQ3MGUiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjQsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTZUMDE6MjY6NTUuMzU3XCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjoxLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6MyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNVQxNDo1NDo1MC44NDNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTI0VDAwOjA4OjE4LjE4M1wiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzI0LzIwMjEgMTQ6MzE6NTciLCJleHAiOjE2Mzc3ODIzMTcsImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.eE1864WwwVYmcnbXbrCnB7wu9_B_-c2OA8HwHKNtu28
+
+{
+    "nombre": "prueba",
+    "idCliente": 18,
+    "idModelo": 3,
+    "idClaseActividad": 19,
+    "idTipoMantenimiento": 37
+}
+
+###
+POST https://development-kmp.ws.solera.pe/api/Administracion/GestionDocumentaria
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2OGI4MjkyNi1kMzA1LTQ0NWMtYjIzMS02MTc5MDVlMmZmYTciLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjQsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTZUMDE6MjY6NTUuMzU3XCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjoxLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6MyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNVQxNDo1NDo1MC44NDNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTI0VDEyOjM5OjAwLjI5N1wiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzI0LzIwMjEgMTk6MzI6MDAiLCJleHAiOjE2Mzc4MDAzMjAsImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.nZ19cmP_Zm_P9Xmb0l9A3OGqnwxBycVRxfoqyBlzokY
+
+{
+    "nombre": "inactivo",
+    "cliente": "TESTFO",
+    "modelo": "nuevo modelo activo",
+    "actividad": "rrrrrrrrrrrrrrrr",
+    "tipo_mantenimiento": "nuevo tipo mtto",
+    "activo": true,
+    "idCliente": 19,
+    "mime": "documento",
+    "ruta": "/admin/maestros/agregar_documentos",
+    "idModelo": 5,
+    "idTipoMantenimiento": 30,
+    "idActividad": 16,
+    "documentosList": [],
+    "id": 40
+}
+###
+POST https://development-kmp.ws.solera.pe/api/Seguridad
+Content-Type: application/json
+
+{
+  "usr": "solera",
+  "psw": "1234",
+  "uniq": ""
+}
+
+###
+GET https://localhost:5001/api/Mantenimiento/AbrirAsignacion/83
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYWE4MDVlOS05MDljLTQzZDEtOGNjNS04ZTExNjdjMDQyZDUiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjEsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjEsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMDFUMjA6NTE6MjJcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MTQsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjo0NyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlN1cGVydmlzb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MSxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMC0wMVQxMToyNDoyMy42ODNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MTYsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjo1MixcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlN1cGVydmlzb3IgZGVsIHRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMC0wMVQxMTozNjowMS4yNVwiLFwiZmVjaGFNb2RcIjpudWxsLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcInRvdGFsXCI6MH1dLFwidXN1YXJpb1JvbGVzXCI6bnVsbCxcInRlbWFcIjpudWxsLFwiaXBcIjpudWxsLFwiZmlybWFcIjpudWxsLFwiZGV2aWNlXCI6bnVsbCxcImN1c3RvbWVyXCI6bnVsbCxcImlkXCI6MSxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpudWxsLFwiZGVzY3JpcGNpb25cIjpudWxsLFwidmlzaWJsZVwiOmZhbHNlLFwiYWN0aXZvXCI6dHJ1ZSxcImFzaWduYWRvXCI6ZmFsc2UsXCJlc3RhZG9cIjowLFwic3ViRXN0YWRvXCI6MCxcImZlY2hhUmVnXCI6XCIyMDIxLTA5LTEwVDE2OjE3OjEzXCIsXCJmZWNoYU1vZFwiOlwiMjAyMS0xMC0yOVQxNDozNDo1MS41NlwiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTAvMjkvMjAyMSAyMDozMzoxNiIsImV4cCI6MTYzNTU1NzU5NiwiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.nv8zflVuMH3oHaXWbs5BHltnU7VxRn-n5CUMJWZM6xk
+
+###
+POST https://localhost:5001/api/Administracion/BandejaMaestrosPaginado
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NGY1OWVmYy03Mzc3LTRiZmQtYmQyNC1kNzVhOGJjNjIzZDgiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MSxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjMsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJUZWNuaWNvXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTVUMTQ6NTQ6NTAuODQzXCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjozLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6NCxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIkFkbWluaXN0cmFkb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNlQwMToyNjo1NS4zNTdcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTE3VDE1OjU5OjAyLjQwN1wiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzE3LzIwMjEgMjE6NDg6MzAiLCJleHAiOjE2MzcyMDM3MDksImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.88AMzPaudwIcZ_OfI7p2W_T_J_bSJ5xQgHU6NdafUn4
+
+{
+  "page": 0,
+  "pageSize": 5,
+  "filter": {
+    "nombre": "",
+    "estado": 0,
+    "tipo": 8,
+    "idclaseactividad": 0,
+    "fechaIni": null,
+    "fechaFin": null,
+    "codigo": ""
+  }
+}
+
+###
+POST https://localhost:5001/api/Mantenimiento/GuardarAsignacion
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYWE4MDVlOS05MDljLTQzZDEtOGNjNS04ZTExNjdjMDQyZDUiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjEsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjEsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMDFUMjA6NTE6MjJcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MTQsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjo0NyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlN1cGVydmlzb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MSxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMC0wMVQxMToyNDoyMy42ODNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MTYsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjo1MixcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlN1cGVydmlzb3IgZGVsIHRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMC0wMVQxMTozNjowMS4yNVwiLFwiZmVjaGFNb2RcIjpudWxsLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcInRvdGFsXCI6MH1dLFwidXN1YXJpb1JvbGVzXCI6bnVsbCxcInRlbWFcIjpudWxsLFwiaXBcIjpudWxsLFwiZmlybWFcIjpudWxsLFwiZGV2aWNlXCI6bnVsbCxcImN1c3RvbWVyXCI6bnVsbCxcImlkXCI6MSxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpudWxsLFwiZGVzY3JpcGNpb25cIjpudWxsLFwidmlzaWJsZVwiOmZhbHNlLFwiYWN0aXZvXCI6dHJ1ZSxcImFzaWduYWRvXCI6ZmFsc2UsXCJlc3RhZG9cIjowLFwic3ViRXN0YWRvXCI6MCxcImZlY2hhUmVnXCI6XCIyMDIxLTA5LTEwVDE2OjE3OjEzXCIsXCJmZWNoYU1vZFwiOlwiMjAyMS0xMC0yOVQxNDozNDo1MS41NlwiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTAvMjkvMjAyMSAyMDozMzoxNiIsImV4cCI6MTYzNTU1NzU5NiwiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.nv8zflVuMH3oHaXWbs5BHltnU7VxRn-n5CUMJWZM6xk
+
+{
+  "activo": true,
+  "codigo": "MAN0000089.21",
+  "descripcion": "",
+  "estado": 0,
+  "fechaMod": "2021-10-29T17:06:40.8",
+  "fechaReg": "2021-10-29T17:06:40.8",
+  "id": 89,
+  "idAsignacion": 89,
+  "nombre": "",
+  "secciones": [
+    {
+      "activo": true,
+      "asignado": false,
+      "descripcion": "",
+      "estado": 0,
+      "fechaReg": "2021-10-25T09:39:59.987",
+      "grupos": [
+        {
+          "activo": true,
+          "asignado": false,
+          "descripcion": "",
+          "estado": 0,
+          "fechaReg": "2021-10-25T09:41:07.96",
+          "id": 67,
+          "idSeccion": 53,
+          "nombre": "Diesel",
+          "parametros": [
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 1,
+              "dato": "Motor",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 1,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 1,
+              "idSeccion": 89,
+              "index": 1,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "",
+              "visible": false
+            },
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 2,
+              "dato": "9600959985ef457f9676f86a6601089f-1635545541438.jpg",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 1,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 6,
+              "idSeccion": 89,
+              "index": 2,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "/storage/emulated/0/Pictures/dcp/9600959985ef457f9676f86a6601089f-1635545541438.jpg",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "",
+              "visible": false
+            },
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 1,
+              "dato": "llave,gato hidraulico",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 2,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 10,
+              "idSeccion": 89,
+              "index": 3,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "",
+              "visible": false
+            },
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 3,
+              "dato": "2021 - 10 - 13",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 1,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 5,
+              "idSeccion": 89,
+              "index": 4,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "",
+              "visible": false
+            },
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 4,
+              "dato": "Descripcion motor",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 1,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 3,
+              "idSeccion": 89,
+              "index": 5,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "",
+              "visible": false
+            },
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 5,
+              "dato": "",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 1,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 9,
+              "idSeccion": 89,
+              "index": 6,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "",
+              "visible": false
+            }
+          ],
+          "pos": "h",
+          "total": 0,
+          "visible": true
+        }
+      ],
+      "id": 53,
+      "idFormato": 37,
+      "nombre": "Motores",
+      "total": 0,
+      "visible": false
+    }
+  ],
+  "subestado": -1,
+  "total": 0,
+  "visible": false
+}
+
+###
+GET https://localhost:5001/api/Seguridad/ObtenerMenu
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyODAxMDExNy00ODhlLTQ3NWItYTcyYS04MDI0N2Y2N2JjYTAiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MSxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjMsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJUZWNuaWNvXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTVUMTQ6NTQ6NTAuODQzXCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjozLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6NCxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIkFkbWluaXN0cmFkb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNlQwMToyNjo1NS4zNTdcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTE3VDEwOjA0OjMzLjk0N1wiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzE3LzIwMjEgMTU6MDc6MjciLCJleHAiOjE2MzcxNzk2NDcsImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.m75CvMS8-ElGVM38wioqwqmyNNvIujJlfyH1YQHA2Ew
+
+###
+GET https://localhost:5001/api/Administracion/ObtenerNotificaciones
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiNmQyYjRiZC1jODJmLTQxNWItYjlmZC1lYTliNmI2NjliOGEiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W10sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTExVDA5OjA5OjUyLjA4XCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwidG90YWxcIjowfSIsImZlY2giOiIxMS8xMS8yMDIxIDE2OjA0OjE0IiwiZXhwIjoxNjM2NjY0NjU0LCJpc3MiOiJrb21hdHN1LmNvbS5wZSIsImF1ZCI6ImtvbWF0c3UuY29tLnBlIn0.hkRA_itIdeYmIhSzY3dct0Olo4YctZ1HXuNvyvR1Ev0
+
+###
+POST https://localhost:5001/api/Administracion/CrudClientes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxOGVlODY1Zi0xNmZiLTQ5ZTQtYTE0MS0xYzI2YTk3OTMyYjIiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjEsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjEsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMDFUMjA6NTE6MjJcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MTQsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjo0NyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlN1cGVydmlzb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MSxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMC0wMVQxMToyNDoyMy42ODNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MTYsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjo1MixcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlN1cGVydmlzb3IgZGVsIHRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMC0wMVQxMTozNjowMS4yNVwiLFwiZmVjaGFNb2RcIjpudWxsLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcInRvdGFsXCI6MH1dLFwidXN1YXJpb1JvbGVzXCI6bnVsbCxcInRlbWFcIjpudWxsLFwiaXBcIjpudWxsLFwiZmlybWFcIjpudWxsLFwiZGV2aWNlXCI6bnVsbCxcImN1c3RvbWVyXCI6bnVsbCxcImlkXCI6MSxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpudWxsLFwiZGVzY3JpcGNpb25cIjpudWxsLFwidmlzaWJsZVwiOmZhbHNlLFwiYWN0aXZvXCI6dHJ1ZSxcImFzaWduYWRvXCI6ZmFsc2UsXCJlc3RhZG9cIjowLFwic3ViRXN0YWRvXCI6MCxcImZlY2hhUmVnXCI6XCIyMDIxLTA5LTEwVDE2OjE3OjEzXCIsXCJmZWNoYU1vZFwiOlwiMjAyMS0xMS0xMFQwOTozODoyMC4yOTdcIixcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzEwLzIwMjEgMTU6MjM6MTQiLCJleHAiOjE2MzY1NzU3OTQsImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.oyve16nzd6bq3MIOjULkIZCU8XKetAm_JIvywA_eBKE
+
+{
+  "id": 1,
+  "nombre": "Alicorp",
+  "ruc": "20208754224",
+  "razon": "Alicorp SAC",
+  "ubicacion": "Av. argentina 1452, Cercado de lima",
+  "estado": 1
+}
+
+###
+POST https://localhost:5001/api/Administracion/CrudEquipos
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzZjIwNmM3MS1jZmE0LTRmODEtYjg1Yi1iMDhjNjUxZTVkNTYiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MSxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjMsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJUZWNuaWNvXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTVUMTQ6NTQ6NTAuODQzXCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjozLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6NCxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIkFkbWluaXN0cmFkb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNlQwMToyNjo1NS4zNTdcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTE4VDA5OjU4OjQ0Ljk5XCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTEvMTgvMjAyMSAxNjozNzowNCIsImV4cCI6MTYzNzI3MTQyNCwiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.KdzLLcM3bUQw0lMTJhL1uOs-MMU9R3YjCvUmwJMw9Ow
+
+{
+  "id": 26,
+  "codigo": "string",
+  "nombre": "string",
+  "descripcion": "string",
+  "visible": true,
+  "activo": true,
+  "asignado": true,
+  "estado": 0,
+  "subEstado": 0,
+  "idUsuarioReg": 0,
+  "idUsuarioMod": 0,
+  "entidad": 0,
+  "total": 0,
+  "modelo": "string",
+  "idModelo": 5,
+  "idTipoEquipo": 16,
+  "flota": "string",
+  "idCliente": 19,
+  "cliente": "string",
+  "horometro": "string",
+  "idFlota": 4
+}
+
+### dispositivos de la aplicacion
+POST https://localhost:5001/api/Administracion/ObtenerDispositivos
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmZjYyOTU3My1iY2Q5LTRhYjQtYmFkMi01YTI3YzQ1N2VkZGIiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MSxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjMsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJUZWNuaWNvXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTVUMTQ6NTQ6NTAuODQzXCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjQsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTZUMDE6MjY6NTUuMzU3XCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJ0b3RhbFwiOjB9XSxcInVzdWFyaW9Sb2xlc1wiOm51bGwsXCJ0ZW1hXCI6bnVsbCxcImlwXCI6bnVsbCxcImZpcm1hXCI6bnVsbCxcImRldmljZVwiOm51bGwsXCJjdXN0b21lclwiOm51bGwsXCJpZFwiOjEsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6bnVsbCxcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0wOS0xMFQxNjoxNzoxM1wiLFwiZmVjaGFNb2RcIjpcIjIwMjEtMTEtMTZUMTA6NTU6NDUuNDgzXCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzE2LzIwMjEgMTY6MTU6MzEiLCJleHAiOjE2MzcwOTczMzAsImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.6Eopy67zgNhybzkFTC4lgPYOikyOKl_9DI-h-0i5VQQ
+
+{
+  "page": 0,
+  "pageSize": 5,
+  "filter": {
+    "tipo": 2,
+    "fechaIni": null,
+    "fechaFin": null
+  }
+}
+
+### dispositivos agrupados por bahia
+POST https://localhost:5001/api/Administracion/ObtenerDispositivos
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmZjYyOTU3My1iY2Q5LTRhYjQtYmFkMi01YTI3YzQ1N2VkZGIiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MSxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjMsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJUZWNuaWNvXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTVUMTQ6NTQ6NTAuODQzXCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjQsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTZUMDE6MjY6NTUuMzU3XCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJ0b3RhbFwiOjB9XSxcInVzdWFyaW9Sb2xlc1wiOm51bGwsXCJ0ZW1hXCI6bnVsbCxcImlwXCI6bnVsbCxcImZpcm1hXCI6bnVsbCxcImRldmljZVwiOm51bGwsXCJjdXN0b21lclwiOm51bGwsXCJpZFwiOjEsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6bnVsbCxcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0wOS0xMFQxNjoxNzoxM1wiLFwiZmVjaGFNb2RcIjpcIjIwMjEtMTEtMTZUMTA6NTU6NDUuNDgzXCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzE2LzIwMjEgMTY6MTU6MzEiLCJleHAiOjE2MzcwOTczMzAsImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.6Eopy67zgNhybzkFTC4lgPYOikyOKl_9DI-h-0i5VQQ
+
+{
+  "page": 0,
+  "pageSize": 5,
+  "filter": {
+    "tipo": 1,
+    "fechaIni": null,
+    "fechaFin": null
+  }
+}
+
+
+###
+POST https://localhost:5001/api/Administracion/BandejaMaestrosPaginado
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmZTFlYjljOC0yMzZmLTQ3NmMtOGNiNS1mY2JmMzFmYjQyODUiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W10sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTExVDE3OjE5OjI4LjE0XCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwidG90YWxcIjowfSIsImZlY2giOiIxMS8xMS8yMDIxIDIzOjI2OjUwIiwiZXhwIjoxNjM2NjkxMjEwLCJpc3MiOiJrb21hdHN1LmNvbS5wZSIsImF1ZCI6ImtvbWF0c3UuY29tLnBlIn0.__nGFt8IaFlZOwVqaIWmbHjGujjsi1DVjI_M25AIk3A
+
+{
+  "page": 0,
+  "pageSize": 5,
+  "offset": 0,
+  "next": 0,
+  "filter": {
+    "id": 0,
+    "idUsuario": 0,
+    "dni": "",
+    "nombre": "",
+    "estado": 0,
+    "tipo": 8,
+    "idClaseActividad": 2,
+    "fechaIni": null,
+    "fechaFin": null,
+    "codigo": ""
+  }
+}
+
+###
+POST https://localhost:5001/api/Actividades/CargaIndividual
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhZDgyNTI3NC05OWUwLTQyYTYtYWM3Yi05ZDhkODY4MjU0NzIiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W10sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTEyVDE0OjQ1OjE5LjE5N1wiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTEvMTQvMjAyMSAxNTozMDozNCIsImV4cCI6MTYzNjkyMTgzNCwiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.VYjxikGkI0JyxRSEuChgyMLYVlVehXuAYdsEsnKUbIM
+
+{
+  "id": 0,
+  "idUsuarioReg": 1,
+  "idCliente": 1,
+  "idEquipo": 1,
+  "idActividad": 1,
+  "idTipoMantenimiento": 1,
+  "idBahia": 1,
+  "idTipoSolicitud": 1,
+  "actividad": "prueba de actividad",
+  "nbl": "02225",
+  "nos": "0144558",
+  "npe": "0255188"
+}
+
+### numero de os
+POST https://localhost:5001/api/Actividades/ObtenerRecursos
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhZDgyNTI3NC05OWUwLTQyYTYtYWM3Yi05ZDhkODY4MjU0NzIiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W10sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTEyVDE0OjQ1OjE5LjE5N1wiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTEvMTQvMjAyMSAxNTozMDozNCIsImV4cCI6MTYzNjkyMTgzNCwiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.VYjxikGkI0JyxRSEuChgyMLYVlVehXuAYdsEsnKUbIM
+
+{
+  "id": 1
+}
+
+### numero de os
+POST https://localhost:5001/api/Seguridad/BandejaUsuariosPaginado
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxZDlmYmRiNS0yMTk5LTRkMjEtYjE2MS1mNWRhYzFkYjUwNjkiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjQsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTZUMDE6MjY6NTUuMzU3XCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjoxLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6MyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNVQxNDo1NDo1MC44NDNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTIzVDEwOjAxOjI5LjI0N1wiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzIzLzIwMjEgMTY6MjU6MjciLCJleHAiOjE2Mzc3MDI3MjYsImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.BpQnB1S9SGPYNYQE7u_6wnyGJBKbP3eg11IIYTIsGBQ
+
+{
+  "page": 0,
+  "pageSize": 10,
+  "filter": {
+    "nombre": null,
+    "fechaIni": null,
+    "fechaFin": null
+  }
+}
+
+
+### numero de os
+GET https://localhost:5001/api/Seguridad/ObtenerRoles/34
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxZmJlMGYwMi05M2U2LTRjYzQtYWM5Mi03NTQ2NmE4ZWE2NDUiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MSxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjMsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJUZWNuaWNvXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTVUMTQ6NTQ6NTAuODQzXCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjozLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6NCxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIkFkbWluaXN0cmFkb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNlQwMToyNjo1NS4zNTdcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTE2VDEyOjU2OjQ3LjRcIixcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfSIsImZlY2giOiIxMS8xNi8yMDIxIDIwOjAzOjM0IiwiZXhwIjoxNjM3MTExMDE0LCJpc3MiOiJrb21hdHN1LmNvbS5wZSIsImF1ZCI6ImtvbWF0c3UuY29tLnBlIn0.YN9TKLl6h-ynCqu6dCOBBvemIjETMLpNWvPhMuAEbQQ
+
+### numero de os
+POST https://localhost:5001/api/Actividades/BandejaActividades
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxZDlmYmRiNS0yMTk5LTRkMjEtYjE2MS1mNWRhYzFkYjUwNjkiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjQsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTZUMDE6MjY6NTUuMzU3XCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjoxLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6MyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNVQxNDo1NDo1MC44NDNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTIzVDEwOjAxOjI5LjI0N1wiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzIzLzIwMjEgMTY6MjU6MjciLCJleHAiOjE2Mzc3MDI3MjYsImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.BpQnB1S9SGPYNYQE7u_6wnyGJBKbP3eg11IIYTIsGBQ
+
+{
+  "page": 0,
+  "pageSize": 5,
+  "filter": {
+    "idUsuario": 0,
+    "nombre": null,
+    "fechaIni": null,
+    "fechaFin": null
+  }
+}
+
+###
+GET https://localhost:5001/api/Actividades/ObtenerActividad/10
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NmUzNzE2MS02ZjJlLTRhZGMtOWFhNy04ZGRkNWZlOTZkZmYiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MSxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjMsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJUZWNuaWNvXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTVUMTQ6NTQ6NTAuODQzXCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjozLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6NCxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIkFkbWluaXN0cmFkb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNlQwMToyNjo1NS4zNTdcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTE5VDA5OjQ1OjQxLjYxXCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTEvMTkvMjAyMSAxNzozNDoxNCIsImV4cCI6MTYzNzM2MTI1NCwiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.WrhUhKyEBRlQDGZxwqtP0SvDOvbGHpsxoKFBc7ldPDk
+
+### añadir documentos
+POST https://localhost:5001/api/Administracion/GestionDocumentaria
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMWZhY2RhZi0zNWU2LTQ4ZGUtYmU2My1hNGZmMTgzNTI2NTIiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MSxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjMsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJUZWNuaWNvXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTVUMTQ6NTQ6NTAuODQzXCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjozLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6NCxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIkFkbWluaXN0cmFkb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNlQwMToyNjo1NS4zNTdcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTE3VDE3OjI0OjI4Ljc3XCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTEvMTcvMjAyMSAyMjo1NDowOSIsImV4cCI6MTYzNzIwNzY0OSwiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.bjQ6YLy0TP8nPpEIf1S82VgRAUo2mg4cpckukBrd0t0
+
+{
+  "nombre": "archivo1",
+  "idCliente": 1,
+  "idModelo": 1,
+  "idActividad": 1,
+  "idTipoMantenimiento": 1,
+  "modulo": 0,
+  "mime": "documento",
+  "ruta": "/admin/maestros/agregar_documentos",
+  "entidad": 0,
+  "documentosList": [
+    "xskodksmsmd",
+    "xskodksmsmdssds"
+  ]
+}

@@ -98,7 +98,8 @@
           <div class="flex flex-row justify-start gap-10 mb-5">
             <mat-form-field class="w-1/4">
               <mat-label class="font-bold">Modelo</mat-label>
-              <mat-select
+              <input matInput formControlName="modelo" />
+              <!--<mat-select
                 formControlName="modelo"
                 [value]="form.controls['modelo'].value"
               >
@@ -107,21 +108,22 @@
                   [value]="modelo.id"
                   >{{ modelo.nombre }}</mat-option
                 >
-              </mat-select>
+              </mat-select>-->
             </mat-form-field>
 
             <mat-form-field class="w-1/4">
               <mat-label class="font-bold">Flota</mat-label>
-              <mat-select
+              <input matInput formControlName="flota" />
+              <!--<mat-select
                 formControlName="flota"
-                [value]="form.controls['flota'].value"
               >
+              
                 <mat-option
                   *ngFor="let flota of flotasOpt"
                   [value]="flota.id"
                   >{{ flota.nombre }}</mat-option
                 >
-              </mat-select>
+              </mat-select>-->
             </mat-form-field>
 
             <mat-form-field class="w-1/4">

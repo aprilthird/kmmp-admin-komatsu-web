@@ -55,16 +55,27 @@ export class DialogAddDocumentosComponent implements OnInit {
         this.initData?.tipoMantenimiento,
         Validators.required
       ),
-      estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
-      idCliente: new FormControl(),
+      activo: new FormControl(
+        this.initData?.nestado === "Activo" ? true : false
+      ),
+      idCliente: new FormControl(this.initData?.idCliente),
       mime: new FormControl("documento"),
       ruta: new FormControl("/admin/maestros/agregar_documentos"),
       //entidad: new FormControl(2),
-      documentosList: new FormControl(null, Validators.required),
-      idModelo: new FormControl(),
-      idActividad: new FormControl(),
-      idTipoMantenimiento: new FormControl(),
+      //documentosList: new FormControl(null, Validators.required),
+      idModelo: new FormControl(this.initData?.idModelo),
+      idTipoMantenimiento: new FormControl(this.initData?.idTipoMantenimiento),
+      idActividad: new FormControl(this.initData?.idActividad),
     });
+
+    if (!this.isEdit) {
+      this.form.addControl(
+        "documentosList",
+        new FormControl([], Validators.required)
+      );
+    } else {
+      this.form.addControl("documentosList", new FormControl([]));
+    }
   }
 
   ngOnInit(): void {
@@ -103,7 +114,7 @@ export class DialogAddDocumentosComponent implements OnInit {
 
   check(event): void {
     setTimeout(() => {
-      this.form.controls["estado"].setValue(event.checked ? 1 : 0);
+      this.form.controls["activo"].setValue(event.checked);
     }, 200);
   }
 
