@@ -230,16 +230,16 @@
                 *ngFor="let tipoMtto of tipoMttos"
                 class="flex justify-between w-full px-5"
               >
-                <div class="w-1/4 mb-5">
+                <div class="w-1/4 mb-5 max-w-xs">
                   <div class="mt-4 text-lg font-medium">Nombre</div>
-                  <div class="mt-0.5 line-clamp-2 text-secondary">
+                  <div class="mt-0.5 text-secondary truncate overflow-ellipsis">
                     {{ tipoMtto?.nombre }}
                   </div>
                 </div>
 
-                <div class="w-1/4 mb-5">
+                <div class="w-1/4 mb-5 max-w-xs">
                   <div class="mt-4 text-lg font-medium">Descripción</div>
-                  <div class="mt-0.5 line-clamp-2 text-secondary">
+                  <div class="mt-0.5 text-secondary truncate overflow-ellipsis">
                     {{ tipoMtto?.descripcion }}
                   </div>
                 </div>
