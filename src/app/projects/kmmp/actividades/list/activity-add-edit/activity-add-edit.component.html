@@ -85,6 +85,7 @@
               <mat-select
                 formControlName="equipo"
                 [value]="form.controls['equipo'].value"
+                (selectionChange)="getEquiposData($event.value)"
               >
                 <mat-option
                   *ngFor="let equipo of equiposOpt"
@@ -144,7 +145,7 @@
 
           <div class="flex flex-row justify-between mb-5">
             <mat-form-field class="w-1/5">
-              <mat-label class="font-bold">Actividad</mat-label>
+              <mat-label class="font-bold">Clase de actividad</mat-label>
               <mat-select
                 formControlName="actividad"
                 [value]="form.controls['actividad'].value"
@@ -281,7 +282,7 @@
               <input
                 matInput
                 [matDatepicker]="datepicker1"
-                formControlName="fecha_estimada"
+                formControlName="fechaEstimadaIni"
               />
 
               <mat-datepicker-toggle
@@ -397,6 +398,7 @@
               mat-raised-button
               [color]="'primary'"
               (click)="addSingleActivity()"
+              [disabled]="form.invalid"
             >
               <mat-progress-spinner
                 *ngIf="loadLoading"

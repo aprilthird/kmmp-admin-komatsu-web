@@ -5,8 +5,8 @@
       <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
     </button>
   </div>
-  <div mat-dialog-content class="pb-6">
-    <div class="flex flex-col w-full">
+  <div mat-dialog-content class="pb-6 format-modal">
+    <div class="flex flex-col">
       <!-- Nombre -->
       <mat-form-field class="w-full">
         <mat-label>Nombre</mat-label>
@@ -36,10 +36,11 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field class="w-full">
-        <mat-label class="font-bold">Tipo de actividad</mat-label>
+        <mat-label class="font-bold">Clase de actividad</mat-label>
         <mat-select
           formControlName="idClaseActividad"
           [value]="form.controls['idClaseActividad'].value"
+          (selectionChange)="setTipoMtto($event.value)"
         >
           <mat-option
             *ngFor="let actividad of actividadOpt"
@@ -48,6 +49,7 @@
           >
         </mat-select>
       </mat-form-field>
+
       <mat-form-field class="w-full">
         <mat-label class="font-bold">Tipo de mantenimiento</mat-label>
         <mat-select
@@ -61,6 +63,10 @@
           >
         </mat-select>
       </mat-form-field>
+      <mat-error *ngIf="emptyTipoMtto"
+        >Clase de actividad seleccionada no posee tipos de
+        mantenimento</mat-error
+      >
     </div>
   </div>
   <div mat-dialog-actions class="flex justify-end px-6 bg-gray-100">
@@ -82,7 +88,7 @@
       [color]="'primary'"
       class="w-24"
       (click)="onSubmit()"
-      [disabled]="form.get('nombre').hasError('required')"
+      [disabled]="form.invalid"
     >
       <span *ngIf="!loading"> Crear </span>
       <mat-progress-spinner

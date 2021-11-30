@@ -2,13 +2,10 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Response } from "app/shared/models/general-model";
 import { environment } from "environments/environment";
-import { filter } from "lodash";
-import { type } from "os";
+
 import { BehaviorSubject, Observable } from "rxjs";
-import { tap } from "rxjs/operators";
 
 import { ActivitiesData } from "../fake-db/activities/activity-fake-db";
-import { Activity } from "./models/activities-model";
 
 import { Activity as ActivityI } from "./models/activities-model";
 
@@ -123,11 +120,22 @@ export class ActivitiesService {
         filter: {},
       }
     );
+    /*.pipe(
+        tap((resp: any) => {
+          this._activities.next(resp.body.data);
+        })
+      );*/
   }
 
   getActivity(id: number): Observable<any[]> {
     return this.http.get<any[]>(
       environment.apiUrl + `/Actividades/ObtenerActividad/${id}`
+    );
+  }
+
+  deleteFormatById(id: number): Observable<any[]> {
+    return this.http.delete<any[]>(
+      environment.apiUrl + `/Actividades/EliminarFormatoXActividad/${id}`
     );
   }
 }

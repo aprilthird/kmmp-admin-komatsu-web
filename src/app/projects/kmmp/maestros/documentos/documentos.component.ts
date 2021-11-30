@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
+import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { PermissionService } from "app/core/permission/permission.service";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
@@ -26,7 +27,8 @@ export class DocumentosComponent implements OnInit {
     private _routeActived: ActivatedRoute,
     private _router: Router,
     private matDialog: MatDialog,
-    private documentService: DocumentosService
+    private documentService: DocumentosService,
+    private _fuseConfirmationService: FuseConfirmationService
   ) {
     this.getBabias();
   }
@@ -97,5 +99,39 @@ export class DocumentosComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(() => this.loadData());
+  }
+
+  delete(doc): void {
+    doc.estado = 0;
+    console.log(doc);
+
+    const dialogRef = this._fuseConfirmationService.open({
+      title: "Eliminar usuario",
+      message: "¿Estás seguro que deseas eliminar este documento?",
+      icon: {
+        name: "heroicons_outline:trash",
+        color: "primary",
+      },
+      actions: {
+        confirm: {
+          label: "Sí, eliminar",
+          color: "primary",
+        },
+        cancel: {
+          label: "No",
+        },
+      },
+      dismissible: true,
+    });
+
+    dialogRef.beforeClosed().subscribe((result) => {
+      if (result === "confirmed") {
+        this.isLoading = true;
+        this.documentService.postDocumento(doc).subscribe(() => {
+          this.isLoading = false;
+          this.loadData();
+        });
+      }
+    });
   }
 }

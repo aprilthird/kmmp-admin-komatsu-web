@@ -1,4 +1,3 @@
-import { X } from "@angular/cdk/keycodes";
 import { Component, Inject, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -65,7 +64,8 @@ export class DialogAddDocumentosComponent implements OnInit {
       //documentosList: new FormControl(null, Validators.required),
       idModelo: new FormControl(this.initData?.idModelo),
       idTipoMantenimiento: new FormControl(this.initData?.idTipoMantenimiento),
-      idActividad: new FormControl(this.initData?.idActividad),
+      idClaseActividad: new FormControl(this.initData?.idActividad),
+      estado: 1,
     });
 
     if (!this.isEdit) {

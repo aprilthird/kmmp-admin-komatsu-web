@@ -16,7 +16,7 @@ export interface Activity {
   total?: number;
   idCliente: number;
   idEquipo: number;
-  idActividad: number;
+  idClaseActividad: number;
   idTipoMantenimiento: number;
   idBahia: number;
   idTipoSolicitud: number;
@@ -28,4 +28,5 @@ export interface Activity {
   flota?: number;
   modelo?: number;
   actividad?: string;
+  fechaEstimadaIni?: any;
 }

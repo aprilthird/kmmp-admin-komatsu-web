@@ -211,8 +211,10 @@ export class CrearUsuarioComponent implements OnInit {
           };
 
           setTimeout(() => {
-            this.alert = null;
-            this._router.navigateByUrl("/admin/ajustes/usuarios");
+            if (response.message !== "El usuario ya existe") {
+              this.alert = null;
+              this._router.navigateByUrl("/admin/ajustes/usuarios");
+            }
           }, 2500);
         });
     }

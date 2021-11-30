@@ -3,19 +3,6 @@
 
 
 ###
-POST https://development-kmp.ws.solera.pe/api/Core/GuardarFormato
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2OWFiNjFmNC04ODc2LTRjM2YtYTllZC04NTUzMjgyNTQ3MGUiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjQsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTZUMDE6MjY6NTUuMzU3XCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjoxLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6MyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNVQxNDo1NDo1MC44NDNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTI0VDAwOjA4OjE4LjE4M1wiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzI0LzIwMjEgMTQ6MzE6NTciLCJleHAiOjE2Mzc3ODIzMTcsImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.eE1864WwwVYmcnbXbrCnB7wu9_B_-c2OA8HwHKNtu28
-
-{
-    "nombre": "prueba",
-    "idCliente": 18,
-    "idModelo": 3,
-    "idClaseActividad": 19,
-    "idTipoMantenimiento": 37
-}
-
-###
 POST https://development-kmp.ws.solera.pe/api/Administracion/GestionDocumentaria
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3ZTY1YWFmNy0yOTNiLTRhZWMtYjU4Yy02OTAwODYxNjQ4NmEiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjQsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTZUMDE6MjY6NTUuMzU3XCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjoxLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6MyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNVQxNDo1NDo1MC44NDNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTI1VDE3OjMwOjE1LjExXCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTEvMjYvMjAyMSAwMzo1MDo1MCIsImV4cCI6MTYzNzkxNjY1MCwiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.Pbczd-1G7rG43Bhe2UB_uSj4RP2x3OWOS9PXH2J892Q
@@ -48,9 +35,9 @@ Content-Type: application/json
 }
 
 ###
-GET https://localhost:5001/api/Mantenimiento/AbrirAsignacion/83
+GET https://development-kmp.ws.solera.pe/api/Mantenimiento/AbrirAsignacion/6
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYWE4MDVlOS05MDljLTQzZDEtOGNjNS04ZTExNjdjMDQyZDUiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjEsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjEsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMDFUMjA6NTE6MjJcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MTQsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjo0NyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlN1cGVydmlzb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MSxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMC0wMVQxMToyNDoyMy42ODNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MTYsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjo1MixcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlN1cGVydmlzb3IgZGVsIHRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMC0wMVQxMTozNjowMS4yNVwiLFwiZmVjaGFNb2RcIjpudWxsLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcInRvdGFsXCI6MH1dLFwidXN1YXJpb1JvbGVzXCI6bnVsbCxcInRlbWFcIjpudWxsLFwiaXBcIjpudWxsLFwiZmlybWFcIjpudWxsLFwiZGV2aWNlXCI6bnVsbCxcImN1c3RvbWVyXCI6bnVsbCxcImlkXCI6MSxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpudWxsLFwiZGVzY3JpcGNpb25cIjpudWxsLFwidmlzaWJsZVwiOmZhbHNlLFwiYWN0aXZvXCI6dHJ1ZSxcImFzaWduYWRvXCI6ZmFsc2UsXCJlc3RhZG9cIjowLFwic3ViRXN0YWRvXCI6MCxcImZlY2hhUmVnXCI6XCIyMDIxLTA5LTEwVDE2OjE3OjEzXCIsXCJmZWNoYU1vZFwiOlwiMjAyMS0xMC0yOVQxNDozNDo1MS41NlwiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTAvMjkvMjAyMSAyMDozMzoxNiIsImV4cCI6MTYzNTU1NzU5NiwiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.nv8zflVuMH3oHaXWbs5BHltnU7VxRn-n5CUMJWZM6xk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMzVhZTdhYi1iNDFkLTQ1NWItODJkNy1lNDMxZWY1YjdkOGEiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjQsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTZUMDE6MjY6NTUuMzU3XCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjoxLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6MyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNVQxNDo1NDo1MC44NDNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTI2VDA5OjQzOjA1LjM2XCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTEvMjYvMjAyMSAxNToyNDoxNyIsImV4cCI6MTYzNzk1ODI1NywiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.k8NE3LpYz47nEXA2fGaQ8KDSO5FyuYzMqq4yVhddVP4
 
 ###
 POST https://localhost:5001/api/Administracion/BandejaMaestrosPaginado
@@ -519,5 +506,540 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMWZhY2RhZ
   "documentosList": [
     "xskodksmsmd",
     "xskodksmsmdssds"
+  ]
+}
+
+
+### añadir documentos
+POST https://development-kmp.ws.solera.pe/api/Core/GuardarSeccion
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1MDE2MzQyOC00YzVlLTRhYjAtOTE2Zi05M2U0MTFmNmRjNTUiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6NjMsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjozMixcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcInBlcmZpbFwiLFwiZGVzY3JpcGNpb25cIjpudWxsLFwidmlzaWJsZVwiOmZhbHNlLFwiYWN0aXZvXCI6dHJ1ZSxcImFzaWduYWRvXCI6ZmFsc2UsXCJlc3RhZG9cIjowLFwic3ViRXN0YWRvXCI6MCxcImZlY2hhUmVnXCI6XCIyMDIxLTExLTI5VDEwOjU5OjE0LjA1N1wiLFwiZmVjaGFNb2RcIjpudWxsLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9XSxcInVzdWFyaW9Sb2xlc1wiOm51bGwsXCJ0ZW1hXCI6bnVsbCxcImlwXCI6bnVsbCxcImZpcm1hXCI6bnVsbCxcImRldmljZVwiOm51bGwsXCJjdXN0b21lclwiOm51bGwsXCJpZFwiOjEsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6bnVsbCxcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0wOS0xMFQxNjoxNzoxM1wiLFwiZmVjaGFNb2RcIjpcIjIwMjEtMTEtMjlUMjE6MDM6NTAuNTlcIixcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfSIsImZlY2giOiIxMS8zMC8yMDIxIDA3OjA1OjM4IiwiZXhwIjoxNjM4MjczOTM4LCJpc3MiOiJrb21hdHN1LmNvbS5wZSIsImF1ZCI6ImtvbWF0c3UuY29tLnBlIn0.M0ew-_UOvorUEASCE8hs7jLRAaEalvkCqWc1sBPTxRk
+
+{
+    "index": 0,
+    "grupos": [
+        {
+            "index": 0,
+            "pos": "h",
+            "idSeccion": 14,
+            "parametros": [
+                {
+                    "index": 0,
+                    "indexSeccion": 0,
+                    "indexGrupo": 0,
+                    "idAsignacion": 0,
+                    "idAsignacionDetalle": 0,
+                    "idFormato": 0,
+                    "idSeccion": 0,
+                    "idGrupo": 34,
+                    "idParametro": 1,
+                    "idParametroGrupo": 0,
+                    "label": "dato",
+                    "dato": null,
+                    "tipoNombre": null,
+                    "valor": "ttttttttt",
+                    "placeholder": "texto",
+                    "obligatorio": true,
+                    "editable": true,
+                    "minCaracteres": 1,
+                    "maxCaracteres": 10,
+                    "regex": "",
+                    "fileBase64": null,
+                    "fila": 1,
+                    "columna": 1,
+                    "tipo": 0,
+                    "id": 29,
+                    "codigo": null,
+                    "nombre": null,
+                    "descripcion": null,
+                    "visible": true,
+                    "activo": true,
+                    "asignado": false,
+                    "estado": 0,
+                    "subEstado": 0,
+                    "fechaReg": "2021-11-29T16:01:54.65",
+                    "fechaMod": null,
+                    "usuarioMod": null,
+                    "usuarioReg": null,
+                    "idUsuarioReg": 0,
+                    "idUsuarioMod": 0,
+                    "entidad": 0,
+                    "total": 0
+                }
+            ],
+            "id": 34,
+            "codigo": null,
+            "nombre": "horizontal",
+            "descripcion": null,
+            "visible": true,
+            "activo": true,
+            "asignado": false,
+            "estado": 0,
+            "subEstado": 0,
+            "fechaReg": "2021-11-29T16:01:39.18",
+            "fechaMod": null,
+            "usuarioMod": null,
+            "usuarioReg": null,
+            "idUsuarioReg": 0,
+            "idUsuarioMod": 0,
+            "entidad": 0,
+            "total": 0
+        },
+        {
+            "index": 0,
+            "pos": "v",
+            "idSeccion": 14,
+            "parametros": [
+                {
+                    "index": 0,
+                    "indexSeccion": 0,
+                    "indexGrupo": 0,
+                    "idAsignacion": 0,
+                    "idAsignacionDetalle": 0,
+                    "idFormato": 0,
+                    "idSeccion": 0,
+                    "idGrupo": 35,
+                    "idParametro": 2,
+                    "idParametroGrupo": 0,
+                    "label": "numero",
+                    "dato": null,
+                    "tipoNombre": null,
+                    "valor": "null",
+                    "placeholder": "numero",
+                    "obligatorio": true,
+                    "editable": true,
+                    "minCaracteres": null,
+                    "maxCaracteres": null,
+                    "regex": null,
+                    "fileBase64": null,
+                    "fila": 1,
+                    "columna": null,
+                    "tipo": 0,
+                    "id": 30,
+                    "codigo": null,
+                    "nombre": null,
+                    "descripcion": null,
+                    "visible": true,
+                    "activo": true,
+                    "asignado": false,
+                    "estado": 0,
+                    "subEstado": 0,
+                    "fechaReg": "2021-11-29T16:02:17.36",
+                    "fechaMod": null,
+                    "usuarioMod": null,
+                    "usuarioReg": null,
+                    "idUsuarioReg": 0,
+                    "idUsuarioMod": 0,
+                    "entidad": 0,
+                    "total": 0
+                }
+            ],
+            "id": 35,
+            "codigo": null,
+            "nombre": "vertical",
+            "descripcion": null,
+            "visible": true,
+            "activo": true,
+            "asignado": false,
+            "estado": 0,
+            "subEstado": 0,
+            "fechaReg": "2021-11-29T16:02:04.123",
+            "fechaMod": null,
+            "usuarioMod": null,
+            "usuarioReg": null,
+            "idUsuarioReg": 0,
+            "idUsuarioMod": 0,
+            "entidad": 0,
+            "total": 0
+        }
+    ],
+    "idFormato": 19,
+    "orden": 0,
+    "id": 14,
+    "codigo": null,
+    "nombre": "seccion 1",
+    "descripcion": null,
+    "visible": false,
+    "activo": true,
+    "asignado": false,
+    "estado": 0,
+    "subEstado": 0,
+    "fechaReg": "2021-11-29T16:01:19.703",
+    "fechaMod": null,
+    "usuarioMod": null,
+    "usuarioReg": null,
+    "idUsuarioReg": 0,
+    "idUsuarioMod": 0,
+    "entidad": 0,
+    "total": 0
+}
+
+###
+POST https://development-kmp.ws.solera.pe/api/Mantenimiento/GuardarAsignacion
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1MDE2MzQyOC00YzVlLTRhYjAtOTE2Zi05M2U0MTFmNmRjNTUiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6NjMsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjozMixcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcInBlcmZpbFwiLFwiZGVzY3JpcGNpb25cIjpudWxsLFwidmlzaWJsZVwiOmZhbHNlLFwiYWN0aXZvXCI6dHJ1ZSxcImFzaWduYWRvXCI6ZmFsc2UsXCJlc3RhZG9cIjowLFwic3ViRXN0YWRvXCI6MCxcImZlY2hhUmVnXCI6XCIyMDIxLTExLTI5VDEwOjU5OjE0LjA1N1wiLFwiZmVjaGFNb2RcIjpudWxsLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9XSxcInVzdWFyaW9Sb2xlc1wiOm51bGwsXCJ0ZW1hXCI6bnVsbCxcImlwXCI6bnVsbCxcImZpcm1hXCI6bnVsbCxcImRldmljZVwiOm51bGwsXCJjdXN0b21lclwiOm51bGwsXCJpZFwiOjEsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6bnVsbCxcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0wOS0xMFQxNjoxNzoxM1wiLFwiZmVjaGFNb2RcIjpcIjIwMjEtMTEtMjlUMjE6MDM6NTAuNTlcIixcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfSIsImZlY2giOiIxMS8zMC8yMDIxIDA3OjA1OjM4IiwiZXhwIjoxNjM4MjczOTM4LCJpc3MiOiJrb21hdHN1LmNvbS5wZSIsImF1ZCI6ImtvbWF0c3UuY29tLnBlIn0.M0ew-_UOvorUEASCE8hs7jLRAaEalvkCqWc1sBPTxRk
+
+{
+  "activo": true,
+  "codigo": "MAN0000089.21",
+  "descripcion": "",
+  "estado": 0,
+  "fechaMod": "2021-10-29T17:06:40.8",
+  "fechaReg": "2021-10-29T17:06:40.8",
+  "id": 89,
+  "idAsignacion": 89,
+  "nombre": "",
+  "secciones": [
+    {
+      "activo": true,
+      "asignado": false,
+      "descripcion": "",
+      "estado": 0,
+      "fechaReg": "2021-10-25T09:39:59.987",
+      "grupos": [
+        {
+          "activo": true,
+          "asignado": false,
+          "descripcion": "",
+          "estado": 0,
+          "fechaReg": "2021-10-25T09:41:07.96",
+          "id": 67,
+          "idSeccion": 53,
+          "nombre": "Diesel",
+          "parametros": [
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 1,
+              "dato": "Motor",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 1,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 1,
+              "idSeccion": 89,
+              "index": 1,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "qqqqqqqqqqqqqq",
+              "visible": false
+            },
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 2,
+              "dato": "9600959985ef457f9676f86a6601089f-1635545541438.jpg",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 1,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 6,
+              "idSeccion": 89,
+              "index": 2,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "/storage/emulated/0/Pictures/dcp/9600959985ef457f9676f86a6601089f-1635545541438.jpg",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "",
+              "visible": false
+            },
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 1,
+              "dato": "llave,gato hidraulico",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 2,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 10,
+              "idSeccion": 89,
+              "index": 3,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "",
+              "visible": false
+            },
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 3,
+              "dato": "2021 - 10 - 13",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 1,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 5,
+              "idSeccion": 89,
+              "index": 4,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "",
+              "visible": false
+            },
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 4,
+              "dato": "Descripcion motor",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 1,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 3,
+              "idSeccion": 89,
+              "index": 5,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "",
+              "visible": false
+            },
+            {
+              "activo": false,
+              "codigo": "MAN0000089.21",
+              "columna": 5,
+              "dato": "",
+              "descripcion": "",
+              "editable": true,
+              "estado": 0,
+              "fechaReg": "0001-01-01T00:00:00",
+              "fila": 1,
+              "filebase64": "",
+              "id": 0,
+              "idAsignacion": 89,
+              "idFormato": 37,
+              "idGrupo": 67,
+              "idParametro": 9,
+              "idSeccion": 89,
+              "index": 6,
+              "indexGrupo": 1,
+              "indexSeccion": 1,
+              "label": "",
+              "maxCaracteres": -1,
+              "minCaracteres": -1,
+              "nombre": "",
+              "obligatorio": false,
+              "path": "",
+              "placeholder": "",
+              "regex": "",
+              "tipo": 0,
+              "total": 0,
+              "valor": "",
+              "visible": false
+            }
+          ],
+          "pos": "h",
+          "total": 0,
+          "visible": true
+        }
+      ],
+      "id": 53,
+      "idFormato": 37,
+      "nombre": "Motores",
+      "total": 0,
+      "visible": false
+    }
+  ],
+  "subestado": -1,
+  "total": 0,
+  "visible": false
+}
+
+###
+GET https://localhost:5001/api/Seguridad/ObtenerMenu
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyODAxMDExNy00ODhlLTQ3NWItYTcyYS04MDI0N2Y2N2JjYTAiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MSxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjMsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJUZWNuaWNvXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMTEtMTVUMTQ6NTQ6NTAuODQzXCIsXCJmZWNoYU1vZFwiOm51bGwsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0se1wiaWRSb2xcIjozLFwiaWRPcGNpb25cIjowLFwiaWRFbXByZXNhXCI6MCxcIm51bVVzdWFyaW9zXCI6MCxcImlkXCI6NCxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIkFkbWluaXN0cmFkb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMS0xNlQwMToyNjo1NS4zNTdcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJpZFVzdWFyaW9SZWdcIjowLFwiaWRVc3VhcmlvTW9kXCI6MCxcImVudGlkYWRcIjowLFwidG90YWxcIjowfV0sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTE3VDEwOjA0OjMzLjk0N1wiLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzE3LzIwMjEgMTU6MDc6MjciLCJleHAiOjE2MzcxNzk2NDcsImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.m75CvMS8-ElGVM38wioqwqmyNNvIujJlfyH1YQHA2Ew
+
+###
+GET https://localhost:5001/api/Administracion/ObtenerNotificaciones
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiNmQyYjRiZC1jODJmLTQxNWItYjlmZC1lYTliNmI2NjliOGEiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W10sXCJ1c3VhcmlvUm9sZXNcIjpudWxsLFwidGVtYVwiOm51bGwsXCJpcFwiOm51bGwsXCJmaXJtYVwiOm51bGwsXCJkZXZpY2VcIjpudWxsLFwiY3VzdG9tZXJcIjpudWxsLFwiaWRcIjoxLFwiY29kaWdvXCI6bnVsbCxcIm5vbWJyZVwiOm51bGwsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjAsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMTBUMTY6MTc6MTNcIixcImZlY2hhTW9kXCI6XCIyMDIxLTExLTExVDA5OjA5OjUyLjA4XCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwidG90YWxcIjowfSIsImZlY2giOiIxMS8xMS8yMDIxIDE2OjA0OjE0IiwiZXhwIjoxNjM2NjY0NjU0LCJpc3MiOiJrb21hdHN1LmNvbS5wZSIsImF1ZCI6ImtvbWF0c3UuY29tLnBlIn0.hkRA_itIdeYmIhSzY3dct0Olo4YctZ1HXuNvyvR1Ev0
+
+###
+POST https://localhost:5001/api/Administracion/CrudClientes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxOGVlODY1Zi0xNmZiLTQ5ZTQtYTE0MS0xYzI2YTk3OTMyYjIiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6MyxcImlkT3BjaW9uXCI6MCxcImlkRW1wcmVzYVwiOjAsXCJudW1Vc3Vhcmlvc1wiOjAsXCJpZFwiOjEsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6XCJBZG1pbmlzdHJhZG9yXCIsXCJkZXNjcmlwY2lvblwiOm51bGwsXCJ2aXNpYmxlXCI6ZmFsc2UsXCJhY3Rpdm9cIjp0cnVlLFwiYXNpZ25hZG9cIjpmYWxzZSxcImVzdGFkb1wiOjEsXCJzdWJFc3RhZG9cIjowLFwiZmVjaGFSZWdcIjpcIjIwMjEtMDktMDFUMjA6NTE6MjJcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MTQsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjo0NyxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlN1cGVydmlzb3JcIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MSxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMC0wMVQxMToyNDoyMy42ODNcIixcImZlY2hhTW9kXCI6bnVsbCxcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9LHtcImlkUm9sXCI6MTYsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjo1MixcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcIlN1cGVydmlzb3IgZGVsIHRlY25pY29cIixcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0xMC0wMVQxMTozNjowMS4yNVwiLFwiZmVjaGFNb2RcIjpudWxsLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcInRvdGFsXCI6MH1dLFwidXN1YXJpb1JvbGVzXCI6bnVsbCxcInRlbWFcIjpudWxsLFwiaXBcIjpudWxsLFwiZmlybWFcIjpudWxsLFwiZGV2aWNlXCI6bnVsbCxcImN1c3RvbWVyXCI6bnVsbCxcImlkXCI6MSxcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpudWxsLFwiZGVzY3JpcGNpb25cIjpudWxsLFwidmlzaWJsZVwiOmZhbHNlLFwiYWN0aXZvXCI6dHJ1ZSxcImFzaWduYWRvXCI6ZmFsc2UsXCJlc3RhZG9cIjowLFwic3ViRXN0YWRvXCI6MCxcImZlY2hhUmVnXCI6XCIyMDIxLTA5LTEwVDE2OjE3OjEzXCIsXCJmZWNoYU1vZFwiOlwiMjAyMS0xMS0xMFQwOTozODoyMC4yOTdcIixcInVzdWFyaW9Nb2RcIjpudWxsLFwidXN1YXJpb1JlZ1wiOm51bGwsXCJ0b3RhbFwiOjB9IiwiZmVjaCI6IjExLzEwLzIwMjEgMTU6MjM6MTQiLCJleHAiOjE2MzY1NzU3OTQsImlzcyI6ImtvbWF0c3UuY29tLnBlIiwiYXVkIjoia29tYXRzdS5jb20ucGUifQ.oyve16nzd6bq3MIOjULkIZCU8XKetAm_JIvywA_eBKE
+
+{
+  "id": 1,
+  "nombre": "Alicorp",
+  "ruc": "20208754224",
+  "razon": "Alicorp SAC",
+  "ubicacion": "Av. argentina 1452, Cercado de lima",
+  "estado": 1
+}
+
+###
+POST https://development-kmp.ws.solera.pe/api/Administracion/GestionDocumentaria
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMjUyOGViMS1mZDU5LTRmMzEtOWFmYy0wN2Q2ODk2OTFhODkiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6NjMsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjozMixcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcInBlcmZpbFwiLFwiZGVzY3JpcGNpb25cIjpudWxsLFwidmlzaWJsZVwiOmZhbHNlLFwiYWN0aXZvXCI6dHJ1ZSxcImFzaWduYWRvXCI6ZmFsc2UsXCJlc3RhZG9cIjowLFwic3ViRXN0YWRvXCI6MCxcImZlY2hhUmVnXCI6XCIyMDIxLTExLTI5VDEwOjU5OjE0LjA1N1wiLFwiZmVjaGFNb2RcIjpudWxsLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9XSxcInVzdWFyaW9Sb2xlc1wiOm51bGwsXCJ0ZW1hXCI6bnVsbCxcImlwXCI6bnVsbCxcImZpcm1hXCI6bnVsbCxcImRldmljZVwiOm51bGwsXCJjdXN0b21lclwiOm51bGwsXCJpZFwiOjEsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6bnVsbCxcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0wOS0xMFQxNjoxNzoxM1wiLFwiZmVjaGFNb2RcIjpcIjIwMjEtMTEtMzBUMDk6MzI6MTUuMjAzXCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTEvMzAvMjAyMSAxNDozMjoxNyIsImV4cCI6MTYzODMwMDczNywiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.C-KWU7ogmOfMsgcFxiHx_4TxAfhyDUOAtG95W-p3rac
+
+{
+    "nombre": "Nuevo ssssso",
+    "cliente": "pepsi",
+    "modelo": "wwww",
+    "actividad": "ccccccccccccccccc",
+    "tipo_mantenimiento": "otro",
+    "activo": true,
+    "idCliente": 14,
+    "mime": "documento",
+    "ruta": "/admin/maestros/agregar_documentos",
+    "idModelo": 5,
+    "idTipoMantenimiento": 53,
+    "idClaseActividad": 22,
+    "documentosList": [],
+    "id": 41
+}
+
+###
+POST https://development-kmp.ws.solera.pe/api/Core/GuardarParametrosxGrupo
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMjUyOGViMS1mZDU5LTRmMzEtOWFmYy0wN2Q2ODk2OTFhODkiLCJkYXRhIjoie1widXNyXCI6XCJzb2xlcmFcIixcInBzd1wiOlwiTVRJek5HRmtaR1JsUUVCcmFuTmpia0E9XCIsXCJwc3dOdWV2b1wiOm51bGwsXCJjb3JyZW9cIjpcInNvbGVyYUBzb2xlcmEuY29tXCIsXCJjaXBcIjpudWxsLFwiZG5pXCI6bnVsbCxcIm5vbWJyZXNcIjpcInNvbGVyYVwiLFwiYXBlbGxpZG9zXCI6XCJ3ZWJiYmJcIixcImZlY2hhTmFjaW1pZW50b1wiOm51bGwsXCJmZWNoYUluZ3Jlc29cIjpudWxsLFwicm9sSWRcIjowLFwiY2FyZ29JZFwiOm51bGwsXCJwdWVzdG9JZFwiOm51bGwsXCJqZWZhdHVyYUlkXCI6bnVsbCxcImlkRW1wcmVzYVwiOjEsXCJlbXByZXNhXCI6XCJLb21hdHN1XCIsXCJjb250YWN0b1JlZmVyZW5jaWFcIjpudWxsLFwidGVsZWZvbm9SZWZlcmVuY2lhXCI6bnVsbCxcImRpcmVjY2lvblwiOm51bGwsXCJ0ZWxlZm9ub1wiOm51bGwsXCJjZWx1bGFyXCI6bnVsbCxcIm1vdmlsXCI6ZmFsc2UsXCJ3ZWJcIjp0cnVlLFwicmVzdHJpY2Npb25BY2Nlc29cIjpmYWxzZSxcInJvbGVzXCI6W3tcImlkUm9sXCI6NjMsXCJpZE9wY2lvblwiOjAsXCJpZEVtcHJlc2FcIjowLFwibnVtVXN1YXJpb3NcIjowLFwiaWRcIjozMixcImNvZGlnb1wiOm51bGwsXCJub21icmVcIjpcInBlcmZpbFwiLFwiZGVzY3JpcGNpb25cIjpudWxsLFwidmlzaWJsZVwiOmZhbHNlLFwiYWN0aXZvXCI6dHJ1ZSxcImFzaWduYWRvXCI6ZmFsc2UsXCJlc3RhZG9cIjowLFwic3ViRXN0YWRvXCI6MCxcImZlY2hhUmVnXCI6XCIyMDIxLTExLTI5VDEwOjU5OjE0LjA1N1wiLFwiZmVjaGFNb2RcIjpudWxsLFwidXN1YXJpb01vZFwiOm51bGwsXCJ1c3VhcmlvUmVnXCI6bnVsbCxcImlkVXN1YXJpb1JlZ1wiOjAsXCJpZFVzdWFyaW9Nb2RcIjowLFwiZW50aWRhZFwiOjAsXCJ0b3RhbFwiOjB9XSxcInVzdWFyaW9Sb2xlc1wiOm51bGwsXCJ0ZW1hXCI6bnVsbCxcImlwXCI6bnVsbCxcImZpcm1hXCI6bnVsbCxcImRldmljZVwiOm51bGwsXCJjdXN0b21lclwiOm51bGwsXCJpZFwiOjEsXCJjb2RpZ29cIjpudWxsLFwibm9tYnJlXCI6bnVsbCxcImRlc2NyaXBjaW9uXCI6bnVsbCxcInZpc2libGVcIjpmYWxzZSxcImFjdGl2b1wiOnRydWUsXCJhc2lnbmFkb1wiOmZhbHNlLFwiZXN0YWRvXCI6MCxcInN1YkVzdGFkb1wiOjAsXCJmZWNoYVJlZ1wiOlwiMjAyMS0wOS0xMFQxNjoxNzoxM1wiLFwiZmVjaGFNb2RcIjpcIjIwMjEtMTEtMzBUMDk6MzI6MTUuMjAzXCIsXCJ1c3VhcmlvTW9kXCI6bnVsbCxcInVzdWFyaW9SZWdcIjpudWxsLFwiaWRVc3VhcmlvUmVnXCI6MCxcImlkVXN1YXJpb01vZFwiOjAsXCJlbnRpZGFkXCI6MCxcInRvdGFsXCI6MH0iLCJmZWNoIjoiMTEvMzAvMjAyMSAxNDozMjoxNyIsImV4cCI6MTYzODMwMDczNywiaXNzIjoia29tYXRzdS5jb20ucGUiLCJhdWQiOiJrb21hdHN1LmNvbS5wZSJ9.C-KWU7ogmOfMsgcFxiHx_4TxAfhyDUOAtG95W-p3rac
+
+{
+"id": 38,
+  "codigo": "string",
+  "nombre": "qwqwq",
+  "descripcion": "string",
+  "visible": true,
+  "activo": true,
+  "asignado": false,
+  "estado": 0,
+  "subEstado": 0,
+  "fechaReg": "2021-11-30T15:31:40.876Z",
+  "fechaMod": "2021-11-30T15:31:40.876Z",
+  "usuarioMod": "string",
+  "usuarioReg": "string",
+  "idUsuarioReg": 0,
+  "idUsuarioMod": 0,
+  "entidad": 0,
+  "total": 0,
+  "index": 0,
+  "pos": "h",
+  "idSeccion": 19,
+  "parametros": [
+    {
+      "index": 0,
+      "indexSeccion": 0,
+      "indexGrupo": 0,
+      "idAsignacion": 0,
+      "idAsignacionDetalle": 0,
+      "idFormato": 0,
+      "idSeccion": 0,
+      "idGrupo": 38,
+      "idParametro": 1,
+      "idParametroGrupo": 0,
+      "label": "qqqq",
+      "dato": "parametro 2",
+      "tipoNombre": null,
+      "valor": null,
+      "placeholder": "qqq",
+      "obligatorio": true,
+      "editable": true,
+      "minCaracteres": 1,
+      "maxCaracteres": 22,
+      "regex": "",
+      "fileBase64": null,
+      "fila": 1,
+      "columna": 1,
+      "tipo": 0,
+      "observado": null,
+      "idUsuarioObservado": 0,
+      "id": 33,
+      "codigo": null,
+      "nombre": null,
+      "descripcion": null,
+      "visible": true,
+      "activo": true,
+      "asignado": false,
+      "estado": 0,
+      "subEstado": 0,
+      "fechaReg": "2021-11-30T03:30:14.29",
+      "fechaMod": null,
+      "usuarioMod": null,
+      "usuarioReg": null,
+      "idUsuarioReg": 0,
+      "idUsuarioMod": 0,
+      "entidad": 0,
+      "total": 0
+    }
   ]
 }

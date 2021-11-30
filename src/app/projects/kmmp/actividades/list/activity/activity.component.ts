@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChange,
-  SimpleChanges,
-} from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { AssignBayComponent } from "../../dialogs/assign-bay/assign-bay.component";
 
@@ -13,35 +6,29 @@ import { AssignBayComponent } from "../../dialogs/assign-bay/assign-bay.componen
 import { ActivitiesService } from "../../activities.service";
 
 //MODELS
-import {
-  Activity,
-  ActivityFake,
-} from "app/projects/kmmp/fake-db/activities/activity-fake-db";
+import { ActivityFake } from "app/projects/kmmp/fake-db/activities/activity-fake-db";
+import { Event } from "@angular/router";
 
 @Component({
   selector: "app-activity",
   templateUrl: "./activity.component.html",
   styleUrls: ["./activity.component.scss"],
 })
-export class ActivityComponent implements OnInit, OnChanges {
-  formatData = formats;
-  preloadedFormatsData = [];
-
+export class ActivityComponent implements OnInit {
   @Input() isEdit: boolean = false;
   @Input() activityData: ActivityFake;
-  activityInfo: any;
+  activityInfo: any = [];
   constructor(
     private dialog: MatDialog,
     private activitiesService: ActivitiesService
   ) {}
 
   ngOnInit(): void {
-    this.preloadedFormats();
-    console.log("this.activityData.id ", this.activityData.id);
+    console.log("this.activityData", this.activityData);
     this.getActivityData(this.activityData.id);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  /*ngOnChanges(changes: SimpleChanges): void {
     if ("isEdit" in changes) {
       this.isEdit = changes["isEdit"].currentValue;
     }
@@ -50,12 +37,11 @@ export class ActivityComponent implements OnInit, OnChanges {
       this.activityData = changes["activityData"].currentValue;
       console.log(this.activityData.formatos);
     }
-  }
+  }*/
 
   getActivityData(id: number): void {
     this.activitiesService.getActivity(id).subscribe((resp: any) => {
       this.activityInfo = resp.body;
-      console.log("activityInfo, ", this.activityInfo);
     });
   }
   assignFormat(): void {
@@ -65,20 +51,19 @@ export class ActivityComponent implements OnInit, OnChanges {
     });
   }
 
-  private preloadedFormats(): void {
-    this.activitiesService.preloadedFormats.subscribe((formats: any) => {
-      this.preloadedFormatsData = formats;
-    });
+  async removeFormat(index: number) {
+    const formatSelected = await this.activityInfo.formatos[index];
+    this.activitiesService
+      .deleteFormatById(formatSelected.idActividadFormato)
+      .subscribe((resp: any) => {
+        this.activityInfo.formatos.splice(index, 1);
+      });
   }
 
-  removeFormat(index: number) {
-    this.activityData.formatos.splice(index, 1);
+  enableDeleteFormats(): boolean {
+    if (this.activityInfo.formatos.filter((x: any) => x.activo).length > 1) {
+      return true;
+    }
+    return false;
   }
 }
-
-const formats = [
-  { title: "Formato FM01", complete: true, porcentage: "75%" },
-  { title: "Formato FM02", complete: true, porcentage: "75%" },
-  { title: "Formato FM03", complete: true, porcentage: "75%" },
-  { title: "Formato FM04", complete: false, porcentage: "75%" },
-];

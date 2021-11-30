@@ -185,6 +185,44 @@
             </div>
           </ng-container>
         </ng-container>
+
+        <ng-template #empty>
+          <div
+            class="
+              p-8
+              sm:p-16
+              border-t
+              text-4xl
+              font-semibold
+              tracking-tight
+              text-center
+            "
+          >
+            No hay formatos registrados
+          </div>
+          <div
+            class="
+              absolute
+              flex flex-0
+              items-center
+              justify-end
+              h-16
+              px-4
+              bottom-0
+              z-49
+              right-0
+              dark:bg-transparent
+              print:hidden
+            "
+          >
+            <span class="font-medium text-secondary">
+              <a mat-button color="primary" (click)="createModelo()">
+                <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+                Nuevo tipo de equipo
+              </a>
+            </span>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>

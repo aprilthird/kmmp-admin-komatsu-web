@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
 import {
-  Activity,
-  Asignaciones,
-} from "app/projects/kmmp/fake-db/activities/activity-fake-db";
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { forkJoin } from "rxjs";
 import { map } from "rxjs/operators";
@@ -26,7 +27,7 @@ export class ActivityAddEditComponent implements OnInit {
   isEdit: boolean;
   idActivity: number;
   isLoading: boolean = true;
-  tipo_mantenimientos = tipo_mantenimientos;
+  //tipo_mantenimientos = tipo_mantenimientos;
   tipo_solicitudes = tipo_solicitudes;
   loadLoading: boolean;
   form: FormGroup = this.fb.group({});
@@ -76,7 +77,7 @@ export class ActivityAddEditComponent implements OnInit {
     });
   }
 
-  private getEquiposData(id: number): void {
+  getEquiposData(id: number): void {
     this.equiposService.getEquipos({ id: id }).subscribe((resp) => {
       const currentEquipo = resp.body.data.find((x: any) => x.id === id);
       this.form.controls["modelo"].setValue(currentEquipo.modelo);
@@ -86,25 +87,38 @@ export class ActivityAddEditComponent implements OnInit {
 
   private setActivityData(): void {
     this.form = this.fb.group({
-      cliente: new FormControl(this.activityInfo?.idCliente),
-      equipo: new FormControl(this.activityInfo?.idEquipo),
+      cliente: new FormControl(
+        this.activityInfo?.idCliente,
+        Validators.required
+      ),
+      equipo: new FormControl(this.activityInfo?.idEquipo, Validators.required),
       modelo: new FormControl(),
       flota: new FormControl(),
-      tipo_equipo: new FormControl(""),
-      actividad: new FormControl(this.activityInfo?.idActividad),
-      tipo_mantenimiento: new FormControl(
-        this.activityInfo?.idTipoMantenimiento
+      tipo_equipo: new FormControl(),
+      actividad: new FormControl(
+        this.activityInfo?.idActividad,
+        Validators.required
       ),
-      bahia_asignada: new FormControl(this.activityInfo?.idBahia),
-      tipo_solicitud: new FormControl(this.activityInfo?.idTipoSolicitud),
+      tipo_mantenimiento: new FormControl(
+        this.activityInfo?.idTipoMantenimiento,
+        Validators.required
+      ),
+      bahia_asignada: new FormControl(
+        this.activityInfo?.idBahia,
+        Validators.required
+      ),
+      tipo_solicitud: new FormControl(
+        this.activityInfo?.idTipoSolicitud,
+        Validators.required
+      ),
       descripcion_actividad: new FormControl(this.activityInfo?.descripcion),
       numero_bl: new FormControl(this.activityInfo?.nbl),
       os: new FormControl(this.activityInfo?.nos),
       pe: new FormControl(this.activityInfo?.npe),
-      fecha_estimada: new FormControl(this.activityInfo?.fechaEstimadaFin),
+      fechaEstimadaIni: new FormControl(),
       duracion: new FormControl(this.activityInfo?.duracion),
-      fecha_real_inicio: new FormControl(this.activityInfo?.fechaRealIni),
-      fecha_real_fin: new FormControl(this.activityInfo?.fechaRealFin),
+      fecha_real_inicio: new FormControl(),
+      fecha_real_fin: new FormControl(),
       duracion_2: new FormControl(this.activityInfo?.duracionReal),
       comentarios_tecnico: new FormControl(
         this.activityInfo?.comentariosTecnico
@@ -112,6 +126,7 @@ export class ActivityAddEditComponent implements OnInit {
     });
     this.form.controls["modelo"].disable();
     this.form.controls["flota"].disable();
+    this.form.controls["tipo_equipo"].disable();
   }
 
   getInboxes(): void {
@@ -140,13 +155,13 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   getTipoMtto(idClaseActividad): void {
-    this.serviceAct.getTipoMtto(8, idClaseActividad).subscribe((resp: any) => {
+    this.serviceAct.getTipoMtto(9, idClaseActividad).subscribe((resp: any) => {
       console.log(resp);
       this.tipo_mttoOpt = resp.body.data;
     });
   }
 
-  private getData(): void {
+  /*private getData(): void {
     this.activatedRoute.paramMap.forEach((param: any) => {
       if (param.params.id) {
         this.idActivity = param.params.id;
@@ -162,7 +177,7 @@ export class ActivityAddEditComponent implements OnInit {
         });
       }
     });
-  }
+  }*/
 
   addSingleActivity(): void {
     this.loadLoading = true;
@@ -207,7 +222,7 @@ export class ActivityAddEditComponent implements OnInit {
     });
   }
 
-  createActivity(): void {
+  /*createActivity(): void {
     this.serviceAct.addNewActivity({
       id: Asignaciones.length,
       estado: "Sin empezar",
@@ -215,7 +230,7 @@ export class ActivityAddEditComponent implements OnInit {
     });
 
     this.router.navigate(["/admin/actividades/list"]);
-  }
+  }*/
 
   getParams(): any {
     const params: ActivityI = {
@@ -231,12 +246,13 @@ export class ActivityAddEditComponent implements OnInit {
       nos: "xxx",
       npe: "yyy",
       idCliente: this.form.controls["cliente"].value,
-      idActividad: this.form.controls["actividad"].value,
+      idClaseActividad: this.form.controls["actividad"].value,
       modelo: 10,
       visible: true,
       activo: true,
       actividad: "actividad",
       nombre: "nombre",
+      fechaEstimadaIni: this.form.controls["fechaEstimadaIni"].value,
       id: 0,
     };
     if ((this.isEdit = true)) {
@@ -263,7 +279,7 @@ const PE = [
   },
 ];
 
-const tipo_mantenimientos = [
+/*const tipo_mantenimientos = [
   {
     id: 1,
     name: "PS01",
@@ -272,7 +288,7 @@ const tipo_mantenimientos = [
     id: 2,
     name: "PS02",
   },
-];
+];*/
 
 const tipo_solicitudes = [
   {

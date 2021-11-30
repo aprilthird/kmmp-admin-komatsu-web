@@ -36,6 +36,20 @@
       </mat-form-field>
 
       <mat-form-field class="w-100-p">
+        <mat-label class="prose">Tipo de equipo</mat-label>
+        <mat-select
+          formControlName="idTipoEquipo"
+          [value]="form.controls['idTipoEquipo'].value"
+        >
+          <mat-option
+            *ngFor="let tipo_equipo of tipo_equipos"
+            [value]="tipo_equipo.id"
+            >{{ tipo_equipo.nombre }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="w-100-p">
         <mat-label class="prose">Modelo</mat-label>
         <mat-select
           formControlName="idModelo"

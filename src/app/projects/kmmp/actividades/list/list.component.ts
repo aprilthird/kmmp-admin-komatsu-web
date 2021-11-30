@@ -1,15 +1,11 @@
 import { Component, OnChanges, OnInit, SimpleChange } from "@angular/core";
 import { MatCheckbox } from "@angular/material/checkbox";
 import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
 import { Pagination } from "app/core/types/list.types";
-import { activities } from "app/mock-api/pages/activities/data";
 import { Observable, Subject } from "rxjs";
-import {
-  Activity,
-  Asignaciones,
-  ActivitiesData,
-  ActivityFake,
-} from "../../fake-db/activities/activity-fake-db";
+import { ActivityFake } from "../../fake-db/activities/activity-fake-db";
+import { EditarFormatoService } from "../../formatos/editar-formato/editar-formato.service";
 import { ActivitiesService } from "../activities.service";
 import { AssignBayComponent } from "../dialogs/assign-bay/assign-bay.component";
 
@@ -35,7 +31,9 @@ export class ListComponent implements OnInit {
 
   constructor(
     private matDialog: MatDialog,
-    private activitiesService: ActivitiesService
+    private activitiesService: ActivitiesService,
+    private editarFormatoService: EditarFormatoService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -100,5 +98,24 @@ export class ListComponent implements OnInit {
       return;
     }
     this.selectedActivity = actividad;
+  }
+
+  getFormats(activity): void {
+    let format: number;
+    let seccion: number;
+    this.activitiesService.getActivity(activity).subscribe((formats: any) => {
+      format = formats.body.formatos[0].id;
+
+      this.editarFormatoService
+        .getObtenerFormatoCompleto(format)
+        .subscribe((secciones: any) => {
+          if (secciones.body.secciones.length > 0) {
+            seccion = secciones.body.secciones[0].id;
+            this.router.navigate([
+              `/admin/actividades/validation/${activity}/${format}/${seccion}`,
+            ]);
+          }
+        });
+    });
   }
 }

@@ -91,7 +91,7 @@
   </div>
 
   <div
-    *ngIf="activityData.formatos && activityData.formatos.length > 0"
+    *ngIf="activityInfo.formatos && activityInfo.formatos.length > 0"
     class="flex flex-col justify-between lg:pl-8"
   >
     <div class="format h-3/4 w-3/4">
@@ -99,36 +99,40 @@
       <div class="flex flex-col lg:flex-row lg:flex-wrap gap-4">
         <div
           class="flex flex-row items-center"
-          *ngFor="let format of activityData.formatos; let i = index"
+          *ngFor="let format of activityInfo.formatos; let i = index"
         >
-          <button
-            mat-button
-            class="w-60 border-red-300 rounded-md border-format-button"
-          >
-            <div class="flex flex-row justify-between items-center w-52">
-              <div>
-                <span>{{ format.name }}</span>
+          <ng-container *ngIf="format.activo">
+            <button
+              mat-button
+              class="w-60 border-red-300 rounded-md border-format-button"
+              (click)="removeFormat($event)"
+            >
+              <div class="flex flex-row justify-between items-center w-52">
+                <div>
+                  <span>{{ format.nombre }}</span>
+                </div>
+                <div class="flex flex-row items-center gap-1">
+                  <span>75%</span
+                  ><mat-icon
+                    class="text-red-300"
+                    svgIcon="warning_amber"
+                  ></mat-icon>
+                </div>
               </div>
-              <div class="flex flex-row items-center gap-1">
-                <span>{{ format.porcentage }}</span
-                ><mat-icon
-                  class="text-red-300"
-                  svgIcon="warning_amber"
-                ></mat-icon>
-              </div>
-            </div>
-          </button>
-          <button *ngIf="isEdit" mat-icon-button>
-            <mat-icon
-              (click)="removeFormat(i)"
-              svgIcon="heroicons_outline:trash"
-            ></mat-icon>
-          </button>
+            </button>
+            <button *ngIf="isEdit" mat-icon-button>
+              <mat-icon
+                (click)="removeFormat(i)"
+                svgIcon="heroicons_outline:trash"
+              ></mat-icon>
+            </button>
+          </ng-container>
         </div>
       </div>
 
       <div class="p-2">
         <button
+          *ngIf="enableDeleteFormats()"
           class="mr-8"
           mat-raised-button
           [color]="'primary'"

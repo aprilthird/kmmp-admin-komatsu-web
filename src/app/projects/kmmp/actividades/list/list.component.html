@@ -95,7 +95,7 @@
               </div>
               <div class="">Equipo</div>
               <div class="">Modelo</div>
-              <div class="">Actividad</div>
+              <div class="">Clase de actividad</div>
               <div class="">Tipo Mnto</div>
               <div class="">Bahía asignada</div>
               <div class="">Estado</div>
@@ -199,10 +199,7 @@
                       ></mat-icon>
                     </button>
                     <mat-menu #menu="matMenu" xPosition="before">
-                      <button
-                        mat-menu-item
-                        routerLink="/admin/actividades/validation/1/1/1"
-                      >
+                      <button mat-menu-item (click)="getFormats(actividad.id)">
                         Ver formatos
                       </button>
                       <button

@@ -1,4 +1,3 @@
-import { X } from "@angular/cdk/keycodes";
 import { Component, Inject, OnInit } from "@angular/core";
 
 import {
@@ -54,11 +53,16 @@ export class DialogAddEquiposComponent implements OnInit {
       this.isEdit = true;
       this.initData = this.data;
       this.equipoId = this.data.id;
+      console.log("this.data ", this.data);
     }
     this.getSelectsData();
     this.form = this.fb.group({
       nombre: new FormControl(this.initData?.nombre, Validators.required),
       tag: new FormControl(this.initData?.tag, Validators.required),
+      idTipoEquipo: new FormControl(
+        this.initData?.idTipoEquipo,
+        Validators.required
+      ),
       modelo: new FormControl(this.initData?.modelo, Validators.required),
       idModelo: new FormControl(this.initData?.idModelo, Validators.required),
       flota: new FormControl(this.initData?.flota, Validators.required),

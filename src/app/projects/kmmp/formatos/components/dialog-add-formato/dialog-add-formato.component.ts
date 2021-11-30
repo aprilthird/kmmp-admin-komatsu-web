@@ -16,16 +16,17 @@ export class DialogAddFormatoComponent implements OnInit {
   loading: boolean = false;
 
   form: FormGroup = this.fb.group({
-    nombre: ["", Validators.required],
-    idCliente: ["", Validators.required],
-    idModelo: ["", Validators.required],
-    idClaseActividad: ["", Validators.required],
-    idTipoMantenimiento: ["", Validators.required],
+    nombre: [null, Validators.required],
+    idCliente: [null, Validators.required],
+    idModelo: [null, Validators.required],
+    idClaseActividad: [null, Validators.required],
+    idTipoMantenimiento: [null, Validators.required],
   });
   clientsOpt: any;
   modelosOpt: any;
   actividadOpt: any;
   tipo_mttoOpt: any;
+  emptyTipoMtto: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -44,15 +45,11 @@ export class DialogAddFormatoComponent implements OnInit {
     let clients = this.serviceAct.getList(1).pipe(map((x: any) => x.body.data));
     let modelos = this.serviceAct.getList(5).pipe(map((x: any) => x.body.data));
     let c_act = this.serviceAct.getList(7).pipe(map((x: any) => x.body.data));
-    let tipo_mtto = this.serviceAct
-      .getList(8)
-      .pipe(map((x: any) => x.body.data));
 
-    forkJoin([clients, modelos, c_act, tipo_mtto]).subscribe((result: any) => {
+    forkJoin([clients, modelos, c_act]).subscribe((result: any) => {
       this.clientsOpt = result[0];
       this.modelosOpt = result[1];
       this.actividadOpt = result[2];
-      this.tipo_mttoOpt = result[3];
       this.loading = false;
     });
   }
@@ -70,6 +67,17 @@ export class DialogAddFormatoComponent implements OnInit {
             });
         });
     }
+  }
+
+  setTipoMtto(idClaseActividad: number): void {
+    this.serviceAct.getTipoMtto(9, idClaseActividad).subscribe((x: any) => {
+      this.tipo_mttoOpt = x.body.data;
+      if (this.tipo_mttoOpt.length === 0) {
+        this.emptyTipoMtto = true;
+      } else {
+        this.emptyTipoMtto = false;
+      }
+    });
   }
 
   getErrorMessage(input: string) {
