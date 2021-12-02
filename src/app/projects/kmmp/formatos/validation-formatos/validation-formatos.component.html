@@ -67,12 +67,16 @@
         [opened]="true"
       ></fuse-vertical-navigation>
 
-      <div class="p-4 mb-2 flex flex-col justify-center items-center gap-5">
+      <div
+        *ngIf="sectionName !== ''"
+        class="p-4 mb-2 flex flex-col justify-center items-center gap-5"
+      >
         <button
           class="text-white"
           mat-raised-button
           [color]="'primary'"
-          disabled
+          [disabled]="!validateFormat()"
+          (click)="postValidateFormat()"
         >
           <mat-icon
             class="text-white mr-1"
@@ -127,16 +131,21 @@
             <!--<mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>-->
           </div>
           <!-- Title -->
-          <div class="flex flex-row justify-between items-center w-full">
+          <div
+            *ngIf="sectionName !== ''"
+            class="flex flex-row justify-between items-center w-full"
+          >
             <div class="flex flex-col activities-container">
               <div class="text-4xl font-extrabold tracking-tight">
                 <span>{{ sectionName }}</span>
                 <mat-icon
+                  *ngIf="validateSection()"
                   class="text-green-600 ml-2"
                   svgIcon="heroicons_outline:check-circle"
                 ></mat-icon>
 
                 <mat-icon
+                  *ngIf="!validateSection()"
                   class="text-yellow-600 ml-2"
                   svgIcon="warning_amber"
                 ></mat-icon>
@@ -144,6 +153,7 @@
             </div>
 
             <button
+              *ngIf="!validateSection()"
               mat-raised-button
               [color]="'secondary'"
               class="text-green-600"
@@ -528,7 +538,7 @@
                                     *ngIf="observation[j]"
                                     class="ml-2 text-red-300 cursor-pointer"
                                     svgIcon="heroicons_outline:annotation"
-                                    (click)="addComment()"
+                                    (click)="addComment(j, k)"
                                   ></mat-icon>
                                 </ng-container>
                               </div>

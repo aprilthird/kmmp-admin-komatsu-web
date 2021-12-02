@@ -138,4 +138,11 @@ export class ActivitiesService {
       environment.apiUrl + `/Actividades/EliminarFormatoXActividad/${id}`
     );
   }
+
+  asignMultipleActivities(data): Observable<any> {
+    console.log(data);
+    const endpoint =
+      environment.apiUrl + "/Actividades/AsignarActividadesABahia";
+    return this.http.post(endpoint, data);
+  }
 }

@@ -36,10 +36,10 @@
       </mat-form-field>-->
       <mat-form-field class="w-100-p">
         <mat-label class="prose">Cliente</mat-label>
-        <mat-select formControlName="cliente">
+        <mat-select formControlName="idCliente">
           <mat-option
             *ngFor="let cliente of clienteOptions"
-            [value]="cliente.nombre"
+            [value]="cliente.id"
             >{{ cliente.nombre }}</mat-option
           >
         </mat-select>

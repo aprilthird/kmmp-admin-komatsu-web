@@ -12,14 +12,18 @@
 
       <mat-form-field floatLabel="always" class="w-100-p">
         <mat-label class="capitalize">{{ data.type }}</mat-label>
-        <mat-select placeholder="Seleccione la {{ data.type }}" #singleSelect>
+        <mat-select
+          (selectionChange)="setDataToAssign($event)"
+          placeholder="Seleccione la {{ data.type }}"
+          #singleSelect
+        >
           <mat-option>
             <ngx-mat-select-search
               [searching]="searchLoader"
             ></ngx-mat-select-search>
           </mat-option>
           <mat-option *ngFor="let item of items" [value]="item.id">
-            {{ item.name }}
+            {{ item.nombre }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -40,21 +44,10 @@
       Cerrar
     </button>
     <button
-      *ngIf="data.type === 'formato'"
       mat-raised-button
       [color]="'primary'"
       class="w-24"
-      (click)="assignFormat()"
-    >
-      <span> Asignar </span>
-    </button>
-
-    <button
-      *ngIf="data.type !== 'formato'"
-      mat-raised-button
-      [color]="'primary'"
-      class="w-24"
-      (click)="matdialigRef.close()"
+      (click)="assignToBay()"
     >
       <span> Asignar </span>
     </button>

@@ -9,4 +9,5 @@ export interface EquipoI {
   nestado?: string;
   idModelo?: number;
   idTipoEquipo?: number;
+  idFlota: number;
 }

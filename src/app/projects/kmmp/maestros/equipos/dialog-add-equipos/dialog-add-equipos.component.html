@@ -65,10 +65,10 @@
       <mat-form-field class="w-100-p">
         <mat-label class="prose">Flota</mat-label>
         <mat-select
-          formControlName="flota"
+          formControlName="idFlota"
           (selectionChange)="flotaSelected($event)"
         >
-          <mat-option *ngFor="let flota of flotasData" [value]="flota.nombre">{{
+          <mat-option *ngFor="let flota of flotasData" [value]="flota.id">{{
             flota.nombre
           }}</mat-option>
         </mat-select>

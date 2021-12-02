@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { ActivitiesService } from "../../activities.service";
+import { BayI } from "./../../models/bays-model";
 
 @Component({
   selector: "app-assign-bay",
@@ -10,23 +12,82 @@ import { ActivitiesService } from "../../activities.service";
 export class AssignBayComponent implements OnInit {
   searchLoader: boolean;
 
-  items = Bahias;
+  items: BayI[] = [];
   preloadedFormatsData = [];
+  dataToAssign: any;
 
   constructor(
     public matdialigRef: MatDialogRef<AssignBayComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private activitiesService: ActivitiesService
+    private activitiesService: ActivitiesService,
+    private _fuseConfirmationService: FuseConfirmationService
   ) {
-    if (data.type === "formato") {
-      this.items = formats;
-    } else {
-      this.items = Bahias;
-    }
+    this.getBays();
   }
 
-  ngOnInit(): void {
-    this.preloadedFormats();
+  ngOnInit(): void {}
+
+  getBays(): void {
+    this.activitiesService.getList(4).subscribe((resp: any) => {
+      this.items = resp.body.data;
+    });
+  }
+
+  setDataToAssign(event): void {
+    this.dataToAssign = {
+      id: 0,
+      codigo: "string",
+      nombre: "string",
+      descripcion: "string",
+      visible: true,
+      activo: true,
+      asignado: true,
+      estado: 0,
+      subEstado: 0,
+      fechaReg: "2021-12-01T01:22:47.462Z",
+      fechaMod: "2021-12-01T01:22:47.462Z",
+      usuarioMod: "string",
+      usuarioReg: "string",
+      idUsuarioReg: 0,
+      idUsuarioMod: 0,
+      entidad: 0,
+      total: 0,
+      idBahia: event.value,
+      idsActividades: this.getIdActivities(),
+    };
+  }
+
+  assignToBay(): void {
+    this.activitiesService
+      .asignMultipleActivities(this.dataToAssign)
+      .subscribe((resp) => {
+        console.log("----x------ ", resp);
+        const dialogRef = this._fuseConfirmationService.open({
+          title: "Asignación a bahía",
+          message: resp.message,
+          icon: {
+            name: "heroicons_outline:clipboard-list",
+            color: "primary",
+          },
+          actions: {
+            cancel: {
+              label: "Ok",
+            },
+          },
+          dismissible: true,
+        });
+        dialogRef.beforeClosed().subscribe((resp) => {
+          this.matdialigRef.close();
+        });
+      });
+  }
+
+  private getIdActivities(): number[] {
+    return this.data.activities
+      .filter((activity: any) => activity.checked)
+      .map((x: any) => {
+        return x.id;
+      });
   }
 
   searchLoading(): void {
@@ -35,37 +96,4 @@ export class AssignBayComponent implements OnInit {
       this.searchLoader = false;
     }, 1500);
   }
-
-  assignFormat(format?: any): void {
-    const newFormats = { ...this.preloadedFormatsData, format };
-    this.activitiesService.preloadedFormats.next(newFormats);
-  }
-
-  private preloadedFormats(): void {
-    this.activitiesService.preloadedFormats.subscribe((formats: any) => {
-      this.preloadedFormatsData = formats;
-    });
-  }
 }
-
-const Bahias = [
-  {
-    name: "bahía 1",
-    id: "1",
-  },
-  {
-    name: "bahía 2",
-    id: "3",
-  },
-  {
-    name: "bahía 3",
-    id: "3",
-  },
-];
-
-const formats = [
-  { name: "Formato FM01", complete: true, porcentage: "75%", id: "1" },
-  { name: "Formato FM02", complete: true, porcentage: "75%", id: "2" },
-  { name: "Formato FM03", complete: true, porcentage: "75%", id: "3" },
-  { name: "Formato FM04", complete: false, porcentage: "75%", id: "4" },
-];

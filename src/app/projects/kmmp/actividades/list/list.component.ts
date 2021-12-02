@@ -28,6 +28,7 @@ export class ListComponent implements OnInit {
 
   start = new Date().toLocaleDateString("en-US");
   end = new Date().toLocaleDateString("en-US");
+  checkAllBays: boolean;
 
   constructor(
     private matDialog: MatDialog,
@@ -59,13 +60,22 @@ export class ListComponent implements OnInit {
   }
 
   openAssignment(): void {
-    this.matDialog.open(AssignBayComponent, {
-      width: "370px",
-      data: { type: "bahía" },
-    });
+    this.matDialog
+      .open(AssignBayComponent, {
+        width: "370px",
+        data: { type: "bahía", activities: this.activities },
+      })
+      .afterClosed()
+      .subscribe(() => {
+        this.checkAllBays = false;
+        return this.activities.map(
+          (activity: ActivityFake) => (activity.checked = false)
+        );
+      });
   }
 
   selectActivity(event: MatCheckbox, index?: number): void {
+    /**Check item */
     if (index || index === 0) {
       this.activities[index].checked = event.checked;
     } else {
@@ -73,14 +83,18 @@ export class ListComponent implements OnInit {
         (activity: ActivityFake) => (activity.checked = event.checked)
       );
     }
-
+    /**Enable asign to bay button */
     if (
       this.activities.find(
         (activity: ActivityFake) => activity.checked === true
       )
     ) {
       this.assignToBay = true;
-    } else this.assignToBay = false;
+    } else {
+      this.assignToBay = false;
+    }
+
+    console.log("this.activities ", this.activities);
   }
 
   daterange(event): void {
@@ -104,7 +118,7 @@ export class ListComponent implements OnInit {
     let format: number;
     let seccion: number;
     this.activitiesService.getActivity(activity).subscribe((formats: any) => {
-      format = formats.body.formatos[0].id;
+      format = formats.body.formatos[0].idFormato;
 
       this.editarFormatoService
         .getObtenerFormatoCompleto(format)

@@ -1,13 +1,14 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Inject, Input, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { AssignBayComponent } from "../../dialogs/assign-bay/assign-bay.component";
+import { Router } from "@angular/router";
 
 //SERVICES
 import { ActivitiesService } from "../../activities.service";
 
 //MODELS
 import { ActivityFake } from "app/projects/kmmp/fake-db/activities/activity-fake-db";
-import { Event } from "@angular/router";
+import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
 
 @Component({
   selector: "app-activity",
@@ -20,7 +21,9 @@ export class ActivityComponent implements OnInit {
   activityInfo: any = [];
   constructor(
     private dialog: MatDialog,
-    private activitiesService: ActivitiesService
+    private activitiesService: ActivitiesService,
+    private router: Router,
+    private _editarFormatoService: EditarFormatoService
   ) {}
 
   ngOnInit(): void {
@@ -65,5 +68,16 @@ export class ActivityComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  redirect(e: any) {
+    this._editarFormatoService
+      .getAbrirAsignacion(e.idActividadFormato)
+      .subscribe((secciones) => {
+        console.log("secciones ", secciones);
+        this.router.navigate([
+          `/admin/actividades/validation/${this.activityData.id}/${e.idActividadFormato}/${secciones.body.secciones[0].id}`,
+        ]);
+      });
   }
 }

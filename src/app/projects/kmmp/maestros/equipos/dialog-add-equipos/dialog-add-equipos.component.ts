@@ -65,7 +65,7 @@ export class DialogAddEquiposComponent implements OnInit {
       ),
       modelo: new FormControl(this.initData?.modelo, Validators.required),
       idModelo: new FormControl(this.initData?.idModelo, Validators.required),
-      flota: new FormControl(this.initData?.flota, Validators.required),
+      idFlota: new FormControl(this.initData?.idFlota, Validators.required),
       cliente: new FormControl(this.initData?.cliente, Validators.required),
       idCliente: new FormControl(),
       estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
@@ -167,9 +167,7 @@ export class DialogAddEquiposComponent implements OnInit {
   }
 
   flotaSelected(e: any): void {
-    const currentClient = this.flotasData.find(
-      (x: any) => x.nombre === e.value
-    );
+    const currentClient = this.flotasData.find((x: any) => x.id === e.value);
 
     this.form.controls["cliente"].setValue(currentClient.cliente);
     this.form.controls["idCliente"].setValue(currentClient.id);

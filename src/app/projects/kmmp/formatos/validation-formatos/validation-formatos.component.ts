@@ -1,21 +1,19 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-
 import { DialogAddCommentComponent } from "../components/dialog-add-comment/dialog-add-comment.component";
 import { DialogValidateFormatComponent } from "../components/dialog-validate-format/dialog-validate-format.component";
 import { ActivatedRoute } from "@angular/router";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
 //SERVICES
 import { ActivitiesService } from "../../actividades/activities.service";
 import { EditarFormatoService } from "../editar-formato/editar-formato.service";
-
-//FAKE CONFIG
-import { ActivityFake } from "../../fake-db/activities/activity-fake-db";
+import { FormatosService } from "../formatos.service";
+import { AzureService } from "app/core/azure/azure.service";
 
 //CONFIG
 import { TipoParametro } from "app/core/types/formatos.types";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { AzureService } from "app/core/azure/azure.service";
+import { FuseConfirmationService } from "@fuse/services/confirmation";
 
 @Component({
   selector: "app-validation-formatos",
@@ -27,10 +25,8 @@ export class ValidationFormatosComponent implements OnInit {
   drawerMode: "side" | "over";
   drawerOpened: boolean;
   menuData: any[];
-  commented: boolean;
   currentIdActivity: any;
   currentActivity: any;
-  sectionSelected: any;
   sectionId: any;
   formatoId: any;
   loading: boolean = true;
@@ -53,18 +49,17 @@ export class ValidationFormatosComponent implements OnInit {
   } = {};
   form: FormGroup = this.fb.group({});
   displayNav: boolean;
-  currentSection: any;
   sectionName: string = "";
-  formatID: string = "";
-  countGroups = 0;
 
   constructor(
     private matDialog: MatDialog,
     private activityServices: ActivitiesService,
     private routerActive: ActivatedRoute,
     private _editarFormatoService: EditarFormatoService,
+    private _fuseConfirmationService: FuseConfirmationService,
     private fb: FormBuilder,
-    private _azureService: AzureService
+    private _azureService: AzureService,
+    private formatosService: FormatosService
   ) {
     this.data.secciones = [];
     this.getActivityId();
@@ -82,8 +77,18 @@ export class ValidationFormatosComponent implements OnInit {
       this.currentIdActivity = params.params["idActivity"];
       this.sectionId = params.params["idSection"];
       this.formatoId = params.params["idFormat"];
-      this._editarFormatoService
+      /*this._editarFormatoService
         .getObtenerFormatoCompleto(this.formatoId)
+        .subscribe((x: any) => {
+          this.data.secciones = x.body.secciones.filter(
+            (seccion: any) => seccion.id === Number(this.sectionId)
+          );
+          this.generateForm();
+          this.sectionName = this.data.secciones[0].nombre;
+        });*/
+
+      this._editarFormatoService
+        .getAbrirAsignacion(this.formatoId)
         .subscribe((x: any) => {
           this.data.secciones = x.body.secciones.filter(
             (seccion: any) => seccion.id === Number(this.sectionId)
@@ -92,6 +97,14 @@ export class ValidationFormatosComponent implements OnInit {
           this.sectionName = this.data.secciones[0].nombre;
         });
     });
+  }
+
+  validateSection(): boolean {
+    return this.data.secciones[0].grupos[0].parametros[0].seccionValida;
+  }
+
+  validateFormat(): boolean {
+    return this.data.secciones[0].grupos[0].parametros[0].formatoValido;
   }
   /** FIN CAPTURAR ID'S DE LA ACTIVIDAD, FORMATO, SECCION */
 
@@ -119,7 +132,7 @@ export class ValidationFormatosComponent implements OnInit {
       ];
       this.currentActivity.map((format: any) => {
         this._editarFormatoService
-          .getObtenerFormatoCompleto(format.id)
+          .getObtenerFormatoCompleto(format.idFormato)
           .subscribe((x: any) => {
             const format = x.body;
 
@@ -127,12 +140,12 @@ export class ValidationFormatosComponent implements OnInit {
               id: x.id,
               title: format.nombre,
               type: "collapsable",
-              link: `/admin/actividades/validation/${this.currentIdActivity}/${format.id}`,
+              //link: `/admin/actividades/validation/${this.currentIdActivity}/${format.id}`,
               children: [],
             });
 
             format.secciones.forEach((section, index) => {
-              this.menuData[0].children[index].children.push({
+              this.menuData[0].children[0].children.push({
                 id: section.id,
                 title: section.nombre,
                 type: "basic",
@@ -142,62 +155,20 @@ export class ValidationFormatosComponent implements OnInit {
             this.displayNav = true;
           });
       });
-
-      /*this.currentActivity.formatos.forEach((formato, index) => {
-        //setTimeout(() => {
-        this.menuData[0].children.push({
-          id: undefined,
-          title: formato.nombre,
-          type: "collapsable",
-          link: `/admin/actividades/validation/${this.currentIdActivity}/${formato.id}`,
-          children: [],
-        });
-
-        formato.sections.forEach((section) => {
-          this.menuData[0].children[index].children.push({
-            id: undefined,
-            title: section.name,
-            type: "basic",
-            link: `/admin/actividades/validation/${this.currentIdActivity}/${formato.id}/${section.id}`,
-          });
-        });
-
-        console.log(" this.menuData ", this.menuData);
-      });
-      //});*/
     });
   }
   /**FIN MENU DE NAVEGACION DINAMICO */
 
   /**obtener data fake */
-  private getActivities(): void {
-    this.activityServices.activities$.subscribe(
-      (activities: ActivityFake[]) => {
-        this.currentActivity = activities.find(
-          (activity) => activity.id === Number(this.currentIdActivity)
-        );
 
-        this.setCollapsableNav();
-      }
-    );
-  }
   /**fin obtener data fake */
 
   /**************************OBTENER/GESTIONS ASIGNACION********************************* */
-  /*getAsignaciones(): void {
-    this._editarFormatoService.getAbrirAsignacion(6).subscribe((response) => {
-      this.data = response.body;
-      this.generateForm();
-      this.loading = false;
-    });
-  }*/
+  /**/
 
   generateForm() {
-    this.countGroups = 0;
     this.data.secciones.forEach((seccion, i) => {
       seccion.grupos.forEach((grupo, j) => {
-        this.countGroups = this.countGroups + 1;
-
         this.observation[`${j}`] = false;
         grupo.parametros.forEach((parametro, k) => {
           if (parametro.activo) {
@@ -357,11 +328,61 @@ export class ValidationFormatosComponent implements OnInit {
   }
 
   validate(): void {
-    this.matDialog.open(DialogValidateFormatComponent, { width: "500px" });
+    const idAsignacionDetalle =
+      this.data.secciones[0].grupos[0].parametros[0].idAsignacionDetalle;
+    const idSeccion = this.data.secciones[0].grupos[0].parametros[0].idSeccion;
+
+    const data = {
+      idAsignacionDetalle: idAsignacionDetalle,
+      idSeccion: idSeccion,
+    };
+    this.matDialog.open(DialogValidateFormatComponent, {
+      width: "500px",
+      data: data,
+    });
   }
 
-  addComment(): void {
-    this.matDialog.open(DialogAddCommentComponent, { width: "500px" });
+  addComment(groupIdx: number, paramIdx: number): void {
+    const group = this.data.secciones[0].grupos.find(
+      (x, index) => index === groupIdx
+    );
+    const data = {
+      group: group,
+      index: paramIdx,
+    };
+    this.matDialog.open(DialogAddCommentComponent, {
+      width: "500px",
+      data: data,
+    });
+  }
+
+  postValidateFormat(): void {
+    const dialogRef = this._fuseConfirmationService.open({
+      title: "Validación de informe",
+      message: "¿Estás seguro que desea validar el informe?",
+
+      actions: {
+        confirm: {
+          label: "Sí, validar",
+          color: "primary",
+        },
+        cancel: {
+          label: "No",
+        },
+      },
+      dismissible: true,
+    });
+
+    dialogRef.beforeClosed().subscribe((result) => {
+      const data = {
+        idAsignacionDetalle:
+          this.data.secciones[0].grupos[0].parametros[0].idAsignacionDetalle,
+        idFormato: this.data.secciones[0].grupos[0].parametros[0].idFormato,
+      };
+      if (result === "confirmed") {
+        this.formatosService.validateFormat(data).subscribe(() => {});
+      }
+    });
   }
 
   deleteComment(): void {}

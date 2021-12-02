@@ -82,6 +82,7 @@ export class ActivityAddEditComponent implements OnInit {
       const currentEquipo = resp.body.data.find((x: any) => x.id === id);
       this.form.controls["modelo"].setValue(currentEquipo.modelo);
       this.form.controls["flota"].setValue(currentEquipo.flota);
+      this.form.controls["idFlota"].setValue(currentEquipo.idFlota);
     });
   }
 
@@ -94,6 +95,7 @@ export class ActivityAddEditComponent implements OnInit {
       equipo: new FormControl(this.activityInfo?.idEquipo, Validators.required),
       modelo: new FormControl(),
       flota: new FormControl(),
+      idFlota: new FormControl(),
       tipo_equipo: new FormControl(),
       actividad: new FormControl(
         this.activityInfo?.idActividad,
@@ -236,7 +238,8 @@ export class ActivityAddEditComponent implements OnInit {
     const params: ActivityI = {
       cliente: JSON.stringify(this.form.controls["cliente"].value),
       idEquipo: this.form.controls["equipo"].value,
-      flota: Number(this.form.controls["flota"].value),
+      flota: this.form.controls["flota"].value,
+      idFlota: Number(this.form.controls["idFlota"].value),
       equipo: this.form.controls["tipo_equipo"].value,
       idTipoMantenimiento: this.form.controls["tipo_mantenimiento"].value,
       idBahia: this.form.controls["bahia_asignada"].value,

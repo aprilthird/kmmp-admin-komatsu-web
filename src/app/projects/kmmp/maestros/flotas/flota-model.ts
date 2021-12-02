@@ -3,4 +3,5 @@ export interface FlotaI {
   cliente: string;
   estado: boolean;
   nestado?: string;
+  idCliente: number;
 }

@@ -29,4 +29,27 @@ export interface Activity {
   modelo?: number;
   actividad?: string;
   fechaEstimadaIni?: any;
+  idFlota?: number;
+}
+
+export interface MultipleBaysI {
+  id: number;
+  codigo: string;
+  nombre: string;
+  descripcion: string;
+  visible: boolean;
+  activo: boolean;
+  asignado: boolean;
+  estado: number;
+  idBahia: number;
+  idsActividades: number[];
+  subEstado?: number;
+  fechaReg?: any;
+  fechaMod?: any;
+  usuarioMod?: string;
+  usuarioReg?: string;
+  idUsuarioReg?: number;
+  idUsuarioMod?: number;
+  entidad?: number;
+  total?: number;
 }
