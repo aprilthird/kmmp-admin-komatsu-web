@@ -50,6 +50,8 @@ export class ValidationFormatosComponent implements OnInit {
   form: FormGroup = this.fb.group({});
   displayNav: boolean;
   sectionName: string = "";
+  formats: any[] = [];
+  codeActivity: string = "";
 
   constructor(
     private matDialog: MatDialog,
@@ -106,6 +108,7 @@ export class ValidationFormatosComponent implements OnInit {
   validateFormat(): boolean {
     return this.data.secciones[0].grupos[0].parametros[0].formatoValido;
   }
+
   /** FIN CAPTURAR ID'S DE LA ACTIVIDAD, FORMATO, SECCION */
 
   /**OBTENER FORMATOS DE LA ACTIVIDAD REAL */
@@ -115,13 +118,14 @@ export class ValidationFormatosComponent implements OnInit {
       .subscribe((activity: any) => {
         this.currentActivity = activity.body.formatos;
         this.setCollapsableNav();
+        this.codeActivity = activity.body.codigo;
       });
   }
   /**FIN OBTENER FORMATOS DE LA ACTIVIDAD REAL */
 
   /**MENU DE NAVEGACION DINAMICO */
-  private setCollapsableNav(): void {
-    setTimeout(() => {
+  private setCollapsableNav() {
+    setTimeout(async () => {
       this.menuData = [
         {
           id: "formatos",
@@ -130,32 +134,51 @@ export class ValidationFormatosComponent implements OnInit {
           children: [],
         },
       ];
-      this.currentActivity.map((format: any) => {
-        this._editarFormatoService
-          .getObtenerFormatoCompleto(format.idFormato)
-          .subscribe((x: any) => {
-            const format = x.body;
+      this.getMenuData();
+      setTimeout(() => {
+        this.formats.forEach((format: any, idx) => {
+          console.log(format);
+          this.menuData[0].children.unshift({
+            id: format.id,
+            title: format.nombre ? format.nombre : "Formato " + (idx + 1),
+            type: "collapsable",
+            children: [],
+          });
 
-            this.menuData[0].children.push({
-              id: x.id,
-              title: format.nombre,
-              type: "collapsable",
-              //link: `/admin/actividades/validation/${this.currentIdActivity}/${format.id}`,
-              children: [],
+          format.secciones.forEach((section, index) => {
+            this.menuData[0].children[0].children.push({
+              id: section.id,
+              title: section.nombre,
+              type: "basic",
+              link: `/admin/actividades/validation/${this.currentIdActivity}/${format.id}/${section.id}`,
             });
+          });
 
-            format.secciones.forEach((section, index) => {
-              this.menuData[0].children[0].children.push({
-                id: section.id,
-                title: section.nombre,
-                type: "basic",
-                link: `/admin/actividades/validation/${this.currentIdActivity}/${format.id}/${section.id}`,
-              });
-            });
+          setTimeout(() => {
             this.displayNav = true;
           });
+        });
+      }, 2500);
+    });
+  }
+
+  getMenuData(): void {
+    this.currentActivity.map((format: any) => {
+      this._editarFormatoService
+        .getAbrirAsignacion(format.idActividadFormato)
+        .subscribe((x: any) => {
+          this.formats.push(x.body);
+        });
+    });
+  }
+
+  checkInformValidated(): boolean {
+    this.formats.forEach((format) => {
+      format.secciones.forEach((section) => {
+        if (!section.grupos[0].parametros[0].seccionValida) return false;
       });
     });
+    return true;
   }
   /**FIN MENU DE NAVEGACION DINAMICO */
 

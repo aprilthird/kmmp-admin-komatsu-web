@@ -17,10 +17,8 @@ import { AssignBayComponent } from "../dialogs/assign-bay/assign-bay.component";
 export class ListComponent implements OnInit {
   asignaciones$: Observable<any[]>;
   pagination$: Observable<Pagination>;
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
   isLoading = false;
-  //activities: Activity[] = Asignaciones;
-  //activities: ActivityFake[] = ActivitiesData;
+
   activities: any[];
   assignToBay: boolean;
   isEdit: boolean;
@@ -118,10 +116,10 @@ export class ListComponent implements OnInit {
     let format: number;
     let seccion: number;
     this.activitiesService.getActivity(activity).subscribe((formats: any) => {
-      format = formats.body.formatos[0].idFormato;
+      format = formats.body.formatos[0].idActividadFormato;
 
       this.editarFormatoService
-        .getObtenerFormatoCompleto(format)
+        .getAbrirAsignacion(format)
         .subscribe((secciones: any) => {
           if (secciones.body.secciones.length > 0) {
             seccion = secciones.body.secciones[0].id;

@@ -35,8 +35,7 @@
       <div class="mt-2">
         <h2
           class="
-            text-3xl
-            md:text-4xl
+            text-2xl
             font-extrabold
             tracking-tight
             leading-7
@@ -44,7 +43,7 @@
             truncate
           "
         >
-          Preventivo
+          {{ codeActivity }}
         </h2>
       </div>
     </div>
@@ -72,10 +71,11 @@
         class="p-4 mb-2 flex flex-col justify-center items-center gap-5"
       >
         <button
+          *ngIf="!validateFormat()"
           class="text-white"
           mat-raised-button
           [color]="'primary'"
-          [disabled]="!validateFormat()"
+          [disabled]="!checkInformValidated()"
           (click)="postValidateFormat()"
         >
           <mat-icon
@@ -85,6 +85,18 @@
 
           Validar informe
         </button>
+
+        <div
+          *ngIf="validateFormat()"
+          class="flex items-center font-bold tracking-tight align-items"
+        >
+          <mat-icon
+            *ngIf="validateSection()"
+            class="text-green-600 mr-2"
+            svgIcon="heroicons_outline:check-circle"
+          ></mat-icon>
+          <span>Informe validado</span>
+        </div>
 
         <button class="text-white bg-red-300" mat-raised-button disabled>
           <mat-icon
