@@ -19,18 +19,28 @@ export class DialogAddCommentComponent implements OnInit {
   ngOnInit(): void {}
 
   async updateObservedParam() {
-    return this.data.group.parametros.map((parametro: any, index: number) => {
+    /*return this.data.group.parametros.map((parametro: any, index: number) => {
       if (index === this.data.index) {
         return (parametro.observado = this.comment.value);
+      }
+    });*/
+
+    return this.data.data.secciones[0].grupos[
+      this.data.groupIndex
+    ].parametros.map((parametro: any, index: number) => {
+      if (index === this.data.paramIndex) {
+        parametro.comentarios = this.comment.value;
+        parametro.observar = true;
       }
     });
   }
 
   async submit() {
     await this.updateObservedParam();
+    console.log("data observada", this.data);
     this.matDialog.close();
-    /*this._editarFormatoService
-      .createDato(this.data.group)
-      .subscribe((resp) => this.matDialog.close());*/
+    this._editarFormatoService
+      .saveAssignation(this.data.data)
+      .subscribe((resp) => this.matDialog.close());
   }
 }

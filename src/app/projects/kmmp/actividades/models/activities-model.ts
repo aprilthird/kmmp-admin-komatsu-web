@@ -30,6 +30,7 @@ export interface Activity {
   actividad?: string;
   fechaEstimadaIni?: any;
   idFlota?: number;
+  idTipoEquipo?: number;
 }
 
 export interface MultipleBaysI {

@@ -145,4 +145,20 @@ export class ActivitiesService {
       environment.apiUrl + "/Actividades/AsignarActividadesABahia";
     return this.http.post(endpoint, data);
   }
+
+  massiveActivitiesUpload(file: any): Observable<any> {
+    const endpoint = environment.apiUrl + "/Actividades/CargaMasiva";
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+    return this.http.post(endpoint, formData);
+  }
+
+  getResources(tipo: number): Observable<Response> {
+    return this.http.post<Response>(
+      environment.apiUrl + `/Actividades/ObtenerRecursos`,
+      {
+        id: tipo,
+      }
+    );
+  }
 }

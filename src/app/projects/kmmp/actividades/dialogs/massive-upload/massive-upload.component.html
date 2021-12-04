@@ -46,7 +46,7 @@
         items-center
         overflow-hidden
         bg-gray-100
-        h-50
+        h-auto
       "
     >
       <div
@@ -62,30 +62,49 @@
           overflow-hidden
           m-5
           w-1/2
+          max-h-48
         "
       >
-        <div class="flex flex-row justify-between gap-10 mb-5">
-          <mat-form-field class="w-full items-center justify-between">
-            <mat-label class="font-bold">Subir archivo</mat-label>
-            <input matInput placeholder="Examinar" />
-            <mat-icon svgIcon="heroicons_outline:upload"></mat-icon>
-          </mat-form-field>
+        <div class="flex flex-col justify-between gap-2">
+          <mat-label class="font-bold">Subir archivo</mat-label>
+          <label class="file w-full flex justify-between items-center">
+            <input type="file" (change)="onChangeFile($event)" />
+            <span>Examinar</span>
+            <mat-icon
+              [color]="'#94a3b8'"
+              [svgIcon]="'heroicons_solid:upload'"
+            ></mat-icon>
+          </label>
+        </div>
+
+        <div class="flex flex-row gap-5 justify-end">
+          <button
+            mat-raised-button
+            [color]="'secondary'"
+            routerLink="/admin/actividades/list"
+          >
+            <span class="ml-2 mr-1">Cancelar</span>
+          </button>
+
+          <button
+            (click)="uploadFile()"
+            mat-raised-button
+            [color]="'primary'"
+            [disabled]="file === ''"
+          >
+            <span class="ml-2 mr-1">Guardar</span>
+          </button>
         </div>
       </div>
-
-      <div class="flex flex-row gap-5 mb-5">
-        <button
-          mat-raised-button
-          [color]="'secondary'"
-          routerLink="/admin/actividades/list"
-        >
-          <span class="ml-2 mr-1">Salir</span>
-        </button>
-
-        <button mat-raised-button [color]="'primary'">
-          <span class="ml-2 mr-1">Guardar</span>
-        </button>
-      </div>
+      <a class="w-full flex justify-center p-14">
+        <div class="flex items-center gap-2 cursor-pointer">
+          <mat-icon
+            [color]="'#94a3b8'"
+            [svgIcon]="'heroicons_solid:download'"
+          ></mat-icon>
+          <a class="underline font-bold"> Descargar formato de carga masiva</a>
+        </div>
+      </a>
     </div>
   </div>
 </div>

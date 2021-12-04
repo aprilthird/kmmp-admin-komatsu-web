@@ -52,6 +52,9 @@ export class ValidationFormatosComponent implements OnInit {
   sectionName: string = "";
   formats: any[] = [];
   codeActivity: string = "";
+  obserForm: {
+    [key: string]: boolean;
+  } = {};
 
   constructor(
     private matDialog: MatDialog,
@@ -79,15 +82,6 @@ export class ValidationFormatosComponent implements OnInit {
       this.currentIdActivity = params.params["idActivity"];
       this.sectionId = params.params["idSection"];
       this.formatoId = params.params["idFormat"];
-      /*this._editarFormatoService
-        .getObtenerFormatoCompleto(this.formatoId)
-        .subscribe((x: any) => {
-          this.data.secciones = x.body.secciones.filter(
-            (seccion: any) => seccion.id === Number(this.sectionId)
-          );
-          this.generateForm();
-          this.sectionName = this.data.secciones[0].nombre;
-        });*/
 
       this._editarFormatoService
         .getAbrirAsignacion(this.formatoId)
@@ -150,7 +144,7 @@ export class ValidationFormatosComponent implements OnInit {
               id: section.id,
               title: section.nombre,
               type: "basic",
-              link: `/admin/actividades/validation/${this.currentIdActivity}/${format.id}/${section.id}`,
+              link: `/admin/actividades/validation/${this.currentIdActivity}/${format.idAsignacionFormato}/${section.id}`,
             });
           });
 
@@ -182,10 +176,6 @@ export class ValidationFormatosComponent implements OnInit {
   }
   /**FIN MENU DE NAVEGACION DINAMICO */
 
-  /**obtener data fake */
-
-  /**fin obtener data fake */
-
   /**************************OBTENER/GESTIONS ASIGNACION********************************* */
   /**/
 
@@ -214,34 +204,40 @@ export class ValidationFormatosComponent implements OnInit {
               this.form.addControl(
                 `${this.getParametroControl({ i, j, k })}`,
                 new FormControl({
-                  value: parametro.dato,
+                  value: parametro.valor,
                   disabled: true,
                 })
               );
             }
+
+            /**OBSERVE PARAM */
+
+            this.obserForm[`${this.getParametroControl({ i, j, k })}`] = true
+              ? parametro.observar
+              : false;
           }
         });
       });
     });
   }
 
+  isObserve(i, j, k) {
+    return this.obserForm[`${i}-${j}-${k}`];
+  }
+  observeToolTip(i, j, k) {
+    if (this.obserForm[`${i}-${j}-${k}`]) {
+      return "Campo ha sido observado";
+    }
+    return "Campo no ha sido observado aún";
+  }
   edit(groupIndex: number): void {
     this.data.secciones.forEach((seccion, i) => {
       seccion.grupos.forEach((grupo, j) => {
         if (j === groupIndex) {
           this.groups[j] = !this.groups[j];
           grupo.parametros.forEach((parametro, k) => {
-            if (this.editGroup[`${i}-${j}-${k}`]) {
-              this.editGroup[`${i}-${j}-${k}`] = false;
-              this.form
-                .get(`${this.getParametroControl({ i, j, k })}`)
-                .disable();
-            } else {
-              this.editGroup[`${i}-${j}-${k}`] = true;
-              this.form
-                .get(`${this.getParametroControl({ i, j, k })}`)
-                .enable();
-            }
+            this.editGroup[`${i}-${j}-${k}`] = true;
+            this.form.get(`${this.getParametroControl({ i, j, k })}`).enable();
           });
         }
       });
@@ -267,22 +263,28 @@ export class ValidationFormatosComponent implements OnInit {
                     .setValue(parametro.dato);
                 }
               }
-              parametro.dato = String(
+              parametro.valor = String(
                 this.form.get(this.getParametroControl({ i, j, k })).value
               );
             }
           });
         });
       });
-      this._editarFormatoService
-        .createDato(data.secciones[0].grupos[j])
-        .subscribe(() => {
-          Object.keys(this.form.controls).forEach((key) => {
-            this.form.get(key).disable();
-          });
+
+      this._editarFormatoService.saveAssignation(data).subscribe(() => {
+        Object.keys(this.form.controls).forEach((key) => {
+          this.form.get(key).disable();
         });
+      });
     }
     e.preventDefault();
+  }
+
+  cancelEdit(j): void {
+    this.groups[j] = false;
+    Object.keys(this.form.controls).forEach((key) => {
+      this.form.get(key).disable();
+    });
   }
 
   setImage(src: string): string {
@@ -366,17 +368,30 @@ export class ValidationFormatosComponent implements OnInit {
   }
 
   addComment(groupIdx: number, paramIdx: number): void {
-    const group = this.data.secciones[0].grupos.find(
+    /*const group = this.data.secciones[0].grupos.find(
       (x, index) => index === groupIdx
     );
     const data = {
       group: group,
       index: paramIdx,
+    };*/
+
+    const data = {
+      data: this.data,
+      groupIndex: groupIdx,
+      paramIndex: paramIdx,
     };
-    this.matDialog.open(DialogAddCommentComponent, {
-      width: "500px",
-      data: data,
-    });
+    this.matDialog
+      .open(DialogAddCommentComponent, {
+        width: "500px",
+        data: data,
+      })
+      .afterClosed()
+      .subscribe(() =>
+        Object.keys(this.observation).forEach(
+          (key) => (this.observation[key] = false)
+        )
+      );
   }
 
   postValidateFormat(): void {
