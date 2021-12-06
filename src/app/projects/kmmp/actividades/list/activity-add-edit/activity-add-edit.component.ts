@@ -215,6 +215,7 @@ export class ActivityAddEditComponent implements OnInit {
 
   removeOS(index: number): void {
     this.service_orders.splice(index, 1);
+    console.log("");
   }
 
   addOS(): void {
