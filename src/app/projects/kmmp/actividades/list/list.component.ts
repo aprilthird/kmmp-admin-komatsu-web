@@ -1,9 +1,9 @@
-import { Component, OnChanges, OnInit, SimpleChange } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { MatCheckbox } from "@angular/material/checkbox";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { Pagination } from "app/core/types/list.types";
-import { Observable, Subject } from "rxjs";
+import { Observable } from "rxjs";
 import { ActivityFake } from "../../fake-db/activities/activity-fake-db";
 import { EditarFormatoService } from "../../formatos/editar-formato/editar-formato.service";
 import { ActivitiesService } from "../activities.service";
@@ -36,25 +36,16 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //this.getAsignations();
     this.getActivities();
   }
 
   changePage(): void {}
 
-  getActivities(): void {
+  private getActivities(): void {
     this.activitiesService.getActivities().subscribe((_activities: any) => {
       console.log(_activities);
       this.activities = _activities.body.data;
     });
-  }
-
-  getAsignations(): void {
-    this.activitiesService.activities$.subscribe(
-      (_activities: ActivityFake[]) => {
-        this.activities = _activities;
-      }
-    );
   }
 
   openAssignment(): void {

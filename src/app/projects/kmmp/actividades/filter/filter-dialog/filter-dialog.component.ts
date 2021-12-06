@@ -42,7 +42,7 @@ export class FilterDialogComponent implements OnInit {
     this.getInboxes();
   }
 
-  getInboxes(): void {
+  private getInboxes(): void {
     this.loading = true;
     let equipo = this.serviceAct.getList(2).pipe(map((x: any) => x.body.data));
     let modelos = this.serviceAct.getList(5).pipe(map((x: any) => x.body.data));
@@ -75,7 +75,7 @@ export class FilterDialogComponent implements OnInit {
     });
   }
 
-  getFilters(): void {
+  private getFilters(): void {
     this.listadoService._filter.subscribe((resp) => {
       this.filterService = resp;
       if (this.filterService) {
@@ -84,7 +84,7 @@ export class FilterDialogComponent implements OnInit {
     });
   }
 
-  setFilter(filter: FilterI): void {
+  private setFilter(filter: FilterI): void {
     this.form.controls["modelo"].setValue(filter.modelo);
     this.form.controls["equipo"].setValue(filter.equipo);
     this.form.controls["actividad"].setValue(filter.actividad);

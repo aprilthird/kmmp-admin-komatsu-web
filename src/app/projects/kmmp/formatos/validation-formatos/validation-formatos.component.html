@@ -477,7 +477,7 @@
                                     >
                                     <ui-upload-file
                                       [required]="parametro.obligatorio"
-                                      [editable]="parametro.editable"
+                                      [editable]="editable(j)"
                                       [type]="'imagen'"
                                       [image]="
                                         parametro.valor !== '' &&
@@ -499,12 +499,12 @@
                                     >
                                     <ui-upload-file
                                       [type]="'firma'"
-                                      [editable]="parametro.editable"
+                                      [editable]="editable(j)"
                                       [image]="
-                                        parametro.dato !== '' &&
-                                        parametro.dato !== null
-                                          ? setImage(parametro.dato)
-                                          : ''
+                                        parametro.valor !== '' &&
+                                        parametro.valor !== null
+                                          ? setImage(parametro.valor)
+                                          : setImage(parametro.dato)
                                       "
                                       [loading]="filesLoading[getParametroControl({i, j, k})]"
                                       (sourceFile)="onChageFile($event, getParametroControl({i, j, k}))"

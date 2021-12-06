@@ -27,7 +27,7 @@ export class AssignBayComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getBays(): void {
+  private getBays(): void {
     this.activitiesService.getList(4).subscribe((resp: any) => {
       this.items = resp.body.data;
     });
@@ -61,7 +61,6 @@ export class AssignBayComponent implements OnInit {
     this.activitiesService
       .asignMultipleActivities(this.dataToAssign)
       .subscribe((resp) => {
-        console.log("----x------ ", resp);
         const dialogRef = this._fuseConfirmationService.open({
           title: "Asignación a bahía",
           message: resp.message,

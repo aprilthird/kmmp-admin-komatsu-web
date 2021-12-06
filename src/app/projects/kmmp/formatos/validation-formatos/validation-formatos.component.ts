@@ -96,11 +96,17 @@ export class ValidationFormatosComponent implements OnInit {
   }
 
   validateSection(): boolean {
-    return this.data.secciones[0].grupos[0].parametros[0].seccionValida;
+    if (this.data.secciones[0].grupos[0].parametros.length > 0) {
+      return this.data.secciones[0].grupos[0].parametros[0].seccionValida;
+    }
+    return false;
   }
 
   validateFormat(): boolean {
-    return this.data.secciones[0].grupos[0].parametros[0].formatoValido;
+    if (this.data.secciones[0].grupos[0].parametros.length > 0) {
+      return this.data.secciones[0].grupos[0].parametros[0].formatoValido;
+    }
+    return false;
   }
 
   /** FIN CAPTURAR ID'S DE LA ACTIVIDAD, FORMATO, SECCION */
@@ -131,7 +137,6 @@ export class ValidationFormatosComponent implements OnInit {
       this.getMenuData();
       setTimeout(() => {
         this.formats.forEach((format: any, idx) => {
-          console.log(format);
           this.menuData[0].children.unshift({
             id: format.id,
             title: format.nombre ? format.nombre : "Formato " + (idx + 1),
@@ -169,7 +174,11 @@ export class ValidationFormatosComponent implements OnInit {
   checkInformValidated(): boolean {
     this.formats.forEach((format) => {
       format.secciones.forEach((section) => {
-        if (!section.grupos[0].parametros[0].seccionValida) return false;
+        if (section.grupos[0].parametros.length > 0) {
+          if (!section.grupos[0].parametros[0].seccionValida) return false;
+        } else {
+          return false;
+        }
       });
     });
     return true;
@@ -197,6 +206,14 @@ export class ValidationFormatosComponent implements OnInit {
                 `${this.getParametroControl({ i, j, k })}`,
                 new FormControl({
                   value: parametro.valor === "true" ? true : false,
+                  disabled: true,
+                })
+              );
+            } else if (parametro.idParametro === TipoParametro.FECHA) {
+              this.form.addControl(
+                `${this.getParametroControl({ i, j, k })}`,
+                new FormControl({
+                  value: this.convertDate(parametro.valor),
                   disabled: true,
                 })
               );
@@ -244,7 +261,12 @@ export class ValidationFormatosComponent implements OnInit {
     });
   }
 
+  editable(j): boolean {
+    return this.groups[`${j}`];
+  }
+
   onSubmit(e: MouseEvent, j: number): void {
+    console.log(this.form.value);
     if (this.form.valid) {
       const data = { ...this.data };
 
@@ -263,6 +285,13 @@ export class ValidationFormatosComponent implements OnInit {
                     .setValue(parametro.dato);
                 }
               }
+
+              /*if (parametro.idParametro === TipoParametro.FECHA) {
+                
+                this.form
+                  .get(this.getParametroControl({ i, j, k }))
+                  .setValue(new Date(parametro.valor).getTimezoneOffset());
+              }*/
               parametro.valor = String(
                 this.form.get(this.getParametroControl({ i, j, k })).value
               );
@@ -421,6 +450,13 @@ export class ValidationFormatosComponent implements OnInit {
         this.formatosService.validateFormat(data).subscribe(() => {});
       }
     });
+  }
+
+  convertDate(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
   }
 
   deleteComment(): void {}

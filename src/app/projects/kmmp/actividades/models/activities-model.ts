@@ -24,13 +24,15 @@ export interface Activity {
   nos: string;
   npe: string;
   cliente: string;
-  equipo: string;
+  equipo?: string;
   flota?: number;
   modelo?: number;
   actividad?: string;
   fechaEstimadaIni?: any;
   idFlota?: number;
   idTipoEquipo?: number;
+  tipo_equipo?: string;
+  idModelo?: number;
 }
 
 export interface MultipleBaysI {

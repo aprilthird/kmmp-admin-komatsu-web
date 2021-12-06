@@ -58,11 +58,16 @@ export class UploadFileComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log("simplechanges ", changes);
     if (changes["loading"]) {
       this.loading = changes["loading"].currentValue;
       if (!this.loading && this._file !== "") {
         this.image = this.getSantizeUrl(URL.createObjectURL(this._file));
       }
+    }
+
+    if (changes["editable"]) {
+      this.editable = changes["editable"].currentValue;
     }
   }
 

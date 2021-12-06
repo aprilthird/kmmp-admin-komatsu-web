@@ -100,45 +100,16 @@
             <mat-form-field class="w-1/4">
               <mat-label class="font-bold">Modelo</mat-label>
               <input matInput formControlName="modelo" />
-              <!--<mat-select
-                formControlName="modelo"
-                [value]="form.controls['modelo'].value"
-              >
-                <mat-option
-                  *ngFor="let modelo of modelosOpt"
-                  [value]="modelo.id"
-                  >{{ modelo.nombre }}</mat-option
-                >
-              </mat-select>-->
             </mat-form-field>
 
             <mat-form-field class="w-1/4">
               <mat-label class="font-bold">Flota</mat-label>
               <input matInput formControlName="flota" />
-              <!--<mat-select
-                formControlName="flota"
-              >
-              
-                <mat-option
-                  *ngFor="let flota of flotasOpt"
-                  [value]="flota.id"
-                  >{{ flota.nombre }}</mat-option
-                >
-              </mat-select>-->
             </mat-form-field>
 
             <mat-form-field class="w-1/4">
               <mat-label class="font-bold">Tipo equipo</mat-label>
-              <mat-select
-                formControlName="tipo_equipo"
-                [value]="form.controls['tipo_equipo'].value"
-              >
-                <mat-option
-                  *ngFor="let tipo_equipo of tipo_equiposOpt"
-                  [value]="tipo_equipo.nombre"
-                  >{{ tipo_equipo.nombre }}</mat-option
-                >
-              </mat-select>
+              <input matInput formControlName="tipo_equipo" />
             </mat-form-field>
           </div>
           <hr />
@@ -162,6 +133,7 @@
             <mat-form-field class="w-1/5">
               <mat-label class="font-bold">Tipo mantenimiento</mat-label>
               <mat-select
+                *ngIf="!isEdit"
                 formControlName="tipo_mantenimiento"
                 [value]="form.controls['tipo_mantenimiento'].value"
                 [disabled]="form.controls['actividad'].value === ''"
@@ -172,6 +144,11 @@
                   >{{ tipo_mantenimiento.nombre }}</mat-option
                 >
               </mat-select>
+              <input
+                *ngIf="isEdit"
+                matInput
+                formControlName="tipo_mantenimiento"
+              />
             </mat-form-field>
 
             <mat-form-field class="w-1/5">
@@ -197,7 +174,7 @@
                 <mat-option
                   *ngFor="let tipo_solicitud of tipo_solicitudes"
                   [value]="tipo_solicitud.id"
-                  >{{ tipo_solicitud.name }}</mat-option
+                  >{{ tipo_solicitud.nombre }}</mat-option
                 >
               </mat-select>
             </mat-form-field>

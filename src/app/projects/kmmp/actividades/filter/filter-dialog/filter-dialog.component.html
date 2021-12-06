@@ -11,22 +11,20 @@
 
   <div mat-dialog-content class="pb-6">
     <div class="flex flex-col w-full">
-      <!-- Nombre -->
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label class="font-bold">Equipo</mat-label>
+        <mat-select formControlName="equipo" placeholder="Ingrese un equipo">
+          <mat-option *ngFor="let equipo of equipoOpt" [value]="equipo.id">{{
+            equipo.nombre
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <mat-form-field floatLabel="always" class="w-100-p">
         <mat-label>Modelo</mat-label>
         <mat-select formControlName="modelo" placeholder="Ingrese un modelo">
           <mat-option *ngFor="let modelo of modelosOpt" [value]="modelo.id">{{
             modelo.nombre
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label class="font-bold">Equipo</mat-label>
-        <mat-select formControlName="equipo" placeholder="Ingrese un equipo">
-          <mat-option *ngFor="let equipo of equipoOpt" [value]="equipo.id">{{
-            equipo.nombre
           }}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -44,20 +42,6 @@
           >
         </mat-select>
       </mat-form-field>
-
-      <!--<mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label class="font-bold">Tipo de solicitud</mat-label>
-        <mat-select
-          formControlName="tipo_solicitud"
-          placeholder="Ingrese un tipo de solicitud"
-        >
-          <mat-option
-            *ngFor="let solicitud of filters.tipo_solicitud"
-            [value]="solicitud.id"
-            >{{ solicitud.name }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>-->
 
       <mat-form-field floatLabel="always" class="w-100-p">
         <mat-label class="font-bold">Estado</mat-label>

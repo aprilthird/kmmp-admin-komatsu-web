@@ -1,6 +1,5 @@
-import { Component, Inject, Input, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { AssignBayComponent } from "../../dialogs/assign-bay/assign-bay.component";
+import { Component, Input, OnInit } from "@angular/core";
+
 import { Router } from "@angular/router";
 
 //SERVICES
@@ -20,40 +19,20 @@ export class ActivityComponent implements OnInit {
   @Input() activityData: ActivityFake;
   activityInfo: any = [];
   constructor(
-    private dialog: MatDialog,
     private activitiesService: ActivitiesService,
     private router: Router,
     private _editarFormatoService: EditarFormatoService
   ) {}
 
   ngOnInit(): void {
-    console.log("this.activityData", this.activityData);
     this.getActivityData(this.activityData.id);
   }
 
-  /*ngOnChanges(changes: SimpleChanges): void {
-    if ("isEdit" in changes) {
-      this.isEdit = changes["isEdit"].currentValue;
-    }
-
-    if ("activityData" in changes) {
-      this.activityData = changes["activityData"].currentValue;
-      console.log(this.activityData.formatos);
-    }
-  }*/
-
-  getActivityData(id: number): void {
+  private getActivityData(id: number): void {
     this.activitiesService.getActivity(id).subscribe((resp: any) => {
       this.activityInfo = resp.body;
     });
   }
-  assignFormat(): void {
-    this.dialog.open(AssignBayComponent, {
-      width: "370px",
-      data: { type: "formato" },
-    });
-  }
-
   async removeFormat(index: number) {
     const formatSelected = await this.activityInfo.formatos[index];
     this.activitiesService

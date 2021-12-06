@@ -15,6 +15,7 @@ import { ActivitiesService } from "../../activities.service";
 import { EquiposService } from "app/projects/kmmp/maestros/equipos/equipos.service";
 //MODELS
 import { Activity as ActivityI } from "./../../models/activities-model";
+import { FuseConfirmationService } from "@fuse/services/confirmation";
 
 @Component({
   selector: "activity-add-edit",
@@ -27,11 +28,8 @@ export class ActivityAddEditComponent implements OnInit {
   isEdit: boolean;
   idActivity: number;
   isLoading: boolean = true;
-  //tipo_mantenimientos = tipo_mantenimientos;
-  tipo_solicitudes = tipo_solicitudes;
   loadLoading: boolean;
   form: FormGroup = this.fb.group({});
-
   clientsOpt: any[];
   equiposOpt: any[];
   bahiasOpt: any[];
@@ -41,21 +39,23 @@ export class ActivityAddEditComponent implements OnInit {
   flotasOpt: any[];
   tipo_mttoOpt: any[];
   activityInfo: any;
+  tipo_solicitudes: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
     private serviceAct: ActivitiesService,
-    private equiposService: EquiposService
+    private equiposService: EquiposService,
+    private _fuseConfirmationService: FuseConfirmationService
   ) {
     this.setActivityData();
     this.getActivityId();
   }
 
   ngOnInit(): void {
-    //this.getData();
     this.getInboxes();
+    this.getTipoSolicitud();
   }
 
   private getActivityId() {
@@ -68,12 +68,12 @@ export class ActivityAddEditComponent implements OnInit {
     });
   }
 
-  getActivityData(id: number) {
+  private getActivityData(id: number) {
     this.serviceAct.getActivity(id).subscribe((resp: any) => {
       this.activityInfo = resp.body;
       setTimeout(() => {
         this.getEquiposData(this.activityInfo.idEquipo);
-      }, 1000);
+      }, 1500);
     });
   }
 
@@ -82,8 +82,15 @@ export class ActivityAddEditComponent implements OnInit {
       const currentEquipo = resp.body.data.find((x: any) => x.id === id);
       this.form.controls["modelo"].setValue(currentEquipo.modelo);
       this.form.controls["flota"].setValue(currentEquipo.flota);
+      this.form.controls["tipo_equipo"].setValue(currentEquipo.tipoEquipo);
+      this.form.controls["idModelo"].setValue(currentEquipo.idModelo);
       this.form.controls["idFlota"].setValue(currentEquipo.idFlota);
+      this.form.controls["idTipoEquipo"].setValue(currentEquipo.idTipoEquipo);
     });
+
+    this.form.controls["modelo"].disable();
+    this.form.controls["flota"].disable();
+    this.form.controls["tipo_equipo"].disable();
   }
 
   private setActivityData(): void {
@@ -96,11 +103,14 @@ export class ActivityAddEditComponent implements OnInit {
       modelo: new FormControl(),
       flota: new FormControl(),
       idFlota: new FormControl(),
+      idModelo: new FormControl(),
       tipo_equipo: new FormControl(),
       actividad: new FormControl(
-        this.activityInfo?.idActividad,
+        this.activityInfo?.idClaseActividad,
         Validators.required
       ),
+      idEquipo: new FormControl(),
+      idTipoEquipo: new FormControl(),
       tipo_mantenimiento: new FormControl(
         this.activityInfo?.idTipoMantenimiento,
         Validators.required
@@ -126,12 +136,18 @@ export class ActivityAddEditComponent implements OnInit {
         this.activityInfo?.comentariosTecnico
       ),
     });
-    this.form.controls["modelo"].disable();
-    this.form.controls["flota"].disable();
-    this.form.controls["tipo_equipo"].disable();
+    setTimeout(() => {
+      if (this.isEdit) this.disableFormControl();
+    }, 2000);
   }
 
-  getInboxes(): void {
+  private disableFormControl(): void {
+    Object.keys(this.form.controls).forEach((key) => {
+      if (key !== "descripcion_actividad") this.form.controls[key].disable();
+    });
+  }
+
+  private getInboxes(): void {
     let clients = this.serviceAct.getList(1).pipe(map((x: any) => x.body.data));
     let equipos = this.serviceAct.getList(2).pipe(map((x: any) => x.body.data));
     let t_e = this.serviceAct.getList(3).pipe(map((x: any) => x.body.data));
@@ -163,30 +179,38 @@ export class ActivityAddEditComponent implements OnInit {
     });
   }
 
-  /*private getData(): void {
-    this.activatedRoute.paramMap.forEach((param: any) => {
-      if (param.params.id) {
-        this.idActivity = param.params.id;
-        this.isEdit = true;
-
-        const currentActivity = Asignaciones.find(
-          (x: Activity) => x.id === Number(this.idActivity)
-        );
-
-        Object.keys(this.form.value).forEach((x) => {
-          console.log(this.form.value);
-          this.form.controls[x].setValue(currentActivity[x]);
-        });
-      }
+  private getTipoSolicitud(): void {
+    this.serviceAct.getResources(7).subscribe((resp) => {
+      this.tipo_solicitudes = resp.body;
     });
-  }*/
+  }
 
   addSingleActivity(): void {
     this.loadLoading = true;
-    this.serviceAct.postCargaIndividual(this.getParams()).subscribe((resp) => {
-      this.loadLoading = false;
-      this.router.navigate(["/admin/actividades/list"]);
-    });
+    this.serviceAct
+      .postCargaIndividual(this.getParams())
+      .subscribe((resp: any) => {
+        this.loadLoading = false;
+        if (resp.code >= 500) {
+          const dialogRef = this._fuseConfirmationService.open({
+            title: "Carga de actividad",
+            message: resp.message,
+            icon: {
+              name: "mat_outline:error_outline",
+              color: "primary",
+            },
+            actions: {
+              cancel: {
+                label: "Ok",
+              },
+            },
+            dismissible: true,
+          });
+          dialogRef.beforeClosed().subscribe(() => {});
+        }
+
+        this.router.navigate(["/admin/actividades/list"]);
+      });
   }
 
   removeOS(index: number): void {
@@ -224,23 +248,14 @@ export class ActivityAddEditComponent implements OnInit {
     });
   }
 
-  /*createActivity(): void {
-    this.serviceAct.addNewActivity({
-      id: Asignaciones.length,
-      estado: "Sin empezar",
-      ...this.form.value,
-    });
-
-    this.router.navigate(["/admin/actividades/list"]);
-  }*/
-
-  getParams(): any {
+  private getParams(): any {
     const params: ActivityI = {
       cliente: JSON.stringify(this.form.controls["cliente"].value),
       idEquipo: this.form.controls["equipo"].value,
       flota: this.form.controls["flota"].value,
       idFlota: Number(this.form.controls["idFlota"].value),
-      equipo: this.form.controls["tipo_equipo"].value,
+      idTipoEquipo: this.form.controls["idTipoEquipo"].value,
+      tipo_equipo: this.form.controls["tipo_equipo"].value,
       idTipoMantenimiento: this.form.controls["tipo_mantenimiento"].value,
       idBahia: this.form.controls["bahia_asignada"].value,
       idTipoSolicitud: this.form.controls["tipo_solicitud"].value,
@@ -250,7 +265,7 @@ export class ActivityAddEditComponent implements OnInit {
       npe: "yyy",
       idCliente: this.form.controls["cliente"].value,
       idClaseActividad: this.form.controls["actividad"].value,
-      modelo: 10,
+      idModelo: this.form.controls["idModelo"].value,
       visible: true,
       activo: true,
       actividad: "actividad",
@@ -258,7 +273,7 @@ export class ActivityAddEditComponent implements OnInit {
       fechaEstimadaIni: this.form.controls["fechaEstimadaIni"].value,
       id: 0,
     };
-    if ((this.isEdit = true)) {
+    if (this.isEdit) {
       params["id"] = this.idActivity;
     } else {
       params["id"] = 0;
@@ -279,23 +294,5 @@ const PE = [
   {
     id: 1,
     value: "DSD8S9F797",
-  },
-];
-
-/*const tipo_mantenimientos = [
-  {
-    id: 1,
-    name: "PS01",
-  },
-  {
-    id: 2,
-    name: "PS02",
-  },
-];*/
-
-const tipo_solicitudes = [
-  {
-    id: 1,
-    name: "Plan",
   },
 ];
