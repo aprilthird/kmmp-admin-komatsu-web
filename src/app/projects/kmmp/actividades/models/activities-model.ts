@@ -33,6 +33,12 @@ export interface Activity {
   idTipoEquipo?: number;
   tipo_equipo?: string;
   idModelo?: number;
+  duracion?: number;
+  duracionReal?: number;
+  comentariosTecnico?: string;
+  fechaRealFin?: any;
+  fechaRealIni?: any;
+  fechaEstimadaFin?: any;
 }
 
 export interface MultipleBaysI {

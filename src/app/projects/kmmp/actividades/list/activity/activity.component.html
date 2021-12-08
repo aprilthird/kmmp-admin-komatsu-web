@@ -1,5 +1,5 @@
-<div class="flex flex-col lg:flex-row justify-between w-max">
-  <div class="flex flex-col border-r pr-8">
+<div class="flex flex-col lg:flex-row justify-between w-max activity-container">
+  <div class="flex flex-col border-r pr-8 w-1/2">
     <div class="flex flex-col ml-1.5 gap-5">
       <div class="flex flex-col mb-2">
         <div class="text-md text-secondary">Descripción de la actividad</div>
@@ -12,19 +12,23 @@
           <span class="font-semibold">{{ activityInfo?.flota }}</span>
         </div>
 
-        <div class="flex flex-col">
+        <!--<div class="flex flex-col">
           <span class="text-md text-secondary">TAG</span>
           <span class="font-semibold">{{ activityInfo?.tag }}</span>
-        </div>
+        </div>-->
 
         <div class="flex flex-col">
           <span class="text-md text-secondary">OS</span>
-          <span class="font-semibold">{{ activityInfo?.nos }}</span>
+          <span class="font-semibold truncate max-w-xs">{{
+            activityInfo?.nos
+          }}</span>
         </div>
 
         <div class="flex flex-col">
           <span class="text-md text-secondary">PE</span>
-          <span class="font-semibold">{{ activityInfo?.npe }}</span>
+          <span class="font-semibold truncate max-w-xs">{{
+            activityInfo?.npe
+          }}</span>
         </div>
       </div>
 
@@ -92,7 +96,7 @@
 
   <div
     *ngIf="activityInfo.formatos && activityInfo.formatos.length > 0"
-    class="flex flex-col justify-between lg:pl-8"
+    class="flex flex-col justify-between lg:pl-8 min-w-1/2"
   >
     <div class="format h-3/4 w-3/4">
       <div class="text-md text-secondary">Formatos</div>
@@ -164,7 +168,7 @@
 
     <div
       *ngIf="!isEdit; else edit"
-      class="porcentage-progress h-1/4 flex flex-col gap-5 w-3/4"
+      class="porcentage-progress h-1/4 flex flex-col gap-5 w-3/4 w-full"
     >
       <div class="flex flex-row justify-between">
         <div class="text-md text-secondary w-3/4">Porcentaje de avance</div>

@@ -144,11 +144,16 @@
                   >{{ tipo_mantenimiento.nombre }}</mat-option
                 >
               </mat-select>
+
               <input
                 *ngIf="isEdit"
                 matInput
                 formControlName="tipo_mantenimiento"
               />
+              <mat-error *ngIf="!isEdit && tipo_mttoOpt.length === 0"
+                >No existen tipo de mantenimeintos para dicha clase de
+                actividad!</mat-error
+              >
             </mat-form-field>
 
             <mat-form-field class="w-1/5">
@@ -198,6 +203,7 @@
             </mat-form-field>
 
             <div
+              [formGroup]="formOS"
               class="w-1/4 flex flex-row items-center"
               *ngFor="let service_order of service_orders; let i = index"
             >
@@ -206,24 +212,36 @@
                   >N° de OS</mat-label
                 >
                 <mat-label *ngIf="i > 0"></mat-label>
-                <input matInput [value]="service_order.value" />
+                <input matInput formControlName="{{ i }}" />
               </mat-form-field>
               <button
                 *ngIf="i === 0; else trash"
                 (click)="addOS()"
                 mat-icon-button
-                class="mt-1"
+                class="mt-1 ml-1 bg-gray-200"
+                [disabled]="isEdit"
               >
-                <mat-icon svgIcon="heroicons_outline:plus-circle"></mat-icon>
+                <mat-icon
+                  class="text-blue-900"
+                  svgIcon="heroicons_outline:plus"
+                ></mat-icon>
               </button>
               <ng-template #trash>
-                <button mat-icon-button (click)="removeOS(i)" class="mt-1">
-                  <mat-icon svgIcon="close"></mat-icon>
+                <button
+                  mat-icon-button
+                  (click)="removeOS(i)"
+                  class="mt-1 ml-1 bg-red-100"
+                  [disabled]="isEdit"
+                >
+                  <mat-icon class="text-red-600" svgIcon="close"></mat-icon>
                 </button>
               </ng-template>
             </div>
           </div>
-          <div class="flex flex-row justify-start gap-10 mb-5">
+          <div
+            [formGroup]="formPE"
+            class="flex flex-row justify-start gap-10 mb-5"
+          >
             <div
               class="w-1/4 flex flex-row items-center"
               *ngFor="let pe_item of pe_items; let i = index"
@@ -233,19 +251,28 @@
                   >N° de PE</mat-label
                 >
                 <mat-label *ngIf="i > 0"></mat-label>
-                <input matInput [value]="pe_item.value" />
+                <input matInput formControlName="{{ i }}" />
               </mat-form-field>
               <button
                 *ngIf="i === 0; else trashPe"
                 (click)="addPE()"
                 mat-icon-button
-                class="mt-1"
+                class="mt-1 ml-1 bg-gray-200"
+                [disabled]="isEdit"
               >
-                <mat-icon svgIcon="heroicons_outline:plus-circle"></mat-icon>
+                <mat-icon
+                  class="text-blue-900"
+                  svgIcon="heroicons_outline:plus"
+                ></mat-icon>
               </button>
               <ng-template #trashPe>
-                <button mat-icon-button (click)="removePE(i)" class="mt-1">
-                  <mat-icon svgIcon="close"></mat-icon>
+                <button
+                  mat-icon-button
+                  (click)="removePE(i)"
+                  class="mt-1 ml-1 bg-red-100"
+                  [disabled]="isEdit"
+                >
+                  <mat-icon class="text-red-600" svgIcon="close"></mat-icon>
                 </button>
               </ng-template>
             </div>
@@ -259,7 +286,7 @@
               <input
                 matInput
                 [matDatepicker]="datepicker1"
-                formControlName="fechaEstimadaIni"
+                formControlName="fechaEstimadaFin"
               />
 
               <mat-datepicker-toggle
@@ -277,7 +304,7 @@
             </mat-form-field>
 
             <mat-form-field class="w-1/4">
-              <mat-label class="font-bold">Duración</mat-label>
+              <mat-label class="font-bold">Duración estimado</mat-label>
               <input matInput value="12:00" formControlName="duracion" />
             </mat-form-field>
           </div>
@@ -290,7 +317,7 @@
               <input
                 matInput
                 [matDatepicker]="datepicker2"
-                formControlName="fecha_real_inicio"
+                formControlName="fechaRealIni"
               />
 
               <mat-datepicker-toggle
@@ -312,7 +339,7 @@
               <input
                 matInput
                 [matDatepicker]="datepicker3"
-                formControlName="fecha_real_fin"
+                formControlName="fechaRealFin"
               />
 
               <mat-datepicker-toggle
@@ -330,8 +357,8 @@
             </mat-form-field>
 
             <mat-form-field class="w-1/4">
-              <mat-label class="font-bold">Duración</mat-label>
-              <input matInput value="12:00" formControlName="duracion_2" />
+              <mat-label class="font-bold">Duración Real</mat-label>
+              <input matInput value="12:00" formControlName="duracionReal" />
             </mat-form-field>
           </div>
 
@@ -339,7 +366,7 @@
             <mat-form-field class="w-full">
               <mat-label class="font-bold">Comentarios del técnico</mat-label>
               <textarea
-                formControlName="comentarios_tecnico"
+                formControlName="comentariosTecnico"
                 matInput
                 placeholder="Cometarios del técnico"
               ></textarea>
