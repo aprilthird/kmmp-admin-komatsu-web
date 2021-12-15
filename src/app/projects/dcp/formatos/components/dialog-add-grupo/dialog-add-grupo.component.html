@@ -16,7 +16,9 @@
       <mat-label>Posición</mat-label>
       <mat-select formControlName="pos">
         <ng-container *ngFor="let posicion of posiciones">
-          <mat-option [value]="posicion.id"> {{ posicion.label }} </mat-option>
+          <mat-option [value]="posicion.id">
+            {{ posicion.id | groupPosition: posicion.id }}
+          </mat-option>
         </ng-container>
       </mat-select>
     </mat-form-field>
@@ -24,6 +26,7 @@
   </div>
   <div mat-dialog-actions class="flex justify-end px-6 bg-gray-100">
     <button
+      (click)="dialogRef.close()"
       mat-button
       class="
         ml-4
@@ -35,7 +38,12 @@
     >
       Cancelar
     </button>
-    <button mat-raised-button [color]="'primary'" class="w-24">
+    <button
+      mat-raised-button
+      [color]="'primary'"
+      class="w-24"
+      [disabled]="form.invalid"
+    >
       <span *ngIf="!loading"> Crear </span>
       <mat-progress-spinner
         *ngIf="loading"

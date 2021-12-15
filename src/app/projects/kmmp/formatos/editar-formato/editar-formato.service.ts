@@ -14,6 +14,11 @@ import { tap } from "rxjs/operators";
 @Injectable({ providedIn: "root" })
 export class EditarFormatoService {
   _formato: BehaviorSubject<Formato> = new BehaviorSubject<Formato>(null);
+  _tipo_mantenimeinto: BehaviorSubject<Formato> = new BehaviorSubject<Formato>(
+    null
+  );
+  _actividad: BehaviorSubject<Formato> = new BehaviorSubject<Formato>(null);
+  _modelo: BehaviorSubject<Formato> = new BehaviorSubject<Formato>(null);
   _secciones: BehaviorSubject<Seccion[]> = new BehaviorSubject<Seccion[]>(null);
   _tipoDatos: BehaviorSubject<Parametro[]> = new BehaviorSubject<Parametro[]>(
     null
@@ -36,6 +41,9 @@ export class EditarFormatoService {
         tap((response) => {
           if (response && response.body) {
             this._formato.next(response.body.nombre);
+            this._tipo_mantenimeinto.next(response.body?.tipoMantenimiento);
+            this._modelo.next(response.body?.modelo);
+            this._actividad.next(response.body?.actividad);
           }
         })
       );

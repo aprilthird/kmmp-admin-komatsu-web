@@ -8,23 +8,52 @@
       #matDrawer
     >
       <!-- Menu-->
-      <div class="flex flex-col p-3 pb-0 form-title">
-        <div class="d-flex items-center form-title__text">
-          Formato: {{ formato$ | async }}
+
+      <div class="flex flex-col p-5 pb-0 form-title">
+        <div class="d-flex items-center font-bold">
+          {{ formato$ | async | uppercase }}
         </div>
-        <div class="d-flex items-center form-title__text">Secciones</div>
+        <div class="d-flex items-center">
+          <span class="font-bold">Modelo: </span>
+          <span>{{ modelo$ | async }}</span>
+        </div>
+        <div class="d-flex items-center">
+          <span class="font-bold">T.de Mantenimiento: </span>
+          <span>{{ tipoMantenimiento$ | async }}</span>
+        </div>
+        <div class="d-flex items-center">
+          <span class="font-bold">Actividad: </span>
+          <span>{{ actividad$ | async }}</span>
+        </div>
       </div>
 
       <div class="flex flex-col section p-3 pt-1" id="items">
         <a
           class="flex items-center justify-between section__menu h-10 mb-0.5"
-          *ngFor="let menu of menuData"
+          *ngFor="let menu of menuData; let i = index"
           routerLinkActive="active"
           routerLink="{{ menu.link }}"
         >
           <span>{{ menu.title }}</span>
 
-          <mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>
+          <!--<mat-icon [svgIcon]="'heroicons_outline:menu'"></mat-icon>-->
+
+          <div *ngIf="menuData.length > 0">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Toggle menu"
+            >
+              <mat-icon svgIcon="heroicons_outline:dots-vertical"></mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item>Editar</button>
+              <button (click)="deleteSection(menuData[i])" mat-menu-item>
+                Eliminar
+              </button>
+            </mat-menu>
+          </div>
         </a>
       </div>
       <mat-divider></mat-divider>
@@ -35,12 +64,13 @@
           Agregar sección
         </button>
       </div>
+      <mat-divider></mat-divider>
     </mat-drawer>
     <!-- Drawer content -->
     <mat-drawer-content class="flex flex-col" fuseScrollReset>
       <!-- Main -->
       <div class="flex-auto">
-        <div class="flex flex-col relative flex-auto min-w-0">
+        <div class="flex flex-col relative flex-auto min-w-0 mb-6">
           <div class="absolute inset-x-0 top-0" *ngIf="loading">
             <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
           </div>
@@ -143,7 +173,7 @@
               "
               *ngIf="menuData.length === 0"
             >
-              No existe contenido para las secciones.
+              No existe contenido
             </h3>
 
             <h3
@@ -160,7 +190,7 @@
             >
               Debe seleccionar una sección
             </h3>
-            <ng-container *ngIf="grupos.length > 0">
+            <ng-container *ngIf="grupos.length > 0 && validSection">
               <app-grupos
                 *ngFor="let grupo of grupos"
                 [data]="grupo"
@@ -172,7 +202,7 @@
       </div>
       <div
         class="
-          relative
+          absolute
           flex flex-0
           items-center
           justify-end
@@ -181,13 +211,18 @@
           px-4
           z-49
           border-t
-          bg-card
           dark:bg-transparent
           print:hidden
+          bottom-0
         "
       >
         <span class="font-medium text-secondary">
-          <button mat-button color="primary" (click)="clickNewGrupo()">
+          <button
+            *ngIf="idSection !== 0 && validSection"
+            mat-button
+            color="primary"
+            (click)="clickNewGrupo()"
+          >
             <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
             Agregar grupo
           </button>

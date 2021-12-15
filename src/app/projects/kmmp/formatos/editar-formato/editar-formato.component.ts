@@ -8,6 +8,7 @@ import {
 import { MatDialog } from "@angular/material/dialog";
 import { MatDrawer } from "@angular/material/sidenav";
 import { ActivatedRoute, Event, NavigationEnd, Router } from "@angular/router";
+import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { FuseMediaWatcherService } from "@fuse/services/media-watcher";
 import { Formato, Grupo } from "app/core/types/formatos.types";
 import { Observable, Subject } from "rxjs";
@@ -35,16 +36,39 @@ export class EditarFormatoComponent implements OnInit, OnDestroy {
   loading: boolean = true;
 
   formato$: Observable<Formato>;
+  tipoMantenimiento$: Observable<Formato>;
+  modelo$: Observable<Formato>;
+  actividad$: Observable<Formato>;
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  idSection: number;
+  validSection: boolean;
   constructor(
     private _router: Router,
     private _changeDetectorRef: ChangeDetectorRef,
     private _fuseMediaWatcherService: FuseMediaWatcherService,
     public dialog: MatDialog,
     private _activedRoute: ActivatedRoute,
-    private _editarFormatoService: EditarFormatoService
+    private _editarFormatoService: EditarFormatoService,
+    private _fuseConfirmationService: FuseConfirmationService
   ) {
+    this.getSections();
+    this.formato$ = this._editarFormatoService._formato.pipe(
+      takeUntil(this._unsubscribeAll)
+    );
+    this.tipoMantenimiento$ =
+      this._editarFormatoService._tipo_mantenimeinto.pipe(
+        takeUntil(this._unsubscribeAll)
+      );
+    this.actividad$ = this._editarFormatoService._actividad.pipe(
+      takeUntil(this._unsubscribeAll)
+    );
+    this.modelo$ = this._editarFormatoService._modelo.pipe(
+      takeUntil(this._unsubscribeAll)
+    );
+  }
+
+  private getSections(): void {
     this._editarFormatoService.secciones$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((secciones) => {
@@ -54,12 +78,14 @@ export class EditarFormatoComponent implements OnInit, OnDestroy {
           type: "basic",
           link: `/admin/formatos/editar/${this._activedRoute.snapshot.params.id}/${e.id}`,
         }));
+        setTimeout(() => {
+          this.validSection = secciones.some(
+            (section) =>
+              section.id ===
+              Number(this._activedRoute.snapshot.params.idSeccion)
+          );
+        }, 500);
       });
-
-    // this._router.routeReuseStrategy.shouldReuseRoute = () => true;
-    this.formato$ = this._editarFormatoService.formato$.pipe(
-      takeUntil(this._unsubscribeAll)
-    );
   }
 
   ngOnInit(): void {
@@ -94,6 +120,42 @@ export class EditarFormatoComponent implements OnInit, OnDestroy {
     var sortable = Sortable.create(el);
   }
 
+  deleteSection(menu): void {
+    const dialogRef = this._fuseConfirmationService.open({
+      title: "Eliminar sección",
+      message: "¿Estás seguro que desea eliminar ésta sección?",
+
+      actions: {
+        confirm: {
+          label: "Sí, eliminar",
+          color: "primary",
+        },
+        cancel: {
+          label: "No",
+        },
+      },
+      dismissible: true,
+    });
+
+    dialogRef.beforeClosed().subscribe((result) => {
+      const data = {
+        idFormat: Number(this._activedRoute.snapshot.params.id),
+        id: menu.id,
+        activo: false,
+      };
+
+      if (result === "confirmed") {
+        this._editarFormatoService.createSeccion(data).subscribe(() => {
+          this._editarFormatoService
+            .getSecciones({
+              idFormulario: Number(this._activedRoute.snapshot.params.id),
+            })
+            .subscribe(() => {});
+        });
+      }
+    });
+  }
+
   /**
    * On destroy
    */
@@ -105,16 +167,23 @@ export class EditarFormatoComponent implements OnInit, OnDestroy {
 
   loadGrupos() {
     if (this._activedRoute.snapshot.params.idSeccion) {
-      this.loading = true;
-      this._editarFormatoService
-        .getGrupos(this._activedRoute.snapshot.params.idSeccion)
-        .subscribe((response) => {
-          this.currentSeccion = this.menuData.find(
-            (e) => e.id === Number(this._activedRoute.snapshot.params.idSeccion)
-          )?.title;
-          this.loading = false;
-          this.grupos = response.body;
-        });
+      this.idSection = Number(this._activedRoute.snapshot.params.idSeccion);
+      if (this.idSection === 0) {
+        this.grupos = [];
+        this.loading = false;
+      } else {
+        this.loading = true;
+        this._editarFormatoService
+          .getGrupos(this._activedRoute.snapshot.params.idSeccion)
+          .subscribe((response) => {
+            this.currentSeccion = this.menuData.find(
+              (e) =>
+                e.id === Number(this._activedRoute.snapshot.params.idSeccion)
+            )?.title;
+            this.loading = false;
+            this.grupos = response.body;
+          });
+      }
     } else {
       this.loading = false;
 
@@ -156,7 +225,8 @@ export class EditarFormatoComponent implements OnInit, OnDestroy {
       this._activedRoute.snapshot.params.idSeccion;
 
     dialogRef.componentInstance.success.subscribe((grupo) => {
-      this.grupos.push(grupo);
+      //this.grupos.push(grupo);
+      this.loadGrupos();
       dialogRef.close(close);
     });
   }

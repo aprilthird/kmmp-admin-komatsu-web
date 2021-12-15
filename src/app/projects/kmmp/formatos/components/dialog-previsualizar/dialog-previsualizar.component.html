@@ -207,8 +207,8 @@
                         [type]="'imagen'"
                         [image]="
                           parametro.valor !== '' && parametro.valor !== null
-                            ? setImage(parametro.valor)
-                            : setImage(parametro.valor)
+                            ? setImage(parametro.dato)
+                            : setImage(parametro.dato)
                         "
                         [loading]="filesLoading[getParametroControl({i, j, k})]"
                         (sourceFile)="onChageFile($event, getParametroControl({i, j, k}))"
@@ -222,16 +222,11 @@
                         *ngIf="parametro.visible"
                         >{{ parametro.label }}</span
                       >
-                      <ui-upload-file
-                        [type]="'firma'"
-                        [image]="
-                          parametro.dato !== '' && parametro.dato !== null
-                            ? setImage(parametro.dato)
-                            : ''
-                        "
-                        [loading]="filesLoading[getParametroControl({i, j, k})]"
-                        (sourceFile)="onChageFile($event, getParametroControl({i, j, k}))"
-                      ></ui-upload-file>
+                      <img
+                        class="w-44"
+                        matTooltip="El técnico cargará la firma desde el móvil"
+                        [src]="'./assets/images/ui/no-image/no-image.svg'"
+                      />
                     </div>
 
                     <!-- LABEL -->

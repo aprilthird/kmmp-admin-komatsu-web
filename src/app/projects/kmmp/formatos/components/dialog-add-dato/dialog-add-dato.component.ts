@@ -56,6 +56,25 @@ export class DialogAddDatoComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   options: any[] = [];
 
+  regexValidation = [
+    {
+      id: 1,
+      nombre: "Email",
+    },
+    {
+      id: 2,
+      nombre: "Nombre",
+    },
+    {
+      id: 3,
+      nombre: "Dirección",
+    },
+    {
+      id: 4,
+      nombre: "Teléfono",
+    },
+  ];
+
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<DialogAddDatoComponent>,
@@ -64,7 +83,9 @@ export class DialogAddDatoComponent implements OnInit {
     private router: Router,
     private activeRouter: ActivatedRoute
   ) {
-    this.tiposDatos = this._editarFormatoService.datos();
+    this.tiposDatos = this._editarFormatoService
+      .datos()
+      .filter((data) => data.id !== 4);
   }
 
   addOption(event: MatChipInputEvent): void {
@@ -215,9 +236,7 @@ export class DialogAddDatoComponent implements OnInit {
         break;
 
       case TipoParametro.FECHA:
-      case TipoParametro.UPLOAD:
       case TipoParametro.IMAGEN:
-      case TipoParametro.FIRMA:
         this.image = "";
         this.form.clearValidators();
         this.form = this.fb.group({
@@ -255,7 +274,7 @@ export class DialogAddDatoComponent implements OnInit {
         this.form = this.fb.group({
           idParametro: [values.idParametro, Validators.required],
           placeholder: [values.placeholder, Validators.required],
-          label: [values.placeholder, Validators.required],
+          label: [values.label, Validators.required],
           visible: [values.visible],
           obligatorio: [values.obligatorio],
           editable: [values.editable],
@@ -295,6 +314,7 @@ export class DialogAddDatoComponent implements OnInit {
         break;
 
       case TipoParametro.CHECKBOX:
+      case TipoParametro.FIRMA:
         this.form.clearValidators();
         this.form = this.fb.group({
           idParametro: [values.idParametro, Validators.required],
@@ -313,6 +333,9 @@ export class DialogAddDatoComponent implements OnInit {
         this.form.get("minCaracteres").disable();
         this.form.get("maxCaracteres").disable();
         this.form.get("regex").disable();
+        if (TipoParametro.FIRMA) {
+          this.form.get("placeholder").setValue("Agregar firma");
+        }
         break;
     }
 

@@ -39,8 +39,9 @@ import { MatChipsModule } from "@angular/material/chips";
 import { AperturaAsignacionComponent } from "./asignaciones/apertura-asignacion/apertura-asignacion.component";
 import { ValidationFormatosComponent } from "./validation-formatos/validation-formatos.component";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { DialogValidateFormatComponent } from './components/dialog-validate-format/dialog-validate-format.component';
-import { DialogAddCommentComponent } from './components/dialog-add-comment/dialog-add-comment.component';
+import { DialogValidateFormatComponent } from "./components/dialog-validate-format/dialog-validate-format.component";
+import { DialogAddCommentComponent } from "./components/dialog-add-comment/dialog-add-comment.component";
+import { MatMenuModule } from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { DialogAddCommentComponent } from './components/dialog-add-comment/dialo
     MatDatepickerModule,
     MatChipsModule,
     MatCheckboxModule,
+    MatMenuModule,
     SharedModule,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "es-ES" }],

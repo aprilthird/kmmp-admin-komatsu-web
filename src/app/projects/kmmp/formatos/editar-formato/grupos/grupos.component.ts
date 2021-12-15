@@ -87,8 +87,8 @@ export class GruposComponent implements OnInit {
   clickDeleteParametro(parametro): void {
     console.log(this.data);
     const dialogRef = this._fuseConfirmationService.open({
-      title: "Eliminar parametro",
-      message: "¿Estás seguro que deseas eliminar el parametro?",
+      title: "Eliminar Dato",
+      message: "¿Estás seguro que deseas eliminar el Dato?",
       icon: {
         name: "heroicons_outline:trash",
         color: "primary",
@@ -113,6 +113,37 @@ export class GruposComponent implements OnInit {
         data.parametros = [parametro];
         this._editarFormatoService.createDato(data).subscribe((response) => {
           this.data.parametros = response.body.filter((e) => e.activo);
+        });
+      }
+    });
+  }
+
+  deleteGroup(): void {
+    const dialogRef = this._fuseConfirmationService.open({
+      title: "Eliminar grupo",
+      message: "¿Estás seguro que desea eliminar éste grupo?",
+
+      actions: {
+        confirm: {
+          label: "Sí, eliminar",
+          color: "primary",
+        },
+        cancel: {
+          label: "No",
+        },
+      },
+      dismissible: true,
+    });
+
+    dialogRef.beforeClosed().subscribe((result) => {
+      const data = {
+        id: this.data.id,
+        activo: false,
+      };
+
+      if (result === "confirmed") {
+        this._editarFormatoService.createGrupo(data).subscribe((resp) => {
+          this.data.activo = false;
         });
       }
     });

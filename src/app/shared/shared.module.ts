@@ -11,6 +11,7 @@ import { InnerHeaderComponent } from "./ui/inner-header/inner-header.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
+import { GroupPositionPipe } from "./pipes/group-position.pipe";
 
 @NgModule({
   imports: [
@@ -30,9 +31,15 @@ import { MatInputModule } from "@angular/material/input";
     ReactiveFormsModule,
     UploadFileComponent,
     TextFilterPipe,
+    GroupPositionPipe,
     InnerHeaderComponent,
   ],
-  declarations: [UploadFileComponent, TextFilterPipe, InnerHeaderComponent],
+  declarations: [
+    UploadFileComponent,
+    TextFilterPipe,
+    GroupPositionPipe,
+    InnerHeaderComponent,
+  ],
   providers: [ExportExcelService],
 })
 export class SharedModule {}
