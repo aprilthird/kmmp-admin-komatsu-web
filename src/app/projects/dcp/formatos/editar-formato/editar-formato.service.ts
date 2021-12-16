@@ -31,7 +31,7 @@ export class EditarFormatoService {
 
   getFormato(idFormato): Observable<any> {
     return this._httpClient
-      .get<any>(environment.apiUrl + "/Core/ObtenerFormato/" + idFormato )
+      .get<any>(environment.apiUrl + "/Core/ObtenerFormato/" + idFormato)
       .pipe(
         tap((response) => {
           if (response && response.body) {
@@ -41,8 +41,10 @@ export class EditarFormatoService {
       );
   }
 
-  getObtenerFormatoCompleto(id):Observable<any> {
-    return this._httpClient.get<any>(environment.apiUrl + '/Core/ObtenerFormatoCompleto/' + id);
+  getObtenerFormatoCompleto(id): Observable<any> {
+    return this._httpClient.get<any>(
+      environment.apiUrl + "/Core/ObtenerFormatoCompleto/" + id
+    );
   }
 
   datos(): any {

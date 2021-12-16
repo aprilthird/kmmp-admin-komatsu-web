@@ -18,13 +18,8 @@ export class DialogAddCommentComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  async updateObservedParam() {
-    /*return this.data.group.parametros.map((parametro: any, index: number) => {
-      if (index === this.data.index) {
-        return (parametro.observado = this.comment.value);
-      }
-    });*/
-
+  /*async updateObservedParam() {
+    
     return this.data.data.secciones[0].grupos[
       this.data.groupIndex
     ].parametros.map((parametro: any, index: number) => {
@@ -33,11 +28,32 @@ export class DialogAddCommentComponent implements OnInit {
         parametro.observar = true;
       }
     });
+  }*/
+
+  async updateObservedParam() {
+    console.log(this.data);
+    return this.data.data.secciones.map((section: any) => {
+      if (section.id === Number(this.data.sectionId)) {
+        return section.grupos.map((group: any, index: number) => {
+          if (index === Number(this.data.groupIndex)) {
+            return group.parametros.map((parametro: any, index: number) => {
+              if (index === this.data.paramIndex) {
+                parametro.comentarios = this.comment.value;
+                parametro.observar = true;
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
   async submit() {
     await this.updateObservedParam();
-    console.log("data observada", this.data);
+    const payload = {
+      secciones: this.data.data,
+      idFormato: this.data.formatoId,
+    };
     this.matDialog.close();
     this._editarFormatoService
       .saveAssignation(this.data.data)

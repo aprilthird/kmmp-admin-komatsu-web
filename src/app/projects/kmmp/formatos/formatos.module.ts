@@ -67,7 +67,6 @@ import { MatMenuModule } from "@angular/material/menu";
     MatIconModule,
     MatButtonModule,
     MatPaginatorModule,
-    MatIconModule,
     MatProgressBarModule,
     MatTooltipModule,
     MatSortModule,

@@ -14,7 +14,10 @@ export class DialogAddGrupoComponent implements OnInit {
   @Input() idSeccion: number;
   @Output() success: EventEmitter<Grupo> = new EventEmitter();
 
-  posiciones = [{ id: "h", label: "Horizontal" }, { id: "v", label: "Vertical"}];
+  posiciones = [
+    { id: "h", label: "Horizontal" },
+    { id: "v", label: "Vertical" },
+  ];
   loading: boolean = false;
 
   form: FormGroup = this.fb.group({

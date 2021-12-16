@@ -12,6 +12,8 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from "@angular/material/button";
 import { MatInputModule } from "@angular/material/input";
 import { GroupPositionPipe } from "./pipes/group-position.pipe";
+import { UiDialogsComponent } from "./ui/ui-dialogs/ui-dialogs.component";
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   imports: [
@@ -24,6 +26,7 @@ import { GroupPositionPipe } from "./pipes/group-position.pipe";
     MatFormFieldModule,
     MatButtonModule,
     MatInputModule,
+    MatDialogModule,
   ],
   exports: [
     CommonModule,
@@ -37,8 +40,9 @@ import { GroupPositionPipe } from "./pipes/group-position.pipe";
   declarations: [
     UploadFileComponent,
     TextFilterPipe,
-    GroupPositionPipe,
     InnerHeaderComponent,
+    GroupPositionPipe,
+    UiDialogsComponent,
   ],
   providers: [ExportExcelService],
 })

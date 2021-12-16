@@ -14,6 +14,7 @@ import { AzureService } from "app/core/azure/azure.service";
 //CONFIG
 import { TipoParametro } from "app/core/types/formatos.types";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
+import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 
 @Component({
   selector: "app-validation-formatos",
@@ -56,6 +57,9 @@ export class ValidationFormatosComponent implements OnInit {
     [key: string]: boolean;
   } = {};
 
+  sections: any[] = [];
+  currentSectionData: any;
+
   constructor(
     private matDialog: MatDialog,
     private activityServices: ActivitiesService,
@@ -66,7 +70,7 @@ export class ValidationFormatosComponent implements OnInit {
     private _azureService: AzureService,
     private formatosService: FormatosService
   ) {
-    this.data.secciones = [];
+    this.data.secciones = [{}];
     this.getActivityId();
     this.getActivityData();
   }
@@ -85,29 +89,48 @@ export class ValidationFormatosComponent implements OnInit {
 
       this._editarFormatoService
         .getAbrirAsignacion(this.formatoId)
-        .subscribe((x: any) => {
-          this.data.secciones = x.body.secciones.filter(
+        .subscribe(async (x: any) => {
+          this.sections = await x.body.secciones;
+          this.data = x.body;
+          /*this.data.secciones = x.body.secciones.filter(
             (seccion: any) => seccion.id === Number(this.sectionId)
           );
           this.generateForm();
-          this.sectionName = this.data.secciones[0].nombre;
+          this.sectionName = this.data.secciones[0].nombre;*/
+          if (this.sectionId) {
+            this.currentSectionData = await [...this.sections].find(
+              (section: any) => Number(this.sectionId) === section.id
+            );
+            this.generateForm();
+            this.sectionName = this.sections[0].nombre;
+          }
         });
     });
   }
 
   validateSection(): boolean {
-    if (this.data.secciones[0].grupos[0].parametros.length > 0) {
-      return this.data.secciones[0].grupos[0].parametros[0].seccionValida;
+    return this.currentSectionData.grupos[0].parametros.some(
+      (parametro) => parametro.seccionValida
+    );
+  }
+
+  validateFormat() {
+    for (let i = 0; i < this.sections.length; i++) {
+      for (let j = 0; j < this.sections[i].grupos[0].parametros.length; j++) {
+        if (this.sections[i].grupos[0].parametros[j].formatoValido) {
+          return true;
+        }
+      }
     }
     return false;
   }
 
-  validateFormat(): boolean {
-    if (this.data.secciones[0].grupos[0].parametros.length > 0) {
-      return this.data.secciones[0].grupos[0].parametros[0].formatoValido;
+  /*validateFormat(): boolean {
+    if (this.sections[0].grupos[0].parametros.length > 0) {
+      return this.sections[0].grupos[0].parametros[0].formatoValido;
     }
     return false;
-  }
+  }*/
 
   /** FIN CAPTURAR ID'S DE LA ACTIVIDAD, FORMATO, SECCION */
 
@@ -117,14 +140,17 @@ export class ValidationFormatosComponent implements OnInit {
       .getActivity(this.currentIdActivity)
       .subscribe((activity: any) => {
         this.currentActivity = activity.body.formatos;
-        this.setCollapsableNav();
+        setTimeout(() => {
+          this.setCollapsableNav();
+        }, 1500);
+
         this.codeActivity = activity.body.codigo;
       });
   }
   /**FIN OBTENER FORMATOS DE LA ACTIVIDAD REAL */
 
   /**MENU DE NAVEGACION DINAMICO */
-  private setCollapsableNav() {
+  /*private setCollapsableNav() {
     setTimeout(async () => {
       this.menuData = [
         {
@@ -150,6 +176,14 @@ export class ValidationFormatosComponent implements OnInit {
               title: section.nombre,
               type: "basic",
               link: `/admin/actividades/validation/${this.currentIdActivity}/${format.idAsignacionFormato}/${section.id}`,
+              badge: {
+                title: !section.grupos[0].parametros[0].seccionValida
+                  ? "warning_amber"
+                  : "heroicons_outline:check-circle",
+                classes: !section.grupos[0].parametros[0].seccionValida
+                  ? "text-gray-600"
+                  : "text-green-600",
+              },
             });
           });
 
@@ -158,6 +192,39 @@ export class ValidationFormatosComponent implements OnInit {
           });
         });
       }, 2500);
+    });
+  }*/
+
+  private setCollapsableNav(): void {
+    this.menuData = [
+      {
+        id: "secciones",
+        title: "Secciones",
+        type: "group",
+        children: [],
+      },
+    ];
+
+    this.sections.forEach((section, index) => {
+      this.menuData[0].children.push({
+        id: section.id,
+        title: section.nombre,
+        type: "basic",
+        link: `/admin/actividades/validation/${this.currentIdActivity}/${this.formatoId}/${section.id}`,
+        children: [],
+        badge: {
+          title: !section.grupos[0].parametros.some(
+            (parametro) => parametro.seccionValida
+          )
+            ? "warning_amber"
+            : "heroicons_outline:check-circle",
+          classes: !section.grupos[0].parametros.some(
+            (parametro) => parametro.seccionValida
+          )
+            ? "text-gray-600"
+            : "text-green-600",
+        },
+      });
     });
   }
 
@@ -189,7 +256,7 @@ export class ValidationFormatosComponent implements OnInit {
   /**/
 
   generateForm() {
-    this.data.secciones.forEach((seccion, i) => {
+    this.sections.forEach((seccion, i) => {
       seccion.grupos.forEach((grupo, j) => {
         this.observation[`${j}`] = false;
         grupo.parametros.forEach((parametro, k) => {
@@ -203,7 +270,7 @@ export class ValidationFormatosComponent implements OnInit {
             }
             if (parametro.idParametro === TipoParametro.CHECKBOX) {
               this.form.addControl(
-                `${this.getParametroControl({ i, j, k })}`,
+                `${this.getParametroControl({ j, k })}`,
                 new FormControl({
                   value: parametro.valor === "true" ? true : false,
                   disabled: true,
@@ -211,7 +278,7 @@ export class ValidationFormatosComponent implements OnInit {
               );
             } else if (parametro.idParametro === TipoParametro.FECHA) {
               this.form.addControl(
-                `${this.getParametroControl({ i, j, k })}`,
+                `${this.getParametroControl({ j, k })}`,
                 new FormControl({
                   value: this.convertDate(parametro.valor),
                   disabled: true,
@@ -219,7 +286,7 @@ export class ValidationFormatosComponent implements OnInit {
               );
             } else {
               this.form.addControl(
-                `${this.getParametroControl({ i, j, k })}`,
+                `${this.getParametroControl({ j, k })}`,
                 new FormControl({
                   value: parametro.valor,
                   disabled: true,
@@ -229,7 +296,7 @@ export class ValidationFormatosComponent implements OnInit {
 
             /**OBSERVE PARAM */
 
-            this.obserForm[`${this.getParametroControl({ i, j, k })}`] = true
+            this.obserForm[`${this.getParametroControl({ j, k })}`] = true
               ? parametro.observar
               : false;
           }
@@ -238,23 +305,23 @@ export class ValidationFormatosComponent implements OnInit {
     });
   }
 
-  isObserve(i, j, k) {
-    return this.obserForm[`${i}-${j}-${k}`];
+  isObserve(j, k) {
+    return this.obserForm[`${j}-${k}`];
   }
-  observeToolTip(i, j, k) {
-    if (this.obserForm[`${i}-${j}-${k}`]) {
+  observeToolTip(j, k) {
+    if (this.obserForm[`${j}-${k}`]) {
       return "Campo ha sido observado";
     }
     return "Campo no ha sido observado aún";
   }
   edit(groupIndex: number): void {
-    this.data.secciones.forEach((seccion, i) => {
+    this.sections.forEach((seccion, i) => {
       seccion.grupos.forEach((grupo, j) => {
         if (j === groupIndex) {
           this.groups[j] = !this.groups[j];
           grupo.parametros.forEach((parametro, k) => {
             this.editGroup[`${i}-${j}-${k}`] = true;
-            this.form.get(`${this.getParametroControl({ i, j, k })}`).enable();
+            this.form.get(`${this.getParametroControl({ j, k })}`).enable();
           });
         }
       });
@@ -265,48 +332,83 @@ export class ValidationFormatosComponent implements OnInit {
     return this.groups[`${j}`];
   }
 
-  onSubmit(e: MouseEvent, j: number): void {
-    console.log(this.form.value);
-    if (this.form.valid) {
-      const data = { ...this.data };
+  onSubmit(
+    e: MouseEvent,
+    indexGroup: number,
+    deleteComment?: boolean,
+    paramIdx?: number
+  ): void {
+    const data = [...this.sections];
 
-      data.secciones.forEach((seccion, i) => {
-        seccion.grupos.forEach((grupo, j) => {
+    data.forEach((seccion, i) => {
+      seccion.grupos.forEach((grupo, j) => {
+        if (indexGroup === j) {
           this.groups[j] = !this.groups[j];
-          grupo.parametros.forEach((parametro, k) => {
-            if (parametro.activo) {
-              if (
-                parametro.idParametro === TipoParametro.UPLOAD ||
-                parametro.idParametro === TipoParametro.IMAGEN
-              ) {
-                if (parametro.valor === null || parametro.valor === "") {
-                  this.form
-                    .get(this.getParametroControl({ i, j, k }))
-                    .setValue(parametro.dato);
-                }
-              }
-
-              /*if (parametro.idParametro === TipoParametro.FECHA) {
-                
-                this.form
-                  .get(this.getParametroControl({ i, j, k }))
-                  .setValue(new Date(parametro.valor).getTimezoneOffset());
-              }*/
+        }
+        if (deleteComment) {
+          if (j === indexGroup) {
+            grupo.comentarios = null;
+          }
+        }
+        grupo.parametros.forEach((parametro, k) => {
+          if (parametro.activo) {
+            if (
+              parametro.idParametro === TipoParametro.UPLOAD ||
+              parametro.idParametro === TipoParametro.IMAGEN
+            ) {
+              this.checkImgParam(parametro, 0, j, k);
+            } else if (parametro.idParametro === TipoParametro.FIRMA) {
+              this.checkSignParam(paramIdx, parametro, indexGroup, 0, k, j);
+            } else {
               parametro.valor = String(
-                this.form.get(this.getParametroControl({ i, j, k })).value
+                this.form.get(this.getParametroControl({ j, k })).value
               );
             }
-          });
+          }
         });
       });
-
-      this._editarFormatoService.saveAssignation(data).subscribe(() => {
-        Object.keys(this.form.controls).forEach((key) => {
-          this.form.get(key).disable();
-        });
+    });
+    const payload = {
+      ...this.data,
+      secciones: data,
+    };
+    this._editarFormatoService.saveAssignation(payload).subscribe(() => {
+      Object.keys(this.form.controls).forEach((key) => {
+        this.form.get(key).disable();
       });
-    }
+    });
     e.preventDefault();
+  }
+
+  checkImgParam(parametro, i = 0, j, k): void {
+    if (parametro.valor === null || parametro.valor === "") {
+      this.form
+        .get(this.getParametroControl({ j, k }))
+        .setValue(parametro.dato);
+    }
+    parametro.valor = String(
+      this.form.get(this.getParametroControl({ j, k })).value
+    );
+  }
+
+  checkSignParam(paramIdx, parametro, indexGroup, i = 0, k, j): void {
+    if (paramIdx) {
+      if (paramIdx === k && indexGroup === j) {
+        parametro.valor = null;
+        this.form.get(this.getParametroControl({ j, k })).setValue(null);
+      }
+    } else {
+      if (
+        this.form.get(this.getParametroControl({ j, k })).value &&
+        this.form.get(this.getParametroControl({ j, k })).value !== ""
+      ) {
+        parametro.valor = String(
+          this.form.get(this.getParametroControl({ j, k })).value
+        );
+      } else {
+        parametro.valor = null;
+      }
+    }
   }
 
   cancelEdit(j): void {
@@ -320,8 +422,8 @@ export class ValidationFormatosComponent implements OnInit {
     return this._azureService.getResourceUrlComplete(src);
   }
 
-  getParametroControl({ i, j, k }) {
-    return `${i}-${j}-${k}`;
+  getParametroControl({ j, k }) {
+    return `${j}-${k}`;
   }
 
   getEditButton({ i, j, k }) {
@@ -381,10 +483,10 @@ export class ValidationFormatosComponent implements OnInit {
     );
   }
 
-  validate(): void {
+  /*validate(): void {
     const idAsignacionDetalle =
-      this.data.secciones[0].grupos[0].parametros[0].idAsignacionDetalle;
-    const idSeccion = this.data.secciones[0].grupos[0].parametros[0].idSeccion;
+      this.sections[0].grupos[0].parametros[0].idAsignacionDetalle;
+    const idSeccion = this.sections[0].grupos[0].parametros[0].idSeccion;
 
     const data = {
       idAsignacionDetalle: idAsignacionDetalle,
@@ -393,6 +495,42 @@ export class ValidationFormatosComponent implements OnInit {
     this.matDialog.open(DialogValidateFormatComponent, {
       width: "500px",
       data: data,
+    });
+  }*/
+
+  validate(): void {
+    const idAsignacionDetalle =
+      this.currentSectionData.grupos[0].parametros[0].idAsignacionDetalle;
+    const idSeccion = this.currentSectionData.grupos[0].parametros[0].idSeccion;
+
+    const data = {
+      idAsignacionDetalle: idAsignacionDetalle,
+      idSeccion: idSeccion,
+    };
+    const dialogRef = this.matDialog.open(DialogValidateFormatComponent, {
+      width: "500px",
+      data: data,
+    });
+
+    dialogRef.componentInstance.success.subscribe((resp) => {
+      if (resp.code === 200 && resp.error === 0) {
+        this.currentSectionData.grupos[0].parametros[0].seccionValida = true;
+        this.validateSection();
+        this.setCollapsableNav();
+      } else {
+        this.matDialog
+          .open(UiDialogsComponent, {
+            width: "500px",
+            data: {
+              title: "Error",
+              message: resp.message,
+            },
+          })
+          .afterClosed()
+          .subscribe(() => this.setCollapsableNav());
+      }
+
+      dialogRef.close(close);
     });
   }
 
@@ -409,7 +547,10 @@ export class ValidationFormatosComponent implements OnInit {
       data: this.data,
       groupIndex: groupIdx,
       paramIndex: paramIdx,
+      sectionId: this.sectionId,
+      formatoId: this.formatoId,
     };
+    console.log("this.data ", this.data);
     this.matDialog
       .open(DialogAddCommentComponent, {
         width: "500px",
@@ -423,7 +564,7 @@ export class ValidationFormatosComponent implements OnInit {
       );
   }
 
-  postValidateFormat(): void {
+  /*postValidateFormat(): void {
     const dialogRef = this._fuseConfirmationService.open({
       title: "Validación de informe",
       message: "¿Estás seguro que desea validar el informe?",
@@ -443,11 +584,43 @@ export class ValidationFormatosComponent implements OnInit {
     dialogRef.beforeClosed().subscribe((result) => {
       const data = {
         idAsignacionDetalle:
-          this.data.secciones[0].grupos[0].parametros[0].idAsignacionDetalle,
-        idFormato: this.data.secciones[0].grupos[0].parametros[0].idFormato,
+          this.sections[0].grupos[0].parametros[0].idAsignacionDetalle,
+        idFormato: this.sections[0].grupos[0].parametros[0].idFormato,
       };
       if (result === "confirmed") {
         this.formatosService.validateFormat(data).subscribe(() => {});
+      }
+    });
+  }*/
+
+  postValidateFormat(): void {
+    const dialogRef = this._fuseConfirmationService.open({
+      title: "Validación de formato",
+      message: "¿Estás seguro que desea validar el formato?",
+
+      actions: {
+        confirm: {
+          label: "Sí, validar",
+          color: "primary",
+        },
+        cancel: {
+          label: "No",
+        },
+      },
+      dismissible: true,
+    });
+
+    dialogRef.beforeClosed().subscribe((result) => {
+      const data = {
+        idAsignacionDetalle:
+          this.sections[0].grupos[0].parametros[0].idAsignacionDetalle,
+        idFormato: this.sections[0].grupos[0].parametros[0].idFormato,
+      };
+
+      if (result === "confirmed") {
+        this.formatosService.validateFormat(data).subscribe(() => {
+          this.sections[0].grupos[0].parametros[0].formatoValido = true;
+        });
       }
     });
   }
@@ -459,5 +632,27 @@ export class ValidationFormatosComponent implements OnInit {
     return [date.getFullYear(), mnth, day].join("-");
   }
 
-  deleteComment(): void {}
+  removeSign(event, groupIdx: number, paramIdx: number): void {
+    const dialogRef = this._fuseConfirmationService.open({
+      title: "Eliminar firma",
+      message: "¿Estás seguro que desea eliminar permanentemente la firma?",
+
+      actions: {
+        confirm: {
+          label: "Sí, eliminar",
+          color: "primary",
+        },
+        cancel: {
+          label: "No",
+        },
+      },
+      dismissible: true,
+    });
+
+    dialogRef.beforeClosed().subscribe((result) => {
+      if (result === "confirmed") {
+        this.onSubmit(event, groupIdx, false, paramIdx);
+      }
+    });
+  }
 }

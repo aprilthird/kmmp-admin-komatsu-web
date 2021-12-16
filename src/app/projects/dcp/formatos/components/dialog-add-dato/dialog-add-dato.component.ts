@@ -10,13 +10,12 @@ import { EditarFormatoService } from "../../editar-formato/editar-formato.servic
   styleUrls: ["./dialog-add-dato.component.scss"],
 })
 export class DialogAddDatoComponent implements OnInit {
-  
   @Input() data: Grupo;
-  @Input() edit:any;
+  @Input() edit: any;
   @Output() success: EventEmitter<any> = new EventEmitter();
 
   loading: boolean = false;
-  tiposDatos:any;
+  tiposDatos: any;
 
   form: FormGroup = this.fb.group({
     idParametro: ["", Validators.required],
@@ -37,7 +36,7 @@ export class DialogAddDatoComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogAddDatoComponent>,
     private _editarFormatoService: EditarFormatoService
   ) {
-    this.tiposDatos = this._editarFormatoService.datos();
+    //this.tiposDatos = this._editarFormatoService.datos();
   }
 
   ngOnInit(): void {
@@ -54,7 +53,7 @@ export class DialogAddDatoComponent implements OnInit {
         regex: this.edit.regex,
         fila: this.edit.fila,
         columna: this.edit.columna,
-      })
+      });
     }
   }
 
@@ -67,12 +66,12 @@ export class DialogAddDatoComponent implements OnInit {
       body.parametros.push({
         ...this.form.value,
         idGrupo: body.id,
-        ...(this.edit ? {id: this.edit.id}: {})
+        ...(this.edit ? { id: this.edit.id } : {}),
       });
       this._editarFormatoService.createDato(body).subscribe(
         (response) => {
           this.loading = false;
-          this.success.emit(response.body)
+          this.success.emit(response.body);
           setTimeout(() => {
             this.dialogRef.close();
           }, 100);

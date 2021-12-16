@@ -58,20 +58,12 @@ export class DialogAddDatoComponent implements OnInit {
 
   regexValidation = [
     {
-      id: 1,
-      nombre: "Email",
-    },
-    {
       id: 2,
-      nombre: "Nombre",
+      nombre: "Validar correo",
     },
     {
       id: 3,
-      nombre: "Dirección",
-    },
-    {
-      id: 4,
-      nombre: "Teléfono",
+      nombre: "Validar DNI",
     },
   ];
 
@@ -304,9 +296,10 @@ export class DialogAddDatoComponent implements OnInit {
           fila: [values.fila, Validators.required],
           columna: [values.columna, Validators.required],
         });
+
         this.form.get("placeholder").disable();
         this.form.get("visible").disable();
-        this.form.get("obligatorio").disable();
+        this.form.controls["obligatorio"].disable();
         this.form.get("editable").disable();
         this.form.get("minCaracteres").disable();
         this.form.get("maxCaracteres").disable();
@@ -329,6 +322,7 @@ export class DialogAddDatoComponent implements OnInit {
           fila: [values.fila, Validators.required],
           columna: [values.columna, Validators.required],
         });
+
         this.form.get("placeholder").disable();
         this.form.get("minCaracteres").disable();
         this.form.get("maxCaracteres").disable();

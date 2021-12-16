@@ -29,7 +29,7 @@
 
       <div class="flex flex-col section p-3 pt-1" id="items">
         <a
-          class="flex items-center justify-between section__menu h-10 mb-0.5"
+          class="flex items-center justify-between section__menu mb-0.5"
           *ngFor="let menu of menuData; let i = index"
           routerLinkActive="active"
           routerLink="{{ menu.link }}"
@@ -104,6 +104,7 @@
                         leading-7
                         sm:leading-10
                         truncate
+                        max-w-3xl
                       "
                     >
                       {{ currentSeccion }}
