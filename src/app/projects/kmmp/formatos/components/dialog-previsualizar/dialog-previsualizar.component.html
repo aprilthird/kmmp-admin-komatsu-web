@@ -34,12 +34,7 @@
                         'grid flex-row': grupo.pos === 'h'
                       }"
                     >-->
-            <div
-              class="grid flex-row gap-5"
-              [ngClass]="{
-                'justify-center': grupo.pos === 'v'
-              }"
-            >
+            <div class="grid flex-row gap-5">
               <ng-container
                 *ngFor="let parametro of grupo.parametros; let k = index"
               >
@@ -47,7 +42,10 @@
                   class="flex w-60 min-w-60"
                   [ngClass]="{
                     'mb-3': grupo.pos === 'v',
-                    'mr-3': grupo.pos === 'h'
+                    'mr-3': grupo.pos === 'h',
+                    'w-max': grupo.pos === 'v' && parametro.idParametro == 6,
+                    'justify-self-center':
+                      grupo.pos === 'v' && parametro.idParametro == 6
                   }"
                   [ngStyle]="{
                     'grid-area':

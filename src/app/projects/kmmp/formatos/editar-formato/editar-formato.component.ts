@@ -142,6 +142,7 @@ export class EditarFormatoComponent implements OnInit, OnDestroy {
         idFormat: Number(this._activedRoute.snapshot.params.id),
         id: menu.id,
         activo: false,
+        nombre: menu.title,
       };
 
       if (result === "confirmed") {
