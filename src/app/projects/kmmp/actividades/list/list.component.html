@@ -30,7 +30,7 @@
     <div class="flex flex-row flex-wrap justify-between items-center w-full">
       <div class="flex flex-col activities-container">
         <div class="text-4xl font-extrabold tracking-tight">Actividades</div>
-        <a class="prose font-bold">De {{ start }} al {{ end }}</a>
+        <a class="prose font-bold">De semana {{ start }} al {{ end }}</a>
       </div>
       <div
         class="flex flex-wrap gap-5 mt-5 xl:my-none"
@@ -201,9 +201,9 @@
                       ></mat-icon>
                     </button>
                     <mat-menu #menu="matMenu" xPosition="before">
-                      <button mat-menu-item (click)="getFormats(actividad.id)">
+                      <!--<button mat-menu-item (click)="getFormats(actividad.id)">
                         Ver formatos
-                      </button>
+                      </button>-->
                       <button
                         mat-menu-item
                         routerLink="/admin/actividades/edit/{{ actividad.id }}"

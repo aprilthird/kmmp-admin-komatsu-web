@@ -1,3 +1,4 @@
+import { X } from "@angular/cdk/keycodes";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import {
@@ -40,10 +41,10 @@ export class EditarFormatoService {
       .pipe(
         tap((response) => {
           if (response && response.body) {
-            this._formato.next(response.body.nombre);
+            this._formato.next(response.body?.descripcion);
             this._tipo_mantenimeinto.next(response.body?.tipoMantenimiento);
             this._modelo.next(response.body?.modelo);
-            this._actividad.next(response.body?.actividad);
+            this._actividad.next(response.body?.claseActividad);
           }
         })
       );
@@ -80,7 +81,7 @@ export class EditarFormatoService {
       )
       .pipe(
         tap((response) => {
-          this._secciones.next(response.body);
+          this._secciones.next(response.body.filter((x) => x.activo));
         })
       );
   }

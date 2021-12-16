@@ -109,16 +109,24 @@ export class ValidationFormatosComponent implements OnInit {
   }
 
   validateSection(): boolean {
-    return this.currentSectionData.grupos[0].parametros.some(
-      (parametro) => parametro.seccionValida
-    );
+    if (this.currentSectionData.grupos.length > 0) {
+      if (this.currentSectionData.grupos[0].parametros) {
+        return this.currentSectionData.grupos[0].parametros.some(
+          (parametro) => parametro.seccionValida
+        );
+      }
+    }
   }
 
   validateFormat() {
     for (let i = 0; i < this.sections.length; i++) {
-      for (let j = 0; j < this.sections[i].grupos[0].parametros.length; j++) {
-        if (this.sections[i].grupos[0].parametros[j].formatoValido) {
-          return true;
+      if (this.sections[i].grupos && this.sections[i].grupos.length > 0) {
+        for (let j = 0; j < this.sections[i].grupos[0].parametros.length; j++) {
+          if (this.sections[i].grupos && this.sections[i].grupos.length > 0) {
+            if (this.sections[i].grupos[0].parametros[j].formatoValido) {
+              return true;
+            }
+          }
         }
       }
     }
@@ -204,28 +212,29 @@ export class ValidationFormatosComponent implements OnInit {
         children: [],
       },
     ];
-
-    this.sections.forEach((section, index) => {
-      this.menuData[0].children.push({
-        id: section.id,
-        title: section.nombre,
-        type: "basic",
-        link: `/admin/actividades/validation/${this.currentIdActivity}/${this.formatoId}/${section.id}`,
-        children: [],
-        badge: {
-          title: !section.grupos[0].parametros.some(
-            (parametro) => parametro.seccionValida
-          )
-            ? "warning_amber"
-            : "heroicons_outline:check-circle",
-          classes: !section.grupos[0].parametros.some(
-            (parametro) => parametro.seccionValida
-          )
-            ? "text-gray-600"
-            : "text-green-600",
-        },
+    if (this.sections[0].grupos.length > 0) {
+      this.sections.forEach((section, index) => {
+        this.menuData[0].children.push({
+          id: section.id,
+          title: section.nombre,
+          type: "basic",
+          link: `/admin/actividades/validation/${this.currentIdActivity}/${this.formatoId}/${section.id}`,
+          children: [],
+          badge: {
+            title: !section.grupos[0].parametros.some(
+              (parametro) => parametro.seccionValida
+            )
+              ? "warning_amber"
+              : "heroicons_outline:check-circle",
+            classes: !section.grupos[0].parametros.some(
+              (parametro) => parametro.seccionValida
+            )
+              ? "text-gray-600"
+              : "text-green-600",
+          },
+        });
       });
-    });
+    }
   }
 
   getMenuData(): void {
@@ -315,16 +324,16 @@ export class ValidationFormatosComponent implements OnInit {
     return "Campo no ha sido observado aún";
   }
   edit(groupIndex: number): void {
-    this.sections.forEach((seccion, i) => {
-      seccion.grupos.forEach((grupo, j) => {
-        if (j === groupIndex) {
-          this.groups[j] = !this.groups[j];
-          grupo.parametros.forEach((parametro, k) => {
-            this.editGroup[`${i}-${j}-${k}`] = true;
+    this.currentSectionData.grupos.forEach((grupo, j) => {
+      if (j === groupIndex) {
+        this.groups[j] = !this.groups[j];
+        grupo.parametros.forEach((parametro, k) => {
+          this.editGroup[`${j}`] = true;
+          if (this.form.controls[`${this.getParametroControl({ j, k })}`]) {
             this.form.get(`${this.getParametroControl({ j, k })}`).enable();
-          });
-        }
-      });
+          }
+        });
+      }
     });
   }
 
@@ -332,24 +341,15 @@ export class ValidationFormatosComponent implements OnInit {
     return this.groups[`${j}`];
   }
 
-  onSubmit(
-    e: MouseEvent,
-    indexGroup: number,
-    deleteComment?: boolean,
-    paramIdx?: number
-  ): void {
+  onSubmit(e: MouseEvent, indexGroup: number, paramIdx?: number): void {
     const data = [...this.sections];
 
     data.forEach((seccion, i) => {
       seccion.grupos.forEach((grupo, j) => {
         if (indexGroup === j) {
-          this.groups[j] = !this.groups[j];
+          this.groups[j] = false;
         }
-        if (deleteComment) {
-          if (j === indexGroup) {
-            grupo.comentarios = null;
-          }
-        }
+
         grupo.parametros.forEach((parametro, k) => {
           if (parametro.activo) {
             if (
@@ -550,7 +550,6 @@ export class ValidationFormatosComponent implements OnInit {
       sectionId: this.sectionId,
       formatoId: this.formatoId,
     };
-    console.log("this.data ", this.data);
     this.matDialog
       .open(DialogAddCommentComponent, {
         width: "500px",
@@ -651,7 +650,7 @@ export class ValidationFormatosComponent implements OnInit {
 
     dialogRef.beforeClosed().subscribe((result) => {
       if (result === "confirmed") {
-        this.onSubmit(event, groupIdx, false, paramIdx);
+        this.onSubmit(event, groupIdx, paramIdx);
       }
     });
   }

@@ -53,10 +53,11 @@ export class ActivityComponent implements OnInit {
     this._editarFormatoService
       .getAbrirAsignacion(e.idActividadFormato)
       .subscribe((secciones) => {
-        console.log("secciones ", secciones);
-        this.router.navigate([
-          `/admin/actividades/validation/${this.activityData.id}/${e.idActividadFormato}/${secciones.body.secciones[0].id}`,
-        ]);
+        if (secciones.body.secciones && secciones.body.secciones.length > 0) {
+          this.router.navigate([
+            `/admin/actividades/validation/${this.activityData.id}/${e.idActividadFormato}/${secciones.body.secciones[0].id}`,
+          ]);
+        }
       });
   }
 }

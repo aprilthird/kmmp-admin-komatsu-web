@@ -24,8 +24,8 @@ export class ListComponent implements OnInit {
   isEdit: boolean;
   selectedActivity: any;
 
-  start = new Date().toLocaleDateString("en-US");
-  end = new Date().toLocaleDateString("en-US");
+  start = new Date().toLocaleDateString("es-ES");
+  end = new Date().toLocaleDateString("es-ES");
   checkAllBays: boolean;
 
   constructor(
