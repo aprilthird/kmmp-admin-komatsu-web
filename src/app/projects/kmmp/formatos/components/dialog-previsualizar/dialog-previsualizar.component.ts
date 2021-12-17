@@ -122,11 +122,11 @@ export class DialogPrevisualizarComponent implements OnInit {
     }
 
     if (control.hasError("minlength")) {
-      return `Debe tener mínimo ${control.errors.minlength.requiredLength}`;
+      return `Debe tener mínimo ${control.errors.minlength.requiredLength} caracteres`;
     }
 
     if (control.hasError("maxlength")) {
-      return `Debe tener máximo ${control.errors.maxlength.requiredLength}`;
+      return `Debe tener máximo ${control.errors.maxlength.requiredLength} caracteres`;
     }
 
     if (control.hasError("pattern")) {

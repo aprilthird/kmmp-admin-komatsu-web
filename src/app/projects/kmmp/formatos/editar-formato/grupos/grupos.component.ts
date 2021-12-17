@@ -43,7 +43,6 @@ export class GruposComponent implements OnInit {
       width: "842px",
       disableClose: true,
     });
-
     dialogRef.componentInstance.data = this.data;
     dialogRef.componentInstance.edit = parametro;
 
@@ -85,7 +84,6 @@ export class GruposComponent implements OnInit {
    * Delete product
    */
   clickDeleteParametro(parametro): void {
-    console.log(this.data);
     const dialogRef = this._fuseConfirmationService.open({
       title: "Eliminar Dato",
       message: "¿Estás seguro que deseas eliminar el Dato?",

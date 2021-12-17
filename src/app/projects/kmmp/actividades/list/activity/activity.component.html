@@ -101,7 +101,7 @@
     <div class="format h-3/4 w-3/4">
       <div class="text-md text-secondary">Formatos</div>
       <div class="flex flex-col lg:flex-row lg:flex-wrap gap-4">
-        <div
+        <ng-container
           class="flex flex-row items-center"
           *ngFor="let format of activityInfo.formatos; let i = index"
         >
@@ -137,7 +137,7 @@
               ></mat-icon>
             </button>
           </ng-container>
-        </div>
+        </ng-container>
       </div>
 
       <div class="p-2">

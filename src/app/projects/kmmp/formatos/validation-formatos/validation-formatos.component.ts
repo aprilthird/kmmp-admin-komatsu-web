@@ -30,7 +30,7 @@ export class ValidationFormatosComponent implements OnInit {
   currentActivity: any;
   sectionId: any;
   formatoId: any;
-  loading: boolean = true;
+  loaded: boolean;
   data: any = {};
 
   filesLoading: {
@@ -72,7 +72,6 @@ export class ValidationFormatosComponent implements OnInit {
   ) {
     this.data.secciones = [{}];
     this.getActivityId();
-    this.getActivityData();
   }
 
   ngOnInit(): void {
@@ -92,6 +91,19 @@ export class ValidationFormatosComponent implements OnInit {
         .subscribe(async (x: any) => {
           this.sections = await x.body.secciones;
           this.data = x.body;
+          if (this.sections[0].grupos && this.sections[0].grupos.length > 0) {
+            this.getActivityData();
+          } else {
+            this.matDialog.open(UiDialogsComponent, {
+              width: "500px",
+              data: {
+                message: "No existe información en el actual formato!",
+                title: "Error",
+                action: "redirect",
+                url: "admin/actividades/list",
+              },
+            });
+          }
           /*this.data.secciones = x.body.secciones.filter(
             (seccion: any) => seccion.id === Number(this.sectionId)
           );
@@ -109,24 +121,18 @@ export class ValidationFormatosComponent implements OnInit {
   }
 
   validateSection(): boolean {
-    if (this.currentSectionData.grupos.length > 0) {
-      if (this.currentSectionData.grupos[0].parametros) {
-        return this.currentSectionData.grupos[0].parametros.some(
-          (parametro) => parametro.seccionValida
-        );
-      }
+    if (this.currentSectionData.grupos[0].parametros) {
+      return this.currentSectionData.grupos[0].parametros.some(
+        (parametro) => parametro.seccionValida
+      );
     }
   }
 
   validateFormat() {
     for (let i = 0; i < this.sections.length; i++) {
-      if (this.sections[i].grupos && this.sections[i].grupos.length > 0) {
-        for (let j = 0; j < this.sections[i].grupos[0].parametros.length; j++) {
-          if (this.sections[i].grupos && this.sections[i].grupos.length > 0) {
-            if (this.sections[i].grupos[0].parametros[j].formatoValido) {
-              return true;
-            }
-          }
+      for (let j = 0; j < this.sections[i].grupos[0].parametros.length; j++) {
+        if (this.sections[i].grupos[0].parametros[j].formatoValido) {
+          return true;
         }
       }
     }
@@ -150,6 +156,7 @@ export class ValidationFormatosComponent implements OnInit {
         this.currentActivity = activity.body.formatos;
         setTimeout(() => {
           this.setCollapsableNav();
+          this.loaded = true;
         }, 1500);
 
         this.codeActivity = activity.body.codigo;
@@ -212,29 +219,27 @@ export class ValidationFormatosComponent implements OnInit {
         children: [],
       },
     ];
-    if (this.sections[0].grupos.length > 0) {
-      this.sections.forEach((section, index) => {
-        this.menuData[0].children.push({
-          id: section.id,
-          title: section.nombre,
-          type: "basic",
-          link: `/admin/actividades/validation/${this.currentIdActivity}/${this.formatoId}/${section.id}`,
-          children: [],
-          badge: {
-            title: !section.grupos[0].parametros.some(
-              (parametro) => parametro.seccionValida
-            )
-              ? "warning_amber"
-              : "heroicons_outline:check-circle",
-            classes: !section.grupos[0].parametros.some(
-              (parametro) => parametro.seccionValida
-            )
-              ? "text-gray-600"
-              : "text-green-600",
-          },
-        });
+    this.sections.forEach((section, index) => {
+      this.menuData[0].children.push({
+        id: section.id,
+        title: section.nombre,
+        type: "basic",
+        link: `/admin/actividades/validation/${this.currentIdActivity}/${this.formatoId}/${section.id}`,
+        children: [],
+        badge: {
+          title: !section.grupos[0].parametros.some(
+            (parametro) => parametro.seccionValida
+          )
+            ? "warning_amber"
+            : "heroicons_outline:check-circle",
+          classes: !section.grupos[0].parametros.some(
+            (parametro) => parametro.seccionValida
+          )
+            ? "text-gray-600"
+            : "text-green-600",
+        },
       });
-    }
+    });
   }
 
   getMenuData(): void {

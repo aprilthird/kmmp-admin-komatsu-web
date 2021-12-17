@@ -103,6 +103,12 @@ export class DialogAddDatoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("- ", this.edit);
+    if (this.edit.idParametro === TipoParametro.LABEL) {
+      this.form.get("visible").disable();
+      this.form.controls["obligatorio"].disable();
+      this.form.get("editable").disable();
+    }
     if (this.edit) {
       this.form.setValue({
         idParametro: this.edit.idParametro,
@@ -188,6 +194,9 @@ export class DialogAddDatoComponent implements OnInit {
           const optionSelect = values.dato.split(",");
           optionSelect.map((option) => this.options.push({ name: option }));
         }
+        this.form.get("visible").enable();
+        this.form.controls["obligatorio"].enable();
+        this.form.get("editable").enable();
         this.form.clearValidators();
         this.form = this.fb.group({
           idParametro: [values.idParametro, Validators.required],
@@ -212,6 +221,10 @@ export class DialogAddDatoComponent implements OnInit {
       case TipoParametro.TEXTO:
       case TipoParametro.AREA_TEXTO:
         this.form.clearValidators();
+        this.form.get("visible").enable();
+        this.form.controls["obligatorio"].enable();
+        this.form.get("editable").enable();
+
         this.form = this.fb.group({
           idParametro: [values.idParametro, Validators.required],
           placeholder: [values.placeholder, Validators.required],
@@ -225,11 +238,15 @@ export class DialogAddDatoComponent implements OnInit {
           fila: [values.fila, Validators.required],
           columna: [values.columna, Validators.required],
         });
+
         break;
 
       case TipoParametro.FECHA:
       case TipoParametro.IMAGEN:
         this.image = "";
+        this.form.get("visible").enable();
+        this.form.controls["obligatorio"].enable();
+        this.form.get("editable").enable();
         this.form.clearValidators();
         this.form = this.fb.group({
           idParametro: [values.idParametro, Validators.required],
@@ -259,10 +276,16 @@ export class DialogAddDatoComponent implements OnInit {
         this.form.get("regex").disable();
         this.form.get("minCaracteres").disable();
         this.form.get("maxCaracteres").disable();
+        this.form.get("visible").enable();
+        this.form.controls["obligatorio"].enable();
+        this.form.get("editable").enable();
         break;
 
       case TipoParametro.NUMERICO:
         this.form.clearValidators();
+        this.form.get("visible").enable();
+        this.form.controls["obligatorio"].enable();
+        this.form.get("editable").enable();
         this.form = this.fb.group({
           idParametro: [values.idParametro, Validators.required],
           placeholder: [values.placeholder, Validators.required],
@@ -279,10 +302,14 @@ export class DialogAddDatoComponent implements OnInit {
         this.form.get("regex").disable();
         this.form.get("minCaracteres").disable();
         this.form.get("maxCaracteres").disable();
+
         break;
 
       case TipoParametro.LABEL:
         this.form.clearValidators();
+        this.form.get("visible").disable();
+        this.form.controls["obligatorio"].disable();
+        this.form.get("editable").disable();
         this.form = this.fb.group({
           idParametro: [values.idParametro, Validators.required],
           placeholder: [""],
@@ -298,9 +325,7 @@ export class DialogAddDatoComponent implements OnInit {
         });
 
         this.form.get("placeholder").disable();
-        this.form.get("visible").disable();
-        this.form.controls["obligatorio"].disable();
-        this.form.get("editable").disable();
+
         this.form.get("minCaracteres").disable();
         this.form.get("maxCaracteres").disable();
         this.form.get("regex").disable();
@@ -308,6 +333,9 @@ export class DialogAddDatoComponent implements OnInit {
 
       case TipoParametro.CHECKBOX:
       case TipoParametro.FIRMA:
+        this.form.get("visible").enable();
+        this.form.controls["obligatorio"].enable();
+        this.form.get("editable").enable();
         this.form.clearValidators();
         this.form = this.fb.group({
           idParametro: [values.idParametro, Validators.required],

@@ -48,7 +48,8 @@
       </div>
     </div>
   </div>
-  <mat-drawer-container class="flex-auto h-full min-h-70">
+  <mat-progress-bar *ngIf="!loaded" [mode]="'indeterminate'"></mat-progress-bar>
+  <mat-drawer-container class="flex-auto h-full min-h-70" *ngIf="loaded">
     <!-- Drawer -->
     <mat-drawer
       class="w-60 dark:bg-gray-900"
@@ -65,10 +66,7 @@
         [opened]="true"
       ></fuse-vertical-navigation>
 
-      <div
-        *ngIf="sectionName !== ''"
-        class="p-4 mb-2 flex flex-col justify-center items-center gap-5"
-      >
+      <div class="p-4 mb-2 flex flex-col justify-center items-center gap-5">
         <button
           *ngIf="!validateFormat()"
           class="text-white"
