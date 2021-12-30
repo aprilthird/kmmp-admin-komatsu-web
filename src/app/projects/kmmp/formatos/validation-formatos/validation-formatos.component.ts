@@ -361,9 +361,9 @@ export class ValidationFormatosComponent implements OnInit {
               parametro.idParametro === TipoParametro.UPLOAD ||
               parametro.idParametro === TipoParametro.IMAGEN
             ) {
-              this.checkImgParam(parametro, 0, j, k);
+              this.checkImgParam(parametro, j, k);
             } else if (parametro.idParametro === TipoParametro.FIRMA) {
-              this.checkSignParam(paramIdx, parametro, indexGroup, 0, k, j);
+              this.checkSignParam(paramIdx, parametro, indexGroup, k, j);
             } else {
               parametro.valor = String(
                 this.form.get(this.getParametroControl({ j, k })).value
@@ -376,6 +376,7 @@ export class ValidationFormatosComponent implements OnInit {
     const payload = {
       ...this.data,
       secciones: data,
+      idActividadFormtao: Number(this.formatoId),
     };
     this._editarFormatoService.saveAssignation(payload).subscribe(() => {
       Object.keys(this.form.controls).forEach((key) => {
@@ -385,7 +386,7 @@ export class ValidationFormatosComponent implements OnInit {
     e.preventDefault();
   }
 
-  checkImgParam(parametro, i = 0, j, k): void {
+  checkImgParam(parametro, j, k): void {
     if (parametro.valor === null || parametro.valor === "") {
       this.form
         .get(this.getParametroControl({ j, k }))
@@ -396,7 +397,7 @@ export class ValidationFormatosComponent implements OnInit {
     );
   }
 
-  checkSignParam(paramIdx, parametro, indexGroup, i = 0, k, j): void {
+  checkSignParam(paramIdx, parametro, indexGroup, k, j): void {
     if (paramIdx) {
       if (paramIdx === k && indexGroup === j) {
         parametro.valor = null;

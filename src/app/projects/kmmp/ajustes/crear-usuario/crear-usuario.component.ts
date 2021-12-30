@@ -8,10 +8,16 @@ import {
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Perfil } from "app/projects/dcp/seguridad/perfiles/perfiles.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { CrearUsuarioService } from "./crear-usuario.service";
+
+interface Perfil {
+  id: string;
+  nombre: string;
+  activo: boolean;
+  visible: boolean;
+}
 
 function minSelectedCheckboxes(min = 1) {
   const validator: ValidatorFn = (formArray: FormArray) => {
@@ -39,7 +45,6 @@ export class CrearUsuarioComponent implements OnInit {
   alert: any;
 
   perfiles: Perfil[] = [];
-
   form: FormGroup = this.fb.group({
     usr: ["", [Validators.required, Validators.pattern("[a-zA-Z0-9s]+")]],
     psw: [
