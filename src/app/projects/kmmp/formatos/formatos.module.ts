@@ -42,6 +42,10 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { DialogValidateFormatComponent } from "./components/dialog-validate-format/dialog-validate-format.component";
 import { DialogAddCommentComponent } from "./components/dialog-add-comment/dialog-add-comment.component";
 import { MatMenuModule } from "@angular/material/menu";
+import { DynamicFormatComponent } from './dynamic-format/dynamic-format.component';
+import { SectionsComponent } from './dynamic-format/sections/sections.component';
+import { GroupsComponent } from './dynamic-format/sections/groups/groups.component';
+import { FieldsComponent } from './dynamic-format/sections/groups/fields/fields.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +64,10 @@ import { MatMenuModule } from "@angular/material/menu";
     ValidationFormatosComponent,
     DialogValidateFormatComponent,
     DialogAddCommentComponent,
+    DynamicFormatComponent,
+    SectionsComponent,
+    GroupsComponent,
+    FieldsComponent,
   ],
   imports: [
     CommonModule,

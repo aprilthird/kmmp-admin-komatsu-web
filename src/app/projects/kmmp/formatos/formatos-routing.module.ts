@@ -11,6 +11,7 @@ import { ListadoComponent } from "./listado/listado.component";
 
 //APERTUR ASIGNACION
 import { AperturaAsignacionComponent } from "./asignaciones/apertura-asignacion/apertura-asignacion.component";
+import { DynamicFormatComponent } from "./dynamic-format/dynamic-format.component";
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: "asignaciones/apertura/:id",
     component: AperturaAsignacionComponent,
+  },
+  {
+    path: "formato-dinamico",
+    component: DynamicFormatComponent,
   },
   {
     path: "",
