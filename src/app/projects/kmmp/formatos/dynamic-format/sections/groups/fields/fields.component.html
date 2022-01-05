@@ -1,1 +1,18 @@
-<p>fields works!</p>
+<div>
+  <!--<ng-container *ngFor="let param of groupData.parametros">-->
+  <div class="flex gap-2 items-center">
+    <mat-form-field class="w-full font-semibold" floatLabel="always">
+      <mat-label>{{ groupData.label }}</mat-label>
+      <input
+        id="{{ groupData.label + groupData.id }}"
+        matInput
+        type="text"
+        placeholder="{{ groupData.placeholder }}"
+      />
+    </mat-form-field>
+    <button mat-icon-button>
+      <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
+    </button>
+  </div>
+  <!--</ng-container>-->
+</div>

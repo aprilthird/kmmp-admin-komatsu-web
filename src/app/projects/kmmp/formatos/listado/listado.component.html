@@ -148,9 +148,9 @@
                   <!-- Acciones -->
                   <div>
                     <a
-                      routerLink="/admin/formatos/editar/{{ formato.id }}/{{
-                        formato.idSeccion || '0'
-                      }}"
+                      routerLink="/admin/formatos/formato-dinamico/{{
+                        formato.id
+                      }}/{{ formato.idSeccion || '0' }}"
                       class="min-w-7 w-7 min-h-7 h-7 mr-1"
                       mat-icon-button
                       matTooltip="Editar"

@@ -1,62 +1,83 @@
-<div class="">
+<div class="w-full">
   <div class="flex items-center ml-6 pt-4">
     <div
-      class="
-        border-t-2 border-l-2 border-r-2
-        px-4
-        py-2
-        rounded-t-xl
-        overflow-hidden
-        bg-card
-      "
+      class="border-t-2 border-l-2 border-r-2 px-4 py-2 rounded-t-xl overflow-hidden bg-card"
     >
-      <div class="sm:text-lg leading-6 truncate">Grupo 1</div>
+      <div class="sm:text-lg leading-6 truncate">{{ groupData.nombre }}</div>
     </div>
   </div>
-
+  <mat-progress-bar
+    class="progress-add-dato"
+    *ngIf="isLoading"
+    [mode]="'indeterminate'"
+  ></mat-progress-bar>
   <div
-    class="
-      flex flex-auto
-      ml-6
-      mr-6
-      bg-gray-300
-      py-8
-      px-6
-      md:px-8
-      rounded-b-xl rounded-tr-xl
-      border-2
-    "
+    class="flex flex-auto ml-6 mr-6 bg-gray-300 py-8 px-6 md:px-8 rounded-b-xl rounded-tr-xl border-2"
   >
-    <div
-      class="
-        flex flex-col
-        justify-between
-        md:flex-row
-        overflow-hidden
-        sm:overflow-y-auto
-        w-full
-      "
-    >
+    <div class="flex flex-col gap-2 justify-between w-full">
       <div
-        class="
-          flex flex-0
-          items-center
-          justify-center
-          w-full
-          h-16
-          px-4
-          z-49
-          dark:bg-transparent
-          print:hidden
-          bottom-0
-        "
+        class="flex flex-col flex-0 w-full px-4 z-49 dark:bg-transparent print:hidden bottom-0 h-max"
+        [ngClass]="{
+          'justify-center':
+            (groupData.parametros && groupData.parametros.length) === 0,
+          'items-center': groupData.pos === 'v'
+        }"
       >
-        <span class="font-medium text-secondary">
-          <button mat-button color="primary">
+        <span
+          *ngIf="
+            (groupData.parametros &&
+              groupData.parametros.length === 0 &&
+              groupData.pos === 'h') ||
+            groupData.pos === 'v'
+          "
+          class="font-medium text-secondary"
+          [ngClass]="{ 'right-28 absolute': groupData.parametros.length > 0 }"
+        >
+          <button mat-button color="primary" (click)="postParam()">
             <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
             Agregar campo
           </button>
         </span>
+        <div
+          *ngIf="groupData.pos === 'v'"
+          cdkDropList
+          class="flex flex-col list-section"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <app-fields
+            class="list-box"
+            cdkDrag
+            *ngFor="let groupData of groupData.parametros"
+            [groupData]="groupData"
+          ></app-fields>
+        </div>
+        <ng-container *ngIf="groupData.pos === 'h'">
+          <div
+            *ngFor="let row of rows; let i = index"
+            cdkDropListOrientation="horizontal"
+            cdkDropList
+            class="flex list-section items-center"
+            (cdkDropListDropped)="drop($event, i)"
+          >
+            <app-fields
+              class="list-box"
+              cdkDrag
+              *ngFor="let groupData of row"
+              [groupData]="groupData"
+            ></app-fields>
+            <button
+              mat-button
+              color="primary"
+              matTooltip="Agregar campo a esta fila"
+            >
+              <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+            </button>
+          </div>
+          <button mat-button color="primary" class="flex justify-start w-min">
+            <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+            Agregar Fila
+          </button>
+        </ng-container>
       </div>
     </div>
   </div>

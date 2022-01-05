@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-fields',
-  templateUrl: './fields.component.html',
-  styleUrls: ['./fields.component.scss']
+  selector: "app-fields",
+  templateUrl: "./fields.component.html",
+  styleUrls: ["./fields.component.scss"],
 })
 export class FieldsComponent implements OnInit {
+  @Input() groupData: any;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
+
+interface Params {}

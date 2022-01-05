@@ -1,4 +1,3 @@
-import { X } from "@angular/cdk/keycodes";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
@@ -31,7 +30,7 @@ export class FormatosService {
       .filter((section) => section.id === idSection)
       .map((x) =>
         x.grupos.push({
-          id: x.grupos.length,
+          id: x.grupos.length + 1,
           nombre: x.grupos.length,
         })
       );

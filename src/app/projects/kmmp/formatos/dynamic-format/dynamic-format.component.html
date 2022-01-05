@@ -61,23 +61,34 @@
       >
         <mat-form-field floatLabel="always" class="w-full md:w-1/4">
           <mat-label class="font-bold">Modelo</mat-label>
-          <input matInput type="text" disabled />
+          <input matInput type="text" disabled [value]="modelo || ''" />
         </mat-form-field>
         <mat-form-field floatLabel="always" class="w-full md:w-1/4">
           <mat-label class="font-bold">T. de mantenimiento</mat-label>
-          <input matInput type="text" disabled />
+          <input
+            matInput
+            type="text"
+            disabled
+            [value]="tipoMantenimiento || ''"
+          />
         </mat-form-field>
         <mat-form-field floatLabel="always" class="w-full md:w-1/4">
           <mat-label class="font-bold">Actividad</mat-label>
-          <input matInput type="text" disabled />
+          <input matInput type="text" disabled [value]="actividad || ''" />
         </mat-form-field>
       </div>
     </div>
   </div>
-  <ng-container *ngIf="sections$ | async as sections">
-    <ng-container *ngFor="let section of sections; trackBy: trackByFn">
-      <app-sections [sectionData]="section"></app-sections>
-    </ng-container>
+  <ng-container *ngIf="sections">
+    <div cdkDropList class="list-section" (cdkDropListDropped)="drop($event)">
+      <ng-container *ngFor="let section of sections; trackBy: trackByFn">
+        <app-sections
+          cdkDrag
+          class="list-box"
+          [sectionData]="section"
+        ></app-sections>
+      </ng-container>
+    </div>
   </ng-container>
 
   <div
