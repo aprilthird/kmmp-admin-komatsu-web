@@ -44,14 +44,17 @@
         </mat-menu>
       </span>
     </div>
-    <ng-container *ngIf="grupos.length > 0"></ng-container>
-    <div cdkDropList class="list-section" (cdkDropListDropped)="drop($event)">
-      <app-groups
-        cdkDrag
-        *ngFor="let group of grupos"
-        class="list-box w-full"
-        [groupData]="group"
-      ></app-groups>
-    </div>
+    <ng-container *ngIf="grupos.length > 0">
+      <div cdkDropList class="list-section" (cdkDropListDropped)="drop($event)">
+        <ng-container *ngFor="let group of grupos">
+          <app-groups
+            cdkDrag
+            *ngIf="group.activo"
+            class="list-box w-full"
+            [groupData]="group"
+          ></app-groups>
+        </ng-container>
+      </div>
+    </ng-container>
   </div>
 </div>

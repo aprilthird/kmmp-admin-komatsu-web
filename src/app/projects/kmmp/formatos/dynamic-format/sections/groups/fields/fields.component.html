@@ -1,18 +1,144 @@
 <div>
-  <!--<ng-container *ngFor="let param of groupData.parametros">-->
   <div class="flex gap-2 items-center">
-    <mat-form-field class="w-full font-semibold" floatLabel="always">
-      <mat-label>{{ groupData.label }}</mat-label>
-      <input
-        id="{{ groupData.label + groupData.id }}"
-        matInput
-        type="text"
-        placeholder="{{ groupData.placeholder }}"
-      />
-    </mat-form-field>
-    <button mat-icon-button>
+    <ng-container [ngSwitch]="paramData.idParametro">
+      <mat-form-field
+        *ngSwitchCase="1"
+        class="w-full font-semibold"
+        floatLabel="always"
+      >
+        <mat-label *ngIf="paramData.visible">{{ paramData.label }}</mat-label>
+        <input
+          id="{{ paramData.idGrupo + paramData.id }}"
+          matInput
+          type="text"
+          placeholder="{{ paramData.placeholder }}"
+        />
+        <mat-progress-spinner
+          [mode]="'indeterminate'"
+          *ngIf="isLoading"
+          [diameter]="16"
+        ></mat-progress-spinner>
+      </mat-form-field>
+
+      <mat-form-field *ngSwitchCase="2" floatLabel="always" class="w-full">
+        <mat-label *ngIf="paramData.visible">{{ paramData.label }}</mat-label>
+        <input
+          id="{{ paramData.idGrupo + paramData.id }}"
+          matInput
+          type="number"
+          placeholder="{{ paramData.placeholder }}"
+        />
+        <mat-progress-spinner
+          [mode]="'indeterminate'"
+          *ngIf="isLoading"
+          [diameter]="16"
+        ></mat-progress-spinner>
+      </mat-form-field>
+
+      <mat-form-field *ngSwitchCase="3" floatLabel="always" class="w-full">
+        <mat-label *ngIf="paramData.visible">{{ paramData.label }}</mat-label>
+        <textarea
+          class="resize-none"
+          matInput
+          placeholder="{{ paramData.placeholder }}"
+        ></textarea>
+        <mat-progress-spinner
+          [mode]="'indeterminate'"
+          *ngIf="isLoading"
+          [diameter]="16"
+        ></mat-progress-spinner>
+      </mat-form-field>
+
+      <mat-form-field *ngSwitchCase="5" floatLabel="always" class="w-full">
+        <mat-label *ngIf="paramData.visible">{{ paramData.label }}</mat-label>
+        <input
+          matInput
+          [matDatepicker]="datepicker"
+          placeholder="{{ paramData.placeholder }}"
+        />
+        <mat-progress-spinner
+          [mode]="'indeterminate'"
+          *ngIf="isLoading"
+          [diameter]="16"
+        ></mat-progress-spinner>
+
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="datepicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>
+              Aplicar
+            </button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <div *ngSwitchCase="8" class="w-full">
+        <p class="text-gray-900 font-medium">
+          {{ paramData.label }}
+        </p>
+        <mat-progress-spinner
+          [mode]="'indeterminate'"
+          *ngIf="isLoading"
+          [diameter]="16"
+        ></mat-progress-spinner>
+      </div>
+
+      <div *ngSwitchCase="9" class="w-full">
+        <div class="flex flex-col">
+          <mat-label *ngIf="paramData.visible">{{ paramData.label }}</mat-label>
+          <mat-slide-toggle [color]="'primary'"></mat-slide-toggle>
+        </div>
+        <mat-progress-spinner
+          [mode]="'indeterminate'"
+          *ngIf="isLoading"
+          [diameter]="16"
+        ></mat-progress-spinner>
+      </div>
+    </ng-container>
+
+    <button mat-icon-button [matMenuTriggerFor]="actions">
       <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
     </button>
+    <mat-menu #actions="matMenu">
+      <button mat-menu-item [matMenuTriggerFor]="texto">Texto</button>
+      <button mat-menu-item (click)="editField('number')">Numérico</button>
+      <button mat-menu-item (click)="editField('date')">Fecha</button>
+      <button mat-menu-item [matMenuTriggerFor]="varios">Varios valores</button>
+      <button mat-menu-item [matMenuTriggerFor]="archivo">Archivo</button>
+      <button mat-menu-item>Editable</button>
+      <button mat-menu-item>Obligatorio</button>
+      <button mat-menu-item>Placeholder</button>
+      <button mat-menu-item class="text-red-600">Eliminar</button>
+    </mat-menu>
+
+    <mat-menu #texto="matMenu">
+      <button mat-menu-item [matMenuTriggerFor]="normal">Normal</button>
+      <button mat-menu-item (click)="editField('area')">Texto largo</button>
+      <button mat-menu-item (click)="editField('label')">Sólo etiqueta</button>
+    </mat-menu>
+
+    <mat-menu #normal="matMenu">
+      <button mat-menu-item (click)="editField('text')">Input</button>
+      <button mat-menu-item (click)="editField('dni')">DNI</button>
+      <button mat-menu-item (click)="editField('email')">Correo</button>
+      <button mat-menu-item (click)="openOtherValidator()">
+        Otro validador
+      </button>
+    </mat-menu>
+
+    <mat-menu #varios="matMenu">
+      <button mat-menu-item>Lista</button>
+      <button mat-menu-item (click)="editField('checkbox')">Checkbox</button>
+    </mat-menu>
+
+    <mat-menu #archivo="matMenu">
+      <button mat-menu-item>Archivo</button>
+      <button mat-menu-item>Imagen</button>
+      <button mat-menu-item>Firma</button>
+    </mat-menu>
   </div>
-  <!--</ng-container>-->
 </div>

@@ -24,7 +24,6 @@ export class SectionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadGrupos();
-    console.log("section data ", this.sectionData);
   }
 
   ngOnDestry(): void {

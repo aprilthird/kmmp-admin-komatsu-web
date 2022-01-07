@@ -46,6 +46,9 @@ import { DynamicFormatComponent } from "./dynamic-format/dynamic-format.componen
 import { SectionsComponent } from "./dynamic-format/sections/sections.component";
 import { GroupsComponent } from "./dynamic-format/sections/groups/groups.component";
 import { FieldsComponent } from "./dynamic-format/sections/groups/fields/fields.component";
+import { VerticalGroupComponent } from './dynamic-format/sections/groups/vertical-group/vertical-group.component';
+import { HorizontalGroupComponent } from './dynamic-format/sections/groups/horizontal-group/horizontal-group.component';
+import { OtherValidatorComponent } from './dynamic-format/dialog-components/other-validator/other-validator.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +71,9 @@ import { FieldsComponent } from "./dynamic-format/sections/groups/fields/fields.
     SectionsComponent,
     GroupsComponent,
     FieldsComponent,
+    VerticalGroupComponent,
+    HorizontalGroupComponent,
+    OtherValidatorComponent,
   ],
   imports: [
     CommonModule,
