@@ -49,6 +49,8 @@ import { FieldsComponent } from "./dynamic-format/sections/groups/fields/fields.
 import { VerticalGroupComponent } from './dynamic-format/sections/groups/vertical-group/vertical-group.component';
 import { HorizontalGroupComponent } from './dynamic-format/sections/groups/horizontal-group/horizontal-group.component';
 import { OtherValidatorComponent } from './dynamic-format/dialog-components/other-validator/other-validator.component';
+import { ChipsSelectionComponent } from './dynamic-format/dialog-components/chips-selection/chips-selection.component';
+import { UploadImageComponent } from './dynamic-format/dialog-components/upload-image/upload-image.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +76,8 @@ import { OtherValidatorComponent } from './dynamic-format/dialog-components/othe
     VerticalGroupComponent,
     HorizontalGroupComponent,
     OtherValidatorComponent,
+    ChipsSelectionComponent,
+    UploadImageComponent,
   ],
   imports: [
     CommonModule,

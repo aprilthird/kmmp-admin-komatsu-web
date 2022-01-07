@@ -98,6 +98,64 @@
           [diameter]="16"
         ></mat-progress-spinner>
       </div>
+
+      <div *ngSwitchCase="4" class="w-full">
+        <p class="text-gray-900 font-medium">
+          {{ paramData.placeholder }}
+        </p>
+        <mat-progress-spinner
+          [mode]="'indeterminate'"
+          *ngIf="isLoading"
+          [diameter]="16"
+        ></mat-progress-spinner>
+      </div>
+
+      <div *ngSwitchCase="6" class="w-full">
+        <span class="text-gray-800 font-medium" *ngIf="paramData.visible">{{
+          paramData.label
+        }}</span>
+        <ui-upload-file
+          [type]="'imagen'"
+          [image]="
+            paramData.valor !== '' && paramData.valor !== null
+              ? setImage(paramData.dato)
+              : setImage(paramData.dato)
+          "
+          [loading]="filesLoading"
+          (sourceFile)="onChageFile($event)"
+        ></ui-upload-file>
+      </div>
+
+      <div *ngSwitchCase="7" class="w-full">
+        <p class="text-gray-900 font-medium">
+          {{ paramData.placeholder }}
+        </p>
+        <mat-progress-spinner
+          [mode]="'indeterminate'"
+          *ngIf="isLoading"
+          [diameter]="16"
+        ></mat-progress-spinner>
+      </div>
+
+      <div *ngSwitchCase="10" class="w-full">
+        <div class="flex flex-col">
+          <mat-form-field floatLabel="always">
+            <mat-label *ngIf="paramData.visible">{{
+              paramData.label
+            }}</mat-label>
+            <mat-select
+              placeholder="{{ paramData.placeholder }}"
+              [value]="paramData.valor"
+            >
+              <mat-option
+                *ngFor="let option of splitOptions(paramData.dato)"
+                [value]="option"
+                >{{ option }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
     </ng-container>
 
     <button mat-icon-button [matMenuTriggerFor]="actions">
@@ -111,7 +169,10 @@
       <button mat-menu-item [matMenuTriggerFor]="archivo">Archivo</button>
       <button mat-menu-item>Editable</button>
       <button mat-menu-item>Obligatorio</button>
-      <button mat-menu-item>Placeholder</button>
+      <button mat-menu-item>Visible</button>
+      <button mat-menu-item [matMenuTriggerFor]="placeholder">
+        Placeholder
+      </button>
       <button mat-menu-item class="text-red-600">Eliminar</button>
     </mat-menu>
 
@@ -131,14 +192,31 @@
     </mat-menu>
 
     <mat-menu #varios="matMenu">
-      <button mat-menu-item>Lista</button>
+      <button mat-menu-item (click)="openSelection()">Lista</button>
       <button mat-menu-item (click)="editField('checkbox')">Checkbox</button>
     </mat-menu>
 
     <mat-menu #archivo="matMenu">
-      <button mat-menu-item>Archivo</button>
-      <button mat-menu-item>Imagen</button>
-      <button mat-menu-item>Firma</button>
+      <button mat-menu-item (click)="editField('upload')">Archivo</button>
+      <button mat-menu-item (click)="openOUploadImage()">Imagen</button>
+      <button mat-menu-item (click)="editField('sign')">Firma</button>
+    </mat-menu>
+
+    <mat-menu #placeholder="matMenu">
+      <div class="flex flex-col w-full p-4">
+        <mat-form-field floatLabel="always" class="w-full">
+          <mat-label>Escriba el placeholder</mat-label>
+          <input [(ngModel)]="paramData.placeholder" matInput />
+        </mat-form-field>
+        <button mat-menu-item (click)="setPlaceholcer($event.value)">
+          Guardar
+        </button>
+        <mat-progress-spinner
+          [mode]="'indeterminate'"
+          *ngIf="isLoading"
+          [diameter]="16"
+        ></mat-progress-spinner>
+      </div>
     </mat-menu>
   </div>
 </div>

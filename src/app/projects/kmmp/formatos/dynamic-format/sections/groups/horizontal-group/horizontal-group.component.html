@@ -42,7 +42,7 @@
           class="list-box"
           cdkDrag
           *ngFor="let paramData of row; let j = index"
-          [groupData]="row[j]"
+          [groupData]="groupData"
           [paramData]="paramData"
         ></app-fields>
         <button

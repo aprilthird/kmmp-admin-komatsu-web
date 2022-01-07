@@ -9,6 +9,22 @@ export function paramsInfo(type: string, paramData: ParamI): ParamI {
         placeholder: "Ingrese texto",
         label: "Texto",
       };
+    case "dni":
+      return {
+        ...paramData,
+        idParametro: 1,
+        label: "DNI",
+        regex: "dni",
+        placeholder: "Ingrese DNI",
+      };
+    case "email":
+      return {
+        ...paramData,
+        idParametro: 1,
+        label: "Correo",
+        regex: "email",
+        placeholder: "Ingrese correo",
+      };
     case "number":
       return {
         ...paramData,
@@ -24,6 +40,14 @@ export function paramsInfo(type: string, paramData: ParamI): ParamI {
         label: "Area de texto",
       };
 
+    case "upload":
+      return {
+        ...paramData,
+        idParametro: 4,
+        label: "Cargue imagen",
+        placeholder: "Cargar imagen",
+      };
+
     case "date":
       return {
         ...paramData,
@@ -31,31 +55,41 @@ export function paramsInfo(type: string, paramData: ParamI): ParamI {
         placeholder: "Ingrese fecha",
         label: "Fecha",
       };
+    case "image":
+      return {
+        ...paramData,
+        idParametro: 6,
+        label: "Imagen",
+      };
+
+    case "sign":
+      return {
+        ...paramData,
+        idParametro: 7,
+        label: "Firma",
+        placeholder: "Cargar firma",
+      };
+
     case "label":
       return {
         ...paramData,
         idParametro: 8,
         label: "Label",
       };
-    case "dni":
-      return {
-        ...paramData,
-        idParametro: 1,
-        label: "Ingrese texto",
-        regex: "dni",
-      };
-    case "email":
-      return {
-        ...paramData,
-        idParametro: 1,
-        label: "Ingrese texto",
-        regex: "email",
-      };
+
     case "checkbox":
       return {
         ...paramData,
         idParametro: 9,
         label: "Checkbox",
+      };
+
+    case "selection":
+      return {
+        ...paramData,
+        idParametro: 10,
+        label: "Selection",
+        placeholder: "Ingrese opciones",
       };
   }
 }
