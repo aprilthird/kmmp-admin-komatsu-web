@@ -1,26 +1,9 @@
 <div
-  class="
-    sm:inset-0
-    flex flex-col flex-auto
-    min-w-0
-    sm:overflow-hidden
-    bg-card
-    dark:bg-transparent
-  "
+  class="sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"
 >
   <!-- Header -->
   <div
-    class="
-      relative
-      flex flex-col
-      sm:flex-row
-      flex-0
-      sm:items-center sm:justify-between
-      py-8
-      px-6
-      md:px-8
-      border-b
-    "
+    class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b"
   >
     <!-- Loader -->
     <div class="absolute inset-x-0 bottom-0">
@@ -44,25 +27,10 @@
   <div class="flex flex-auto overflow-hidden">
     <!-- Products list -->
     <div
-      class="
-        flex flex-col flex-auto
-        overflow-hidden
-        sm:overflow-y-auto
-        bg-gray-100
-      "
+      class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto bg-gray-100"
     >
       <div
-        class="
-          sm:col-span-2
-          md:col-span-4
-          flex flex-col flex-auto
-          p-6
-          bg-card
-          shadow
-          rounded-2xl
-          overflow-hidden
-          m-5
-        "
+        class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden m-5"
       >
         <form [formGroup]="form">
           <div class="flex flex-row justify-start gap-10 mb-5">
@@ -390,6 +358,7 @@
               mat-raised-button
               [color]="'primary'"
               (click)="saveActivity()"
+              [disabled]="loadLoading"
             >
               <mat-progress-spinner
                 *ngIf="loadLoading"
@@ -404,7 +373,7 @@
               mat-raised-button
               [color]="'primary'"
               (click)="addSingleActivity()"
-              [disabled]="form.invalid"
+              [disabled]="form.invalid || loadLoading"
             >
               <mat-progress-spinner
                 *ngIf="loadLoading"

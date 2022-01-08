@@ -106,6 +106,10 @@ export class ActivityAddEditComponent implements OnInit {
         this.isLoading = false;
 
         this.setActivityData();
+        this.bahiasOpt.unshift({
+          id: null,
+          nombre: "----NINGUNA----",
+        });
       }
     );
   }
@@ -236,10 +240,7 @@ export class ActivityAddEditComponent implements OnInit {
         this.activityInfo?.idTipoMantenimiento,
         Validators.required
       ),
-      bahia_asignada: new FormControl(
-        this.activityInfo?.idBahia,
-        Validators.required
-      ),
+      bahia_asignada: new FormControl(this.activityInfo?.idBahia),
       tipo_solicitud: new FormControl(
         this.activityInfo?.idTipoSolicitud,
         Validators.required

@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { ActivitiesService } from "../../activities.service";
+import { ListComponent } from "../../list/list.component";
 import { BayI } from "./../../models/bays-model";
 
 @Component({
@@ -11,7 +12,7 @@ import { BayI } from "./../../models/bays-model";
 })
 export class AssignBayComponent implements OnInit {
   searchLoader: boolean;
-
+  isLoading: boolean;
   items: BayI[] = [];
   preloadedFormatsData = [];
   dataToAssign: any;
@@ -19,8 +20,7 @@ export class AssignBayComponent implements OnInit {
   constructor(
     public matdialigRef: MatDialogRef<AssignBayComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private activitiesService: ActivitiesService,
-    private _fuseConfirmationService: FuseConfirmationService
+    private activitiesService: ActivitiesService
   ) {
     this.getBays();
   }
@@ -58,27 +58,17 @@ export class AssignBayComponent implements OnInit {
   }
 
   assignToBay(): void {
-    this.activitiesService
-      .asignMultipleActivities(this.dataToAssign)
-      .subscribe((resp) => {
-        const dialogRef = this._fuseConfirmationService.open({
-          title: "Asignación a bahía",
-          message: resp.message,
-          icon: {
-            name: "heroicons_outline:clipboard-list",
-            color: "primary",
-          },
-          actions: {
-            cancel: {
-              label: "Ok",
-            },
-          },
-          dismissible: true,
-        });
-        dialogRef.beforeClosed().subscribe((resp) => {
-          this.matdialigRef.close();
-        });
-      });
+    this.isLoading = true;
+    this.activitiesService.asignMultipleActivities(this.dataToAssign).subscribe(
+      () => {
+        this.isLoading = false;
+        this.matdialigRef.close();
+      },
+      () => {
+        this.isLoading = false;
+        this.matdialigRef.close();
+      }
+    );
   }
 
   private getIdActivities(): number[] {

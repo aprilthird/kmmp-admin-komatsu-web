@@ -41,9 +41,8 @@ export class ListComponent implements OnInit {
 
   changePage(): void {}
 
-  private getActivities(): void {
+  getActivities(): void {
     this.activitiesService.getActivities().subscribe((_activities: any) => {
-      console.log(_activities);
       this.activities = _activities.body.data;
     });
   }
@@ -57,6 +56,7 @@ export class ListComponent implements OnInit {
       .afterClosed()
       .subscribe(() => {
         this.checkAllBays = false;
+        this.getActivities();
         return this.activities.map(
           (activity: ActivityFake) => (activity.checked = false)
         );

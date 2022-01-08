@@ -33,13 +33,7 @@
     <button
       (click)="matdialigRef.close()"
       mat-button
-      class="
-        ml-4
-        bg-gray-50
-        border-solid border border-accent-300
-        text-gray-700
-        shadow-none
-      "
+      class="ml-4 bg-gray-50 border-solid border border-accent-300 text-gray-700 shadow-none"
     >
       Cerrar
     </button>
@@ -50,6 +44,11 @@
       (click)="assignToBay()"
     >
       <span> Asignar </span>
+      <mat-progress-spinner
+        *ngIf="isLoading"
+        [diameter]="24"
+        [mode]="'indeterminate'"
+      ></mat-progress-spinner>
     </button>
   </div>
 </form>
