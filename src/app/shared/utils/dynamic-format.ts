@@ -1,95 +1,86 @@
 import { ParamI } from "../models/formatos";
 
-export function paramsInfo(type: string, paramData: ParamI): ParamI {
+export function paramsInfo(type: number, paramData: ParamI): ParamI {
   switch (type) {
-    case "text":
+    case 1:
       return {
         ...paramData,
         idParametro: 1,
-        placeholder: "Ingrese texto",
         label: "Texto",
       };
-    case "dni":
+    case 1:
       return {
         ...paramData,
         idParametro: 1,
         label: "DNI",
         regex: "dni",
-        placeholder: "Ingrese DNI",
       };
-    case "email":
+    case 1:
       return {
         ...paramData,
         idParametro: 1,
         label: "Correo",
         regex: "email",
-        placeholder: "Ingrese correo",
       };
-    case "number":
+    case 2:
       return {
         ...paramData,
         idParametro: 2,
-        placeholder: "Ingrese número",
         label: "Número",
       };
-    case "area":
+    case 3:
       return {
         ...paramData,
         idParametro: 3,
-        placeholder: "Ingrese texto",
         label: "Area de texto",
       };
 
-    case "upload":
+    case 4:
       return {
         ...paramData,
         idParametro: 4,
         label: "Cargue imagen",
-        placeholder: "Cargar imagen",
       };
 
-    case "date":
+    case 5:
       return {
         ...paramData,
         idParametro: 5,
-        placeholder: "Ingrese fecha",
         label: "Fecha",
       };
-    case "image":
+    case 6:
       return {
         ...paramData,
         idParametro: 6,
         label: "Imagen",
       };
 
-    case "sign":
+    case 7:
       return {
         ...paramData,
         idParametro: 7,
         label: "Firma",
-        placeholder: "Cargar firma",
       };
 
-    case "label":
+    case 8:
       return {
         ...paramData,
         idParametro: 8,
         label: "Label",
       };
 
-    case "checkbox":
+    case 9:
       return {
         ...paramData,
         idParametro: 9,
         label: "Checkbox",
       };
 
-    case "selection":
+    case 10:
       return {
         ...paramData,
         idParametro: 10,
         label: "Selection",
-        placeholder: "Ingrese opciones",
       };
   }
 }

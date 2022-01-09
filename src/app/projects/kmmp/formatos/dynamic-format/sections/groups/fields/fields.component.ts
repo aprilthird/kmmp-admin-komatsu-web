@@ -32,7 +32,7 @@ export class FieldsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  editField(type: any): void {
+  editField(type: number): void {
     this.isLoading = true;
     this._editarFormatoService
       .createDato({
@@ -62,7 +62,7 @@ export class FieldsComponent implements OnInit {
         minCaracteres: values.min,
         maxCaracteres: values.max,
       };
-      this.editField("text");
+      this.editField(1);
       dialogRef.close();
     });
   }
@@ -77,7 +77,7 @@ export class FieldsComponent implements OnInit {
         ...this.paramData,
         dato: dato,
       };
-      this.editField("image");
+      this.editField(6);
       dialogRef.close();
     });
   }
@@ -109,7 +109,7 @@ export class FieldsComponent implements OnInit {
         ...this.paramData,
         dato: dato,
       };
-      this.editField("selection");
+      this.editField(10);
       dialogRef.close();
     });
   }
@@ -118,5 +118,24 @@ export class FieldsComponent implements OnInit {
     return options.split(",");
   }
 
-  setPlaceholcer(value: string): void {}
+  setPlaceholcer(value: string): void {
+    this.paramData = {
+      ...this.paramData,
+      placeholder: value,
+    };
+    this.editField(this.paramData.idParametro);
+  }
+
+  setAttribute(value: boolean, attribute: string): void {
+    this.paramData = {
+      ...this.paramData,
+      [attribute]: value,
+    };
+    this.editField(this.paramData.idParametro);
+  }
+
+  deleteParam(): void {
+    this.paramData = { ...this.paramData, activo: false };
+    this.editField(this.paramData.idParametro);
+  }
 }

@@ -1,11 +1,39 @@
 <div class="w-full">
   <div class="flex items-center ml-6 pt-4">
     <div
-      class="border-t-2 border-l-2 border-r-2 px-4 py-2 rounded-t-xl overflow-hidden bg-card"
+      class="border-t-2 border-l-2 border-r-2 px-4 py-2 rounded-t-xl overflow-hidden bg-card flex align-center gap-2"
     >
-      <div class="sm:text-lg leading-6 truncate font-bold">
+      <span [hidden]="edit" class="sm:text-lg leading-6 truncate font-bold">
         {{ sectionData.nombre }}
-      </div>
+      </span>
+      <input
+        [hidden]="!edit"
+        #nameInput
+        class="sm:text-lg leading-6 truncate"
+        value="{{ sectionData.nombre }}"
+        maxlength="20"
+      />
+
+      <span
+        *ngIf="!edit"
+        class="mat-button-wrapper cursor-pointer"
+        (click)="editSection()"
+        matTooltip="Editar nombre de Sección"
+      >
+        <mat-icon [svgIcon]="'heroicons_outline:pencil'"> </mat-icon>
+      </span>
+      <span
+        *ngIf="edit"
+        class="mat-button-wrapper cursor-pointer"
+        (click)="save()"
+        matTooltip="Guardar"
+      >
+        <mat-icon [svgIcon]="'heroicons_outline:save'"> </mat-icon>
+      </span>
+
+      <span class="mat-button-wrapper cursor-pointer" (click)="deleteSection()">
+        <mat-icon [svgIcon]="'heroicons_outline:trash'"> </mat-icon>
+      </span>
     </div>
   </div>
 
@@ -22,10 +50,6 @@
       }"
     >
       <span class="font-medium text-secondary">
-        <!--<button mat-button color="primary" (click)="postGroup()">
-          <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-          Agregar grupo
-        </button>-->
         <button
           mat-button
           color="primary"

@@ -18,9 +18,11 @@ export class EditarFormatoResolver implements Resolve<boolean> {
     state: RouterStateSnapshot
   ): Observable<any> {
     return forkJoin([
-      this._editarFormatoService.getSecciones({ idFormulario: route.params.id }),
+      this._editarFormatoService.getSecciones({
+        idFormulario: route.params.id,
+      }),
       this._editarFormatoService.getFormato(route.params.id),
       this._editarFormatoService.getTipoDatos(),
-    ])
+    ]);
   }
 }
