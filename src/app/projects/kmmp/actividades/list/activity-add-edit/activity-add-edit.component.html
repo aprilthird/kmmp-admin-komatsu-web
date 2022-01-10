@@ -39,6 +39,7 @@
               <mat-select
                 formControlName="cliente"
                 [value]="form.controls['cliente'].value"
+                (selectionChange)="setBay($event.value)"
               >
                 <mat-option
                   *ngFor="let cliente of clientsOpt"

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MatSelect } from "@angular/material/select";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PermissionService } from "app/core/permission/permission.service";
 import { Pagination } from "app/core/types/list.types";
@@ -8,7 +9,6 @@ import { takeUntil } from "rxjs/operators";
 import { DispositivosService } from "../../ajustes/dispositivos/dispositivos.services";
 import { DialogAddDispositivosComponent } from "./dialog-add-dispositivos/dialog-add-dispositivos.component";
 import { DispositivoI } from "./dispositivo-model";
-//import { DispositivosService } from "./dispositivos.service";
 
 @Component({
   selector: "app-dispositivos",
@@ -26,7 +26,8 @@ export class DispositivosComponent implements OnInit {
   constructor(
     public _permissonService: PermissionService,
     private _routeActived: ActivatedRoute,
-    private _dispositivosServices: DispositivosService
+    private _dispositivosServices: DispositivosService,
+    private matDialog: MatDialog
   ) {
     this.getDispositivos();
   }
@@ -58,5 +59,13 @@ export class DispositivosComponent implements OnInit {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+
+  assignDevice(deviceDataEvent: MatSelect): void {
+    console.log("deviceDataEvent ", deviceDataEvent);
+    this.matDialog.open(DialogAddDispositivosComponent, {
+      width: "400px",
+      data: deviceDataEvent,
+    });
   }
 }

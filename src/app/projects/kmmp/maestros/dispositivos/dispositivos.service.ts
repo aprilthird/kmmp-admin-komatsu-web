@@ -5,6 +5,7 @@ import {
   ParamsPagination,
 } from "app/core/types/http.types";
 import { Pagination } from "app/core/types/list.types";
+import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import {
@@ -93,5 +94,13 @@ export class DispositivosService {
     });
     this.dispositivos.next(DispositivoResponse.body);
     return DispositivoResponse;
+  }
+
+  assignDeviceToBay(data): Observable<any> {
+    const endpoint = "/Seguridad/AsignarDispositivo";
+    return this.http.post<PaginationResponse<DispositivoI[]>>(
+      environment.apiUrl + endpoint,
+      data
+    );
   }
 }

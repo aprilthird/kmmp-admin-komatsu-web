@@ -220,6 +220,14 @@ export class ActivityAddEditComponent implements OnInit {
     }
   }
 
+  setBay(clientId: number) {
+    this.bahiasOpt = this.bahiasOpt.filter((bay) => bay.idCliente === clientId);
+    this.bahiasOpt.unshift({
+      id: null,
+      nombre: "----NINGUNA----",
+    });
+  }
+
   private setActivityData(): void {
     this.setDynamicFormFromString(TipoFormulario.NOS);
     this.setDynamicFormFromString(TipoFormulario.NPE);
