@@ -27,7 +27,11 @@ export class DynamicFormatComponent implements OnInit {
     private _formatosService: FormatosService,
     private _editarFormatoService: EditarFormatoService,
     private _activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    this._activatedRoute.params.subscribe((params: any) =>
+      this._formatosService._idFormulario.next(Number(params.id))
+    );
+  }
 
   ngOnInit(): void {
     this.getSections();
@@ -51,8 +55,6 @@ export class DynamicFormatComponent implements OnInit {
     this._activatedRoute.params.subscribe((params) => {
       this.idFormat = Number(params["id"]);
     });
-
-    console.log("sections ", this.sections);
   }
 
   ngOnDestry(): void {
@@ -70,17 +72,23 @@ export class DynamicFormatComponent implements OnInit {
     const sectionLength =
       this._editarFormatoService._secciones.getValue().length + 1;
     const sectionName = "Sección " + sectionLength;
-    this._editarFormatoService._idFormulario.next(this.idFormat);
 
     this._editarFormatoService
-      .createSeccion({
-        idFormato: this.idFormat,
-        nombre: sectionName,
-      })
+      .createSeccion(
+        {
+          idFormato: this.idFormat,
+          nombre: sectionName,
+        },
+        true
+      )
       .subscribe(() => []);
   }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.sections, event.previousIndex, event.currentIndex);
+  }
+
+  trackByFn(index, item) {
+    return item.id;
   }
 }

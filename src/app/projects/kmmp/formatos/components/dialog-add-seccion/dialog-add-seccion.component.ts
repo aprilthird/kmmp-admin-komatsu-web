@@ -30,10 +30,13 @@ export class DialogAddSeccionComponent implements OnInit {
     if (this.form.valid && !this.loading) {
       this.loading = true;
       this.editarFormatoService
-        .createSeccion({
-          ...this.form.value,
-          idFormato: Number(this.idFormato),
-        })
+        .createSeccion(
+          {
+            ...this.form.value,
+            idFormato: Number(this.idFormato),
+          },
+          true
+        )
         .subscribe(
           (response) => {
             this.loading = false;

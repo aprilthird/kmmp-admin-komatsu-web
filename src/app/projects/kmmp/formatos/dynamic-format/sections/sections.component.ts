@@ -4,6 +4,7 @@ import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { ActivatedRoute } from "@angular/router";
 import { EditarFormatoService } from "../../editar-formato/editar-formato.service";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
+import { FormatosService } from "../../formatos.service";
 
 @Component({
   selector: "app-sections",
@@ -22,8 +23,10 @@ export class SectionsComponent implements OnInit {
 
   constructor(
     private _activedRoute: ActivatedRoute,
+
     private _editarFormatoService: EditarFormatoService,
-    private _fuseConfirmationService: FuseConfirmationService
+    private _fuseConfirmationService: FuseConfirmationService,
+    private _formatService: FormatosService
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +43,7 @@ export class SectionsComponent implements OnInit {
     this._editarFormatoService
       .createGrupo({
         id: 0,
-        idFormato: this._editarFormatoService._idFormulario.getValue(),
+        idFormato: this._formatService._idFormulario.getValue(),
         idSeccion: this.sectionData.id,
         parametros: [],
         pos: pos,
@@ -52,6 +55,7 @@ export class SectionsComponent implements OnInit {
   }
 
   public loadGrupos() {
+    this.isLoading = true;
     if (this._activedRoute.snapshot.params.idSeccion) {
       this.idSection = { ...this.sectionData.id };
       if (this.idSection === 0) {
@@ -78,14 +82,18 @@ export class SectionsComponent implements OnInit {
     });
   }
   save(): void {
-    this._editarFormatoService.createSeccion({
-      ...this.sectionData,
-      nombre: this.el.nativeElement.value,
-    });
-    /*.subscribe(() => {
+    this._editarFormatoService
+      .createSeccion(
+        {
+          ...this.sectionData,
+          nombre: this.el.nativeElement.value,
+        },
+        false
+      )
+      .subscribe(() => {
         this.edit = false;
         this.sectionData.nombre = this.el.nativeElement.value;
-      });*/
+      });
   }
 
   deleteSection(): void {
@@ -107,16 +115,19 @@ export class SectionsComponent implements OnInit {
     });
 
     dialogRef.beforeClosed().subscribe((result) => {
-      console.log(result);
       if (result === "confirmed") {
         this.isLoading = true;
-        this._editarFormatoService.createSeccion({
-          ...this.sectionData,
-          activo: false,
-        });
-        /*.subscribe(() => {
+        this._editarFormatoService
+          .createSeccion(
+            {
+              ...this.sectionData,
+              activo: false,
+            },
+            true
+          )
+          .subscribe(() => {
             this.loadGrupos();
-          });*/
+          });
       }
     });
   }

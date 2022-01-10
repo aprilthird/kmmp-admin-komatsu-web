@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 export class FormatosService {
   _sections: BehaviorSubject<any> = new BehaviorSubject([]);
   sectionList = [];
+  _idFormulario: BehaviorSubject<number> = new BehaviorSubject(null);
   constructor(private _httpClient: HttpClient) {}
 
   get section$(): Observable<any> {

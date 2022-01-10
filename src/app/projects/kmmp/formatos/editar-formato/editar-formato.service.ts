@@ -11,6 +11,7 @@ import { CreateGrupoI } from "app/shared/models/formatos";
 import { environment } from "environments/environment";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { exhaustMap, tap } from "rxjs/operators";
+import { FormatosService } from "../formatos.service";
 
 @Injectable({ providedIn: "root" })
 export class EditarFormatoService {
@@ -24,9 +25,11 @@ export class EditarFormatoService {
   _tipoDatos: BehaviorSubject<Parametro[]> = new BehaviorSubject<Parametro[]>(
     null
   );
-  _idFormulario: BehaviorSubject<number> = new BehaviorSubject(null);
 
-  constructor(private _httpClient: HttpClient) {}
+  constructor(
+    private _httpClient: HttpClient,
+    private _formatService: FormatosService
+  ) {}
 
   get secciones$(): Observable<Seccion[]> {
     return this._secciones.asObservable();
@@ -80,6 +83,7 @@ export class EditarFormatoService {
    * @returns
    */
   getSecciones({ idFormulario, reload = false }): Observable<any> {
+    if (this._secciones.getValue() && !reload) return of(true);
     return this._httpClient
       .get<HttpResponse<Seccion[]>>(
         environment.apiUrl + "/Core/ObtenerSecciones/" + idFormulario
@@ -111,12 +115,15 @@ export class EditarFormatoService {
     );
   }
 
-  createSeccion(data): Observable<any> {
+  createSeccion(data, reload): Observable<any> {
     return this._httpClient
       .post(environment.apiUrl + "/Core/GuardarSeccion", data)
       .pipe(
         exhaustMap(() =>
-          this.getSecciones({ idFormulario: this._idFormulario.getValue() })
+          this.getSecciones({
+            idFormulario: this._formatService._idFormulario.getValue(),
+            reload: reload,
+          })
         )
       );
   }
