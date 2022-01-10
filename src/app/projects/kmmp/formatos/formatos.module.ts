@@ -42,6 +42,15 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { DialogValidateFormatComponent } from "./components/dialog-validate-format/dialog-validate-format.component";
 import { DialogAddCommentComponent } from "./components/dialog-add-comment/dialog-add-comment.component";
 import { MatMenuModule } from "@angular/material/menu";
+import { DynamicFormatComponent } from "./dynamic-format/dynamic-format.component";
+import { SectionsComponent } from "./dynamic-format/sections/sections.component";
+import { GroupsComponent } from "./dynamic-format/sections/groups/groups.component";
+import { FieldsComponent } from "./dynamic-format/sections/groups/fields/fields.component";
+import { VerticalGroupComponent } from './dynamic-format/sections/groups/vertical-group/vertical-group.component';
+import { HorizontalGroupComponent } from './dynamic-format/sections/groups/horizontal-group/horizontal-group.component';
+import { OtherValidatorComponent } from './dynamic-format/dialog-components/other-validator/other-validator.component';
+import { ChipsSelectionComponent } from './dynamic-format/dialog-components/chips-selection/chips-selection.component';
+import { UploadImageComponent } from './dynamic-format/dialog-components/upload-image/upload-image.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +69,15 @@ import { MatMenuModule } from "@angular/material/menu";
     ValidationFormatosComponent,
     DialogValidateFormatComponent,
     DialogAddCommentComponent,
+    DynamicFormatComponent,
+    SectionsComponent,
+    GroupsComponent,
+    FieldsComponent,
+    VerticalGroupComponent,
+    HorizontalGroupComponent,
+    OtherValidatorComponent,
+    ChipsSelectionComponent,
+    UploadImageComponent,
   ],
   imports: [
     CommonModule,

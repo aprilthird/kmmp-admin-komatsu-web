@@ -390,7 +390,9 @@ export class DialogAddDatoComponent implements OnInit {
         this.image = this._azureService.getResourceUrlComplete(
           response.uuidFileName
         );
-      } catch (e) {}
+      } catch (e) {
+        throw e;
+      }
       this.imageLoading = false;
     } else {
       this.form.get("dato").setValue(null);

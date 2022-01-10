@@ -10,7 +10,7 @@ export const environment = {
   azureAccountName: "appinformes",
   azureContaineName: "pictures",
   azureSas:
-    "sp=racwdl&st=2021-10-05T16:07:46Z&se=2022-10-06T00:07:46Z&sv=2020-08-04&sr=c&sig=9MTq3NunBV%2B4lsFQ3S2KcCZkojTMh%2Frx5jrJRdouwvE%3D",
+    "sv=2020-08-04&ss=bfqt&srt=sco&sp=rwdlacupitfx&se=2022-03-03T23:39:46Z&st=2022-01-03T15:39:46Z&spr=https&sig=BU4Y9BHhsNT4EbY%2FM2eJZ7X9EYdNE4NUC9nbcSwFuc8%3D",
   config: {
     layout: "classy",
     scheme: "light",

@@ -6,12 +6,12 @@ import {
   ActivatedRouteSnapshot,
 } from "@angular/router";
 import { forkJoin, Observable, of } from "rxjs";
-import { EditarFormatoService } from "./editar-formato.service";
+import { EditarFormatoService } from "../editar-formato/editar-formato.service";
 
 @Injectable({
   providedIn: "root",
 })
-export class EditarFormatoResolver implements Resolve<boolean> {
+export class DynamicFormatoResolver implements Resolve<boolean> {
   constructor(private _editarFormatoService: EditarFormatoService) {}
   resolve(
     route: ActivatedRouteSnapshot,

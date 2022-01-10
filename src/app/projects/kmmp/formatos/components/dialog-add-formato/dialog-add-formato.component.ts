@@ -61,7 +61,9 @@ export class DialogAddFormatoComponent implements OnInit {
         .agregarFormato(this.form.value)
         .subscribe((response) => {
           this.router
-            .navigateByUrl("/admin/formatos/editar/" + response.body.id + "/0")
+            .navigateByUrl(
+              "/admin/formatos/formato-dinamico/" + response.body.id + "/0"
+            )
             .then(() => {
               this.dialogRef.close();
             });

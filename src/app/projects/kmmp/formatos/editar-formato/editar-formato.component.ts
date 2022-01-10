@@ -146,7 +146,7 @@ export class EditarFormatoComponent implements OnInit, OnDestroy {
       };
 
       if (result === "confirmed") {
-        this._editarFormatoService.createSeccion(data).subscribe(() => {
+        this._editarFormatoService.createSeccion(data, true).subscribe(() => {
           this._editarFormatoService
             .getSecciones({
               idFormulario: Number(this._activedRoute.snapshot.params.id),

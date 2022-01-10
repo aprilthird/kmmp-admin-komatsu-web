@@ -1,4 +1,3 @@
-import { X } from "@angular/cdk/keycodes";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import {
@@ -8,9 +7,11 @@ import {
   Seccion,
 } from "app/core/types/formatos.types";
 import { HttpResponse } from "app/core/types/http.types";
+import { CreateGrupoI } from "app/shared/models/formatos";
 import { environment } from "environments/environment";
 import { BehaviorSubject, Observable, of } from "rxjs";
-import { tap } from "rxjs/operators";
+import { exhaustMap, tap } from "rxjs/operators";
+import { FormatosService } from "../formatos.service";
 
 @Injectable({ providedIn: "root" })
 export class EditarFormatoService {
@@ -25,10 +26,17 @@ export class EditarFormatoService {
     null
   );
 
-  constructor(private _httpClient: HttpClient) {}
+  constructor(
+    private _httpClient: HttpClient,
+    private _formatService: FormatosService
+  ) {}
 
   get secciones$(): Observable<Seccion[]> {
     return this._secciones.asObservable();
+  }
+
+  set secciones$(section: any) {
+    this._secciones.next(section);
   }
 
   get formato$(): Observable<Formato> {
@@ -75,6 +83,7 @@ export class EditarFormatoService {
    * @returns
    */
   getSecciones({ idFormulario, reload = false }): Observable<any> {
+    if (this._secciones.getValue() && !reload) return of(true);
     return this._httpClient
       .get<HttpResponse<Seccion[]>>(
         environment.apiUrl + "/Core/ObtenerSecciones/" + idFormulario
@@ -106,15 +115,21 @@ export class EditarFormatoService {
     );
   }
 
-  createSeccion(data): Observable<any> {
-    return this._httpClient.post(
-      environment.apiUrl + "/Core/GuardarSeccion",
-      data
-    );
+  createSeccion(data, reload): Observable<any> {
+    return this._httpClient
+      .post(environment.apiUrl + "/Core/GuardarSeccion", data)
+      .pipe(
+        exhaustMap(() =>
+          this.getSecciones({
+            idFormulario: this._formatService._idFormulario.getValue(),
+            reload: reload,
+          })
+        )
+      );
   }
 
-  createGrupo(data): Observable<HttpResponse<Grupo>> {
-    return this._httpClient.post<any>(
+  createGrupo(data: CreateGrupoI): Observable<HttpResponse<Grupo>> {
+    return this._httpClient.post<HttpResponse<Grupo>>(
       environment.apiUrl + "/Core/GuardarGrupo",
       data
     );

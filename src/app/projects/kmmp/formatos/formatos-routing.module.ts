@@ -8,9 +8,11 @@ import { EditarFormatoComponent } from "./editar-formato/editar-formato.componen
 import { EditarFormatoResolver } from "./editar-formato/editar-formato.resolver";
 import { GruposComponent } from "./editar-formato/grupos/grupos.component";
 import { ListadoComponent } from "./listado/listado.component";
+import { DynamicFormatoResolver } from "./dynamic-format/dynamic-format.resolver";
 
 //APERTUR ASIGNACION
 import { AperturaAsignacionComponent } from "./asignaciones/apertura-asignacion/apertura-asignacion.component";
+import { DynamicFormatComponent } from "./dynamic-format/dynamic-format.component";
 
 const routes: Routes = [
   {
@@ -41,6 +43,13 @@ const routes: Routes = [
   {
     path: "asignaciones/apertura/:id",
     component: AperturaAsignacionComponent,
+  },
+  {
+    path: "formato-dinamico/:id/:idSeccion",
+    component: DynamicFormatComponent,
+    resolve: {
+      initialData: DynamicFormatoResolver,
+    },
   },
   {
     path: "",
