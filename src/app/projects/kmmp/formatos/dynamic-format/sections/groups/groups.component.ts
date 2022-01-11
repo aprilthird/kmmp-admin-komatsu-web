@@ -73,6 +73,7 @@ export class GroupsComponent implements OnInit {
       .subscribe(() => {
         this.edit = false;
         this.groupData.nombre = this.el.nativeElement.value;
+        this._groups.loadGrupos();
       });
   }
 }

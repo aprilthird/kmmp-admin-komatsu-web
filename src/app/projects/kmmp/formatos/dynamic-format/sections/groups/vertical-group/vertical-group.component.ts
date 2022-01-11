@@ -66,11 +66,21 @@ export class VerticalGroupComponent implements OnInit {
       });
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  async drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(
       this.groupData.parametros,
       event.previousIndex,
       event.currentIndex
     );
+
+    await this.groupData.parametros.map((x, idx) => {
+      x.fila = idx + 1;
+    });
+
+    this._editarFormatoService
+      .createDato({
+        ...this.groupData,
+      })
+      .subscribe(() => {});
   }
 }

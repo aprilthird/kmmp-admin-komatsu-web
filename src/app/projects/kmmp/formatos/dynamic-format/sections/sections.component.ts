@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import { EditarFormatoService } from "../../editar-formato/editar-formato.service";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { FormatosService } from "../../formatos.service";
+import { GroupI } from "app/shared/models/formatos";
 
 @Component({
   selector: "app-sections",
@@ -93,6 +94,7 @@ export class SectionsComponent implements OnInit {
       .subscribe(() => {
         this.edit = false;
         this.sectionData.nombre = this.el.nativeElement.value;
+        this.loadGrupos();
       });
   }
 
@@ -132,7 +134,15 @@ export class SectionsComponent implements OnInit {
     });
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.grupos, event.previousIndex, event.currentIndex);
+  }
+
+  trackByFn(index: number, item: GroupI): number {
+    return item.id;
+  }
+
+  isActiveGroup(): boolean {
+    return this.grupos.some((x) => x.activo);
   }
 }

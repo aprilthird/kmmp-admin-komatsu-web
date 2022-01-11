@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { Observable, Subject } from "rxjs";
+import { Subject } from "rxjs";
 import { FormatosService } from "../formatos.service";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { Formato, Grupo } from "app/core/types/formatos.types";
-import { exhaustMap, takeUntil, tap } from "rxjs/operators";
+import { Formato, Seccion } from "app/core/types/formatos.types";
 import { EditarFormatoService } from "../editar-formato/editar-formato.service";
 import { ActivatedRoute } from "@angular/router";
 
@@ -88,7 +87,7 @@ export class DynamicFormatComponent implements OnInit {
     moveItemInArray(this.sections, event.previousIndex, event.currentIndex);
   }
 
-  trackByFn(index, item) {
+  trackByFn(index: number, item: Seccion): number {
     return item.id;
   }
 }

@@ -1,5 +1,5 @@
 <div>
-  <div class="flex gap-2 items-center">
+  <div class="flex gap-2 items-center flex">
     <ng-container [ngSwitch]="paramData.idParametro">
       <mat-form-field
         *ngSwitchCase="1"
@@ -200,6 +200,10 @@
         >
       </div>
 
+      <button class="pl-7" mat-menu-item [matMenuTriggerFor]="label">
+        Label
+      </button>
+
       <button class="pl-7" mat-menu-item [matMenuTriggerFor]="placeholder">
         Placeholder
       </button>
@@ -234,8 +238,34 @@
       <button mat-menu-item (click)="editField(7)">Firma</button>
     </mat-menu>
 
+    <mat-menu #label="matMenu">
+      <div class="flex flex-col w-56 p-4">
+        <mat-form-field floatLabel="always" class="w-full">
+          <mat-label>Ingrese el Label</mat-label>
+          <input
+            (click)="$event.stopPropagation()"
+            [(ngModel)]="paramData.label"
+            matInput
+          />
+        </mat-form-field>
+        <button
+          class="rounded-2xl justify-center text-white"
+          style="background-color: #000f9f"
+          mat-menu-item
+          (click)="setLabel(paramData.label)"
+        >
+          Guardar
+        </button>
+        <mat-progress-spinner
+          [mode]="'indeterminate'"
+          *ngIf="isLoading"
+          [diameter]="16"
+        ></mat-progress-spinner>
+      </div>
+    </mat-menu>
+
     <mat-menu #placeholder="matMenu">
-      <div class="flex flex-col w-full p-4">
+      <div class="flex flex-col w-56 p-4">
         <mat-form-field floatLabel="always" class="w-full">
           <mat-label>Escriba el placeholder</mat-label>
           <input

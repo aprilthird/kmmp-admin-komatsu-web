@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { AzureService } from "app/core/azure/azure.service";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
@@ -22,6 +22,8 @@ export class FieldsComponent implements OnInit {
   isLoading: boolean;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   filesLoading: boolean;
+  edit: boolean;
+  @ViewChild("nameInput") el: ElementRef;
 
   constructor(
     private _editarFormatoService: EditarFormatoService,
@@ -126,6 +128,14 @@ export class FieldsComponent implements OnInit {
     this.editField(this.paramData.idParametro);
   }
 
+  setLabel(value: string): void {
+    this.paramData = {
+      ...this.paramData,
+      label: value,
+    };
+    this.editField(this.paramData.idParametro);
+  }
+
   setAttribute(value: boolean, attribute: string): void {
     this.paramData = {
       ...this.paramData,
@@ -137,5 +147,16 @@ export class FieldsComponent implements OnInit {
   deleteParam(): void {
     this.paramData = { ...this.paramData, activo: false };
     this.editField(this.paramData.idParametro);
+  }
+
+  editGroup(): void {
+    this.edit = true;
+    setTimeout(() => {
+      this.el.nativeElement.select();
+    });
+  }
+
+  save(): void {
+    this.edit = false;
   }
 }

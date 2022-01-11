@@ -20,7 +20,7 @@
           groupData.parametros.length === 0 &&
           groupData.pos === 'h'
         "
-        class="font-medium text-secondary"
+        class="font-medium text-secondary flex justify-center"
         [ngClass]="{
           'right-28 absolute': groupData.parametros.length > 0
         }"
@@ -52,6 +52,7 @@
           (click)="addParam(row[0].fila)"
         >
           <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+          Agregar campo
         </button>
       </div>
       <button

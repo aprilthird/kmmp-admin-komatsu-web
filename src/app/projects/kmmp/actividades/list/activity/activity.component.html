@@ -157,17 +157,6 @@
             isEdit ? "Guardar cambios" : "Editar formatos"
           }}</span>
         </button>
-
-        <button
-          *ngIf="isEdit"
-          class="mr-8 mt-4 xl:my-0"
-          mat-raised-button
-          [color]="'primary'"
-          (click)="isEdit = false"
-        >
-          <mat-icon svgIcon="mat_outline:cancel"></mat-icon>
-          <span class="ml-2 mr-1">Cancelar</span>
-        </button>
       </div>
     </div>
     <hr />
@@ -179,20 +168,7 @@
       <div class="flex flex-row justify-between">
         <div class="text-md text-secondary w-3/4">Porcentaje de avance</div>
         <span
-          class="
-            inline-flex
-            items-center
-            font-bold
-            text-xs
-            px-2.5
-            py-0.5
-            rounded-full
-            tracking-wide
-            uppercase
-            bg-red-200
-            text-red-800
-            dark:bg-red-600 dark:text-red-50
-          "
+          class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50"
         >
           <span class="leading-relaxed whitespace-nowrap">Observada</span>
         </span>

@@ -127,11 +127,23 @@ export class HorizontalGroupComponent implements OnInit {
     return activeParams;
   }
 
-  drop(event: CdkDragDrop<string[]>, idx: number) {
+  async drop(event: CdkDragDrop<string[]>, idx: number) {
     moveItemInArray(
       this.rowsOfGrid[idx],
       event.previousIndex,
       event.currentIndex
     );
+    await this.rowsOfGrid[idx].map((x, i) => {
+      x.columna = i + 1;
+    });
+    await this.groupData.parametros.map((x) =>
+      this.rowsOfGrid[idx].find((y) => y.id === x.id)
+    );
+
+    this._editarFormatoService
+      .createDato({
+        ...this.groupData,
+      })
+      .subscribe(() => {});
   }
 }

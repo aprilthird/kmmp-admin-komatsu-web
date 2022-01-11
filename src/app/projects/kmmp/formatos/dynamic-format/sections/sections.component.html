@@ -43,10 +43,10 @@
     <div
       class="flex flex-0 items-center w-full px-4 z-49 dark:bg-transparent print:hidden bottom-0"
       [ngClass]="{
-        'justify-end': grupos.length > 0,
-        'h-4': grupos.length > 0,
-        'justify-center': grupos.length === 0,
-        'h-16': grupos.length === 0
+        'justify-end': isActiveGroup(),
+        'h-4': isActiveGroup(),
+        'justify-center': !isActiveGroup(),
+        'h-16': !isActiveGroup()
       }"
     >
       <span class="font-medium text-secondary">

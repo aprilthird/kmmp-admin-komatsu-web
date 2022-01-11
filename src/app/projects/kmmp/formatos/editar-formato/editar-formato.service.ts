@@ -49,7 +49,7 @@ export class EditarFormatoService {
       .pipe(
         tap((response) => {
           if (response && response.body) {
-            this._formato.next(response.body?.descripcion);
+            this._formato.next(response.body?.nombre);
             this._tipo_mantenimeinto.next(response.body?.tipoMantenimiento);
             this._modelo.next(response.body?.modelo);
             this._actividad.next(response.body?.claseActividad);
