@@ -20,6 +20,7 @@ export class DynamicFormatoResolver implements Resolve<boolean> {
     return forkJoin([
       this._editarFormatoService.getSecciones({
         idFormulario: route.params.id,
+        reload: true,
       }),
       this._editarFormatoService.getFormato(route.params.id),
       this._editarFormatoService.getTipoDatos(),

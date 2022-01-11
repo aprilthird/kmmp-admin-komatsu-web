@@ -62,7 +62,7 @@ export class DialogAddFormatoComponent implements OnInit {
         .subscribe((response) => {
           this.router
             .navigateByUrl(
-              "/admin/formatos/formato-dinamico/" + response.body.id + "/0"
+              "/admin/formatos/formato-dinamico/" + response.body.id
             )
             .then(() => {
               this.dialogRef.close();

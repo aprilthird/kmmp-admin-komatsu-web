@@ -45,7 +45,7 @@ const routes: Routes = [
     component: AperturaAsignacionComponent,
   },
   {
-    path: "formato-dinamico/:id/:idSeccion",
+    path: "formato-dinamico/:id",
     component: DynamicFormatComponent,
     resolve: {
       initialData: DynamicFormatoResolver,

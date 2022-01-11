@@ -57,23 +57,18 @@ export class SectionsComponent implements OnInit {
 
   public loadGrupos() {
     this.isLoading = true;
-    if (this._activedRoute.snapshot.params.idSeccion) {
-      this.idSection = { ...this.sectionData.id };
-      if (this.idSection === 0) {
-        this.grupos = [];
+    this.idSection = { ...this.sectionData.id };
+    this.grupos = [];
+
+    this.isLoading = true;
+    this._editarFormatoService
+      .getGrupos(this.sectionData.id)
+      .subscribe((response) => {
         this.isLoading = false;
-      } else {
-        this.isLoading = true;
-        this._editarFormatoService
-          .getGrupos(this.sectionData.id)
-          .subscribe((response) => {
-            this.isLoading = false;
-            this.grupos = response.body;
-          });
-      }
-    } else {
-      this.isLoading = false;
-    }
+        this.grupos = response.body;
+      });
+
+    this.isLoading = false;
   }
 
   editSection(): void {
