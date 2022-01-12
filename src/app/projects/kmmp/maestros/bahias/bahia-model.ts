@@ -3,4 +3,5 @@ export interface BahiaI {
   cliente: string;
   estado: boolean;
   nestado?: string;
+  idCliente?: number;
 }

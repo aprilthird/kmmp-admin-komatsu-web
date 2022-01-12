@@ -277,8 +277,9 @@ export class ActivityAddEditComponent implements OnInit {
     }, 2000);
   }
 
-  private getParams(): any {
+  private getParams(): ActivityI {
     const params: ActivityI = {
+      asignado: this.form.controls["bahia_asignada"].value ? true : false,
       cliente: JSON.stringify(this.form.controls["cliente"].value),
       idEquipo: this.form.controls["equipo"].value,
       flota: this.form.controls["flota"].value,
@@ -306,7 +307,6 @@ export class ActivityAddEditComponent implements OnInit {
     } else {
       params["id"] = 0;
     }
-
     return params;
   }
 }
