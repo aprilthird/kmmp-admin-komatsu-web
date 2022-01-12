@@ -37,10 +37,10 @@
 
       <mat-form-field class="w-100-p">
         <mat-label class="prose">Cliente</mat-label>
-        <mat-select formControlName="cliente">
+        <mat-select formControlName="idCliente">
           <mat-option
             *ngFor="let cliente of clienteOptions"
-            [value]="cliente.nombre"
+            [value]="cliente?.id"
             >{{ cliente.nombre }}</mat-option
           >
         </mat-select>
@@ -60,13 +60,7 @@
     <button
       (click)="matdialigRef.close()"
       mat-button
-      class="
-        ml-4
-        bg-gray-50
-        border-solid border border-accent-300
-        text-gray-700
-        shadow-none
-      "
+      class="ml-4 bg-gray-50 border-solid border border-accent-300 text-gray-700 shadow-none"
     >
       Cancelar
     </button>

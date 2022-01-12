@@ -17,7 +17,6 @@ export class SectionsComponent implements OnInit {
   isLoading: boolean;
   sections$: Observable<any>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-  idSection: number;
   grupos: any[] = [];
   edit: boolean;
   @ViewChild("nameInput") el: ElementRef;
@@ -57,9 +56,7 @@ export class SectionsComponent implements OnInit {
 
   public loadGrupos() {
     this.isLoading = true;
-    this.idSection = { ...this.sectionData.id };
     this.grupos = [];
-
     this.isLoading = true;
     this._editarFormatoService
       .getGrupos(this.sectionData.id)

@@ -40,7 +40,7 @@ export class DialogAddBahiasComponent implements OnInit {
     this.form = this.fb.group({
       nombre: new FormControl(this.initData?.nombre, Validators.required),
       estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
-      cliente: new FormControl(this.initData?.cliente, Validators.required),
+      idCliente: new FormControl(this.initData?.cliente, Validators.required),
     });
 
     this.setCliente();
@@ -48,7 +48,7 @@ export class DialogAddBahiasComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  setCliente(): void {
+  private setCliente(): void {
     this.maestServ.getList(1).subscribe((resp: any) => {
       this.clienteOptions = resp.body.data;
     });

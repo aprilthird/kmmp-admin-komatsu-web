@@ -175,6 +175,15 @@
       <button class="pl-7" mat-menu-item [matMenuTriggerFor]="archivo">
         Archivo
       </button>
+      <button class="pl-7" mat-menu-item [matMenuTriggerFor]="properties">
+        Propiedades
+      </button>
+      <button mat-menu-item class="text-red-600 pl-7" (click)="deleteParam()">
+        Eliminar
+      </button>
+    </mat-menu>
+
+    <mat-menu #properties #matMenu>
       <div class="flex flex-col">
         <mat-checkbox
           (click)="$event.stopPropagation()"
@@ -206,9 +215,6 @@
 
       <button class="pl-7" mat-menu-item [matMenuTriggerFor]="placeholder">
         Placeholder
-      </button>
-      <button mat-menu-item class="text-red-600 pl-7" (click)="deleteParam()">
-        Eliminar
       </button>
     </mat-menu>
 

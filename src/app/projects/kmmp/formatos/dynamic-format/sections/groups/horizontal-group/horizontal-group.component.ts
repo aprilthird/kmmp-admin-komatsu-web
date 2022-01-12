@@ -33,6 +33,7 @@ export class HorizontalGroupComponent implements OnInit {
     this.isLoading = true;
     let column: number;
     let row = rowNumber;
+    let parametrosPayload;
 
     let _column = [];
     await this.groupData.parametros.map((data) => {
@@ -42,27 +43,46 @@ export class HorizontalGroupComponent implements OnInit {
     });
     const highestColumn = Math.max.apply(null, _column);
     column = highestColumn + 1;
-
-    if (this.groupData.parametros && this.groupData.parametros.length === 0) {
-      row = 1;
-      column = 1;
-    }
-
     const count = this.groupData.parametros.map((x) => x.activo);
     const textLength = count.length + 1;
+    let label = "";
 
+    const previousParams = this.groupData.parametros.find(
+      (x) => x.fila === rowNumber && x.columna === highestColumn
+    );
+
+    if (this.groupData.parametros.length === 0) {
+      row = 1;
+      column = 1;
+      parametrosPayload = {
+        ...GeneralParams,
+        label: "",
+        columna: column,
+        fila: row,
+        idGrupo: this.groupData.id,
+      };
+    } else {
+      if (previousParams.idParametro === 8) {
+        label = "Label";
+      }
+      parametrosPayload = {
+        ...GeneralParams,
+        idParametro: previousParams.idParametro,
+        label: label,
+        fila: previousParams.fila,
+        columna: column,
+        idGrupo: previousParams.idGrupo,
+        dato: previousParams.dato,
+      };
+    }
+    console.log({
+      ...this.groupData,
+      parametros: [parametrosPayload],
+    });
     this._editarFormatoService
       .createDato({
         ...this.groupData,
-        parametros: [
-          {
-            ...GeneralParams,
-            label: "texto " + textLength,
-            columna: column,
-            fila: row,
-            idGrupo: this.groupData.id,
-          },
-        ],
+        parametros: [parametrosPayload],
       })
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {
@@ -85,12 +105,43 @@ export class HorizontalGroupComponent implements OnInit {
         parametros: [
           {
             ...GeneralParams,
-            label: "texto " + textLength,
+            //label: "texto " + textLength,
             columna: 1,
             fila: highestRow + 1,
             idGrupo: this.groupData.id,
           },
         ],
+      })
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        this._groups.loadGrupos();
+        this.isLoading = false;
+      });
+  }
+
+  async addRowTMP() {
+    this.isLoading = true;
+    console.log(this.rowsOfGrid);
+    console.log(this.rowsOfGrid.length);
+    const rows = await this.groupData.parametros.map((data) => data.fila);
+    const highestRow = Math.max.apply(null, rows);
+    const newRow = [...this.rowsOfGrid[this.rowsOfGrid.length - 1]].map((x) => {
+      return {
+        ...GeneralParams,
+        columna: x.columna,
+        fila: highestRow + 1,
+        idGrupo: x.idGrupo,
+        idParametro: x.idParametro,
+        label: x.label,
+        placeholder: x.placeholder,
+        dato: x.dato,
+      };
+    });
+
+    this._editarFormatoService
+      .createDato({
+        ...this.groupData,
+        parametros: newRow,
       })
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {

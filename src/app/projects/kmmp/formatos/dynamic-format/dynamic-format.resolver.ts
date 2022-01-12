@@ -1,11 +1,6 @@
 import { Injectable } from "@angular/core";
-import {
-  Router,
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot,
-} from "@angular/router";
-import { forkJoin, Observable, of } from "rxjs";
+import { Resolve, ActivatedRouteSnapshot } from "@angular/router";
+import { forkJoin, Observable } from "rxjs";
 import { EditarFormatoService } from "../editar-formato/editar-formato.service";
 
 @Injectable({
@@ -13,10 +8,7 @@ import { EditarFormatoService } from "../editar-formato/editar-formato.service";
 })
 export class DynamicFormatoResolver implements Resolve<boolean> {
   constructor(private _editarFormatoService: EditarFormatoService) {}
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<any> {
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
     return forkJoin([
       this._editarFormatoService.getSecciones({
         idFormulario: route.params.id,
