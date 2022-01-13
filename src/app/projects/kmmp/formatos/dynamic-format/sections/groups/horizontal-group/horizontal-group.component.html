@@ -38,20 +38,24 @@
         class="flex list-section items-center"
         (cdkDropListDropped)="drop($event, i)"
       >
-        <app-fields
-          class="list-box"
-          *ngFor="let paramData of row; let j = index"
-          [groupData]="groupData"
-          [paramData]="paramData"
-        ></app-fields>
+        <div class="flex items-center">
+          <app-fields
+            *ngFor="let paramData of row; let j = index"
+            class="list-box"
+            [groupData]="groupData"
+            [paramData]="paramData"
+            (columnToDelete)="delete($event, 'column')"
+            (rowToDelete)="delete($event, 'row')"
+          ></app-fields>
+        </div>
         <button
           mat-button
           color="primary"
           matTooltip="Agregar campo a esta fila"
-          (click)="addParam(row[0].fila)"
+          (click)="addColumn()"
         >
           <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-          Agregar campo
+          Agregar columna
         </button>
       </div>
       <button
@@ -62,7 +66,7 @@
         "
         mat-button
         color="primary"
-        (click)="addRowTMP()"
+        (click)="addRow()"
         class="flex justify-start w-min"
       >
         <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>

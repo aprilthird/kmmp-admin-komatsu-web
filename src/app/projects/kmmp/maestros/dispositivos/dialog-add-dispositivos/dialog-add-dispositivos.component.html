@@ -23,17 +23,15 @@
       </mat-form-field>
 
       <mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label>Bahía asignada</mat-label>
+        <mat-label>Bahías asignada</mat-label>
         <mat-select
-          (selectionChange)="baySelection($event)"
           formControlName="idBahia"
+          (selectionChange)="baySelection($event)"
           multiple
         >
-          <ng-container *ngIf="bays.length > 0">
-            <mat-option *ngFor="let bay of bays" [value]="bay.idBahia">
-              {{ bay.bahia }}
-            </mat-option>
-          </ng-container>
+          <mat-option *ngFor="let bay of bays" [value]="bay.idBahia">
+            {{ bay.bahia }}
+          </mat-option>
         </mat-select>
         <mat-error *ngIf="form.controls['idBahia'].invalid">{{
           matErrorMsg

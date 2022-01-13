@@ -1,4 +1,14 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  EventEmitter,
+  SimpleChanges,
+  AfterViewInit,
+} from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { AzureService } from "app/core/azure/azure.service";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
@@ -16,14 +26,19 @@ import { SectionsComponent } from "../../sections.component";
   templateUrl: "./fields.component.html",
   styleUrls: ["./fields.component.scss"],
 })
-export class FieldsComponent implements OnInit {
+export class FieldsComponent implements OnInit, AfterViewInit {
   @Input() paramData: ParamI;
   @Input() groupData: GroupI;
+  /*@Input() lowestRow: number;
+  @Input() lowestColumn: number;*/
+  @Output() columnToDelete: EventEmitter<number> = new EventEmitter(null);
+  @Output() rowToDelete: EventEmitter<number> = new EventEmitter(null);
   isLoading: boolean;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   filesLoading: boolean;
   edit: boolean;
   @ViewChild("nameInput") el: ElementRef;
+  delete: any;
 
   constructor(
     private _editarFormatoService: EditarFormatoService,
@@ -33,6 +48,16 @@ export class FieldsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+  /*ngOnChanges(changes: SimpleChanges): void {
+    changes.lowestRow.currentValue = this.lowestRow;
+    changes.lowestColumn.currentValue = this.lowestColumn;
+  }*/
+
+  ngAfterViewInit(): void {
+    this.delete = () => {
+      this.columnToDelete.emit(this.paramData.columna);
+    };
+  }
 
   editField(type: number): void {
     this.isLoading = true;
@@ -154,6 +179,16 @@ export class FieldsComponent implements OnInit {
     setTimeout(() => {
       this.el.nativeElement.select();
     });
+  }
+
+  deleteColumnRow(type: string): void {
+    //this.paramData = { ...this.paramData, activo: false };
+    //this.editField(this.paramData.idParametro);
+    if (type === "row") {
+      this.rowToDelete.emit(this.paramData.fila);
+    } else {
+      this.columnToDelete.emit(this.paramData.columna);
+    }
   }
 
   save(): void {

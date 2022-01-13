@@ -1,4 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { X } from "@angular/cdk/keycodes";
 import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
 import { GeneralParams } from "app/shared/models/formatos";
@@ -13,6 +14,9 @@ import { SectionsComponent } from "../../sections.component";
 })
 export class HorizontalGroupComponent implements OnInit {
   @Input() groupData: any;
+  lowestRow: number;
+  //lowestColumn: number;
+  //highestColumn: number;
   isLoading: boolean;
   rowsOfGrid = [];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -24,65 +28,50 @@ export class HorizontalGroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.createGrid();
+    //this.firstColumnRow();
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.groupData = changes.groupData.currentValue;
   }
 
-  async addParam(rowNumber?: number) {
+  /*firstColumnRow(): void {
+    const columns = this.groupData.parametros
+      .filter((data) => data.activo)
+      .map((x) => x.columna);
+    const rows = this.groupData.parametros
+      .filter((data) => data.activo)
+      .map((x) => x.fila);
+    this.lowestRow = Math.min.apply(null, rows);
+    this.lowestColumn = Math.min.apply(null, columns);
+    this.highestColumn = Math.max.apply(null, columns);
+  }*/
+
+  async addColumn() {
     this.isLoading = true;
-    let column: number;
-    let row = rowNumber;
-    let parametrosPayload;
+    const columns = [...this.groupData.parametros].map((data) => data.columna);
+    const highestColumn = Math.max.apply(null, columns);
+    let lastColumn = [];
 
-    let _column = [];
-    await this.groupData.parametros.map((data) => {
-      if (data.fila === row && data.columna) {
-        _column.push(data.columna);
-      }
+    [...this.groupData.parametros].map((data) => {
+      if (data.columna === highestColumn && data.activo) lastColumn.push(data);
     });
-    const highestColumn = Math.max.apply(null, _column);
-    column = highestColumn + 1;
-    const count = this.groupData.parametros.map((x) => x.activo);
-    const textLength = count.length + 1;
-    let label = "";
 
-    const previousParams = this.groupData.parametros.find(
-      (x) => x.fila === rowNumber && x.columna === highestColumn
-    );
-
-    if (this.groupData.parametros.length === 0) {
-      row = 1;
-      column = 1;
-      parametrosPayload = {
+    const newColumn = await lastColumn.map((x) => {
+      return {
         ...GeneralParams,
-        label: "",
-        columna: column,
-        fila: row,
-        idGrupo: this.groupData.id,
+        columna: highestColumn + 1,
+        fila: x.fila,
+        idGrupo: x.idGrupo,
+        idParametro: x.idParametro,
+        label: x.label,
+        placeholder: x.placeholder,
+        dato: x.dato,
       };
-    } else {
-      if (previousParams.idParametro === 8) {
-        label = "Label";
-      }
-      parametrosPayload = {
-        ...GeneralParams,
-        idParametro: previousParams.idParametro,
-        label: label,
-        fila: previousParams.fila,
-        columna: column,
-        idGrupo: previousParams.idGrupo,
-        dato: previousParams.dato,
-      };
-    }
-    console.log({
-      ...this.groupData,
-      parametros: [parametrosPayload],
     });
     this._editarFormatoService
       .createDato({
         ...this.groupData,
-        parametros: [parametrosPayload],
+        parametros: newColumn,
       })
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {
@@ -93,36 +82,6 @@ export class HorizontalGroupComponent implements OnInit {
 
   async addRow() {
     this.isLoading = true;
-    const rows = await this.groupData.parametros.map((data) => data.fila);
-    const highestRow = Math.max.apply(null, rows);
-
-    const count = this.groupData.parametros.map((x) => x.activo);
-    const textLength = count.length + 1;
-
-    this._editarFormatoService
-      .createDato({
-        ...this.groupData,
-        parametros: [
-          {
-            ...GeneralParams,
-            //label: "texto " + textLength,
-            columna: 1,
-            fila: highestRow + 1,
-            idGrupo: this.groupData.id,
-          },
-        ],
-      })
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(() => {
-        this._groups.loadGrupos();
-        this.isLoading = false;
-      });
-  }
-
-  async addRowTMP() {
-    this.isLoading = true;
-    console.log(this.rowsOfGrid);
-    console.log(this.rowsOfGrid.length);
     const rows = await this.groupData.parametros.map((data) => data.fila);
     const highestRow = Math.max.apply(null, rows);
     const newRow = [...this.rowsOfGrid[this.rowsOfGrid.length - 1]].map((x) => {
@@ -178,7 +137,137 @@ export class HorizontalGroupComponent implements OnInit {
     return activeParams;
   }
 
-  async drop(event: CdkDragDrop<string[]>, idx: number) {
+  async addParam() {
+    this.isLoading = true;
+
+    this._editarFormatoService
+      .createDato({
+        ...this.groupData,
+        parametros: [
+          {
+            ...GeneralParams,
+            fila: 1,
+            columna: 1,
+          },
+        ],
+      })
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        this._groups.loadGrupos();
+        this.isLoading = false;
+      });
+  }
+
+  delete(position: number, type: string): void {
+    let positionType;
+    if (type === "row") positionType = "fila";
+    else positionType = "columna";
+    this.isLoading = true;
+    const posToDelete = this.groupData.parametros.filter((x) => {
+      if (x[positionType] === position) {
+        x.activo = false;
+        return x;
+      }
+    });
+    this._editarFormatoService
+      .createDato({
+        ...this.groupData,
+        parametros: posToDelete,
+      })
+      .subscribe(() => {
+        this.isLoading = false;
+        this._groups.loadGrupos();
+      });
+  }
+
+  /*async addParam(rowNumber?: number) {
+    this.isLoading = true;
+    let column: number;
+    let row = rowNumber;
+    let parametrosPayload;
+
+    let _column = [];
+    await this.groupData.parametros.map((data) => {
+      if (data.fila === row && data.columna) {
+        _column.push(data.columna);
+      }
+    });
+    const highestColumn = Math.max.apply(null, _column);
+    column = highestColumn + 1;
+    const count = this.groupData.parametros.map((x) => x.activo);
+    const textLength = count.length + 1;
+    let label = "";
+
+    const previousParams = this.groupData.parametros.find(
+      (x) => x.fila === rowNumber && x.columna === highestColumn
+    );
+
+    if (this.groupData.parametros.length === 0) {
+      row = 1;
+      column = 1;
+      parametrosPayload = {
+        ...GeneralParams,
+        label: "",
+        columna: column,
+        fila: row,
+        idGrupo: this.groupData.id,
+      };
+    } else {
+      if (previousParams.idParametro === 8) {
+        label = "Label";
+      }
+      parametrosPayload = {
+        ...GeneralParams,
+        idParametro: previousParams.idParametro,
+        label: label,
+        fila: previousParams.fila,
+        columna: column,
+        idGrupo: previousParams.idGrupo,
+        dato: previousParams.dato,
+      };
+    }
+
+    this._editarFormatoService
+      .createDato({
+        ...this.groupData,
+        parametros: [parametrosPayload],
+      })
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        this._groups.loadGrupos();
+        this.isLoading = false;
+      });
+  }
+
+  async addRow() {
+    this.isLoading = true;
+    const rows = await this.groupData.parametros.map((data) => data.fila);
+    const highestRow = Math.max.apply(null, rows);
+
+    const count = this.groupData.parametros.map((x) => x.activo);
+    const textLength = count.length + 1;
+
+    this._editarFormatoService
+      .createDato({
+        ...this.groupData,
+        parametros: [
+          {
+            ...GeneralParams,
+            //label: "texto " + textLength,
+            columna: 1,
+            fila: highestRow + 1,
+            idGrupo: this.groupData.id,
+          },
+        ],
+      })
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        this._groups.loadGrupos();
+        this.isLoading = false;
+      });
+  }*/
+
+  /*async drop(event: CdkDragDrop<string[]>, idx: number) {
     moveItemInArray(
       this.rowsOfGrid[idx],
       event.previousIndex,
@@ -196,5 +285,5 @@ export class HorizontalGroupComponent implements OnInit {
         ...this.groupData,
       })
       .subscribe(() => {});
-  }
+  }*/
 }

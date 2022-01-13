@@ -21,6 +21,7 @@ export class DialogAddDispositivosComponent implements OnInit {
   form: FormGroup;
   matErrorMsg = "Dato obligatorio";
   bays = [];
+  idBahias = [];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
@@ -31,9 +32,9 @@ export class DialogAddDispositivosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.form = this.fb.group({
-      nombre: new FormControl(data?.nombre, Validators.required),
+      nombre: new FormControl(data?.usuario, Validators.required),
       fecha_creacion: new FormControl(data?.fechaReg, Validators.required),
-      idBahia: new FormControl(data?.idBahia, Validators.required),
+      idBahia: new FormControl(),
       idDispositivo: new FormControl(data?.id),
       id: new FormControl(data?.idDispositivoBahia),
     });
@@ -51,7 +52,7 @@ export class DialogAddDispositivosComponent implements OnInit {
   }
 
   baySelection(event: MatSelectChange): void {
-    event.value.forEach((valueSelected) => {
+    event.value.forEach((valueSelected: number) => {
       const selectet = this.bays.find((bay) => bay.idBahia === valueSelected);
       const payload = {
         idBahia: selectet.idBahia,
@@ -60,9 +61,7 @@ export class DialogAddDispositivosComponent implements OnInit {
         id: selectet.idDispositivoBahia,
       };
 
-      this.dispositivoService
-        .assignDeviceToBay(payload)
-        .subscribe((resp) => {});
+      this.dispositivoService.assignDeviceToBay(payload).subscribe(() => {});
     });
   }
 
@@ -72,6 +71,11 @@ export class DialogAddDispositivosComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((resp) => {
         this.bays = resp.body;
+        this.form.controls.idBahia.patchValue([
+          ...this.bays.map((bay) => {
+            if (bay.idDispositivoBahia > 0) return bay.idBahia;
+          }),
+        ]);
       });
   }
 
