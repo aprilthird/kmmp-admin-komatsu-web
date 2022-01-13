@@ -1,11 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { PaginationResponse } from "app/core/types/http.types";
 import { Response } from "app/shared/models/general-model";
 import { environment } from "environments/environment";
 
 import { BehaviorSubject, Observable } from "rxjs";
 
 import { ActivitiesData } from "../fake-db/activities/activity-fake-db";
+import { DispositivoI } from "../maestros/dispositivos/dispositivo-model";
 
 import { Activity as ActivityI } from "./models/activities-model";
 
@@ -159,6 +161,13 @@ export class ActivitiesService {
       {
         id: tipo,
       }
+    );
+  }
+
+  getBaysByDevice(idDevice: number): Observable<any> {
+    const endpoint = `/Seguridad/ObtenerBahiasXDispositivo/${+idDevice}`;
+    return this.http.get<PaginationResponse<DispositivoI[]>>(
+      environment.apiUrl + endpoint
     );
   }
 }

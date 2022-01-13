@@ -14,27 +14,28 @@
         <input
           matInput
           type="text"
-          formControlName="dispositivo"
+          formControlName="nombre"
           placeholder="Ingrese nombre"
         />
-        <mat-error *ngIf="form.controls['dispositivo'].invalid">{{
+        <mat-error *ngIf="form.controls['nombre'].invalid">{{
           matErrorMsg
         }}</mat-error>
       </mat-form-field>
 
       <mat-form-field floatLabel="always" class="w-100-p">
         <mat-label>Bahía asignada</mat-label>
-        <mat-select formControlName="bahia_asignada">
-          <ng-container *ngIf="(bays$ | async)?.body?.data">
-            <mat-option
-              *ngFor="let bay of (bays$ | async)?.body?.data"
-              [value]="bay.id"
-            >
-              {{ bay.nombre }}
+        <mat-select
+          (selectionChange)="baySelection($event)"
+          formControlName="idBahia"
+          multiple
+        >
+          <ng-container *ngIf="bays.length > 0">
+            <mat-option *ngFor="let bay of bays" [value]="bay.idBahia">
+              {{ bay.bahia }}
             </mat-option>
           </ng-container>
         </mat-select>
-        <mat-error *ngIf="form.controls['bahia_asignada'].invalid">{{
+        <mat-error *ngIf="form.controls['idBahia'].invalid">{{
           matErrorMsg
         }}</mat-error>
       </mat-form-field>
@@ -59,9 +60,9 @@
       mat-button
       class="ml-4 bg-gray-50 border-solid border border-accent-300 text-gray-700 shadow-none"
     >
-      Cancelar
+      Cerrar
     </button>
-    <button
+    <!--<button
       mat-raised-button
       [color]="'primary'"
       class="w-32"
@@ -69,6 +70,6 @@
       [disabled]="form.invalid"
     >
       <span>Crear</span>
-    </button>
+    </button>-->
   </div>
 </form>
