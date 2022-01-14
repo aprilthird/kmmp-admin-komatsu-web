@@ -38,25 +38,43 @@
         class="flex list-section items-center"
         (cdkDropListDropped)="drop($event, i)"
       >
-        <div class="flex items-center">
-          <app-fields
-            *ngFor="let paramData of row; let j = index"
-            class="list-box"
-            [groupData]="groupData"
-            [paramData]="paramData"
-            (columnToDelete)="delete($event, 'column')"
-            (rowToDelete)="delete($event, 'row')"
-          ></app-fields>
-        </div>
-        <button
-          mat-button
-          color="primary"
-          matTooltip="Agregar campo a esta fila"
-          (click)="addColumn()"
-        >
-          <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
-          Agregar columna
-        </button>
+        <ng-container *ngFor="let paramData of row; let j = index">
+          <div class="flex flex-col items-center">
+            <!--<mat-icon
+              *ngIf="paramData.fila === lowestRow"
+              (click)="delete(paramData.columna, 'column')"
+              style="cursor: pointer"
+              [svgIcon]="'heroicons_solid:trash'"
+              matTooltip="Eliminar toda la columna"
+            ></mat-icon>-->
+            <app-fields
+              class="list-box"
+              [ngClass]="{
+                'no-padding-top': paramData.fila === lowestRow,
+                'padding-top': paramData.fila !== lowestRow
+              }"
+              [groupData]="groupData"
+              [paramData]="paramData"
+              (columnToDelete)="delete($event, 'column')"
+              (rowToDelete)="delete($event, 'row')"
+              [lowestColumn]="lowestColumn"
+              [lowestRow]="lowestRow"
+            ></app-fields>
+          </div>
+          <button
+            *ngIf="
+              paramData.columna === highestColumn &&
+              paramData.fila === lowestRow
+            "
+            mat-button
+            color="primary"
+            matTooltip="Agregar campo a esta fila"
+            (click)="addColumn()"
+          >
+            <mat-icon [svgIcon]="'heroicons_solid:plus'"></mat-icon>
+            Agregar columna
+          </button>
+        </ng-container>
       </div>
       <button
         *ngIf="

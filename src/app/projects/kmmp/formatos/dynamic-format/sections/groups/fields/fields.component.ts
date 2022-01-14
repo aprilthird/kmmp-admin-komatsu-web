@@ -29,8 +29,8 @@ import { SectionsComponent } from "../../sections.component";
 export class FieldsComponent implements OnInit, AfterViewInit {
   @Input() paramData: ParamI;
   @Input() groupData: GroupI;
-  /*@Input() lowestRow: number;
-  @Input() lowestColumn: number;*/
+  @Input() lowestRow: number;
+  @Input() lowestColumn: number;
   @Output() columnToDelete: EventEmitter<number> = new EventEmitter(null);
   @Output() rowToDelete: EventEmitter<number> = new EventEmitter(null);
   isLoading: boolean;
@@ -48,10 +48,7 @@ export class FieldsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {}
-  /*ngOnChanges(changes: SimpleChanges): void {
-    changes.lowestRow.currentValue = this.lowestRow;
-    changes.lowestColumn.currentValue = this.lowestColumn;
-  }*/
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngAfterViewInit(): void {
     this.delete = () => {

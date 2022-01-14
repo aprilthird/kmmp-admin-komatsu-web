@@ -200,7 +200,7 @@
         Propiedades
       </button>
       <button
-        *ngIf="paramData.columna === 1 && paramData.fila !== 1"
+        *ngIf="paramData.columna === lowestColumn"
         mat-menu-item
         class="text-red-600 pl-7"
         (click)="deleteColumnRow('row')"
@@ -208,12 +208,20 @@
         Eliminar toda la fila
       </button>
       <button
-        *ngIf="paramData.fila === 1"
+        *ngIf="paramData.fila === lowestRow"
         mat-menu-item
         class="text-red-600 pl-7"
         (click)="deleteColumnRow('column')"
       >
         Eliminar toda la columna
+      </button>
+      <button
+        *ngIf="groupData.pos === 'v'"
+        mat-menu-item
+        class="text-red-600 pl-7"
+        (click)="deleteParam()"
+      >
+        Eliminar
       </button>
     </mat-menu>
 

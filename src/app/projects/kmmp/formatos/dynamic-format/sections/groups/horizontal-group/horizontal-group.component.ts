@@ -1,5 +1,4 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { X } from "@angular/cdk/keycodes";
 import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
 import { GeneralParams } from "app/shared/models/formatos";
@@ -15,8 +14,8 @@ import { SectionsComponent } from "../../sections.component";
 export class HorizontalGroupComponent implements OnInit {
   @Input() groupData: any;
   lowestRow: number;
-  //lowestColumn: number;
-  //highestColumn: number;
+  lowestColumn: number;
+  highestColumn: number;
   isLoading: boolean;
   rowsOfGrid = [];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -28,13 +27,13 @@ export class HorizontalGroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.createGrid();
-    //this.firstColumnRow();
+    this.firstColumnRow();
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.groupData = changes.groupData.currentValue;
   }
 
-  /*firstColumnRow(): void {
+  firstColumnRow(): void {
     const columns = this.groupData.parametros
       .filter((data) => data.activo)
       .map((x) => x.columna);
@@ -44,16 +43,30 @@ export class HorizontalGroupComponent implements OnInit {
     this.lowestRow = Math.min.apply(null, rows);
     this.lowestColumn = Math.min.apply(null, columns);
     this.highestColumn = Math.max.apply(null, columns);
-  }*/
+  }
 
   async addColumn() {
     this.isLoading = true;
     const columns = [...this.groupData.parametros].map((data) => data.columna);
     const highestColumn = Math.max.apply(null, columns);
+
+    /**for actives */
+    const columnsActive = [...this.groupData.parametros]
+      .filter((data) => data.activo)
+      .map((x) => x.columna);
+    const highestColumnActive = Math.max.apply(null, columnsActive);
+    /**for actives */
     let lastColumn = [];
 
+    console.log(
+      [...this.groupData.parametros].map((data) => {
+        if (data.columna === highestColumnActive && data.activo) return data;
+      })
+    );
+
     [...this.groupData.parametros].map((data) => {
-      if (data.columna === highestColumn && data.activo) lastColumn.push(data);
+      if (data.columna === highestColumnActive && data.activo)
+        lastColumn.push(data);
     });
 
     const newColumn = await lastColumn.map((x) => {
