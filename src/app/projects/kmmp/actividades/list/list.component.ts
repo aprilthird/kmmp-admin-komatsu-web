@@ -48,6 +48,7 @@ export class ListComponent implements OnInit {
   }
 
   openAssignment(): void {
+    this.assignToBay = false;
     this.matDialog
       .open(AssignBayComponent, {
         width: "370px",

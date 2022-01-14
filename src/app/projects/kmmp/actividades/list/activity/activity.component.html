@@ -112,7 +112,9 @@
               (click)="redirect(format)"
             >
               <div class="flex flex-row justify-between items-center w-52">
-                <div>
+                <div
+                  class="text-ellipsis overflow-hidden max-w-fit advance-format"
+                >
                   <span>{{ format.nombre }}</span>
                 </div>
                 <div class="flex flex-row items-center gap-1">
@@ -159,26 +161,28 @@
         </button>
       </div>
     </div>
-    <hr />
+    <div>
+      <hr />
 
-    <div
-      *ngIf="!isEdit; else edit"
-      class="porcentage-progress h-1/4 flex flex-col gap-5 w-3/4 w-full"
-    >
-      <div class="flex flex-row justify-between">
-        <div class="text-md text-secondary w-3/4">Porcentaje de avance</div>
-        <span
-          class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50"
-        >
-          <span class="leading-relaxed whitespace-nowrap">Observada</span>
-        </span>
-      </div>
-      <div class="flex flex-row justify-between items-center">
-        <mat-progress-bar
-          class="h-2 w-3/4 rounded-full"
-          [value]="activityInfo?.avance"
-        ></mat-progress-bar>
-        <span>{{ activityInfo?.avance }}%</span>
+      <div
+        *ngIf="!isEdit; else edit"
+        class="porcentage-progress h-1/4 flex flex-col gap-5 w-3/4 w-full"
+      >
+        <div class="flex flex-row justify-between">
+          <div class="text-md text-secondary w-3/4">Porcentaje de avance</div>
+          <span
+            class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50"
+          >
+            <span class="leading-relaxed whitespace-nowrap">Observada</span>
+          </span>
+        </div>
+        <div class="flex flex-row justify-between items-center">
+          <mat-progress-bar
+            class="h-2 w-3/4 rounded-full"
+            [value]="activityInfo?.avance"
+          ></mat-progress-bar>
+          <span>{{ activityInfo?.avance }}%</span>
+        </div>
       </div>
     </div>
   </div>

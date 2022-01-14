@@ -193,6 +193,43 @@ export class HorizontalGroupComponent implements OnInit {
       });
   }
 
+  /**PROBANDO ELIMINACION DE COLUMNAS Y RESTAR UNA POSICIÓN A LAS SIGUIENTES COLUMNAS */
+  deleteTMP(position: number, type: string): void {
+    let positionType;
+    if (type === "row") positionType = "fila";
+    else positionType = "columna";
+    this.isLoading = true;
+    const posToDelete = this.groupData.parametros.filter((x) => {
+      if (x[positionType] === position) {
+        x.activo = false;
+        return x;
+      }
+    });
+    this._editarFormatoService
+      .createDato({
+        ...this.groupData,
+        parametros: posToDelete,
+      })
+      .subscribe(() => {
+        if (this.groupData.parametros.some((x) => x.columna === position + 1)) {
+          let columnToMove = this.groupData.parametros.filter(
+            (y) => y.position === position + 1
+          );
+          columnToMove.map((x) => (x.columna = x.columna - 1));
+
+          this._editarFormatoService
+            .createDato({
+              ...this.groupData,
+              parametros: columnToMove,
+            })
+            .subscribe(() => {
+              this.isLoading = false;
+              this._groups.loadGrupos();
+            });
+        }
+      });
+  }
+
   /*async addParam(rowNumber?: number) {
     this.isLoading = true;
     let column: number;
