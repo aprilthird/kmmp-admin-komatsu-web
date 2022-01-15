@@ -1,3 +1,4 @@
+import { ThisReceiver } from "@angular/compiler";
 import {
   Component,
   ElementRef,
@@ -8,6 +9,7 @@ import {
   EventEmitter,
   SimpleChanges,
   AfterViewInit,
+  HostListener,
 } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { AzureService } from "app/core/azure/azure.service";
@@ -47,6 +49,22 @@ export class FieldsComponent implements OnInit, AfterViewInit {
     private _azureService: AzureService
   ) {}
 
+  @HostListener("click")
+  editlabel() {
+    this.editLabel();
+  }
+
+  @HostListener("window:click", ["$event.target"])
+  onClick(classname) {
+    const className = (classname as Element).className;
+    if (
+      className !==
+      "mat-tooltip-trigger text-gray-900 font-medium cursor-pointer"
+    ) {
+      //this.saveLabel();
+    }
+  }
+
   ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {}
 
@@ -73,6 +91,12 @@ export class FieldsComponent implements OnInit, AfterViewInit {
         this._groups.loadGrupos();
         this.isLoading = false;
       });
+  }
+
+  saveLabel(): void {
+    this.paramData.label = this.el.nativeElement.value;
+    this.editField(8);
+    this.edit = !this.edit;
   }
 
   openOtherValidator(): void {
@@ -171,7 +195,7 @@ export class FieldsComponent implements OnInit, AfterViewInit {
     this.editField(this.paramData.idParametro);
   }
 
-  editGroup(): void {
+  editLabel(): void {
     this.edit = true;
     setTimeout(() => {
       this.el.nativeElement.select();

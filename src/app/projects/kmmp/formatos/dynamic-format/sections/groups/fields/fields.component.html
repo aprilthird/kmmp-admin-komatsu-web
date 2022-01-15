@@ -12,7 +12,7 @@
         <ng-container [ngSwitch]="paramData.idParametro">
           <mat-form-field
             *ngSwitchCase="1"
-            class="w-full font-semibold"
+            class="w-52 font-semibold"
             floatLabel="always"
           >
             <mat-label *ngIf="paramData.visible">{{
@@ -48,7 +48,7 @@
             ></mat-progress-spinner>
           </mat-form-field>
 
-          <mat-form-field *ngSwitchCase="3" floatLabel="always" class="w-full">
+          <mat-form-field *ngSwitchCase="3" floatLabel="always" class="w-52">
             <mat-label *ngIf="paramData.visible">{{
               paramData.label
             }}</mat-label>
@@ -94,9 +94,37 @@
           </mat-form-field>
 
           <div *ngSwitchCase="8" class="w-full">
-            <p class="text-gray-900 font-medium">
+            <p
+              [hidden]="edit"
+              class="text-gray-900 font-medium cursor-pointer"
+              style="
+                width: 13rem;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-height: 5rem;
+              "
+              [matTooltip]="paramData.label"
+              (click)="editlabel()"
+            >
               {{ paramData.label }}
             </p>
+            <div class="flex gap-1">
+              <input
+                [hidden]="!edit"
+                #nameInput
+                class="sm:text-lg leading-6 truncate"
+                style="width: 13rem"
+                value="{{ paramData.label }}"
+              />
+              <mat-icon
+                class="cursor-pointer"
+                *ngIf="edit"
+                [svgIcon]="'heroicons_outline:save'"
+                matTooltip="'Guardar'"
+                (click)="saveLabel()"
+              >
+              </mat-icon>
+            </div>
             <mat-progress-spinner
               [mode]="'indeterminate'"
               *ngIf="isLoading"
@@ -109,7 +137,11 @@
               <mat-label *ngIf="paramData.visible">{{
                 paramData.label
               }}</mat-label>
-              <mat-slide-toggle [color]="'primary'"></mat-slide-toggle>
+              <div class="flex gap-2">
+                <span>No</span>
+                <mat-slide-toggle [color]="'primary'"></mat-slide-toggle>
+                <span>Si</span>
+              </div>
             </div>
             <mat-progress-spinner
               [mode]="'indeterminate'"

@@ -211,16 +211,20 @@ export class HorizontalGroupComponent implements OnInit {
         parametros: posToDelete,
       })
       .subscribe(() => {
-        if (this.groupData.parametros.some((x) => x.columna === position + 1)) {
-          let columnToMove = this.groupData.parametros.filter(
-            (y) => y.position === position + 1
+        if (
+          this.groupData.parametros.some(
+            (x) => x[positionType] === position + 1
+          )
+        ) {
+          let elementToMove = this.groupData.parametros.filter(
+            (y) => y[positionType] === position + 1
           );
-          columnToMove.map((x) => (x.columna = x.columna - 1));
 
+          elementToMove.map((x) => (x[positionType] = x[positionType] - 1));
           this._editarFormatoService
             .createDato({
               ...this.groupData,
-              parametros: columnToMove,
+              parametros: elementToMove,
             })
             .subscribe(() => {
               this.isLoading = false;

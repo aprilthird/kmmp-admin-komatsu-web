@@ -202,7 +202,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5NGYwMmNmZ
                             "idGrupo": 54,
                             "idParametro": 5,
                             "idParametroGrupo": 0,
-                            "label": "Fecha de último cabio",
+                            "label": "Fecha de último cambio",
                             "dato": "",
                             "tipoNombre": null,
                             "valor": "azul",

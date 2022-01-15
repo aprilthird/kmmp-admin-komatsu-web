@@ -49,10 +49,6 @@
             ></mat-icon>-->
             <app-fields
               class="list-box"
-              [ngClass]="{
-                'no-padding-top': paramData.fila === lowestRow,
-                'padding-top': paramData.fila !== lowestRow
-              }"
               [groupData]="groupData"
               [paramData]="paramData"
               (columnToDelete)="delete($event, 'column')"
@@ -66,6 +62,7 @@
               paramData.columna === highestColumn &&
               paramData.fila === lowestRow
             "
+            class="ml-16"
             mat-button
             color="primary"
             matTooltip="Agregar campo a esta fila"

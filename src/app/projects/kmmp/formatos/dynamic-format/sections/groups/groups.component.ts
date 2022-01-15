@@ -1,5 +1,13 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
+
 import { EditarFormatoService } from "../../../editar-formato/editar-formato.service";
 import { SectionsComponent } from "../sections.component";
 
