@@ -1,6 +1,11 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialog,
+} from "@angular/material/dialog";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
+import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { ActivitiesService } from "../../activities.service";
 import { ListComponent } from "../../list/list.component";
 import { BayI } from "./../../models/bays-model";
@@ -20,7 +25,8 @@ export class AssignBayComponent implements OnInit {
   constructor(
     public matdialigRef: MatDialogRef<AssignBayComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private activitiesService: ActivitiesService
+    private activitiesService: ActivitiesService,
+    private _matDialog: MatDialog
   ) {
     this.getBays();
   }
@@ -60,12 +66,33 @@ export class AssignBayComponent implements OnInit {
   assignToBay(): void {
     this.isLoading = true;
     this.activitiesService.asignMultipleActivities(this.dataToAssign).subscribe(
-      () => {
-        this.isLoading = false;
-        this.matdialigRef.close();
+      (resp) => {
+        if (resp.code === 502) {
+          this.isLoading = false;
+          this._matDialog.open(UiDialogsComponent, {
+            width: "500px",
+            data: {
+              message: resp.message ? resp?.message : resp?.error,
+              title: "Error",
+              action: "/admin/actividades/list",
+            },
+          });
+          this.matdialigRef.close();
+        } else {
+          this.isLoading = false;
+          this.matdialigRef.close();
+        }
       },
-      () => {
+      (err) => {
         this.isLoading = false;
+        this._matDialog.open(UiDialogsComponent, {
+          width: "500px",
+          data: {
+            message: err.message ? err.message : err.code,
+            title: "Error",
+            action: "/admin/actividades/list",
+          },
+        });
         this.matdialigRef.close();
       }
     );
