@@ -16,7 +16,9 @@ export class DialogAddCommentComponent implements OnInit {
     private _editarFormatoService: EditarFormatoService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log("data ", this.data);
+  }
 
   /*async updateObservedParam() {
     

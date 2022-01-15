@@ -23,6 +23,7 @@ export class DialogAddDispositivosComponent implements OnInit {
   bays = [];
   idBahias = [];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  baysAssigned: any[] = [];
 
   constructor(
     private dispositivoService: DispositivosService,
@@ -52,16 +53,36 @@ export class DialogAddDispositivosComponent implements OnInit {
   }
 
   baySelection(event: MatSelectChange): void {
+    let el: number;
+    let active: boolean;
     event.value.forEach((valueSelected: number) => {
-      const selectet = this.bays.find((bay) => bay.idBahia === valueSelected);
-      const payload = {
-        idBahia: selectet.idBahia,
-        idDispositivo: this.data.id,
-        nombre: "",
-        id: selectet.idDispositivoBahia,
-      };
+      this.baysAssigned.filter((x: any) => {
+        if (x !== valueSelected) {
+          active = false;
+          el = x;
+        }
+      });
+    });
 
-      this.dispositivoService.assignDeviceToBay(payload).subscribe(() => {});
+    if (this.baysAssigned.length < event.value.length) {
+      active = true;
+      el = event.value.find((x) => !this.baysAssigned.includes(x));
+    }
+
+    if (event.value.length === 0) {
+      active = false;
+      el = this.baysAssigned[0];
+    }
+    const selectet = this.bays.find((bay) => bay.idBahia === el);
+    const payload = {
+      idBahia: selectet.idBahia,
+      idDispositivo: this.data.id,
+      nombre: "",
+      id: selectet.idDispositivoBahia,
+      activo: active,
+    };
+    this.dispositivoService.assignDeviceToBay(payload).subscribe(() => {
+      this.matdialigRef.close();
     });
   }
 
@@ -73,9 +94,14 @@ export class DialogAddDispositivosComponent implements OnInit {
         this.bays = resp.body;
         this.form.controls.idBahia.patchValue([
           ...this.bays.map((bay) => {
-            if (bay.idDispositivoBahia > 0) return bay.idBahia;
+            if (bay.idDispositivoBahia > 0 && bay.activo) return bay.idBahia;
           }),
         ]);
+        this.baysAssigned = this.bays
+          .filter((bay) => {
+            if (bay.idDispositivoBahia > 0 && bay.activo) return bay.idBahia;
+          })
+          .map((x) => x.idBahia);
       });
   }
 
