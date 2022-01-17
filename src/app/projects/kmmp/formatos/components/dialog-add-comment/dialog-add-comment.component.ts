@@ -9,7 +9,7 @@ import { EditarFormatoService } from "../../editar-formato/editar-formato.servic
   styleUrls: ["./dialog-add-comment.component.scss"],
 })
 export class DialogAddCommentComponent implements OnInit {
-  comment = new FormControl("", Validators.required);
+  comment = new FormControl(this.data?.comment, Validators.required);
   constructor(
     public matDialog: MatDialogRef<DialogAddCommentComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -20,20 +20,7 @@ export class DialogAddCommentComponent implements OnInit {
     console.log("data ", this.data);
   }
 
-  /*async updateObservedParam() {
-    
-    return this.data.data.secciones[0].grupos[
-      this.data.groupIndex
-    ].parametros.map((parametro: any, index: number) => {
-      if (index === this.data.paramIndex) {
-        parametro.comentarios = this.comment.value;
-        parametro.observar = true;
-      }
-    });
-  }*/
-
   async updateObservedParam() {
-    console.log(this.data);
     return this.data.data.secciones.map((section: any) => {
       if (section.id === Number(this.data.sectionId)) {
         return section.grupos.map((group: any, index: number) => {

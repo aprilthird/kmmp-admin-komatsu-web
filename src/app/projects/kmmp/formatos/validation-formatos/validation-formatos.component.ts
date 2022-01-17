@@ -540,21 +540,14 @@ export class ValidationFormatosComponent implements OnInit {
     });
   }
 
-  addComment(groupIdx: number, paramIdx: number): void {
-    /*const group = this.data.secciones[0].grupos.find(
-      (x, index) => index === groupIdx
-    );
-    const data = {
-      group: group,
-      index: paramIdx,
-    };*/
-
+  addComment(groupIdx: number, paramIdx: number, comment): void {
     const data = {
       data: this.data,
       groupIndex: groupIdx,
       paramIndex: paramIdx,
       sectionId: this.sectionId,
       formatoId: this.formatoId,
+      comment: comment,
     };
     this.matDialog
       .open(DialogAddCommentComponent, {
