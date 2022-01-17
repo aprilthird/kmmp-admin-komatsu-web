@@ -1,3 +1,21 @@
+<div class="flex flex-col items-center gap-5">
+  <div id="chart">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [markers]="chartOptions.markers"
+      [stroke]="chartOptions.stroke"
+      [yaxis]="chartOptions.yaxis"
+      [dataLabels]="chartOptions.dataLabels"
+      [title]="chartOptions.title"
+      [fill]="chartOptions.fill"
+      [tooltip]="chartOptions.tooltip"
+      [legend]="chartOptions.legend"
+    ></apx-chart>
+  </div>
+</div>
+
 <!--<dx-chart
   id="chart"
   class="adhesion-chart"
