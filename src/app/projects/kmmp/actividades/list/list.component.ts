@@ -56,12 +56,20 @@ export class ListComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(() => {
-        this.checkAllBays = false;
         this.getActivities();
-        return this.activities.map(
+        this.activities.map(
           (activity: ActivityFake) => (activity.checked = false)
         );
       });
+  }
+
+  checkAllFn(): boolean {
+    let value = false;
+    const activWithBahia = this.activities.filter((x) => x.bahia);
+    if (activWithBahia.every((x) => x.checked)) {
+      value = true;
+    }
+    return value;
   }
 
   selectActivity(event: MatCheckbox, index?: number): void {
@@ -84,7 +92,7 @@ export class ListComponent implements OnInit {
       this.assignToBay = false;
     }
 
-    console.log("this.activities ", this.activities);
+    this.checkAllFn();
   }
 
   daterange(event): void {
