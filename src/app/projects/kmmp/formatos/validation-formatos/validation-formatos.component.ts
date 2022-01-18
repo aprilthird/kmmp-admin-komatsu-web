@@ -106,11 +106,7 @@ export class ValidationFormatosComponent implements OnInit {
               },
             });
           }
-          /*this.data.secciones = x.body.secciones.filter(
-            (seccion: any) => seccion.id === Number(this.sectionId)
-          );
-          this.generateForm();
-          this.sectionName = this.data.secciones[0].nombre;*/
+
           if (this.sectionId) {
             this.currentSectionData = await [...this.sections].find(
               (section: any) => Number(this.sectionId) === section.id
@@ -123,11 +119,19 @@ export class ValidationFormatosComponent implements OnInit {
   }
 
   validateSection(): boolean {
-    if (this.currentSectionData.grupos[0].parametros) {
-      return this.currentSectionData.grupos[0].parametros.some(
-        (parametro) => parametro.seccionValida
-      );
-    }
+    return this.currentSectionData.grupos[0].parametros.some(
+      (parametro) => parametro.seccionValida
+    );
+  }
+
+  isSectionObserved(): boolean {
+    const groups = this.currentSectionData.grupos.map((group) => group);
+
+    const params = groups.map((group) =>
+      group.parametros.some((param) => param.observar)
+    );
+
+    return params.some((x) => x);
   }
 
   validateFormat() {
@@ -222,6 +226,9 @@ export class ValidationFormatosComponent implements OnInit {
       },
     ];
     this.sections.forEach((section, index) => {
+      const params = section.grupos.map((group) =>
+        group.parametros.some((param) => param.observar)
+      );
       this.menuData[0].children.push({
         id: section.id,
         title: section.nombre,
@@ -229,16 +236,17 @@ export class ValidationFormatosComponent implements OnInit {
         link: `/admin/actividades/validation/${this.currentIdActivity}/${this.formatoId}/${section.id}`,
         children: [],
         badge: {
-          title: !section.grupos[0].parametros.some(
-            (parametro) => parametro.seccionValida
-          )
-            ? "warning_amber"
-            : "heroicons_outline:check-circle",
-          classes: !section.grupos[0].parametros.some(
-            (parametro) => parametro.seccionValida
-          )
-            ? "text-gray-600"
-            : "text-green-600",
+          title:
+            !section.grupos[0].parametros.some(
+              (parametro) => parametro.seccionValida
+            ) && params.some((x) => x)
+              ? "warning_amber"
+              : section.grupos[0].parametros.some(
+                  (parametro) => parametro.seccionValida
+                )
+              ? "heroicons_outline:check-circle"
+              : "",
+          classes: params.some((x) => x) ? "text-yellow-600" : "text-green-600",
         },
       });
     });

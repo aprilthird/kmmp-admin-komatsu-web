@@ -114,17 +114,25 @@
                   currentSectionData.nombre
                 }}</span>
                 <mat-icon
-                  matTooltip="Seccion validada"
+                  [matTooltip]="
+                    !isSectionObserved()
+                      ? 'Sección validada'
+                      : 'Sección validada con observaciones'
+                  "
                   *ngIf="validateSection()"
                   class="text-green-600 ml-2"
+                  [ngClass]="{
+                    'text-green-600': !isSectionObserved(),
+                    'text-yellow-600': isSectionObserved()
+                  }"
                   svgIcon="heroicons_outline:check-circle"
                 ></mat-icon>
 
                 <mat-icon
-                  matTooltip="Seccion aún no esta validada"
-                  *ngIf="!validateSection()"
+                  *ngIf="!validateSection() && isSectionObserved()"
                   class="text-yellow-600 ml-2"
                   svgIcon="warning_amber"
+                  [matTooltip]="'Sección Observada sin validar aún'"
                 ></mat-icon>
               </div>
             </div>
@@ -521,7 +529,11 @@
                                     'text-red-300': !parametro.comentarios
                                   }"
                                   class="ml-2 text-red-300 cursor-pointer"
-                                  svgIcon="heroicons_outline:annotation"
+                                  [svgIcon]="
+                                    !parametro.comentarios
+                                      ? 'heroicons_outline:chat'
+                                      : 'heroicons_solid:chat'
+                                  "
                                   (click)="
                                     addComment(j, k, parametro.comentarios)
                                   "
