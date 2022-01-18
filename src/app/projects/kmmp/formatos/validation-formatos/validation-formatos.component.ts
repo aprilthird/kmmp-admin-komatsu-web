@@ -16,6 +16,7 @@ import { TipoParametro } from "app/core/types/formatos.types";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { PermissionService } from "app/core/permission/permission.service";
+import { environment } from "environments/environment";
 
 @Component({
   selector: "app-validation-formatos",
@@ -60,6 +61,7 @@ export class ValidationFormatosComponent implements OnInit {
 
   sections: any[] = [];
   currentSectionData: any;
+  loadingReport: boolean;
 
   constructor(
     private matDialog: MatDialog,
@@ -565,11 +567,13 @@ export class ValidationFormatosComponent implements OnInit {
         data: data,
       })
       .afterClosed()
-      .subscribe(() =>
+      .subscribe(() => {
         Object.keys(this.observation).forEach(
           (key) => (this.observation[key] = false)
-        )
-      );
+        );
+
+        this.observeToolTip(groupIdx, paramIdx);
+      });
   }
 
   /*postValidateFormat(): void {
@@ -662,5 +666,31 @@ export class ValidationFormatosComponent implements OnInit {
         this.onSubmit(event, groupIdx, paramIdx);
       }
     });
+  }
+
+  printPdf(): void {
+    this.loadingReport = true;
+    fetch(
+      environment.apiUrl + "/Reportes/GenerarInforme/" + Number(this.formatoId)
+    )
+      .then((resp) => resp.blob())
+      .then((blob) => {
+        let url = window.URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = "Asignacion_" + this.formatoId + ".pdf";
+        document.body.appendChild(a);
+        this.loadingReport = false;
+        a.click();
+        a.remove();
+      })
+      .catch((e) =>
+        this.matDialog.open(UiDialogsComponent, {
+          data: {
+            title: "Error",
+            message: "No hay contenido para generar reporte",
+          },
+        })
+      );
   }
 }

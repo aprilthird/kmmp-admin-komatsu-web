@@ -55,7 +55,6 @@ export class FieldsComponent implements OnInit, AfterViewInit {
   editlabel() {
     this.editLabel();
   }
-
   @HostListener("window:click", ["$event.target"])
   onClick(classname) {
     const className = (classname as Element).className;
@@ -63,10 +62,9 @@ export class FieldsComponent implements OnInit, AfterViewInit {
       className !==
       "mat-tooltip-trigger text-gray-900 font-medium cursor-pointer"
     ) {
-      this.saveLabel();
+      //this.saveLabel();
     }
   }
-
   ngOnInit(): void {
     this.validateRegex();
   }
@@ -83,23 +81,56 @@ export class FieldsComponent implements OnInit, AfterViewInit {
       this.paramData.obligatorio &&
       (!this.paramData.regex || this.paramData.regex === "")
     ) {
-      this.fieldData.setValidators(Validators.required);
+      this.fieldData.setValidators([
+        Validators.required,
+        Validators.minLength(this.paramData.minCaracteres),
+        Validators.maxLength(this.paramData.maxCaracteres),
+      ]);
     } else if (this.paramData.regex === "2") {
-      this.fieldData.setValidators(Validators.email);
+      this.fieldData.setValidators([
+        Validators.email,
+        Validators.minLength(this.paramData.minCaracteres),
+        Validators.maxLength(this.paramData.maxCaracteres),
+      ]);
     } else if (this.paramData.regex === "3") {
-      this.fieldData.setValidators(
-        Validators.pattern(/^\d{8}(?:[-\s]\d{4})?$/)
-      );
+      console.log("-----------");
+      this.fieldData.setValidators([
+        Validators.pattern(/^\d{8}(?:[-\s]\d{4})?$/),
+        Validators.minLength(this.paramData.minCaracteres),
+        Validators.maxLength(this.paramData.maxCaracteres),
+      ]);
     }
   }
 
-  getErrorMessage(): string {
-    if (this.fieldData.hasError("required")) {
+  getErrorMessage() {
+    /*if (this.fieldData.hasError("required")) {
       return "Campo requerido";
-    } else if (this.fieldData.hasError("email")) {
+    } */
+
+    if (this.fieldData.hasError("email")) {
       return "Formato de correo inválido";
-    } else {
-      return "Formato de DNI inválido";
+    } else if (
+      this.fieldData.errors?.pattern &&
+      this.fieldData.errors?.pattern?.requiredPattern ===
+        "/^d{8}(?:[-s]d{4})?$/"
+    ) {
+      if (this.fieldData.errors) return "Formato de DNI inválido";
+    } else if (
+      this.fieldData.errors?.minlength ||
+      this.fieldData.errors?.maxlength
+    ) {
+      if (this.fieldData.errors?.minlength)
+        return (
+          "Mínimo " +
+          this.fieldData.errors?.minlength?.requiredLength +
+          " caracteres permitidos"
+        );
+      else this.fieldData.errors?.maxlength;
+      return (
+        "Máximo " +
+        this.fieldData.errors?.maxlength?.requiredLength +
+        " caracteres permitidos"
+      );
     }
   }
 
@@ -136,6 +167,7 @@ export class FieldsComponent implements OnInit, AfterViewInit {
     dialogRef.componentInstance.success.subscribe((values) => {
       this.paramData = {
         ...this.paramData,
+        regex: "",
         minCaracteres: values.min,
         maxCaracteres: values.max,
       };

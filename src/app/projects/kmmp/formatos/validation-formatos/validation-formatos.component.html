@@ -52,7 +52,7 @@
       <div class="p-4 mb-2 flex flex-col justify-center items-center gap-5">
         <button
           *ngIf="!validateFormat()"
-          class="text-white"
+          class="text-white w-40"
           mat-raised-button
           [color]="'primary'"
           [disabled]="!checkInformValidated()"
@@ -64,6 +64,27 @@
           ></mat-icon>
 
           Validar formato
+        </button>
+
+        <button
+          class="text-white w-40"
+          mat-raised-button
+          [color]="'primary'"
+          (click)="printPdf()"
+          [disabled]="loadingReport"
+        >
+          <mat-icon
+            *ngIf="!loadingReport"
+            class="text-white mr-1"
+            svgIcon="heroicons_outline:document-report"
+          ></mat-icon>
+          <mat-progress-spinner
+            *ngIf="loadingReport"
+            [diameter]="24"
+            [mode]="'indeterminate'"
+          >
+          </mat-progress-spinner>
+          <a *ngIf="!loadingReport">Descargar reporte</a>
         </button>
 
         <div
@@ -520,7 +541,6 @@
                                   </div>
                                 </div>
                                 <!--SELECT--->
-
                                 <mat-icon
                                   *ngIf="observation[j]"
                                   [matTooltip]="observeToolTip(j, k)"
