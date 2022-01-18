@@ -1,16 +1,6 @@
 <div class="flex flex-col flex-auto min-w-0">
   <div
-    class="
-      flex flex-col
-      sm:flex-row
-      flex-0
-      sm:items-center sm:justify-between
-      p-6
-      sm:py-8 sm:px-10
-      border-b
-      bg-card
-      dark:bg-transparent
-    "
+    class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent"
   >
     <div class="flex-1 min-w-0">
       <div class="flex flex-wrap items-center font-medium">
@@ -34,14 +24,7 @@
       </div>
       <div class="mt-2">
         <h2
-          class="
-            text-2xl
-            font-extrabold
-            tracking-tight
-            leading-7
-            sm:leading-10
-            truncate
-          "
+          class="text-2xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate"
         >
           {{ codeActivity }}
         </h2>
@@ -110,28 +93,11 @@
       <router-outlet></router-outlet>
 
       <div
-        class="
-          sm:inset-0
-          flex flex-col flex-auto
-          min-w-0
-          sm:overflow-hidden
-          bg-card
-          dark:bg-transparent
-        "
+        class="sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"
       >
         <!-- Header -->
         <div
-          class="
-            relative
-            flex flex-col
-            sm:flex-row
-            flex-0
-            sm:items-center sm:justify-between
-            py-8
-            px-6
-            md:px-8
-            border-b
-          "
+          class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b"
         >
           <!-- Loader -->
           <div class="absolute inset-x-0 bottom-0">
@@ -180,12 +146,7 @@
         <div class="flex flex-auto overflow-hidden">
           <!-- Products list -->
           <div
-            class="
-              flex flex-col flex-auto
-              overflow-hidden
-              sm:overflow-y-auto
-              bg-gray-100
-            "
+            class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto bg-gray-100"
           >
             <ng-container>
               <form [formGroup]="form" novalidate>
@@ -210,36 +171,10 @@
                         let grupo of currentSectionData.grupos;
                         let j = index
                       "
-                      class="
-                        sm:col-span-2
-                        md:col-span-4
-                        flex
-                        justify-start
-                        gap-5
-                        flex-wrap
-                        p-6
-                        bg-card
-                        shadow
-                        rounded-2xl
-                        overflow-hidden
-                        m-5
-                      "
+                      class="sm:col-span-2 md:col-span-4 flex justify-start gap-5 flex-wrap p-6 bg-card shadow rounded-2xl overflow-hidden m-5"
                     >
                       <div
-                        class="
-                          sm:col-span-2
-                          md:col-span-4
-                          flex flex-col
-                          justify-start
-                          gap-5
-                          flex-wrap
-                          p-6
-                          bg-card
-                          shadow
-                          rounded-2xl
-                          overflow-hidden
-                          m-5
-                        "
+                        class="sm:col-span-2 md:col-span-4 flex flex-col justify-start gap-5 flex-wrap p-6 bg-card shadow rounded-2xl overflow-hidden m-5"
                         *ngIf="grupo.parametros.length > 0"
                       >
                         <div class="flex justify-between items-center">
@@ -308,12 +243,7 @@
                             }"
                           >-->
                         <div
-                          class="
-                            grid
-                            flex-row
-                            overflow-x-auto overflow-y-hidden
-                            w-full
-                          "
+                          class="grid flex-row overflow-x-auto overflow-y-hidden w-full"
                         >
                           <ng-container
                             *ngFor="
@@ -573,12 +503,14 @@
                                   *ngIf="observation[j]"
                                   [matTooltip]="observeToolTip(j, k)"
                                   [ngClass]="{
-                                    'text-red-600': isObserve(j, k),
-                                    'text-red-300': !isObserve(j, k)
+                                    'text-red-600': parametro.comentarios,
+                                    'text-red-300': !parametro.comentarios
                                   }"
                                   class="ml-2 text-red-300 cursor-pointer"
                                   svgIcon="heroicons_outline:annotation"
-                                  (click)="addComment(j, k, parametro.comentarios)"
+                                  (click)="
+                                    addComment(j, k, parametro.comentarios)
+                                  "
                                 ></mat-icon>
                               </ng-container>
                             </div>

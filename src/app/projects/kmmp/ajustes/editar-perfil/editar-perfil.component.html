@@ -1,17 +1,7 @@
 <div class="flex flex-col flex-auto min-w-0">
   <!-- Header -->
   <div
-    class="
-      flex flex-col
-      sm:flex-row
-      flex-0
-      sm:items-center sm:justify-between
-      p-6
-      sm:py-8 sm:px-10
-      border-b
-      bg-card
-      dark:bg-transparent
-    "
+    class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent"
   >
     <div class="flex w-full items-center min-w-0">
       <!-- Loader -->
@@ -21,15 +11,7 @@
       <!-- Title -->
       <div class="w-1/4">
         <h2
-          class="
-            text-3xl
-            md:text-4xl
-            font-extrabold
-            tracking-tight
-            leading-7
-            sm:leading-10
-            truncate
-          "
+          class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate"
         >
           <span *ngIf="isEdit"> Editar Perfil</span>
           <span *ngIf="!isEdit"> Crear Perfil</span>
@@ -41,19 +23,7 @@
   <div class="flex flex-auto overflow-hidden bg-gray-100 py-8 px-6">
     <!-- Products list -->
     <div
-      class="
-        flex flex-col flex-auto
-        overflow-hidden
-        sm:overflow-y-auto
-        py-8
-        px-6
-        md:px-3
-        border-radius-1
-        bg-white
-        rounded-lg
-        relative
-        pb-18
-      "
+      class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto py-8 px-6 md:px-3 border-radius-1 bg-white rounded-lg relative pb-18"
     >
       <form [formGroup]="form" novalidate>
         <div class="flex flex-auto flex-wrap">
@@ -102,9 +72,12 @@
               >
                 <mat-checkbox
                   [disabled]="loadingCheckbox"
-                  [color]="'primary'"
+                  [color]="!item.esAccion ? 'primary' : 'accent'"
                   [checked]="item.activo"
                   (change)="clickCheckbox(item)"
+                  [ngClass]="{
+                    'text-gray-500': item.esAccion
+                  }"
                 >
                   {{ item.title }}
                 </mat-checkbox>
@@ -127,31 +100,11 @@
 
       <!-- Footer -->
       <div
-        class="
-          flex flex-row
-          justify-end
-          items-center
-          w-full
-          px-6
-          absolute
-          bottom-0
-          left-0
-          absolute
-          bottom-0
-          left-0
-          h-18
-          bg-gray-50
-        "
+        class="flex flex-row justify-end items-center w-full px-6 absolute bottom-0 left-0 absolute bottom-0 left-0 h-18 bg-gray-50"
       >
         <a
           mat-raised-button
-          class="
-            ml-4
-            bg-gray-50
-            border-solid border border-accent-300
-            text-gray-700
-            shadow-none
-          "
+          class="ml-4 bg-gray-50 border-solid border border-accent-300 text-gray-700 shadow-none"
           routerLink="/admin/ajustes/perfiles"
         >
           <span class="ml-1 mr-1">Cancelar</span>

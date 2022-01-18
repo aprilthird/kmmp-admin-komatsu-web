@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from 'environments/environment';
-import { PaginationResponse } from 'app/core/types/http.types';
-import { tap } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, Observable } from "rxjs";
+import { environment } from "environments/environment";
+import { PaginationResponse } from "app/core/types/http.types";
+import { tap } from "rxjs/operators";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: "root" })
 export class EditarPerfilService {
-  
   _menu: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private _httpClient: HttpClient) {}
 
@@ -15,14 +14,17 @@ export class EditarPerfilService {
     return this._menu.asObservable();
   }
 
-  savePerfil(data):Observable<any> {
-    return this._httpClient.post<any>(environment.apiUrl + '/Seguridad/GuardarRol', data);
+  savePerfil(data): Observable<any> {
+    return this._httpClient.post<any>(
+      environment.apiUrl + "/Seguridad/GuardarRol",
+      data
+    );
   }
 
-  getObtenerPerfil(idPerfil):Observable<any> {
+  getObtenerPerfil(idPerfil): Observable<any> {
     return this._httpClient.get<PaginationResponse<any[]>>(
-      environment.apiUrl + "/Seguridad/ObtenerRoles/" + idPerfil,
-    )
+      environment.apiUrl + "/Seguridad/ObtenerRoles/" + idPerfil
+    );
   }
 
   getObtenerMenu(idPerfil): Observable<any> {
@@ -30,16 +32,26 @@ export class EditarPerfilService {
       .get<any>(environment.apiUrl + "/Seguridad/ObtenerArbol/" + idPerfil)
       .pipe(
         tap((response) => {
-          this._menu.next(response.body);
+          this._menu.next(
+            response.body.filter(
+              (x) => x.idOpcion !== 32 && x.idOpcion !== 33 && x.idOpcion !== 34
+            )
+          );
         })
       );
   }
 
   updateOpcion(idOpcion, data = {}): Observable<any> {
-    return this._httpClient.put<any>(environment.apiUrl + '/Seguridad/ModificarOpcion/' + idOpcion, data);
+    return this._httpClient.put<any>(
+      environment.apiUrl + "/Seguridad/ModificarOpcion/" + idOpcion,
+      data
+    );
   }
-  
-  updateAccion(idAccion):Observable<any> { 
-    return this._httpClient.put<any>(environment.apiUrl + '/Seguridad/ModificarAccion/' + idAccion, {});
+
+  updateAccion(idAccion): Observable<any> {
+    return this._httpClient.put<any>(
+      environment.apiUrl + "/Seguridad/ModificarAccion/" + idAccion,
+      {}
+    );
   }
 }

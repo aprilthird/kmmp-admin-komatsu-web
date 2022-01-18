@@ -49,9 +49,12 @@ export class UsuariosService {
       .post<PaginationResponse<Usuario[]>>(
         environment.apiUrl + "/Seguridad/BandejaUsuariosPaginado",
         {
-          page,
-          pageSize,
-          filter,
+          page: 0,
+          pageSize: 10,
+          filter: {
+            fechaIni: "2021-08-01",
+            fechaFin: "2022-02-01",
+          },
         }
       )
       .pipe(

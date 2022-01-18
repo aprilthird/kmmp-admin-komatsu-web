@@ -25,8 +25,8 @@ interface GetInbox {
     nombre: string;
     estado: number | 1;
     tipo: number;
-    fechaIni: any | "";
-    fechaFin: any | "";
+    fechaIni: string;
+    fechaFin: string;
     codigo: string | "";
   };
 }
@@ -43,8 +43,8 @@ const getInboxParams: GetInbox = {
     nombre: "",
     estado: 0,
     tipo: 1,
-    fechaIni: null,
-    fechaFin: null,
+    fechaIni: "2021-08-01",
+    fechaFin: "2022-02-01",
     codigo: "",
   },
 };
@@ -119,7 +119,10 @@ export class ActivitiesService {
       environment.apiUrl + "/Actividades/BandejaActividades",
       {
         ...getInboxParams,
-        filter: {},
+        filter: {
+          fechaIni: "2021-08-01",
+          fechaFin: "2022-02-01",
+        },
       }
     );
     /*.pipe(

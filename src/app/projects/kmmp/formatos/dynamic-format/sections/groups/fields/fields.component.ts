@@ -11,6 +11,7 @@ import {
   AfterViewInit,
   HostListener,
 } from "@angular/core";
+import { FormControl, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { AzureService } from "app/core/azure/azure.service";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
@@ -35,6 +36,7 @@ export class FieldsComponent implements OnInit, AfterViewInit {
   @Input() lowestColumn: number;
   @Output() columnToDelete: EventEmitter<number> = new EventEmitter(null);
   @Output() rowToDelete: EventEmitter<number> = new EventEmitter(null);
+  fieldData = new FormControl("", Validators.required);
   isLoading: boolean;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   filesLoading: boolean;
@@ -61,17 +63,44 @@ export class FieldsComponent implements OnInit, AfterViewInit {
       className !==
       "mat-tooltip-trigger text-gray-900 font-medium cursor-pointer"
     ) {
-      //this.saveLabel();
+      this.saveLabel();
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.validateRegex();
+  }
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngAfterViewInit(): void {
     this.delete = () => {
       this.columnToDelete.emit(this.paramData.columna);
     };
+  }
+
+  validateRegex(): void {
+    if (
+      this.paramData.obligatorio &&
+      (!this.paramData.regex || this.paramData.regex === "")
+    ) {
+      this.fieldData.setValidators(Validators.required);
+    } else if (this.paramData.regex === "2") {
+      this.fieldData.setValidators(Validators.email);
+    } else if (this.paramData.regex === "3") {
+      this.fieldData.setValidators(
+        Validators.pattern(/^\d{8}(?:[-\s]\d{4})?$/)
+      );
+    }
+  }
+
+  getErrorMessage(): string {
+    if (this.fieldData.hasError("required")) {
+      return "Campo requerido";
+    } else if (this.fieldData.hasError("email")) {
+      return "Formato de correo inválido";
+    } else {
+      return "Formato de DNI inválido";
+    }
   }
 
   editField(type: number): void {

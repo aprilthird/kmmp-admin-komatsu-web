@@ -60,11 +60,12 @@ export class ListadoService {
       .post<PaginationResponse<Formato[]>>(
         environment.apiUrl + "/Core/ObtenerFormatosPaginado",
         {
-          page,
-          pageSize,
+          page: 0,
+          pageSize: 10,
           filter: {
             idClaseActividad,
-            estado,
+            fechaIni: "2021-11-01T00:07:23.160Z",
+            fechaFin: "2022-01-20T00:07:23.160Z",
           },
         }
       )

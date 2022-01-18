@@ -7,17 +7,19 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         ...paramData,
         idParametro: 1,
       };
-    case 1:
+    case 11:
       return {
         ...paramData,
         idParametro: 1,
-        regex: "dni",
+        regex: "3",
+        placeholder: "Ingrese DNI",
       };
-    case 1:
+    case 12:
       return {
         ...paramData,
         idParametro: 1,
-        regex: "email",
+        regex: "2",
+        placeholder: "Ingrese Correo",
       };
     case 2:
       return {

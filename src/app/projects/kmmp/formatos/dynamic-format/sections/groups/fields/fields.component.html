@@ -20,10 +20,13 @@
             }}</mat-label>
             <input
               id="{{ paramData.idGrupo + paramData.id }}"
+              [disabled]="!paramData.editable"
               matInput
               type="text"
+              [formControl]="fieldData"
               placeholder="{{ paramData.placeholder }}"
             />
+            <mat-error>{{ getErrorMessage() }}</mat-error>
             <mat-progress-spinner
               [mode]="'indeterminate'"
               *ngIf="isLoading"
@@ -38,6 +41,7 @@
             <input
               id="{{ paramData.idGrupo + paramData.id }}"
               matInput
+              [disabled]="!paramData.editable"
               type="number"
               placeholder="{{ paramData.placeholder }}"
             />
@@ -55,6 +59,7 @@
             <textarea
               class="resize-none"
               matInput
+              [disabled]="!paramData.editable"
               placeholder="{{ paramData.placeholder }}"
             ></textarea>
             <mat-progress-spinner
@@ -70,6 +75,7 @@
             }}</mat-label>
             <input
               matInput
+              [disabled]="!paramData.editable"
               [matDatepicker]="datepicker"
               placeholder="{{ paramData.placeholder }}"
             />
@@ -95,6 +101,7 @@
 
           <div *ngSwitchCase="8" class="w-full">
             <p
+              [disabled]="!paramData.editable"
               [hidden]="edit"
               class="text-gray-900 font-medium cursor-pointer"
               style="
@@ -139,7 +146,10 @@
               }}</mat-label>
               <div class="flex gap-2">
                 <span>No</span>
-                <mat-slide-toggle [color]="'primary'"></mat-slide-toggle>
+                <mat-slide-toggle
+                  [disabled]="!paramData.editable"
+                  [color]="'primary'"
+                ></mat-slide-toggle>
                 <span>Si</span>
               </div>
             </div>
@@ -197,6 +207,7 @@
                 <mat-select
                   placeholder="{{ paramData.placeholder }}"
                   [value]="paramData.valor"
+                  [disabled]="!paramData.editable"
                 >
                   <mat-option
                     *ngFor="let option of splitOptions(paramData.dato)"
@@ -300,8 +311,8 @@
 
     <mat-menu #normal="matMenu">
       <button mat-menu-item (click)="editField(1)">Input</button>
-      <button mat-menu-item (click)="editField(1)">DNI</button>
-      <button mat-menu-item (click)="editField(1)">Correo</button>
+      <button mat-menu-item (click)="editField(11)">DNI</button>
+      <button mat-menu-item (click)="editField(12)">Correo</button>
       <button mat-menu-item (click)="openOtherValidator()">
         Otro validador
       </button>
