@@ -52,8 +52,9 @@ export class UsuariosService {
           page: 0,
           pageSize: 10,
           filter: {
-            fechaIni: "2021-08-01",
-            fechaFin: "2022-02-01",
+            nombre: null,
+            fechaIni: "2021-06-17",
+            fechaFin: "2022-01-20",
           },
         }
       )

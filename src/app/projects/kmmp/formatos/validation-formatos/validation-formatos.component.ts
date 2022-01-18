@@ -15,6 +15,7 @@ import { AzureService } from "app/core/azure/azure.service";
 import { TipoParametro } from "app/core/types/formatos.types";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
+import { PermissionService } from "app/core/permission/permission.service";
 
 @Component({
   selector: "app-validation-formatos",
@@ -68,7 +69,8 @@ export class ValidationFormatosComponent implements OnInit {
     private _fuseConfirmationService: FuseConfirmationService,
     private fb: FormBuilder,
     private _azureService: AzureService,
-    private formatosService: FormatosService
+    private formatosService: FormatosService,
+    public _permissonService: PermissionService
   ) {
     this.data.secciones = [{}];
     this.getActivityId();

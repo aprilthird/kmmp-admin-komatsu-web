@@ -72,7 +72,7 @@
               >
                 <mat-checkbox
                   [disabled]="loadingCheckbox"
-                  [color]="!item.esAccion ? 'primary' : 'accent'"
+                  [color]="!item.esAccion ? 'primary' : 'warn'"
                   [checked]="item.activo"
                   (change)="clickCheckbox(item)"
                   [ngClass]="{

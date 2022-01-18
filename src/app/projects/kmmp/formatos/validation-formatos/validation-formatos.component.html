@@ -192,24 +192,38 @@
                                 'border-solid': observation[j],
                                 'text-red-400': observation[j]
                               }"
+                              *ngIf="
+                                _permissonService.hasPermissonAccion(
+                                  '/admin/actividades/list',
+                                  'Comentar'
+                                )
+                              "
                             >
                               <mat-icon
                                 svgIcon="heroicons_outline:annotation"
                               ></mat-icon>
                               <span class="ml-2 mr-1">Observar</span>
                             </button>
-
-                            <button
-                              *ngIf="!groups[j]"
-                              mat-raised-button
-                              [color]="'secondary'"
-                              (click)="edit(j)"
+                            <ng-container
+                              *ngIf="
+                                _permissonService.hasPermissonAccion(
+                                  '/admin/actividades/list',
+                                  'Editar'
+                                )
+                              "
                             >
-                              <mat-icon
-                                svgIcon="heroicons_outline:pencil"
-                              ></mat-icon>
-                              <span class="ml-2 mr-1">Editar</span>
-                            </button>
+                              <button
+                                *ngIf="!groups[j]"
+                                mat-raised-button
+                                [color]="'secondary'"
+                                (click)="edit(j)"
+                              >
+                                <mat-icon
+                                  svgIcon="heroicons_outline:pencil"
+                                ></mat-icon>
+                                <span class="ml-2 mr-1">Editar</span>
+                              </button>
+                            </ng-container>
 
                             <button
                               *ngIf="groups[j]"

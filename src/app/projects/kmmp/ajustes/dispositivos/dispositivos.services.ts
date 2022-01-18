@@ -47,8 +47,9 @@ export class DispositivosService {
           page: 0,
           pageSize: 10,
           filter: {
-            fechaFin: "2022-02-02",
-            fechaIni: "2021-01-01",
+            fechaFin: "2022-02-01",
+            fechaIni: "2021-12-27",
+            tipo: 2,
           },
         }
       )
