@@ -224,7 +224,9 @@ export class FieldsComponent implements OnInit, AfterViewInit {
   }
 
   splitOptions(options: string): string[] {
-    return options.split(",");
+    if (options) {
+      return options.split(",");
+    }
   }
 
   setPlaceholcer(value: string): void {

@@ -27,7 +27,7 @@ export class FlotaDataFakeDB {
       },
     },
     dataLabels: {
-      enabled: false,
+      enable: false,
     },
     stroke: {
       show: true,
@@ -45,14 +45,15 @@ export class FlotaDataFakeDB {
     fill: {
       opacity: 1,
     },
-    tooltip: {
+  };
+
+  /**tooltip: {
       y: {
         formatter: function (val) {
           return "$ " + val + " thousands";
         },
       },
-    },
-  };
+    }, */
 
   public static SingleStatusXFlota = {
     series: [44, 55],
