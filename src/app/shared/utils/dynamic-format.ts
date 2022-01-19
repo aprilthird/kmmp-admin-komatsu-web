@@ -6,6 +6,7 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
       return {
         ...paramData,
         idParametro: 1,
+        regex: null,
       };
     case 11:
       return {

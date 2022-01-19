@@ -1,4 +1,3 @@
-import { ThisReceiver } from "@angular/compiler";
 import {
   Component,
   ElementRef,
@@ -15,6 +14,7 @@ import { FormControl, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { AzureService } from "app/core/azure/azure.service";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
+import { InputValidators } from "app/shared/config/input-validator.config";
 import { GroupI, ParamI } from "app/shared/models/formatos";
 import { paramsInfo } from "app/shared/utils/dynamic-format";
 import { Subject } from "rxjs";
@@ -74,64 +74,6 @@ export class FieldsComponent implements OnInit, AfterViewInit {
     this.delete = () => {
       this.columnToDelete.emit(this.paramData.columna);
     };
-  }
-
-  validateRegex(): void {
-    if (
-      this.paramData.obligatorio &&
-      (!this.paramData.regex || this.paramData.regex === "")
-    ) {
-      this.fieldData.setValidators([
-        Validators.required,
-        Validators.minLength(this.paramData.minCaracteres),
-        Validators.maxLength(this.paramData.maxCaracteres),
-      ]);
-    } else if (this.paramData.regex === "2") {
-      this.fieldData.setValidators([
-        Validators.email,
-        Validators.minLength(this.paramData.minCaracteres),
-        Validators.maxLength(this.paramData.maxCaracteres),
-      ]);
-    } else if (this.paramData.regex === "3") {
-      console.log("-----------");
-      this.fieldData.setValidators([
-        Validators.pattern(/^\d{8}(?:[-\s]\d{4})?$/),
-        Validators.minLength(this.paramData.minCaracteres),
-        Validators.maxLength(this.paramData.maxCaracteres),
-      ]);
-    }
-  }
-
-  getErrorMessage() {
-    /*if (this.fieldData.hasError("required")) {
-      return "Campo requerido";
-    } */
-
-    if (this.fieldData.hasError("email")) {
-      return "Formato de correo inválido";
-    } else if (
-      this.fieldData.errors?.pattern &&
-      this.fieldData.errors?.pattern?.requiredPattern ===
-        "/^d{8}(?:[-s]d{4})?$/"
-    ) {
-      if (this.fieldData.errors) return "Formato de DNI inválido";
-    } else if (
-      this.fieldData.errors?.minlength ||
-      this.fieldData.errors?.maxlength
-    ) {
-      if (this.fieldData.errors?.minlength)
-        return (
-          "Mínimo " +
-          this.fieldData.errors?.minlength?.requiredLength +
-          " caracteres permitidos"
-        );
-      else this.fieldData.errors?.maxlength;
-      return (
-        "Máximo " +
-        this.fieldData.errors?.maxlength?.requiredLength +
-        " caracteres permitidos"
-      );
-    }
   }
 
   editField(type: number): void {
@@ -275,5 +217,53 @@ export class FieldsComponent implements OnInit, AfterViewInit {
 
   save(): void {
     this.edit = false;
+  }
+
+  validateRegex(): void {
+    this.fieldData.setValidators([
+      this.paramData.obligatorio
+        ? Validators.required
+        : Validators.nullValidator,
+      Validators.minLength(this.paramData.minCaracteres),
+      Validators.maxLength(this.paramData.maxCaracteres),
+      !this.paramData.regex || this.paramData.regex === ""
+        ? Validators.nullValidator
+        : this.paramData.regex === "2"
+        ? Validators.email
+        : Validators.pattern(/^\d{8}(?:[-\s]\d{4})?$/),
+    ]);
+  }
+
+  getErrorMessage() {
+    if (this.fieldData.hasError("required")) {
+      return InputValidators.errorOutput.REQUIRED;
+    } else {
+      if (this.fieldData?.errors?.email) {
+        return InputValidators.errorOutput.EMAIL;
+      } else if (
+        this.fieldData?.errors?.pattern &&
+        this.fieldData?.errors?.pattern?.requiredPattern ===
+          InputValidators.DNI_PATTERN
+      ) {
+        return InputValidators.errorOutput.DNI;
+      } else if (
+        this.fieldData?.errors?.minlength?.requiredLength ||
+        this.fieldData?.errors?.maxlength?.requiredLength
+      ) {
+        if (this.fieldData.errors?.minlength) {
+          return (
+            InputValidators.errorOutput.MIN +
+            this.fieldData.errors?.minlength?.requiredLength +
+            InputValidators.errorOutput.ALLOWED
+          );
+        } else if (this.fieldData.errors?.maxlength) {
+          return (
+            InputValidators.errorOutput.MAX +
+            this.fieldData.errors?.maxlength?.requiredLength +
+            InputValidators.errorOutput.ALLOWED
+          );
+        }
+      }
+    }
   }
 }

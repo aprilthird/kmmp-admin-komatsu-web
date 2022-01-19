@@ -282,12 +282,15 @@
           (click)="$event.stopPropagation()"
           [color]="'primary'"
           class="p-3 pl-1"
+          [checked]="paramData.obligatorio"
+          (change)="setAttribute($event.checked, 'obligatorio')"
           >Obligatorio</mat-checkbox
         >
         <mat-checkbox
           (click)="$event.stopPropagation()"
           [color]="'primary'"
           class="p-3 pl-1"
+          [checked]="paramData.obligatorio"
           [checked]="paramData.visible"
           (change)="setAttribute($event.checked, 'visible')"
           >Visible</mat-checkbox
