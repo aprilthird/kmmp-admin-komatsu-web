@@ -5,24 +5,36 @@
       <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
     </button>
   </div>
-  <div class="inset-x-0 bottom-0 w-full" *ngIf="loading">
+  <div class="inset-x-0 bottom-0 w-full p-4" *ngIf="loading">
     <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
   </div>
 
   <div mat-dialog-content class="pb-6">
     <div class="flex flex-col w-full">
-      <mat-form-field floatLabel="always" class="w-100-p">
+      <!--<mat-form-field floatLabel="always" class="w-100-p">
         <mat-label class="font-bold">Equipo</mat-label>
-        <mat-select formControlName="equipo" placeholder="Ingrese un equipo">
+        <mat-select formControlName="idEquipo" placeholder="Ingrese un equipo">
           <mat-option *ngFor="let equipo of equipoOpt" [value]="equipo.id">{{
             equipo.nombre
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>-->
+
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label>Cliente</mat-label>
+        <mat-select
+          formControlName="idCliente"
+          placeholder="Ingrese un cliente"
+        >
+          <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">{{
+            cliente.nombre
           }}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field floatLabel="always" class="w-100-p">
         <mat-label>Modelo</mat-label>
-        <mat-select formControlName="modelo" placeholder="Ingrese un modelo">
+        <mat-select formControlName="idModelo" placeholder="Ingrese un modelo">
           <mat-option *ngFor="let modelo of modelosOpt" [value]="modelo.id">{{
             modelo.nombre
           }}</mat-option>
@@ -32,24 +44,13 @@
       <mat-form-field floatLabel="always" class="w-100-p">
         <mat-label class="font-bold">Clase de actividad</mat-label>
         <mat-select
-          formControlName="actividad"
+          formControlName="idClaseActividad"
           placeholder="Ingrese una actividad"
         >
           <mat-option
             *ngFor="let actividad of actividadOpt"
             [value]="actividad.id"
             >{{ actividad.nombre }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label class="font-bold">Estado</mat-label>
-        <mat-select formControlName="estados" placeholder="Ingrese un estados">
-          <mat-option
-            *ngFor="let estado of filters.estados"
-            [value]="estado.id"
-            >{{ estado.name }}</mat-option
           >
         </mat-select>
       </mat-form-field>
@@ -63,13 +64,7 @@
     <button
       (click)="matdialigRef.close()"
       mat-button
-      class="
-        ml-4
-        bg-gray-50
-        border-solid border border-accent-300
-        text-gray-700
-        shadow-none
-      "
+      class="ml-4 bg-gray-50 border-solid border border-accent-300 text-gray-700 shadow-none"
     >
       Cancelar
     </button>

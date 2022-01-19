@@ -19,6 +19,7 @@ export class FilterDialogComponent implements OnInit {
   loading: boolean;
   modelosOpt: any;
   actividadOpt: any;
+  clientes: any;
   equipoOpt: any;
   filterService: FilterI;
 
@@ -29,11 +30,10 @@ export class FilterDialogComponent implements OnInit {
     private listadoService: ListadoService
   ) {
     this.form = this.fb.group({
-      modelo: new FormControl(""),
-      equipo: new FormControl(""),
-      actividad: new FormControl(""),
-      tipo_solicitud: new FormControl(""),
-      estados: new FormControl(""),
+      idCliente: new FormControl(0),
+      idModelo: new FormControl(0),
+      idEquipo: new FormControl(0),
+      idClaseActividad: new FormControl(0),
     });
   }
 
@@ -44,14 +44,17 @@ export class FilterDialogComponent implements OnInit {
 
   private getInboxes(): void {
     this.loading = true;
+
     let equipo = this.serviceAct.getList(2).pipe(map((x: any) => x.body.data));
     let modelos = this.serviceAct.getList(5).pipe(map((x: any) => x.body.data));
     let c_act = this.serviceAct.getList(7).pipe(map((x: any) => x.body.data));
+    let cliente = this.serviceAct.getList(1).pipe(map((x: any) => x.body.data));
 
-    forkJoin([equipo, modelos, c_act]).subscribe((result: any) => {
+    forkJoin([equipo, modelos, c_act, cliente]).subscribe((result: any) => {
       this.equipoOpt = result[0];
       this.modelosOpt = result[1];
       this.actividadOpt = result[2];
+      this.clientes = result[3];
       this.loading = false;
     });
   }
@@ -59,8 +62,7 @@ export class FilterDialogComponent implements OnInit {
   applyFilters(): void {
     this.listadoService
       .getFormatos({
-        idClaseActividad: this.form.controls["actividad"].value,
-        estado: this.form.controls["estados"].value,
+        ...this.form.value,
       })
       .subscribe((resp) => {
         this.listadoService._filter.next(this.form.value);
@@ -85,10 +87,10 @@ export class FilterDialogComponent implements OnInit {
   }
 
   private setFilter(filter: FilterI): void {
-    this.form.controls["modelo"].setValue(filter.modelo);
-    this.form.controls["equipo"].setValue(filter.equipo);
-    this.form.controls["actividad"].setValue(filter.actividad);
-    this.form.controls["estado"].setValue(filter.estado);
+    this.form.controls["idModelo"].setValue(filter.modelo);
+    this.form.controls["idEquipo"].setValue(filter.equipo);
+    this.form.controls["idClaseActividad"].setValue(filter.actividad);
+    this.form.controls["estados"].setValue(filter.estado);
   }
 }
 

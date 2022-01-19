@@ -1,23 +1,22 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { DialogAddCommentComponent } from "../components/dialog-add-comment/dialog-add-comment.component";
-import { DialogValidateFormatComponent } from "../components/dialog-validate-format/dialog-validate-format.component";
-import { ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-
-//SERVICES
-import { ActivitiesService } from "../../actividades/activities.service";
-import { EditarFormatoService } from "../editar-formato/editar-formato.service";
-import { FormatosService } from "../formatos.service";
-import { AzureService } from "app/core/azure/azure.service";
-
-//CONFIG
-import { TipoParametro } from "app/core/types/formatos.types";
+import { MatDialog } from "@angular/material/dialog";
+import { ActivatedRoute } from "@angular/router";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
-import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
+import { AzureService } from "app/core/azure/azure.service";
 import { PermissionService } from "app/core/permission/permission.service";
+import { TipoParametro } from "app/core/types/formatos.types";
+import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { environment } from "environments/environment";
 
+import { ActivitiesService } from "../../actividades/activities.service";
+import { DialogAddCommentComponent } from "../components/dialog-add-comment/dialog-add-comment.component";
+import { DialogValidateFormatComponent } from "../components/dialog-validate-format/dialog-validate-format.component";
+import { EditarFormatoService } from "../editar-formato/editar-formato.service";
+import { FormatosService } from "../formatos.service";
+
+//SERVICES
+//CONFIG
 @Component({
   selector: "app-validation-formatos",
   templateUrl: "./validation-formatos.component.html",
@@ -34,6 +33,7 @@ export class ValidationFormatosComponent implements OnInit {
   formatoId: any;
   loaded: boolean;
   data: any = {};
+  allSectionValidates = [];
 
   filesLoading: {
     [key: string]: boolean;
@@ -219,6 +219,7 @@ export class ValidationFormatosComponent implements OnInit {
   }*/
 
   private setCollapsableNav(): void {
+    this.allSectionValidates = [];
     this.menuData = [
       {
         id: "secciones",
@@ -228,6 +229,14 @@ export class ValidationFormatosComponent implements OnInit {
       },
     ];
     this.sections.forEach((section, index) => {
+      if (
+        section.grupos[0].parametros.some(
+          (parametro) => parametro.seccionValida
+        )
+      ) {
+        this.allSectionValidates.push(true);
+      }
+
       const params = section.grupos.map((group) =>
         group.parametros.some((param) => param.observar)
       );
@@ -252,6 +261,8 @@ export class ValidationFormatosComponent implements OnInit {
         },
       });
     });
+
+    this.validateFormat();
   }
 
   getMenuData(): void {
@@ -531,7 +542,7 @@ export class ValidationFormatosComponent implements OnInit {
     });
 
     dialogRef.componentInstance.success.subscribe((resp) => {
-      if (resp.code === 200 && resp.error === 0) {
+      if (resp.code === 200 || resp.success) {
         this.currentSectionData.grupos[0].parametros[0].seccionValida = true;
         this.validateSection();
         this.setCollapsableNav();

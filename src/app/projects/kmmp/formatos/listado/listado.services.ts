@@ -7,6 +7,7 @@ import {
 } from "app/core/types/http.types";
 import { Pagination } from "app/core/types/list.types";
 import { environment } from "environments/environment";
+import moment from "moment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { FilterI } from "./../../../../shared/models/filters-model";
@@ -48,14 +49,13 @@ export class ListadoService {
       page,
       pageSize,
       idClaseActividad,
-      estado,
-      ...filter
+      idCliente,
+      idModelo,
     }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<Formato[]>> {
-    console.log("filter - ", filter);
     return this._httpClient
       .post<PaginationResponse<Formato[]>>(
         environment.apiUrl + "/Core/ObtenerFormatosPaginado",
@@ -64,8 +64,10 @@ export class ListadoService {
           pageSize: 10,
           filter: {
             idClaseActividad,
-            fechaIni: "2021-11-01T00:07:23.160Z",
-            fechaFin: "2022-01-20T00:07:23.160Z",
+            idCliente,
+            idModelo,
+            fechaInicio: moment().subtract(1, "years").format("yyyy-MM-DD"),
+            fechaFin: moment().format("yyyy-MM-DD"),
           },
         }
       )
