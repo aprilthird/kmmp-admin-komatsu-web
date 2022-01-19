@@ -62,8 +62,7 @@ export class NavigationService {
 
           // Función permite la navegación de manera visual en la vista
           const getNavigation = (e) => {
-            console.log(e.nombre, e.activo, e.nivel);
-            if (!e.activo) return [];
+            if (!e.activo || e.nombre === "Perfil") return [];
 
             // Si la navegación tiene ruta se agrega como permiso a dicha ruta
             if (e.ruta) {
@@ -100,9 +99,6 @@ export class NavigationService {
             getNavigation(e)
           );
           this._permissionsServices.updatPermissions$ = permissions;
-
-          //nextNavigation.default.reverse();
-          //nextNavigation.horizontal.reverse();
 
           localStorage.setItem("navigation", JSON.stringify(nextNavigation));
           localStorage.setItem("permissions", JSON.stringify(permissions));

@@ -32,11 +32,12 @@ export class EditarPerfilService {
       .get<any>(environment.apiUrl + "/Seguridad/ObtenerArbol/" + idPerfil)
       .pipe(
         tap((response) => {
-          this._menu.next(
-            response.body.filter(
-              (x) => x.idOpcion !== 32 && x.idOpcion !== 33 && x.idOpcion !== 34
-            )
-          );
+          response.body.map((x) => {
+            if (x.idOpcion === 34) return (x.nombre = "Perfil para app");
+            if (x.idOpcion === 32) return (x.nombre = "Editar perfil en app");
+            if (x.idOpcion === 33) return (x.nombre = "Comentar perfil en app");
+          });
+          this._menu.next(response.body);
         })
       );
   }

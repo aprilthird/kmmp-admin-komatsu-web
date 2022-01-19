@@ -205,6 +205,23 @@ export class HorizontalGroupComponent implements OnInit {
         return x;
       }
     });
+
+    /**Iterar todas las posiciones de la columna */
+
+    const columns = this.groupData.parametros
+      .filter((data) => data.activo)
+      .map((x) => x.columna);
+
+    const uniqueIds = [...new Set(columns)];
+    console.log("uniqueIds ", uniqueIds);
+    console.log("iterations ", uniqueIds.length - position);
+
+    //simplest way...
+    const simplestWay = Math.max.apply(null, columns);
+    console.log("iterations simplest way", simplestWay - position);
+
+    /**Iterar todas las posiciones de la columna */
+
     this._editarFormatoService
       .createDato({
         ...this.groupData,

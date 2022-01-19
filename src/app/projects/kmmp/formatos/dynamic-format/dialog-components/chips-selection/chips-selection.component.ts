@@ -26,7 +26,10 @@ export class ChipsSelectionComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.paramData.dato && this.paramData.dato.length > 0) {
-      const optionSelect = this.paramData.dato.split(",");
+      let optionSelect = [];
+      if (this.paramData.idParametro === 10) {
+        optionSelect = this.paramData.dato.split(",");
+      } else optionSelect = [];
       optionSelect.map((option) => this.options.push({ name: option }));
     }
   }

@@ -69,6 +69,8 @@ export class ClaseActividadService {
         estado: 0,
         tipo: 9,
         idClaseActividad: idClaseActividad,
+        fechaFin: "2022-02-01",
+        fechaIni: "2021-08-01",
       },
     };
     const endpoint =
