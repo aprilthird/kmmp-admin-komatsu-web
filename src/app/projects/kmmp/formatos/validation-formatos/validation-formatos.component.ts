@@ -43,6 +43,10 @@ export class ValidationFormatosComponent implements OnInit {
     [key: string]: boolean;
   } = {};
 
+  submitEditGroup: {
+    [key: string]: boolean;
+  } = {};
+
   observation: {
     [key: string]: boolean;
   } = {};
@@ -370,6 +374,7 @@ export class ValidationFormatosComponent implements OnInit {
   }
 
   onSubmit(e: MouseEvent, indexGroup: number, paramIdx?: number): void {
+    this.submitEditGroup[`${indexGroup}`] = true;
     const data = [...this.sections];
 
     data.forEach((seccion, i) => {
@@ -396,12 +401,15 @@ export class ValidationFormatosComponent implements OnInit {
         });
       });
     });
+
     const payload = {
-      ...this.data,
       secciones: data,
+      idFormato: data[0].grupos[0].parametros[0].idFormato,
       idActividadFormtao: Number(this.formatoId),
     };
+
     this._editarFormatoService.saveAssignation(payload).subscribe(() => {
+      this.submitEditGroup[`${indexGroup}`] = false;
       Object.keys(this.form.controls).forEach((key) => {
         this.form.get(key).disable();
       });
@@ -410,14 +418,14 @@ export class ValidationFormatosComponent implements OnInit {
   }
 
   checkImgParam(parametro, j, k): void {
-    if (parametro.valor === null || parametro.valor === "") {
+    parametro.valor = String(
+      this.form.get(this.getParametroControl({ j, k })).value
+    );
+    if (!parametro.valor || parametro.valor === "") {
       this.form
         .get(this.getParametroControl({ j, k }))
         .setValue(parametro.dato);
     }
-    parametro.valor = String(
-      this.form.get(this.getParametroControl({ j, k })).value
-    );
   }
 
   checkSignParam(paramIdx, parametro, indexGroup, k, j): void {
@@ -565,7 +573,7 @@ export class ValidationFormatosComponent implements OnInit {
 
   addComment(groupIdx: number, paramIdx: number, comment): void {
     const data = {
-      data: this.data,
+      data: { ...this.data, idActividadFormato: Number(this.formatoId) },
       groupIndex: groupIdx,
       paramIndex: paramIdx,
       sectionId: this.sectionId,

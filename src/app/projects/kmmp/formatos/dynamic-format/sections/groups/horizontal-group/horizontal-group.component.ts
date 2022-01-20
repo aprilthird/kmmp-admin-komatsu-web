@@ -208,21 +208,18 @@ export class HorizontalGroupComponent implements OnInit {
 
     /**Iterar todas las posiciones de la columna */
 
-    const columns = this.groupData.parametros
+    /*const columns = this.groupData.parametros
       .filter((data) => data.activo)
       .map((x) => x.columna);
 
-    const uniqueIds = [...new Set(columns)];
-    console.log("uniqueIds ", uniqueIds);
-    console.log("iterations ", uniqueIds.length - position);
+    const uniqueIds = [...new Set(columns)];*/
+    const itineraions = this.highestColumn - position;
 
-    //simplest way...
-    const simplestWay = Math.max.apply(null, columns);
-    console.log("iterations simplest way", simplestWay - position);
+    for (let i = 0; i < itineraions; i++) {}
 
     /**Iterar todas las posiciones de la columna */
 
-    this._editarFormatoService
+    /*this._editarFormatoService
       .createDato({
         ...this.groupData,
         parametros: posToDelete,
@@ -248,7 +245,7 @@ export class HorizontalGroupComponent implements OnInit {
               this._groups.loadGrupos();
             });
         }
-      });
+      });*/
   }
 
   /*async addParam(rowNumber?: number) {
