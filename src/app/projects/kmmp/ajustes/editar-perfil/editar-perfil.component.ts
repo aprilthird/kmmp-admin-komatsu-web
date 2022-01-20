@@ -59,7 +59,7 @@ export class EditarPerfilComponent implements OnInit {
           activo: currentMenu.activo,
           children: [],
           index: index,
-          acciones: currentMenu?.acciones,
+          acciones: [],
         };
 
         if (currentMenu.subMenu && currentMenu.subMenu.length > 0) {
@@ -67,6 +67,12 @@ export class EditarPerfilComponent implements OnInit {
             response["children"].push(
               generateSubMenu(element, level + 1, index)
             );
+          });
+        }
+
+        if (currentMenu.acciones && currentMenu.acciones.length > 0) {
+          currentMenu.acciones.forEach((element) => {
+            response["acciones"].push(generateSubMenu(element, null, null));
           });
         }
 
