@@ -286,7 +286,7 @@
                             }"
                           >-->
                         <div
-                          class="grid flex-row overflow-x-auto overflow-y-hidden w-full"
+                          class="grid flex-row overflow-x-auto overflow-y-hidden w-full gap-4"
                         >
                           <ng-container
                             *ngFor="
@@ -455,7 +455,10 @@
                                 </div>
 
                                 <!-- FIRMA -->
-                                <div *ngSwitchCase="7" class="w-full">
+                                <div
+                                  *ngSwitchCase="7"
+                                  class="w-full sign-inform"
+                                >
                                   <span
                                     class="text-gray-800 font-medium"
                                     *ngIf="parametro.visible"
