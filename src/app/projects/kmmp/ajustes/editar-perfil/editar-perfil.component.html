@@ -79,16 +79,28 @@
                     'text-gray-500': item.esAccion
                   }"
                 >
-                  {{ item.title }}
+                  {{ item.title ? item.title : item.nombre }}
                 </mat-checkbox>
                 <ul
-                  *ngIf="item.children.length > 0"
+                  *ngIf="item?.children?.length > 0"
                   [ngStyle]="{ 'padding-left.px': 20, 'margin-botom.px': 8 }"
                 >
                   <ng-container
                     *ngTemplateOutlet="
                       recursiveListTmpl;
                       context: { list: item.children }
+                    "
+                  ></ng-container>
+                </ul>
+
+                <ul
+                  *ngIf="item?.acciones?.length > 0"
+                  [ngStyle]="{ 'padding-left.px': 20, 'margin-botom.px': 8 }"
+                >
+                  <ng-container
+                    *ngTemplateOutlet="
+                      recursiveListTmpl;
+                      context: { list: item.acciones }
                     "
                   ></ng-container>
                 </ul>

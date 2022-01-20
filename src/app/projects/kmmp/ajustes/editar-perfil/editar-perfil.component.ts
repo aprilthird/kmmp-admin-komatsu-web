@@ -59,6 +59,7 @@ export class EditarPerfilComponent implements OnInit {
           activo: currentMenu.activo,
           children: [],
           index: index,
+          acciones: currentMenu?.acciones,
         };
 
         if (currentMenu.subMenu && currentMenu.subMenu.length > 0) {
@@ -76,7 +77,6 @@ export class EditarPerfilComponent implements OnInit {
       response.forEach((element, index) => {
         TREE_DATA.push(generateSubMenu(element, 1, index));
       });
-
       this.list = TREE_DATA;
     });
   }
@@ -142,14 +142,16 @@ export class EditarPerfilComponent implements OnInit {
     this.sendCheckRequest(value);
 
     if (value.activo) {
-      let parent = this.list.find((x) => x.index === value.index);
-      parent.activo = true;
-      this.sendCheckRequest(parent);
+      let parent = this.list.find((x) => x?.index === value?.index);
+      if (parent) {
+        parent.activo = true;
+        this.sendCheckRequest(parent);
+      }
     }
-    if (value.children.length > 0 && value.activo) {
-      this.selectAll(value.children, true);
-    } else if (value.children.length > 0 && !value.activo) {
-      this.selectAll(value.children, false);
+    if (value?.children?.length > 0 && value.activo) {
+      this.selectAll(value?.children, true);
+    } else if (value?.children?.length > 0 && !value.activo) {
+      this.selectAll(value?.children, false);
     }
 
     setTimeout(() => {
