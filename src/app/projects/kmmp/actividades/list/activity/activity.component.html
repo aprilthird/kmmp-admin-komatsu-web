@@ -108,7 +108,11 @@
           <ng-container *ngIf="format.activo">
             <button
               mat-button
-              class="w-60 border-red-300 rounded-md border-format-button"
+              class="w-60 rounded-md border-format-button"
+              [ngClass]="{
+                'border-blue-600': format?.avance === 100,
+                'border-red-300': format?.avance < 100
+              }"
               (click)="redirect(format)"
             >
               <div class="flex flex-row justify-between items-center w-52">
@@ -126,7 +130,7 @@
                   ></mat-icon>
                   <mat-icon
                     *ngIf="format?.avance === 100"
-                    class="text-red-300"
+                    class="text-green-600"
                     svgIcon="heroicons_outline:check-circle"
                   ></mat-icon>
                 </div>
