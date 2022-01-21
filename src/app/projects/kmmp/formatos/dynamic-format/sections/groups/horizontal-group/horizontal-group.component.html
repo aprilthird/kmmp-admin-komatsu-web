@@ -51,8 +51,8 @@
               class="list-box"
               [groupData]="groupData"
               [paramData]="paramData"
-              (columnToDelete)="delete($event, 'column')"
-              (rowToDelete)="delete($event, 'row')"
+              (columnToDelete)="deleteTMP($event, 'column')"
+              (rowToDelete)="deleteTMP($event, 'row')"
               [lowestColumn]="lowestColumn"
               [lowestRow]="lowestRow"
             ></app-fields>

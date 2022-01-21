@@ -60,12 +60,6 @@ export class HorizontalGroupComponent implements OnInit {
     /**for actives */
     let lastColumn = [];
 
-    console.log(
-      [...this.groupData.parametros].map((data) => {
-        if (data.columna === highestColumnActive && data.activo) return data;
-      })
-    );
-
     [...this.groupData.parametros].map((data) => {
       if (data.columna === highestColumnActive && data.activo)
         lastColumn.push(data);
@@ -215,9 +209,8 @@ export class HorizontalGroupComponent implements OnInit {
       })
       .subscribe(() => {
         const itineraions =
-          positionType === "columna"
-            ? this.highestColumn
-            : this.highestRow - position;
+          (positionType === "columna" ? this.highestColumn : this.highestRow) -
+          position;
 
         for (let i = 0; i < itineraions; i++) {
           setTimeout(() => {
@@ -231,7 +224,18 @@ export class HorizontalGroupComponent implements OnInit {
                 ...this.groupData,
                 parametros: elementToMove,
               })
-              .subscribe(() => {});
+              .subscribe(() => {
+                if (
+                  (positionType === "columna"
+                    ? this.highestColumn
+                    : this.highestRow) -
+                    position ===
+                  i + 1
+                ) {
+                  this.isLoading = false;
+                  this._groups.loadGrupos();
+                }
+              });
           }, i * 2000);
         }
       });
