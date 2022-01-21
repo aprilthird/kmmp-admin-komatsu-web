@@ -85,7 +85,7 @@ export class EquiposComponent implements OnInit {
 
   createEquipo(): void {
     this.matDialog
-      .open(DialogAddEquiposComponent, { width: "400px" })
+      .open(DialogAddEquiposComponent, { width: "400px", maxHeight: "100vh" })
       .afterClosed()
       .subscribe(() => this.loadData());
   }

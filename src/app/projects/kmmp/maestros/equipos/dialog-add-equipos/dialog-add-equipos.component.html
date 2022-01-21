@@ -1,6 +1,6 @@
-<form [formGroup]="form" class="">
+<form [formGroup]="form">
   <div mat-dialog-title class="flex justify-between items-center">
-    <h4>Agregar equipo</h4>
+    <h4 class="font-bold">Agregar equipo</h4>
     <button mat-icon-button type="button" (click)="matdialigRef.close()">
       <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
     </button>
@@ -16,6 +16,7 @@
           type="text"
           formControlName="nombre"
           placeholder="Ingrese nombre"
+          autocomplete="off"
         />
         <mat-error *ngIf="form.controls['nombre'].invalid">{{
           matErrorMsg
@@ -96,13 +97,7 @@
     <button
       (click)="matdialigRef.close()"
       mat-button
-      class="
-        ml-4
-        bg-gray-50
-        border-solid border border-accent-300
-        text-gray-700
-        shadow-none
-      "
+      class="ml-4 bg-gray-50 border-solid border border-accent-300 text-gray-700 shadow-none"
     >
       Cancelar
     </button>

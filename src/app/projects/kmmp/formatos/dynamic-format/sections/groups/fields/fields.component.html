@@ -1,149 +1,380 @@
 <div>
   <div class="flex gap-2 items-center flex">
     <div class="flex flex-col items-center">
-      <!--<mat-icon
-        *ngIf="paramData.fila === lowestRow"
-        (click)="deleteColumn()"
-        style="cursor: pointer; margin-top: -24px"
-        [svgIcon]="'heroicons_solid:trash'"
-        matTooltip="Eliminar toda la columna"
-      ></mat-icon>-->
       <div>
         <ng-container [ngSwitch]="paramData.idParametro">
-          <mat-form-field
-            *ngSwitchCase="1"
-            class="font-semibold w-52"
-            floatLabel="always"
-          >
-            <mat-label *ngIf="paramData.visible">{{
-              paramData.label
-            }}</mat-label>
-            <input
-              id="{{ paramData.idGrupo + paramData.id }}"
-              [disabled]="!paramData.editable"
-              matInput
-              type="text"
-              [formControl]="fieldData"
-              placeholder="{{ paramData.placeholder }}"
-            />
-            <mat-error>{{ getErrorMessage() }}</mat-error>
-            <mat-progress-spinner
-              [mode]="'indeterminate'"
-              *ngIf="isLoading"
-              [diameter]="16"
-            ></mat-progress-spinner>
-          </mat-form-field>
-
-          <mat-form-field *ngSwitchCase="2" floatLabel="always" class="w-52">
-            <mat-label *ngIf="paramData.visible">{{
-              paramData.label
-            }}</mat-label>
-            <input
-              id="{{ paramData.idGrupo + paramData.id }}"
-              matInput
-              [disabled]="!paramData.editable"
-              type="number"
-              placeholder="{{ paramData.placeholder }}"
-            />
-            <mat-progress-spinner
-              [mode]="'indeterminate'"
-              *ngIf="isLoading"
-              [diameter]="16"
-            ></mat-progress-spinner>
-          </mat-form-field>
-
-          <mat-form-field *ngSwitchCase="3" floatLabel="always" class="w-52">
-            <mat-label *ngIf="paramData.visible">{{
-              paramData.label
-            }}</mat-label>
-            <textarea
-              class="resize-none"
-              matInput
-              [disabled]="!paramData.editable"
-              placeholder="{{ paramData.placeholder }}"
-            ></textarea>
-            <mat-progress-spinner
-              [mode]="'indeterminate'"
-              *ngIf="isLoading"
-              [diameter]="16"
-            ></mat-progress-spinner>
-          </mat-form-field>
-
-          <mat-form-field *ngSwitchCase="5" floatLabel="always" class="w-52">
-            <mat-label *ngIf="paramData.visible">{{
-              paramData.label
-            }}</mat-label>
-            <input
-              matInput
-              [disabled]="!paramData.editable"
-              [matDatepicker]="datepicker"
-              placeholder="{{ paramData.placeholder }}"
-            />
-            <mat-progress-spinner
-              [mode]="'indeterminate'"
-              *ngIf="isLoading"
-              [diameter]="16"
-            ></mat-progress-spinner>
-
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="datepicker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #datepicker>
-              <mat-datepicker-actions>
-                <button mat-button matDatepickerCancel>Cancel</button>
-                <button mat-raised-button color="primary" matDatepickerApply>
-                  Aplicar
-                </button>
-              </mat-datepicker-actions>
-            </mat-datepicker>
-          </mat-form-field>
-
-          <div *ngSwitchCase="8" class="w-52">
-            <p
-              [disabled]="!paramData.editable"
-              [hidden]="edit"
-              class="text-gray-900 font-medium cursor-pointer"
-              style="
-                width: 13rem;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                max-height: 5rem;
-              "
-              [matTooltip]="paramData.label"
-              (click)="editlabel()"
-            >
-              {{ paramData.label }}
-            </p>
-            <div class="flex gap-1">
-              <input
-                [hidden]="!edit"
-                #nameInput
-                class="sm:text-lg leading-6 truncate"
-                style="width: 13rem"
-                value="{{ paramData.label }}"
-              />
-              <mat-icon
-                class="cursor-pointer"
-                *ngIf="edit"
-                [svgIcon]="'heroicons_outline:save'"
-                matTooltip="'Guardar'"
-                (click)="saveLabel()"
+          <ng-container *ngSwitchCase="1">
+            <ng-container>
+              <div
+                [disabled]="!paramData.editable"
+                [hidden]="edit"
+                class="text-gray-900 font-medium cursor-pointer"
+                style="
+                  width: 10rem;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  max-height: 5rem;
+                "
+                [matTooltip]="paramData.label"
               >
-              </mat-icon>
-            </div>
-            <mat-progress-spinner
-              [mode]="'indeterminate'"
-              *ngIf="isLoading"
-              [diameter]="16"
-            ></mat-progress-spinner>
+                <label
+                  class="label-edit cursor-pointer"
+                  [ngStyle]="{
+                    visibility: !paramData.visible
+                      ? 'hidden'
+                      : !paramData.label || paramData.label === ''
+                      ? 'hidden'
+                      : 'visible'
+                  }"
+                  >{{
+                    !paramData.label || paramData.label === ""
+                      ? "a"
+                      : paramData.label
+                  }}</label
+                >
+              </div>
+              <div class="flex gap-1" style="width: 10rem">
+                <input
+                  [hidden]="!edit"
+                  #nameInput
+                  class="sm:text-lg leading-6 truncate"
+                  value="{{ paramData.label }}"
+                />
+                <mat-icon
+                  class="cursor-pointer"
+                  *ngIf="edit"
+                  [svgIcon]="'heroicons_outline:save'"
+                  matTooltip="'Guardar'"
+                  (click)="saveLabel(1)"
+                >
+                </mat-icon>
+              </div>
+            </ng-container>
+            <mat-form-field
+              *ngSwitchCase="1"
+              class="font-semibold w-40"
+              floatLabel="always"
+            >
+              <input
+                id="{{ paramData.idGrupo + paramData.id }}"
+                [disabled]="!paramData.editable"
+                matInput
+                type="text"
+                [formControl]="fieldData"
+                placeholder="{{ paramData.placeholder }}"
+              />
+              <mat-error>{{ getErrorMessage() }}</mat-error>
+              <mat-progress-spinner
+                [mode]="'indeterminate'"
+                *ngIf="isLoading"
+                [diameter]="16"
+              ></mat-progress-spinner>
+            </mat-form-field>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="2">
+            <ng-container>
+              <div
+                [disabled]="!paramData.editable"
+                [hidden]="edit"
+                class="text-gray-900 font-medium cursor-pointer"
+                style="
+                  width: 10rem;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  max-height: 5rem;
+                "
+                [matTooltip]="paramData.label"
+              >
+                <label
+                  class="label-edit cursor-pointer"
+                  [ngStyle]="{
+                    visibility: !paramData.visible
+                      ? 'hidden'
+                      : !paramData.label || paramData.label === ''
+                      ? 'hidden'
+                      : 'visible'
+                  }"
+                  >{{
+                    !paramData.label || paramData.label === ""
+                      ? "a"
+                      : paramData.label
+                  }}</label
+                >
+              </div>
+              <div class="flex gap-1" style="width: 10rem">
+                <input
+                  [hidden]="!edit"
+                  #nameInput
+                  class="sm:text-lg leading-6 truncate"
+                  value="{{ paramData.label }}"
+                />
+                <mat-icon
+                  class="cursor-pointer"
+                  *ngIf="edit"
+                  [svgIcon]="'heroicons_outline:save'"
+                  matTooltip="'Guardar'"
+                  (click)="saveLabel(1)"
+                >
+                </mat-icon>
+              </div>
+            </ng-container>
+            <mat-form-field floatLabel="always" class="w-40">
+              <input
+                id="{{ paramData.idGrupo + paramData.id }}"
+                matInput
+                [disabled]="!paramData.editable"
+                type="number"
+                placeholder="{{ paramData.placeholder }}"
+              />
+              <mat-progress-spinner
+                [mode]="'indeterminate'"
+                *ngIf="isLoading"
+                [diameter]="16"
+              ></mat-progress-spinner>
+            </mat-form-field>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="3">
+            <ng-container>
+              <div
+                [disabled]="!paramData.editable"
+                [hidden]="edit"
+                class="text-gray-900 font-medium cursor-pointer"
+                style="
+                  width: 10rem;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  max-height: 5rem;
+                "
+                [matTooltip]="paramData.label"
+              >
+                <label
+                  class="label-edit cursor-pointer"
+                  [ngStyle]="{
+                    visibility: !paramData.visible
+                      ? 'hidden'
+                      : !paramData.label || paramData.label === ''
+                      ? 'hidden'
+                      : 'visible'
+                  }"
+                  >{{
+                    !paramData.label || paramData.label === ""
+                      ? "a"
+                      : paramData.label
+                  }}</label
+                >
+              </div>
+              <div class="flex gap-1" style="width: 10rem">
+                <input
+                  [hidden]="!edit"
+                  #nameInput
+                  class="sm:text-lg leading-6 truncate"
+                  value="{{ paramData.label }}"
+                />
+                <mat-icon
+                  class="cursor-pointer"
+                  *ngIf="edit"
+                  [svgIcon]="'heroicons_outline:save'"
+                  matTooltip="'Guardar'"
+                  (click)="saveLabel(3)"
+                >
+                </mat-icon>
+              </div>
+            </ng-container>
+            <mat-form-field floatLabel="always" class="w-40">
+              <textarea
+                class="resize-none"
+                matInput
+                [disabled]="!paramData.editable"
+                placeholder="{{ paramData.placeholder }}"
+              ></textarea>
+              <mat-progress-spinner
+                [mode]="'indeterminate'"
+                *ngIf="isLoading"
+                [diameter]="16"
+              ></mat-progress-spinner>
+            </mat-form-field>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="5">
+            <ng-container>
+              <div
+                [disabled]="!paramData.editable"
+                [hidden]="edit"
+                class="text-gray-900 font-medium cursor-pointer"
+                style="
+                  width: 10rem;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  max-height: 5rem;
+                "
+                [matTooltip]="paramData.label"
+              >
+                <label
+                  class="label-edit cursor-pointer"
+                  [ngStyle]="{
+                    visibility: !paramData.visible
+                      ? 'hidden'
+                      : !paramData.label || paramData.label === ''
+                      ? 'hidden'
+                      : 'visible'
+                  }"
+                  >{{
+                    !paramData.label || paramData.label === ""
+                      ? "a"
+                      : paramData.label
+                  }}</label
+                >
+              </div>
+              <div class="flex gap-1" style="width: 10rem">
+                <input
+                  [hidden]="!edit"
+                  #nameInput
+                  class="sm:text-lg leading-6 truncate"
+                  value="{{ paramData.label }}"
+                />
+                <mat-icon
+                  class="cursor-pointer"
+                  *ngIf="edit"
+                  [svgIcon]="'heroicons_outline:save'"
+                  matTooltip="'Guardar'"
+                  (click)="saveLabel(5)"
+                >
+                </mat-icon>
+              </div>
+            </ng-container>
+            <mat-form-field floatLabel="always" class="w-40">
+              <input
+                matInput
+                [disabled]="!paramData.editable"
+                [matDatepicker]="datepicker"
+                placeholder="{{ paramData.placeholder }}"
+              />
+              <mat-progress-spinner
+                [mode]="'indeterminate'"
+                *ngIf="isLoading"
+                [diameter]="16"
+              ></mat-progress-spinner>
+
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="datepicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #datepicker>
+                <mat-datepicker-actions>
+                  <button mat-button matDatepickerCancel>Cancel</button>
+                  <button mat-raised-button color="primary" matDatepickerApply>
+                    Aplicar
+                  </button>
+                </mat-datepicker-actions>
+              </mat-datepicker>
+            </mat-form-field>
+          </ng-container>
+
+          <div *ngSwitchCase="8" class="w-40">
+            <ng-container>
+              <div
+                [disabled]="!paramData.editable"
+                [hidden]="edit"
+                class="text-gray-900 font-medium cursor-pointer"
+                style="
+                  width: 10rem;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  max-height: 5rem;
+                "
+                [matTooltip]="paramData.label"
+              >
+                <label
+                  class="label-edit cursor-pointer"
+                  [ngStyle]="{
+                    visibility: !paramData.visible
+                      ? 'hidden'
+                      : !paramData.label || paramData.label === ''
+                      ? 'hidden'
+                      : 'visible'
+                  }"
+                  >{{
+                    !paramData.label || paramData.label === ""
+                      ? "a"
+                      : paramData.label
+                  }}</label
+                >
+              </div>
+              <div class="flex gap-1" style="width: 10rem">
+                <input
+                  [hidden]="!edit"
+                  #nameInput
+                  class="sm:text-lg leading-6 truncate"
+                  value="{{ paramData.label }}"
+                />
+                <mat-icon
+                  class="cursor-pointer"
+                  *ngIf="edit"
+                  [svgIcon]="'heroicons_outline:save'"
+                  matTooltip="'Guardar'"
+                  (click)="saveLabel(8)"
+                >
+                </mat-icon>
+                <mat-progress-spinner
+                  [mode]="'indeterminate'"
+                  *ngIf="isLoading"
+                  [diameter]="16"
+                ></mat-progress-spinner>
+              </div>
+            </ng-container>
           </div>
 
-          <div *ngSwitchCase="9" class="w-52">
+          <div *ngSwitchCase="9" class="w-40">
+            <ng-container>
+              <div
+                [disabled]="!paramData.editable"
+                [hidden]="edit"
+                class="text-gray-900 font-medium cursor-pointer"
+                style="
+                  width: 10rem;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  max-height: 5rem;
+                "
+                [matTooltip]="paramData.label"
+              >
+                <label
+                  class="label-edit cursor-pointer"
+                  [ngStyle]="{
+                    visibility: !paramData.visible
+                      ? 'hidden'
+                      : !paramData.label || paramData.label === ''
+                      ? 'hidden'
+                      : 'visible'
+                  }"
+                  >{{
+                    !paramData.label || paramData.label === ""
+                      ? "a"
+                      : paramData.label
+                  }}</label
+                >
+              </div>
+              <div class="flex gap-1" style="width: 10rem">
+                <input
+                  [hidden]="!edit"
+                  #nameInput
+                  class="sm:text-lg leading-6 truncate"
+                  value="{{ paramData.label }}"
+                />
+                <mat-icon
+                  class="cursor-pointer"
+                  *ngIf="edit"
+                  [svgIcon]="'heroicons_outline:save'"
+                  matTooltip="'Guardar'"
+                  (click)="saveLabel(9)"
+                >
+                </mat-icon>
+              </div>
+            </ng-container>
+
             <div class="flex flex-col">
-              <mat-label *ngIf="paramData.visible">{{
-                paramData.label
-              }}</mat-label>
               <div class="flex gap-2">
                 <span>No</span>
                 <mat-slide-toggle
@@ -160,10 +391,54 @@
             ></mat-progress-spinner>
           </div>
 
-          <div *ngSwitchCase="4" class="w-52">
-            <p class="text-gray-900 font-medium">
-              {{ paramData.placeholder }}
-            </p>
+          <div *ngSwitchCase="4" class="w-40">
+            <ng-container>
+              <div
+                [disabled]="!paramData.editable"
+                [hidden]="edit"
+                class="text-gray-900 font-medium cursor-pointer"
+                style="
+                  width: 10rem;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  max-height: 5rem;
+                "
+                [matTooltip]="paramData.label"
+              >
+                <label
+                  class="label-edit cursor-pointer"
+                  [ngStyle]="{
+                    visibility: !paramData.visible
+                      ? 'hidden'
+                      : !paramData.label || paramData.label === ''
+                      ? 'hidden'
+                      : 'visible'
+                  }"
+                  >{{
+                    !paramData.label || paramData.label === ""
+                      ? "a"
+                      : paramData.label
+                  }}</label
+                >
+              </div>
+              <div class="flex gap-1" style="width: 10rem">
+                <input
+                  [hidden]="!edit"
+                  #nameInput
+                  class="sm:text-lg leading-6 truncate"
+                  value="{{ paramData.label }}"
+                />
+                <mat-icon
+                  class="cursor-pointer"
+                  *ngIf="edit"
+                  [svgIcon]="'heroicons_outline:save'"
+                  matTooltip="'Guardar'"
+                  (click)="saveLabel(4)"
+                >
+                </mat-icon>
+              </div>
+            </ng-container>
+
             <mat-progress-spinner
               [mode]="'indeterminate'"
               *ngIf="isLoading"
@@ -171,10 +446,54 @@
             ></mat-progress-spinner>
           </div>
 
-          <div *ngSwitchCase="6" class="w-52">
-            <span class="text-gray-800 font-medium" *ngIf="paramData.visible">{{
-              paramData.label
-            }}</span>
+          <div *ngSwitchCase="6" class="w-40">
+            <ng-container>
+              <div
+                [disabled]="!paramData.editable"
+                [hidden]="edit"
+                class="text-gray-900 font-medium cursor-pointer"
+                style="
+                  width: 10rem;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  max-height: 5rem;
+                "
+                [matTooltip]="paramData.label"
+              >
+                <label
+                  class="label-edit cursor-pointer"
+                  [ngStyle]="{
+                    visibility: !paramData.visible
+                      ? 'hidden'
+                      : !paramData.label || paramData.label === ''
+                      ? 'hidden'
+                      : 'visible'
+                  }"
+                  >{{
+                    !paramData.label || paramData.label === ""
+                      ? "a"
+                      : paramData.label
+                  }}</label
+                >
+              </div>
+              <div class="flex gap-1" style="width: 10rem">
+                <input
+                  [hidden]="!edit"
+                  #nameInput
+                  class="sm:text-lg leading-6 truncate"
+                  value="{{ paramData.label }}"
+                />
+                <mat-icon
+                  class="cursor-pointer"
+                  *ngIf="edit"
+                  [svgIcon]="'heroicons_outline:save'"
+                  matTooltip="'Guardar'"
+                  (click)="saveLabel(4)"
+                >
+                </mat-icon>
+              </div>
+            </ng-container>
+
             <ui-upload-file
               [type]="'imagen'"
               [image]="
@@ -187,10 +506,54 @@
             ></ui-upload-file>
           </div>
 
-          <div *ngSwitchCase="7" class="w-52">
-            <p class="text-gray-900 font-medium">
-              {{ paramData.placeholder }}
-            </p>
+          <div *ngSwitchCase="7" class="w-40">
+            <ng-container>
+              <div
+                [disabled]="!paramData.editable"
+                [hidden]="edit"
+                class="text-gray-900 font-medium cursor-pointer"
+                style="
+                  width: 10rem;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  max-height: 5rem;
+                "
+                [matTooltip]="paramData.label"
+              >
+                <label
+                  class="label-edit cursor-pointer"
+                  [ngStyle]="{
+                    visibility: !paramData.visible
+                      ? 'hidden'
+                      : !paramData.label || paramData.label === ''
+                      ? 'hidden'
+                      : 'visible'
+                  }"
+                  >{{
+                    !paramData.label || paramData.label === ""
+                      ? "a"
+                      : paramData.label
+                  }}</label
+                >
+              </div>
+              <div class="flex gap-1" style="width: 10rem">
+                <input
+                  [hidden]="!edit"
+                  #nameInput
+                  class="sm:text-lg leading-6 truncate"
+                  value="{{ paramData.label }}"
+                />
+                <mat-icon
+                  class="cursor-pointer"
+                  *ngIf="edit"
+                  [svgIcon]="'heroicons_outline:save'"
+                  matTooltip="'Guardar'"
+                  (click)="saveLabel(4)"
+                >
+                </mat-icon>
+              </div>
+            </ng-container>
+
             <mat-progress-spinner
               [mode]="'indeterminate'"
               *ngIf="isLoading"
@@ -198,12 +561,56 @@
             ></mat-progress-spinner>
           </div>
 
-          <div *ngSwitchCase="10" class="w-52">
+          <div *ngSwitchCase="10" class="w-40">
             <div class="flex flex-col">
+              <ng-container>
+                <div
+                  [disabled]="!paramData.editable"
+                  [hidden]="edit"
+                  class="text-gray-900 font-medium cursor-pointer"
+                  style="
+                    width: 10rem;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    max-height: 5rem;
+                  "
+                  [matTooltip]="paramData.label"
+                >
+                  <label
+                    class="label-edit cursor-pointer"
+                    [ngStyle]="{
+                      visibility: !paramData.visible
+                        ? 'hidden'
+                        : !paramData.label || paramData.label === ''
+                        ? 'hidden'
+                        : 'visible'
+                    }"
+                    >{{
+                      !paramData.label || paramData.label === ""
+                        ? "a"
+                        : paramData.label
+                    }}</label
+                  >
+                </div>
+                <div class="flex gap-1" style="width: 10rem">
+                  <input
+                    [hidden]="!edit"
+                    #nameInput
+                    class="sm:text-lg leading-6 truncate"
+                    value="{{ paramData.label }}"
+                  />
+                  <mat-icon
+                    class="cursor-pointer"
+                    *ngIf="edit"
+                    [svgIcon]="'heroicons_outline:save'"
+                    matTooltip="'Guardar'"
+                    (click)="saveLabel(4)"
+                  >
+                  </mat-icon>
+                </div>
+              </ng-container>
+
               <mat-form-field floatLabel="always">
-                <mat-label *ngIf="paramData.visible">{{
-                  paramData.label
-                }}</mat-label>
                 <mat-select
                   placeholder="{{ paramData.placeholder }}"
                   [value]="paramData.valor"

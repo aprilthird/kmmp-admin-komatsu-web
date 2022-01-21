@@ -1,6 +1,6 @@
 <form [formGroup]="form">
   <div mat-dialog-title class="flex justify-between items-center">
-    <h4>Agregar Documento</h4>
+    <h4 class="font-bold">Agregar Documento</h4>
     <button mat-icon-button type="button" (click)="matdialigRef.close()">
       <mat-icon [svgIcon]="'heroicons_outline:x'"></mat-icon>
     </button>
@@ -116,13 +116,7 @@
     <button
       (click)="matdialigRef.close()"
       mat-button
-      class="
-        ml-4
-        bg-gray-50
-        border-solid border border-accent-300
-        text-gray-700
-        shadow-none
-      "
+      class="ml-4 bg-gray-50 border-solid border border-accent-300 text-gray-700 shadow-none"
     >
       Cancelar
     </button>
