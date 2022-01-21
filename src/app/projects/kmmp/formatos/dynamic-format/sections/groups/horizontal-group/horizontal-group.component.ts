@@ -19,6 +19,7 @@ export class HorizontalGroupComponent implements OnInit {
   isLoading: boolean;
   rowsOfGrid = [];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  highestRow: any;
 
   constructor(
     private _editarFormatoService: EditarFormatoService,
@@ -43,6 +44,7 @@ export class HorizontalGroupComponent implements OnInit {
     this.lowestRow = Math.min.apply(null, rows);
     this.lowestColumn = Math.min.apply(null, columns);
     this.highestColumn = Math.max.apply(null, columns);
+    this.highestRow = Math.max.apply(null, rows);
   }
 
   async addColumn() {
@@ -206,27 +208,35 @@ export class HorizontalGroupComponent implements OnInit {
       }
     });
 
-    /**Iterar todas las posiciones de la columna */
-
-    /*const columns = this.groupData.parametros
-      .filter((data) => data.activo)
-      .map((x) => x.columna);
-
-    const uniqueIds = [...new Set(columns)];*/
-    const itineraions = this.highestColumn - position;
-
-    for (let i = 0; i < itineraions; i++) {}
-
-    /**Iterar todas las posiciones de la columna */
-
-    /*this._editarFormatoService
+    this._editarFormatoService
       .createDato({
         ...this.groupData,
         parametros: posToDelete,
       })
       .subscribe(() => {
-        if (
-          this.groupData.parametros.some(
+        const itineraions =
+          positionType === "columna"
+            ? this.highestColumn
+            : this.highestRow - position;
+
+        for (let i = 0; i < itineraions; i++) {
+          setTimeout(() => {
+            let elementToMove = this.groupData.parametros.filter(
+              (y) => y[positionType] === position + i + 1 && y.activo
+            );
+            elementToMove.map((x) => (x[positionType] = x[positionType] - 1));
+
+            this._editarFormatoService
+              .createDato({
+                ...this.groupData,
+                parametros: elementToMove,
+              })
+              .subscribe(() => {});
+          }, i * 2000);
+        }
+      });
+
+    /*is.groupData.parametros.some(
             (x) => x[positionType] === position + 1
           )
         ) {
@@ -244,8 +254,7 @@ export class HorizontalGroupComponent implements OnInit {
               this.isLoading = false;
               this._groups.loadGrupos();
             });
-        }
-      });*/
+        }*/
   }
 
   /*async addParam(rowNumber?: number) {
