@@ -41,17 +41,17 @@ export class AdhesionComponent implements OnInit {
     this.chartOptions = {
       series: [
         {
-          name: "Income",
+          name: "Act Prog",
           type: "column",
           data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6],
         },
         {
-          name: "Cashflow",
+          name: "Act Ejecutadas",
           type: "column",
           data: [1.1, 3, 3.1, 4, 4.1, 4.9, 6.5, 8.5],
         },
         {
-          name: "Revenue",
+          name: "Cumplimiento",
           type: "line",
           data: [20, 29, 37, 36, 44, 45, 50, 58],
         },
