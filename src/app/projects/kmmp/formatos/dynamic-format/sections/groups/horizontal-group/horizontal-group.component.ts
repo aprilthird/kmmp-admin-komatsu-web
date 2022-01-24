@@ -118,6 +118,10 @@ export class HorizontalGroupComponent implements OnInit {
       });
   }
 
+  activeRows(): boolean {
+    return this.groupData.parametros.some((x) => x.activo);
+  }
+
   private createGrid(): void {
     let rawData = [];
     this.getAllParameters().map((x: any) => {
@@ -212,31 +216,42 @@ export class HorizontalGroupComponent implements OnInit {
           (positionType === "columna" ? this.highestColumn : this.highestRow) -
           position;
 
-        for (let i = 0; i < itineraions; i++) {
-          setTimeout(() => {
-            let elementToMove = this.groupData.parametros.filter(
-              (y) => y[positionType] === position + i + 1 && y.activo
-            );
-            elementToMove.map((x) => (x[positionType] = x[positionType] - 1));
+        if (itineraions === 0) {
+          this.isLoading = false;
+          this._groups.loadGrupos();
+        } else {
+          for (let i = 0; i < itineraions; i++) {
+            setTimeout(() => {
+              let elementToMove = this.groupData.parametros.filter(
+                (y) => y[positionType] === position + i + 1 && y.activo
+              );
+              elementToMove.map((x) => (x[positionType] = x[positionType] - 1));
 
-            this._editarFormatoService
-              .createDato({
-                ...this.groupData,
-                parametros: elementToMove,
-              })
-              .subscribe(() => {
-                if (
-                  (positionType === "columna"
-                    ? this.highestColumn
-                    : this.highestRow) -
-                    position ===
-                  i + 1
-                ) {
-                  this.isLoading = false;
-                  this._groups.loadGrupos();
-                }
-              });
-          }, i * 2000);
+              this._editarFormatoService
+                .createDato({
+                  ...this.groupData,
+                  parametros: elementToMove,
+                })
+                .subscribe(() => {
+                  console.log(
+                    positionType === "columna"
+                      ? this.highestColumn
+                      : this.highestRow
+                  );
+                  console.log(i + 1);
+                  if (
+                    (positionType === "columna"
+                      ? this.highestColumn
+                      : this.highestRow) -
+                      position ===
+                    i + 1
+                  ) {
+                    this.isLoading = false;
+                    this._groups.loadGrupos();
+                  }
+                });
+            }, i * 2000);
+          }
         }
       });
 

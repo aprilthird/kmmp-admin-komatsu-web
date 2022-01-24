@@ -15,14 +15,10 @@
       }"
     >
       <span
-        *ngIf="
-          groupData.parametros &&
-          groupData.parametros.length === 0 &&
-          groupData.pos === 'h'
-        "
+        *ngIf="groupData.parametros && !activeRows() && groupData.pos === 'h'"
         class="font-medium text-secondary flex justify-center"
         [ngClass]="{
-          'right-28 absolute': groupData.parametros.length > 0
+          'right-28 absolute': groupData.parametros.length > 0 && activeRows()
         }"
       >
         <button mat-button color="primary" (click)="addParam()">
@@ -40,13 +36,6 @@
       >
         <ng-container *ngFor="let paramData of row; let j = index">
           <div class="flex flex-col items-center">
-            <!--<mat-icon
-              *ngIf="paramData.fila === lowestRow"
-              (click)="delete(paramData.columna, 'column')"
-              style="cursor: pointer"
-              [svgIcon]="'heroicons_solid:trash'"
-              matTooltip="Eliminar toda la columna"
-            ></mat-icon>-->
             <app-fields
               class="list-box"
               [groupData]="groupData"
@@ -77,6 +66,7 @@
         *ngIf="
           groupData.parametros &&
           groupData.parametros.length > 0 &&
+          activeRows() &&
           groupData.pos === 'h'
         "
         mat-button

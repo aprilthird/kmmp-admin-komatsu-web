@@ -56,7 +56,7 @@ export class SectionsComponent implements OnInit {
 
   public loadGrupos() {
     this.isLoading = true;
-    this.grupos = [];
+    //this.grupos = [];
     this.isLoading = true;
     this._editarFormatoService
       .getGrupos(this.sectionData.id)

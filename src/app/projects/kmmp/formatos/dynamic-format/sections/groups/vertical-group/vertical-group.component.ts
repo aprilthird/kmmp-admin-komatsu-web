@@ -83,4 +83,8 @@ export class VerticalGroupComponent implements OnInit {
       })
       .subscribe(() => {});
   }
+
+  trackByFn(index: number, item: any): number {
+    return item.id;
+  }
 }

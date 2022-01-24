@@ -31,7 +31,9 @@
         class="flex flex-col list-section"
         (cdkDropListDropped)="drop($event)"
       >
-        <ng-container *ngFor="let paramData of groupData.parametros">
+        <ng-container
+          *ngFor="let paramData of groupData.parametros; trackBy: trackByFn"
+        >
           <app-fields
             class="list-box"
             [groupData]="groupData"
