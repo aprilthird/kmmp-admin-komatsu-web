@@ -3,4 +3,5 @@ export interface ModeloI {
   cliente: string;
   estado: boolean;
   nestado?: string;
+  id?: number;
 }

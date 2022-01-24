@@ -58,6 +58,8 @@ export class ListadoComponent implements OnInit, OnDestroy {
       width: "376px",
       data: serviceData,
     });
+
+    dialogRef.afterClosed().subscribe(() => this.loadData());
   }
 
   deleteFormato(format: Formato): void {

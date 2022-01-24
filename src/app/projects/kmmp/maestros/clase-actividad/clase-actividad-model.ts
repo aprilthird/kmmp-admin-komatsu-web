@@ -8,6 +8,7 @@ export interface TipoMttoI {
   estado: boolean;
   nestado?: string;
   codigo?: string;
+  id?: number;
 }
 
 export interface TipoActividadResponseI {

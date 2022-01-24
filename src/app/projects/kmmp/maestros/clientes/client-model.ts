@@ -5,4 +5,5 @@ export interface ClientI {
   ubicacion: string | "";
   estado?: number;
   nestado?: string;
+  id?: number;
 }

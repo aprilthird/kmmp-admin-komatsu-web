@@ -79,8 +79,8 @@ export class ActivitiesService {
     this._activities.next([newData, ...data.source.value]);
   }
 
-  getList(tipo): Observable<any[]> {
-    return this.http.post<any[]>(
+  getList(tipo): Observable<Response> {
+    return this.http.post<Response>(
       environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
       {
         ...getInboxParams,
@@ -92,9 +92,8 @@ export class ActivitiesService {
     );
   }
 
-  getTipoMtto(tipo, idClaseActividad?): Observable<any[]> {
-    console.log("id clase actividad ", idClaseActividad);
-    return this.http.post<any[]>(
+  getTipoMtto(tipo, idClaseActividad?): Observable<Response> {
+    return this.http.post<Response>(
       environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
       {
         ...getInboxParams,
