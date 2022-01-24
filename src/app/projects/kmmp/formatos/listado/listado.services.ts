@@ -82,7 +82,9 @@ export class ListadoService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
-          this._formatos.next(response.body.data);
+          this._formatos.next(
+            response.body.data.filter((formato) => formato.activo)
+          );
         })
       );
   }

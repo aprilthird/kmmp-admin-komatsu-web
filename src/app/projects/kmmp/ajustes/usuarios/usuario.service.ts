@@ -9,6 +9,7 @@ import { Pagination } from "app/core/types/list.types";
 import { Usuario } from "app/core/types/user.types";
 import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";
+import moment from "moment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 
@@ -49,12 +50,12 @@ export class UsuariosService {
       .post<PaginationResponse<Usuario[]>>(
         environment.apiUrl + "/Seguridad/BandejaUsuariosPaginado",
         {
-          page: 0,
-          pageSize: 10,
+          page,
+          pageSize,
           filter: {
             nombre: null,
-            fechaIni: "2021-06-17",
-            fechaFin: "2022-01-20",
+            fechaInicio: moment().subtract(1, "years").format("yyyy-MM-DD"),
+            fechaFin: moment().format("yyyy-MM-DD"),
           },
         }
       )

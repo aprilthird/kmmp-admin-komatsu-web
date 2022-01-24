@@ -98,30 +98,33 @@
 
                   <!-- Acciones -->
                   <div>
-                    <a
-                      routerLink="/admin/formatos/formato-dinamico/{{
-                        formato.id
-                      }}"
-                      class="min-w-7 w-7 min-h-7 h-7 mr-1"
+                    <button
                       mat-icon-button
-                      matTooltip="Editar"
+                      [matMenuTriggerFor]="menu"
+                      aria-label="Toggle menu"
                     >
                       <mat-icon
-                        class="icon-size-5 text-primary-500"
-                        [svgIcon]="'heroicons_outline:pencil'"
+                        svgIcon="heroicons_outline:dots-vertical"
                       ></mat-icon>
-                    </a>
-                    <!--<a
-                      routerLink="/admin/formatos/asignar/{{ formato.id }}"
-                      class="min-w-7 w-7 min-h-7 h-7 mr-1"
-                      mat-icon-button
-                      matTooltip="Asignar formato"
-                    >
-                      <mat-icon
-                        class="icon-size-5 text-primary-500"
-                        [svgIcon]="'heroicons_outline:users'"
-                      ></mat-icon>
-                    </a>-->
+                    </button>
+
+                    <mat-menu #menu="matMenu" xPosition="before">
+                      <button
+                        mat-menu-item
+                        routerLink="/admin/formatos/formato-dinamico/{{
+                          formato.id
+                        }}"
+                      >
+                        Ver formatos
+                      </button>
+
+                      <button mat-menu-item (click)="clickNewFormato(formato)">
+                        Editar
+                      </button>
+                      <button mat-menu-item (click)="deleteFormato(formato)">
+                        Eliminar
+                      </button>
+                    </mat-menu>
                   </div>
                 </div>
               </ng-container>

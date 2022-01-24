@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { ActivitiesService } from "app/projects/kmmp/actividades/activities.service";
 import { forkJoin } from "rxjs";
@@ -33,11 +33,13 @@ export class DialogAddFormatoComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogAddFormatoComponent>,
     private dialogAddFormatoService: DialogAddFormatoService,
     private router: Router,
-    private serviceAct: ActivitiesService
+    private serviceAct: ActivitiesService,
+    @Inject(MAT_DIALOG_DATA) public data
   ) {}
 
   ngOnInit(): void {
     this.getInboxes();
+    this.isEdit();
   }
 
   getInboxes(): void {
@@ -57,17 +59,46 @@ export class DialogAddFormatoComponent implements OnInit {
   onSubmit() {
     if (!this.loading && this.form.valid) {
       this.loading = true;
-      this.dialogAddFormatoService
-        .agregarFormato(this.form.value)
-        .subscribe((response) => {
-          this.router
-            .navigateByUrl(
-              "/admin/formatos/formato-dinamico/" + response.body.id
-            )
-            .then(() => {
-              this.dialogRef.close();
-            });
-        });
+      if (this.data) {
+        this.dialogAddFormatoService
+          .agregarFormato({ ...this.data, ...this.form.value })
+          .subscribe(() => {
+            this.dialogRef.close();
+          });
+      } else {
+        this.dialogAddFormatoService
+          .agregarFormato(this.form.value)
+          .subscribe((response) => {
+            this.router
+              .navigateByUrl(
+                "/admin/formatos/formato-dinamico/" + response.body.id
+              )
+              .then(() => {
+                this.dialogRef.close();
+              });
+          });
+      }
+    }
+  }
+
+  private isEdit(): void {
+    if (this.data) {
+      const {
+        nombre,
+        idCliente,
+        idModelo,
+        idClaseActividad,
+        idTipoMantenimeinto,
+      } = this.data;
+      this.form.patchValue({
+        nombre,
+        idCliente,
+        idModelo,
+        idClaseActividad,
+        idTipoMantenimeinto,
+      });
+
+      console.log("this.form", this.form.value);
     }
   }
 
