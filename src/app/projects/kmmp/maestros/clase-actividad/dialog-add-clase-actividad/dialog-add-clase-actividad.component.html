@@ -22,27 +22,24 @@
         }}</mat-error>
       </mat-form-field>
 
-      <mat-slide-toggle
-        class="self-end"
-        color="primary"
-        (change)="check($event)"
-        [checked]="form.controls['estado'].value === 1 ? true : false"
-      >
-        Estado
-      </mat-slide-toggle>
+      <div class="flex justify-between mt-2">
+        <span>Estado</span>
+        <mat-slide-toggle
+          class="self-end"
+          color="primary"
+          (change)="check($event)"
+          [checked]="form.controls['estado'].value === 1 ? true : false"
+        >
+          Estado
+        </mat-slide-toggle>
+      </div>
     </div>
   </div>
   <div mat-dialog-actions class="flex justify-center px-6 gap-5">
     <button
       (click)="matdialigRef.close()"
       mat-button
-      class="
-        ml-4
-        bg-gray-50
-        border-solid border border-accent-300
-        text-gray-700
-        shadow-none
-      "
+      class="ml-4 bg-gray-50 border-solid border border-accent-300 text-gray-700 shadow-none"
     >
       Cancelar
     </button>

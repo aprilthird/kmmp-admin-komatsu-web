@@ -10,7 +10,7 @@
       <!-- Nombre -->
 
       <mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label>Nombre</mat-label>
+        <mat-label class="font-bold">Nombre</mat-label>
         <input
           matInput
           type="text"
@@ -99,14 +99,15 @@
           Ver archivo
         </p>
       </div>
-
-      <mat-slide-toggle
-        color="primary"
-        (change)="check($event)"
-        [checked]="form.controls['activo'].value"
-      >
-        Estado
-      </mat-slide-toggle>
+      <div class="flex justify-between mt-2">
+        <span>Estado</span>
+        <mat-slide-toggle
+          color="primary"
+          (change)="check($event)"
+          [checked]="form.controls['activo'].value"
+        >
+        </mat-slide-toggle>
+      </div>
     </div>
   </div>
   <div mat-dialog-actions class="flex justify-center px-6 gap-5">
