@@ -50,7 +50,7 @@ export class HorizontalGroupComponent implements OnInit {
   async addColumn() {
     this.isLoading = true;
     const columns = [...this.groupData.parametros].map((data) => data.columna);
-    const highestColumn = Math.max.apply(null, columns);
+    //const highestColumn = Math.max.apply(null, columns);
 
     /**for actives */
     const columnsActive = [...this.groupData.parametros]
@@ -68,7 +68,7 @@ export class HorizontalGroupComponent implements OnInit {
     const newColumn = await lastColumn.map((x) => {
       return {
         ...GeneralParams,
-        columna: highestColumn + 1,
+        columna: highestColumnActive + 1,
         fila: x.fila,
         idGrupo: x.idGrupo,
         idParametro: x.idParametro,
@@ -92,12 +92,12 @@ export class HorizontalGroupComponent implements OnInit {
   async addRow() {
     this.isLoading = true;
     const rows = await this.groupData.parametros.map((data) => data.fila);
-    const highestRow = Math.max.apply(null, rows);
+    //const highestRow = Math.max.apply(null, rows);
     const newRow = [...this.rowsOfGrid[this.rowsOfGrid.length - 1]].map((x) => {
       return {
         ...GeneralParams,
         columna: x.columna,
-        fila: highestRow + 1,
+        fila: this.highestRow + 1,
         idGrupo: x.idGrupo,
         idParametro: x.idParametro,
         label: x.label,
@@ -187,6 +187,7 @@ export class HorizontalGroupComponent implements OnInit {
         ...this.groupData,
         parametros: posToDelete,
       })
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {
         this.isLoading = false;
         this._groups.loadGrupos();
@@ -211,6 +212,7 @@ export class HorizontalGroupComponent implements OnInit {
         ...this.groupData,
         parametros: posToDelete,
       })
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {
         const itineraions =
           (positionType === "columna" ? this.highestColumn : this.highestRow) -
@@ -232,13 +234,8 @@ export class HorizontalGroupComponent implements OnInit {
                   ...this.groupData,
                   parametros: elementToMove,
                 })
+                .pipe(takeUntil(this._unsubscribeAll))
                 .subscribe(() => {
-                  console.log(
-                    positionType === "columna"
-                      ? this.highestColumn
-                      : this.highestRow
-                  );
-                  console.log(i + 1);
                   if (
                     (positionType === "columna"
                       ? this.highestColumn

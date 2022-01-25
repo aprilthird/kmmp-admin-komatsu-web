@@ -6,7 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { map } from "rxjs/operators";
+import { Subject } from "rxjs";
 import { MaestrosService } from "../../maestros.service";
 import { BahiaI } from "../bahia-model";
 import { BahiasService } from "../bahias.service";
@@ -24,6 +24,7 @@ export class DialogAddBahiasComponent implements OnInit {
   bahiaId: number;
   isLoading: boolean;
   clienteOptions: any;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -47,6 +48,12 @@ export class DialogAddBahiasComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
   private setCliente(): void {
     this.maestServ.getList(1).subscribe((resp: any) => {

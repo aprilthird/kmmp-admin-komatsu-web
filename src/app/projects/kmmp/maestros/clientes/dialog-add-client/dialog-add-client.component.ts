@@ -13,6 +13,7 @@ import { ClientI } from "./../client-model";
 
 //SERVICES
 import { MaestrosService } from "../../maestros.service";
+import { Subject } from "rxjs";
 
 @Component({
   selector: "app-dialog-add-client",
@@ -26,6 +27,7 @@ export class DialogAddClientComponent implements OnInit {
   clientId: number;
   initData: ClientI;
   isLoading: boolean;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -52,6 +54,11 @@ export class DialogAddClientComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
   submit(isEdit): void {
     this.isLoading = true;

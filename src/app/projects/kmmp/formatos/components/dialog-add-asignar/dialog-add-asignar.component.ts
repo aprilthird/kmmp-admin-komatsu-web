@@ -30,8 +30,7 @@ export class DialogAddAsignarComponent implements OnInit {
           // Set the alert
           this.alert = {
             type: "success",
-            message:
-              `Se asignó correctamente el formato, código del formato generado: ${response.body.codigo}`,
+            message: `Se asignó correctamente el formato, código del formato generado: ${response.body.codigo}`,
           };
         });
     }

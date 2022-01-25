@@ -8,7 +8,6 @@ import {
   EventEmitter,
   SimpleChanges,
   AfterViewInit,
-  HostListener,
 } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
@@ -54,19 +53,6 @@ export class FieldsComponent implements OnInit, AfterViewInit {
     private _azureService: AzureService
   ) {}
 
-  @HostListener("click", ["$event.target"])
-  onClick(classname) {
-    const className = (classname as Element).className;
-    if (
-      className ===
-        "mat-tooltip-trigger text-gray-900 font-medium cursor-pointer ng-star-inserted" ||
-      className === "label-edit cursor-pointer ng-star-inserted" ||
-      className === "label-edit cursor-pointer"
-    ) {
-      this.editLabel();
-    }
-  }
-
   ngOnInit(): void {
     this.validateRegex();
   }
@@ -97,8 +83,8 @@ export class FieldsComponent implements OnInit, AfterViewInit {
       });
   }
 
-  saveLabel(type: number): void {
-    this.paramData.label = this.el.nativeElement.value;
+  saveLabeOutPut(label: string, type: number): void {
+    this.paramData.label = label;
     this.editField(type);
     this.edit = !this.edit;
   }
@@ -202,7 +188,6 @@ export class FieldsComponent implements OnInit, AfterViewInit {
 
   editLabel(): void {
     this.edit = true;
-
     setTimeout(() => {
       this.el.nativeElement.select();
     });
@@ -227,6 +212,10 @@ export class FieldsComponent implements OnInit, AfterViewInit {
   }
 
   validateRegex(): void {
+    this.paramData.editable
+      ? this.fieldData.enable()
+      : this.fieldData.disable();
+
     this.fieldData.setValidators([
       this.paramData.obligatorio
         ? Validators.required

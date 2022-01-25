@@ -51,6 +51,7 @@ import { HorizontalGroupComponent } from './dynamic-format/sections/groups/horiz
 import { OtherValidatorComponent } from './dynamic-format/dialog-components/other-validator/other-validator.component';
 import { ChipsSelectionComponent } from './dynamic-format/dialog-components/chips-selection/chips-selection.component';
 import { UploadImageComponent } from './dynamic-format/dialog-components/upload-image/upload-image.component';
+import { LabelEditableComponent } from './dynamic-format/sections/groups/fields/label-editable/label-editable.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { UploadImageComponent } from './dynamic-format/dialog-components/upload-
     OtherValidatorComponent,
     ChipsSelectionComponent,
     UploadImageComponent,
+    LabelEditableComponent,
   ],
   imports: [
     CommonModule,

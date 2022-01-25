@@ -8,7 +8,7 @@ import {
 } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSelectChange } from "@angular/material/select";
-import { forkJoin } from "rxjs";
+import { forkJoin, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { ClientI } from "../../clientes/client-model";
 import { FlotasService } from "../../flotas/flotas.service";
@@ -40,6 +40,7 @@ export class DialogAddEquiposComponent implements OnInit {
   modelosData: any;
   flotasData: any;
   tipo_equipos: any;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -75,6 +76,11 @@ export class DialogAddEquiposComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
   getSelectsData(): void {
     this.isLoading = true;

@@ -81,6 +81,7 @@ export class VerticalGroupComponent implements OnInit {
       .createDato({
         ...this.groupData,
       })
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {});
   }
 

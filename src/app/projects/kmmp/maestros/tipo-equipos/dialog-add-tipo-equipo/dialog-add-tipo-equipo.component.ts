@@ -6,6 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Subject } from "rxjs";
 import { TipoEquipoI } from "../model-tipo-equipo";
 import { TipoEquiposService } from "../tipo-equipos.service";
 
@@ -21,6 +22,7 @@ export class DialogAddTipoEquipoComponent implements OnInit {
   isEdit: boolean;
   tipoEquipoId: number;
   isLoading: boolean;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -46,6 +48,12 @@ export class DialogAddTipoEquipoComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
   submit(isEdit): void {
     this.form.controls["id"].enable();

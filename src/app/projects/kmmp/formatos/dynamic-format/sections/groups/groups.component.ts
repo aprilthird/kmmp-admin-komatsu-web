@@ -1,12 +1,7 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
+import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 import { EditarFormatoService } from "../../../editar-formato/editar-formato.service";
 import { SectionsComponent } from "../sections.component";
@@ -22,6 +17,7 @@ export class GroupsComponent implements OnInit {
   rowsOfGrid = [];
   edit: boolean;
   @ViewChild("nameInput") el: ElementRef;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     private _editFormat: EditarFormatoService,
@@ -58,6 +54,7 @@ export class GroupsComponent implements OnInit {
             ...this.groupData,
             activo: false,
           })
+          .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(() => {
             this._groups.loadGrupos();
           });
@@ -78,6 +75,7 @@ export class GroupsComponent implements OnInit {
         ...this.groupData,
         nombre: this.el.nativeElement.value,
       })
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {
         this.edit = false;
         this.groupData.nombre = this.el.nativeElement.value;

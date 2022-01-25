@@ -6,6 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Subject } from "rxjs";
 import { ClaseActividadI } from "../clase-actividad-model";
 import { ClaseActividadService } from "../clase-actividad.service";
 
@@ -22,6 +23,7 @@ export class DialogAddClaseActividadComponent implements OnInit {
   isEdit: boolean;
   claseActividadId: number;
   isLoading: boolean;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -41,6 +43,12 @@ export class DialogAddClaseActividadComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
   submit(isEdit): void {
     this.isLoading = true;

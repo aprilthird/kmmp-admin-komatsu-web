@@ -8,7 +8,7 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { AzureService } from "app/core/azure/azure.service";
 import { ActivitiesService } from "app/projects/kmmp/actividades/activities.service";
-import { forkJoin } from "rxjs";
+import { forkJoin, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 import { DocumentosService } from "../documentos.service";
 
@@ -30,6 +30,7 @@ export class DialogAddDocumentosComponent implements OnInit {
   modelosOpt: any;
   filesLoading: boolean;
   tipo_mttoOpt: any;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -80,6 +81,12 @@ export class DialogAddDocumentosComponent implements OnInit {
 
   ngOnInit(): void {
     this.getInboxes();
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   getInboxes(): void {

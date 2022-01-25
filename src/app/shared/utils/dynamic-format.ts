@@ -45,7 +45,6 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         ...paramData,
         idParametro: 4,
         regex: "",
-        label: "Archivo",
       };
 
     case 5:
@@ -66,7 +65,6 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         ...paramData,
         idParametro: 7,
         regex: "",
-        label: "Firma",
       };
 
     case 8:

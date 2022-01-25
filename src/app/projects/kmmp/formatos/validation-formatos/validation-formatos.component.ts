@@ -8,6 +8,7 @@ import { PermissionService } from "app/core/permission/permission.service";
 import { TipoParametro } from "app/core/types/formatos.types";
 import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { environment } from "environments/environment";
+import { Subject } from "rxjs";
 
 import { ActivitiesService } from "../../actividades/activities.service";
 import { DialogAddCommentComponent } from "../components/dialog-add-comment/dialog-add-comment.component";
@@ -23,6 +24,7 @@ import { FormatosService } from "../formatos.service";
   styleUrls: ["./validation-formatos.component.scss"],
 })
 export class ValidationFormatosComponent implements OnInit {
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
   currentSeccion: string;
   drawerMode: "side" | "over";
   drawerOpened: boolean;
@@ -85,6 +87,12 @@ export class ValidationFormatosComponent implements OnInit {
   ngOnInit(): void {
     this.drawerMode = "side";
     this.drawerOpened = true;
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   /**CAPTURAR ID'S DE LA ACTIVIDAD, FORMATO, SECCION */

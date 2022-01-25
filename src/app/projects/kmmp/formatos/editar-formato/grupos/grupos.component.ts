@@ -5,6 +5,7 @@ import { DialogAddDatoComponent } from "../../components/dialog-add-dato/dialog-
 import { Grupo, TipoParametro } from "app/core/types/formatos.types";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { EditarFormatoService } from "../editar-formato.service";
+import { Subject } from "rxjs";
 
 @Component({
   selector: "app-grupos",
@@ -13,6 +14,7 @@ import { EditarFormatoService } from "../editar-formato.service";
 })
 export class GruposComponent implements OnInit {
   @Input("data") data: Grupo;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     private dialog: MatDialog,
@@ -22,6 +24,12 @@ export class GruposComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.parametros = this.data.parametros.filter((e) => e.activo);
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   clickNewDato() {

@@ -6,6 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Subject } from "rxjs";
 import { MaestrosService } from "../../maestros.service";
 import { FlotaI } from "../flota-model";
 import { FlotasService } from "../flotas.service";
@@ -24,6 +25,7 @@ export class DialogAddFlotasComponent implements OnInit {
   flotaId: number;
   isLoading: boolean;
   clienteOptions: any;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -47,6 +49,12 @@ export class DialogAddFlotasComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
   setCliente(): void {
     this.maestServ.getList(1).subscribe((resp: any) => {
