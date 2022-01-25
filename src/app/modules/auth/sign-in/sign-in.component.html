@@ -1,31 +1,8 @@
 <div
-  class="
-    flex flex-col
-    sm:flex-row
-    items-center
-    md:items-start
-    sm:justify-center
-    md:justify-start
-    flex-auto
-    min-w-0
-  "
+  class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0"
 >
   <div
-    class="
-      md:flex md:items-center md:justify-end
-      w-full
-      sm:w-auto
-      md:h-full md:w-1/2
-      py-8
-      px-4
-      sm:p-12
-      md:p-16
-      sm:rounded-2xl
-      md:rounded-none
-      sm:shadow
-      md:shadow-none
-      sm:bg-card
-    "
+    class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card"
   >
     <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
       <!-- Logo -->
@@ -113,9 +90,9 @@
         </button>
         <div class="flex justify-center mt-2 w-full">
           <a
-            href="https://ca.kmmp.com.pe/"
             target="_blank"
-            class="underline font-bold"
+            class="underline font-bold cursor-pointer"
+            (click)="forgotPassword()"
             >¿Olvidaste tu contraseña?</a
           >
         </div>
@@ -123,22 +100,7 @@
     </div>
   </div>
   <div
-    class="
-      relative
-      hidden
-      md:flex
-      flex-auto
-      items-center
-      justify-center
-      w-1/2
-      h-full
-      p-16
-      lg:px-28
-      bg-primary-900
-      overflow-hidden
-      dark:border-l
-      bg-image
-    "
+    class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 bg-primary-900 overflow-hidden dark:border-l bg-image"
   >
     <!-- Background - @formatter:off -->
     <!-- Rings -->

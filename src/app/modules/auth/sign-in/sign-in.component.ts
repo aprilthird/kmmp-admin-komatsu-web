@@ -1,12 +1,14 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormGroup, NgForm, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
 import { fuseAnimations } from "@fuse/animations";
 import { FuseAlertType } from "@fuse/components/alert";
 import { AuthService } from "app/core/auth/auth.service";
 import { NavigationService } from "app/core/navigation/navigation.service";
 import { HttpResponse } from "app/core/types/http.types";
+import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { environment } from "environments/environment";
 
 @Component({
@@ -35,7 +37,8 @@ export class AuthSignInComponent implements OnInit {
     private _authService: AuthService,
     private _formBuilder: FormBuilder,
     private _router: Router,
-    private _navigationService: NavigationService
+    private _navigationService: NavigationService,
+    private _MatDialog: MatDialog
   ) {}
 
   // -----------------------------------------------------------------------------------------------------
@@ -110,5 +113,16 @@ export class AuthSignInComponent implements OnInit {
         this.showAlert = true;
       }
     );
+  }
+
+  forgotPassword(): void {
+    this._MatDialog.open(UiDialogsComponent, {
+      data: {
+        title: "¿Olvidaste tu contraseña?",
+        message:
+          "Para recuperar tu contraseña, recuerda que siempre puedes hacerlo desde tu plataforma SAP",
+      },
+      width: "500px",
+    });
   }
 }
