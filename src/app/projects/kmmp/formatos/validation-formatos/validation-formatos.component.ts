@@ -6,6 +6,7 @@ import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { AzureService } from "app/core/azure/azure.service";
 import { PermissionService } from "app/core/permission/permission.service";
 import { TipoParametro } from "app/core/types/formatos.types";
+import { Estados } from "app/shared/config/codigos";
 import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { environment } from "environments/environment";
 import { Subject } from "rxjs";
@@ -588,7 +589,11 @@ export class ValidationFormatosComponent implements OnInit {
 
   addComment(groupIdx: number, paramIdx: number, comment): void {
     const data = {
-      data: { ...this.data, idActividadFormato: Number(this.formatoId) },
+      data: {
+        ...this.data,
+        idActividadFormato: Number(this.formatoId),
+        estado: Estados.OBSERVADA,
+      },
       groupIndex: groupIdx,
       paramIndex: paramIdx,
       sectionId: this.sectionId,
