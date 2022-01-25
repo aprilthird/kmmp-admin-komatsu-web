@@ -95,10 +95,7 @@
             [svgIcon]="'heroicons_solid:upload'"
           ></mat-icon>
         </label>
-        <p
-          *ngIf="form.get('documentosList').value"
-          (click)="clickOpenFile(form.get('documentosList').value)"
-        >
+        <p *ngIf="form.get('documentosList').value" (click)="clickOpenFile()">
           Ver archivo
         </p>
       </div>

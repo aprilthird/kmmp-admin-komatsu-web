@@ -60,7 +60,7 @@ export class DialogAddDocumentosComponent implements OnInit {
       ),
       idCliente: new FormControl(this.initData?.idCliente),
       mime: new FormControl("documento"),
-      ruta: new FormControl("/admin/maestros/agregar_documentos"),
+      ruta: new FormControl(),
       //entidad: new FormControl(2),
       //documentosList: new FormControl(null, Validators.required),
       idModelo: new FormControl(this.initData?.idModelo),
@@ -134,6 +134,7 @@ export class DialogAddDocumentosComponent implements OnInit {
       try {
         const response = await this._azureService.uploadFile(blob, file.name);
         this.form.get("documentosList").setValue([response.uuidFileName]);
+        this.form.get("ruta").setValue(response.uuidFileName);
       } catch (e) {}
       this.filesLoading = false;
     } else {
@@ -141,9 +142,9 @@ export class DialogAddDocumentosComponent implements OnInit {
     }
   }
 
-  clickOpenFile(resourceName) {
+  clickOpenFile() {
     window.open(
-      this._azureService.getResourceUrlComplete(resourceName),
+      this._azureService.getResourceUrlComplete(this.data.documento),
       "blank"
     );
   }

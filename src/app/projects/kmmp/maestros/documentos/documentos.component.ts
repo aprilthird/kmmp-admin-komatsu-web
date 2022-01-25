@@ -95,6 +95,7 @@ export class DocumentosComponent implements OnInit {
     this.matDialog
       .open(DialogAddDocumentosComponent, {
         width: "400px",
+        maxHeight: "100vh",
         data: doc,
       })
       .afterClosed()
