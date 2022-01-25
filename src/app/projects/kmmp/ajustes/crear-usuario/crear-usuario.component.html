@@ -1,26 +1,10 @@
 <form [formGroup]="form" (submit)="onSubmit()" #ngForm="ngForm">
   <div
-    class="
-      sm:absolute sm:inset-0
-      flex flex-col flex-auto
-      min-w-0
-      sm:overflow-hidden
-      bg-card
-    "
+    class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card"
   >
     <!-- Header -->
     <div
-      class="
-        relative
-        flex flex-col
-        sm:flex-row
-        flex-0
-        sm:items-center sm:justify-between
-        py-8
-        px-6
-        md:px-8
-        border-b
-      "
+      class="relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b"
     >
       <!-- Loader -->
       <div class="absolute inset-x-0 bottom-0" *ngIf="loading$ | async">
@@ -36,26 +20,10 @@
     <div class="flex flex-auto overflow-hidden bg-gray-100 py-4 px-6">
       <!-- Products list -->
       <div
-        class="
-          flex flex-auto
-          overflow-hidden
-          relative
-          pb-18
-          border-radius-1
-          rounded-lg
-        "
+        class="flex flex-auto overflow-hidden relative pb-18 border-radius-1 rounded-lg"
       >
         <div
-          class="
-            flex flex-col flex-auto
-            overflow-hidden
-            sm:overflow-y-auto
-            py-8
-            px-6
-            md:px-3
-            bg-white
-            w-full
-          "
+          class="flex flex-col flex-auto overflow-hidden sm:overflow-y-auto py-8 px-6 md:px-3 bg-white w-full"
         >
           <div
             class="flex-auto user-info-container"
@@ -83,7 +51,7 @@
               </mat-form-field>
               <div class="w-full md:w-3/4 md:pl-8 pr-8 font-medium">
                 <mat-label>Perfiles</mat-label>
-                <div class="flex items-center h-10 font-normal flex-wrap">
+                <div class="flex items-center font-normal flex-wrap gap-2">
                   <ng-container
                     formArrayName="usuarioRoles"
                     *ngFor="
@@ -92,7 +60,7 @@
                     "
                   >
                     <mat-checkbox
-                      class="example-margin mr-3"
+                      class="example-margin mr-3 w-48 overflow-hidden text-ellipsis h-6"
                       [color]="'primary'"
                       [formControlName]="i"
                       >{{ perfiles[i].nombre }}</mat-checkbox
@@ -181,30 +149,11 @@
 
         <!-- Footer -->
         <div
-          class="
-            flex flex-row
-            justify-end
-            items-center
-            w-full
-            px-6
-            bottom-0
-            left-0
-            bottom-0
-            left-0
-            h-18
-            absolute
-            bg-gray-50
-          "
+          class="flex flex-row justify-end items-center w-full px-6 bottom-0 left-0 bottom-0 left-0 h-18 absolute bg-gray-50"
         >
           <a
             mat-raised-button
-            class="
-              ml-4
-              bg-gray-50
-              border-solid border border-accent-300
-              text-gray-700
-              shadow-none
-            "
+            class="ml-4 bg-gray-50 border-solid border border-accent-300 text-gray-700 shadow-none"
             routerLink="/admin/ajustes/usuarios"
           >
             <span class="ml-1 mr-1">Cancelar</span>

@@ -58,13 +58,15 @@
                 >
                 </mat-checkbox>
               </div>
-              <div class="">Equipo</div>
-              <div class="">Modelo</div>
-              <div class="">Clase de actividad</div>
-              <div class="">Tipo Mnto</div>
-              <div class="">Bahía asignada</div>
-              <div class="">Estado</div>
-              <div class="">Tipo de solicitud</div>
+              <div class="font-bold">ID</div>
+              <div class="font-bold">Equipo</div>
+              <div class="font-bold">Tipo de equipo</div>
+              <div class="font-bold">Modelo</div>
+              <div class="font-bold">Clase de actividad</div>
+              <div class="font-bold">Tipo de Mantenimiento</div>
+              <div class="font-bold">Bahía asignada</div>
+              <div class="font-bold">Estado</div>
+              <div class="font-bold">Tipo de solicitud</div>
               <div>Detalles</div>
               <div></div>
             </div>
@@ -83,22 +85,48 @@
                       [checked]="actividad.checked"
                     ></mat-checkbox>
                   </div>
+
                   <div class="truncate">
+                    {{ actividad?.id }}
+                  </div>
+                  <div
+                    class="truncate-overflow"
+                    [matTooltip]="actividad?.equipo"
+                  >
                     {{ actividad?.equipo }}
                   </div>
 
-                  <div class="truncate">
+                  <div
+                    [matTooltip]="actividad?.tipoEquipo"
+                    class="truncate-overflow"
+                  >
+                    {{ actividad?.tipoEquipo }}
+                  </div>
+
+                  <div
+                    class="truncate-overflow"
+                    [matTooltip]="actividad?.modelo"
+                  >
                     {{ actividad?.modelo }}
                   </div>
 
-                  <div class="truncate">
+                  <div
+                    class="truncate-overflow"
+                    [matTooltip]="actividad?.claseActividad"
+                  >
                     {{ actividad?.claseActividad }}
                   </div>
 
-                  <div class="truncate">
+                  <div
+                    class="truncate-overflow"
+                    [matTooltip]="actividad?.tipoMantenimiento"
+                  >
                     {{ actividad?.tipoMantenimiento }}
                   </div>
-                  <div class="truncate">
+                  <div
+                    class="truncate-overflow"
+                    [matTooltip]="actividad?.bahia"
+                  >
                     {{ actividad?.bahia }}
                   </div>
                   <div class="truncate">
