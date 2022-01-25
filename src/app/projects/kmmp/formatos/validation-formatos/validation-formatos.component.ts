@@ -105,7 +105,9 @@ export class ValidationFormatosComponent implements OnInit {
       this._editarFormatoService
         .getAbrirAsignacion(this.formatoId)
         .subscribe(async (x: any) => {
-          this.sections = await x.body.secciones;
+          this.sections = await x.body.secciones.filter(
+            (section) => section.activo
+          );
           this.data = x.body;
           if (this.sections[0].grupos && this.sections[0].grupos.length > 0) {
             this.getActivityData();
@@ -329,7 +331,8 @@ export class ValidationFormatosComponent implements OnInit {
               this.form.addControl(
                 `${this.getParametroControl({ j, k })}`,
                 new FormControl({
-                  value: this.convertDate(parametro.valor),
+                  //value: this.convertDate(parametro.valor),
+                  value: parametro.valor,
                   disabled: true,
                 })
               );
@@ -400,6 +403,10 @@ export class ValidationFormatosComponent implements OnInit {
               this.checkImgParam(parametro, j, k);
             } else if (parametro.idParametro === TipoParametro.FIRMA) {
               this.checkSignParam(paramIdx, parametro, indexGroup, k, j);
+            } else if (parametro.idParametro === TipoParametro.FECHA) {
+              parametro.valor = this.form.get(
+                this.getParametroControl({ j, k })
+              ).value;
             } else {
               parametro.valor = String(
                 this.form.get(this.getParametroControl({ j, k })).value
@@ -668,6 +675,7 @@ export class ValidationFormatosComponent implements OnInit {
     var date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
       day = ("0" + date.getDate()).slice(-2);
+    //const numberDay = Number(day) + 1;
     return [date.getFullYear(), mnth, day].join("-");
   }
 
