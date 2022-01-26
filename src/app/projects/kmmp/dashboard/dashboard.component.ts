@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
 import { MatTabChangeEvent } from "@angular/material/tabs";
 import { Router } from "@angular/router";
 import { UserService } from "app/core/user/user.service";
 import { User } from "app/core/user/user.types";
+import { setFormatDate } from "app/shared/utils/dates-format";
 
 import {
   ApexAxisChartSeries,
@@ -18,6 +20,7 @@ import {
   ApexTooltip,
 } from "ng-apexcharts";
 import { Observable } from "rxjs";
+import { DashboardService } from "./dashboard.service";
 
 //FAKE DATA
 import { filter } from "./filters/fake-db/fake-db";
@@ -41,6 +44,10 @@ export type ChartOptions = {
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
+  dateRange = new FormGroup({
+    startDate: new FormControl({ value: null }),
+    endDate: new FormControl({ value: null }),
+  });
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
@@ -49,8 +56,14 @@ export class DashboardComponent implements OnInit {
   data = filter;
   _allFlotas = true;
   _allNoExecuted = true;
+  start: string;
+  end: string;
 
-  constructor(private _router: Router, private _userService: UserService) {
+  constructor(
+    private _router: Router,
+    private _userService: UserService,
+    private _dashboardService: DashboardService
+  ) {
     this._userService.user$;
   }
 
@@ -74,6 +87,39 @@ export class DashboardComponent implements OnInit {
     this._userService.user$.subscribe((user: User) => {
       this.user = user;
     });
+  }
+
+  changeDate(): void {
+    const startDate = new Date(this.dateRange.controls["startDate"].value);
+    const endDate = new Date(this.dateRange.controls["endDate"].value);
+    this.displayStringDate();
+
+    const filter = {
+      fechaInicio: setFormatDate(startDate),
+      fechaFin: setFormatDate(endDate),
+    };
+    if (Number(setFormatDate(endDate).split("-")[0]) > 2020) {
+      this._dashboardService.getStatusFlota(filter).subscribe(() => {});
+
+      this._dashboardService.getCodigoDemora(filter).subscribe(() => {});
+
+      this._dashboardService
+        .getActividadesNoEjecutadas(filter)
+        .subscribe(() => {});
+    }
+  }
+
+  private displayStringDate(): void {
+    if (this.dateRange.controls["startDate"].value) {
+      this.start = new Date(
+        this.dateRange.controls["startDate"].value._d
+      ).toLocaleDateString("en-US");
+    }
+    if (this.dateRange.controls["endDate"].value) {
+      this.end = new Date(
+        this.dateRange.controls["endDate"].value._d
+      ).toLocaleDateString("en-US");
+    }
   }
 
   allFlotas(event: MatTabChangeEvent): void {

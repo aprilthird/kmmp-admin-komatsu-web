@@ -19,6 +19,7 @@ export class EditarPerfilComponent implements OnInit {
   });
 
   public list: any[] = [];
+  public listApp: any[] = [];
   loadingCheckbox: boolean;
   validTree = false;
   currentParentSelected: number;
@@ -60,6 +61,7 @@ export class EditarPerfilComponent implements OnInit {
           children: [],
           index: index,
           acciones: [],
+          type: "web",
         };
 
         if (currentMenu.subMenu && currentMenu.subMenu.length > 0) {
@@ -84,6 +86,45 @@ export class EditarPerfilComponent implements OnInit {
         TREE_DATA.push(generateSubMenu(element, 1, index));
       });
       this.list = TREE_DATA;
+    });
+
+    this._editarPerfilService.menuApp$.subscribe((response: any) => {
+      const generateSubMenu = (currentMenu, level, index) => {
+        const response = {
+          title: currentMenu.nombre,
+          level,
+          id: currentMenu.idOpcionRol,
+          idOpcion: currentMenu.idOpcion,
+          esAccion: currentMenu.esAccion,
+          activo: currentMenu.activo,
+          children: [],
+          index: index,
+          acciones: [],
+          type: "movil",
+        };
+
+        if (currentMenu.subMenu && currentMenu.subMenu.length > 0) {
+          currentMenu.subMenu.forEach((element) => {
+            response["children"].push(
+              generateSubMenu(element, level + 1, index)
+            );
+          });
+        }
+
+        if (currentMenu.acciones && currentMenu.acciones.length > 0) {
+          currentMenu.acciones.forEach((element) => {
+            response["acciones"].push(generateSubMenu(element, null, null));
+          });
+        }
+
+        return response;
+      };
+
+      let TREE_DATA = [];
+      response.forEach((element, index) => {
+        TREE_DATA.push(generateSubMenu(element, 1, index));
+      });
+      this.listApp = TREE_DATA;
     });
   }
 
@@ -148,7 +189,10 @@ export class EditarPerfilComponent implements OnInit {
     this.sendCheckRequest(value);
 
     if (value.activo) {
-      let parent = this.list.find((x) => x?.index === value?.index);
+      //let parent = [...this.list, ...this.listApp].find(
+      let parent = [...this.list, ...this.listApp].find(
+        (x) => x?.index === value?.index && x.type === value.type
+      );
       if (parent) {
         parent.activo = true;
         this.sendCheckRequest(parent);
@@ -161,7 +205,7 @@ export class EditarPerfilComponent implements OnInit {
     }
 
     setTimeout(() => {
-      this.loopData(this.list);
+      this.loopData([...this.list, ...this.listApp]);
     }, 2000);
   }
 

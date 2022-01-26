@@ -51,61 +51,126 @@
         <div class="hidden md:block px-8 py-4">
           <mat-divider></mat-divider>
         </div>
-        <div class="flex flex-auto flex-wrap">
-          <div class="flex flex-col md:flex-row w-full md:pl-8">
-            <div class="font-semibold mb-2">Permisos</div>
-          </div>
-          <div class="flex flex-col md:flex-row w-full md:pl-8 overflow-y-auto">
-            <ul>
-              <ng-container
-                *ngTemplateOutlet="recursiveListTmpl; context: { list: list }"
-              ></ng-container>
-            </ul>
+        <div class="flex gap-5">
+          <div class="flex flex-auto flex-wrap">
+            <div class="flex flex-col md:flex-row w-full md:pl-8">
+              <div class="font-semibold mb-2">Permisos para WEB</div>
+            </div>
+            <div
+              class="flex flex-col md:flex-row w-full md:pl-8 overflow-y-auto"
+            >
+              <ul>
+                <ng-container
+                  *ngTemplateOutlet="recursiveListTmpl; context: { list: list }"
+                ></ng-container>
+              </ul>
 
-            <ng-template #recursiveListTmpl let-list="list">
-              <li
-                *ngFor="let item of list"
-                [ngStyle]="{
-                  'margin-bottom.px': item.level === 1 ? 24 : 8,
-                  'margin-top.px': 8
-                }"
-              >
-                <mat-checkbox
-                  [disabled]="loadingCheckbox"
-                  [color]="!item.esAccion ? 'primary' : 'warn'"
-                  [checked]="item.activo"
-                  (change)="clickCheckbox(item)"
-                  [ngClass]="{
-                    'text-gray-500': item.esAccion
+              <ng-template #recursiveListTmpl let-list="list">
+                <li
+                  *ngFor="let item of list"
+                  [ngStyle]="{
+                    'margin-bottom.px': item.level === 1 ? 24 : 8,
+                    'margin-top.px': 8
                   }"
                 >
-                  {{ item.title ? item.title : item.nombre }}
-                </mat-checkbox>
-                <ul
-                  *ngIf="item?.children?.length > 0"
-                  [ngStyle]="{ 'padding-left.px': 20, 'margin-botom.px': 8 }"
-                >
-                  <ng-container
-                    *ngTemplateOutlet="
-                      recursiveListTmpl;
-                      context: { list: item.children }
-                    "
-                  ></ng-container>
-                </ul>
+                  <mat-checkbox
+                    [disabled]="loadingCheckbox"
+                    [color]="!item.esAccion ? 'primary' : 'warn'"
+                    [checked]="item.activo"
+                    (change)="clickCheckbox(item)"
+                    [ngClass]="{
+                      'text-gray-500': item.esAccion
+                    }"
+                  >
+                    {{ item.title ? item.title : item.nombre }}
+                  </mat-checkbox>
+                  <ul
+                    *ngIf="item?.children?.length > 0"
+                    [ngStyle]="{ 'padding-left.px': 20, 'margin-botom.px': 8 }"
+                  >
+                    <ng-container
+                      *ngTemplateOutlet="
+                        recursiveListTmpl;
+                        context: { list: item.children }
+                      "
+                    ></ng-container>
+                  </ul>
 
-                <ul
-                  *ngIf="item?.acciones?.length > 0"
-                  [ngStyle]="{ 'padding-left.px': 20, 'margin-botom.px': 8 }"
+                  <ul
+                    *ngIf="item?.acciones?.length > 0"
+                    [ngStyle]="{ 'padding-left.px': 20, 'margin-botom.px': 8 }"
+                  >
+                    <ng-container
+                      *ngTemplateOutlet="
+                        recursiveListTmpl;
+                        context: { list: item.acciones }
+                      "
+                    ></ng-container>
+                  </ul>
+                </li>
+              </ng-template>
+            </div>
+          </div>
+
+          <div class="flex flex-auto flex-wrap">
+            <div class="flex flex-col w-full md:pl-8 overflow-y-auto">
+              <div class="flex w-full">
+                <div class="font-semibold mb-2">Permisos para MOVIL</div>
+              </div>
+              <ul>
+                <ng-container
+                  *ngTemplateOutlet="
+                    recursiveListAppTmpl;
+                    context: { listApp: listApp }
+                  "
+                ></ng-container>
+              </ul>
+
+              <ng-template #recursiveListAppTmpl let-list="listApp">
+                <li
+                  *ngFor="let item of listApp"
+                  [ngStyle]="{
+                    'margin-bottom.px': item.level === 1 ? 24 : 8,
+                    'margin-top.px': 8
+                  }"
                 >
-                  <ng-container
-                    *ngTemplateOutlet="
-                      recursiveListTmpl;
-                      context: { list: item.acciones }
-                    "
-                  ></ng-container>
-                </ul>
-              </li>
-            </ng-template>
+                  <mat-checkbox
+                    [disabled]="loadingCheckbox"
+                    [color]="!item.esAccion ? 'primary' : 'warn'"
+                    [checked]="item.activo"
+                    (change)="clickCheckbox(item)"
+                    [ngClass]="{
+                      'text-gray-500': item.esAccion
+                    }"
+                  >
+                    {{ item.title ? item.title : item.nombre }}
+                  </mat-checkbox>
+                  <ul
+                    *ngIf="item?.children?.length > 0"
+                    [ngStyle]="{ 'padding-left.px': 20, 'margin-botom.px': 8 }"
+                  >
+                    <ng-container
+                      *ngTemplateOutlet="
+                        recursiveListAppTmpl;
+                        context: { listApp: item.children }
+                      "
+                    ></ng-container>
+                  </ul>
+
+                  <ul
+                    *ngIf="item?.acciones?.length > 0"
+                    [ngStyle]="{ 'padding-left.px': 20, 'margin-botom.px': 8 }"
+                  >
+                    <ng-container
+                      *ngTemplateOutlet="
+                        recursiveListAppTmpl;
+                        context: { listApp: item.acciones }
+                      "
+                    ></ng-container>
+                  </ul>
+                </li>
+              </ng-template>
+            </div>
           </div>
         </div>
       </form>

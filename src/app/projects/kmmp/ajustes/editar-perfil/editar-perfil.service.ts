@@ -8,10 +8,15 @@ import { tap } from "rxjs/operators";
 @Injectable({ providedIn: "root" })
 export class EditarPerfilService {
   _menu: BehaviorSubject<any> = new BehaviorSubject(null);
+  _menuApp: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private _httpClient: HttpClient) {}
 
   get menu$(): Observable<any> {
     return this._menu.asObservable();
+  }
+
+  get menuApp$(): Observable<any> {
+    return this._menuApp.asObservable();
   }
 
   savePerfil(data): Observable<any> {
@@ -32,12 +37,8 @@ export class EditarPerfilService {
       .get<any>(environment.apiUrl + "/Seguridad/ObtenerArbol/" + idPerfil)
       .pipe(
         tap((response) => {
-          response.body.map((x) => {
-            if (x.idOpcion === 34) return (x.nombre = "Perfil para app");
-            if (x.idOpcion === 32) return (x.nombre = "Editar perfil en app");
-            if (x.idOpcion === 33) return (x.nombre = "Comentar perfil en app");
-          });
-          this._menu.next(response.body);
+          this._menu.next(response.body.web);
+          this._menuApp.next(response.body.movil);
         })
       );
   }

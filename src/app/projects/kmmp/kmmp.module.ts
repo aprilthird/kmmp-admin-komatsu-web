@@ -20,6 +20,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatTabsModule } from "@angular/material/tabs";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 import { StatusFlotaComponent } from "./dashboard/charts/status-flota/status-flota.component";
 import { SummaryCardsComponent } from "./dashboard/summary-cards/summary-cards.component";
 import { StatusFlotaSingleComponent } from "./dashboard/charts/status-flota-single/status-flota-single.component";
@@ -29,6 +30,7 @@ import { NoExecuteActivitiesComponent } from "./dashboard/charts/no-execute-acti
 import { NoExecuteActivitiesSingleComponent } from "./dashboard/charts/no-execute-activities-single/no-execute-activities-single.component";
 import { DeleyedCodeComponent } from "./dashboard/charts/deleyed-code/deleyed-code.component";
 import { AdhesionComponent } from "./dashboard/charts/adhesion/adhesion.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 //DEV-EXTREME
 //import { DxChartModule } from "devextreme-angular";
@@ -68,6 +70,8 @@ import { AdhesionComponent } from "./dashboard/charts/adhesion/adhesion.componen
     MatCheckboxModule,
     MatMenuModule,
     MatTabsModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
     //DxChartModule,
   ],
 })
