@@ -44,6 +44,7 @@ import { NgxMatSelectSearchModule } from "ngx-mat-select-search";
 import { FilterDialogComponent } from "./filter/filter-dialog/filter-dialog.component";
 import { UploadActivityDialogComponent } from "./dialogs/upload-activity-dialog/upload-activity-dialog.component";
 import { MassiveUploadComponent } from "./dialogs/massive-upload/massive-upload.component";
+import { PostponeComponent } from './dialogs/postpone/postpone.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { MassiveUploadComponent } from "./dialogs/massive-upload/massive-upload.
     ActivityAddEditComponent,
     UploadActivityDialogComponent,
     MassiveUploadComponent,
+    PostponeComponent,
   ],
   imports: [
     CommonModule,

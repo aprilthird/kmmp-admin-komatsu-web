@@ -8,6 +8,7 @@ import { ActivityFake } from "../../fake-db/activities/activity-fake-db";
 import { EditarFormatoService } from "../../formatos/editar-formato/editar-formato.service";
 import { ActivitiesService } from "../activities.service";
 import { AssignBayComponent } from "../dialogs/assign-bay/assign-bay.component";
+import { PostponeComponent } from "../dialogs/postpone/postpone.component";
 
 @Component({
   selector: "list-activities",
@@ -128,6 +129,13 @@ export class ListComponent implements OnInit {
             ]);
           }
         });
+    });
+  }
+
+  postponeActivity(activityId: number): void {
+    this.matDialog.open(PostponeComponent, {
+      data: activityId,
+      width: "450px",
     });
   }
 }

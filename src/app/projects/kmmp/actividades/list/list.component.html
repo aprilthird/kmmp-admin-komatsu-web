@@ -177,6 +177,13 @@
                       >
                         Editar actividad
                       </button>
+
+                      <button
+                        mat-menu-item
+                        (click)="postponeActivity(actividad.id)"
+                      >
+                        Postergar actividad
+                      </button>
                     </mat-menu>
                   </div>
                   <ng-container *ngIf="selectedActivity?.id === actividad.id">
