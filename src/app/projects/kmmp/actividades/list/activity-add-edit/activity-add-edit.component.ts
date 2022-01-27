@@ -21,6 +21,9 @@ import {
   setEquiposData,
 } from "app/shared/utils/read-load-arrayValues";
 import { TipoFormulario } from "app/shared/models/form-activity";
+import { MatDialog } from "@angular/material/dialog";
+import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
+import { Response } from "app/shared/models/general-model";
 
 @Component({
   selector: "activity-add-edit",
@@ -48,6 +51,9 @@ export class ActivityAddEditComponent implements OnInit {
   flotasOpt = [];
   tipo_mttoOpt = [];
   tipo_solicitudes = [];
+  currentTypeMtto: number;
+  currentDevice: number;
+  enableTipoMtto: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -55,7 +61,8 @@ export class ActivityAddEditComponent implements OnInit {
     private router: Router,
     private serviceAct: ActivitiesService,
     private equiposService: EquiposService,
-    private _fuseConfirmationService: FuseConfirmationService
+    private _fuseConfirmationService: FuseConfirmationService,
+    private matDialog: MatDialog
   ) {
     this.setActivityData();
     this.getActivityId();
@@ -117,6 +124,8 @@ export class ActivityAddEditComponent implements OnInit {
   getTipoMtto(idClaseActividad): void {
     this.serviceAct.getTipoMtto(9, idClaseActividad).subscribe((resp: any) => {
       this.tipo_mttoOpt = resp.body.data;
+      this.enableTipoMtto = true;
+      this.form.controls["tipo_mantenimiento"].enable();
     });
   }
 
@@ -180,16 +189,60 @@ export class ActivityAddEditComponent implements OnInit {
 
   saveActivity(): void {
     this.loadLoading = true;
-    this.serviceAct.postCargaIndividual(this.getParams()).subscribe((resp) => {
-      this.loadLoading = false;
-      this.router.navigate(["/admin/actividades/list"]);
-    });
+    this.serviceAct.postCargaIndividual(this.getParams()).subscribe(
+      (resp: Response) => {
+        if (!resp.success) {
+          this.matDialog
+            .open(UiDialogsComponent, {
+              data: {
+                title: "Error",
+                message: resp.message
+                  ? resp.message
+                  : "Actividad ya está en proceso, no es posible editar dichos valores",
+              },
+              width: "450px",
+            })
+            .afterClosed()
+            .subscribe(() => {
+              this.loadLoading = false;
+              this.router.navigate(["/admin/actividades/list"]);
+            });
+        }
+      },
+      (err) => {
+        this.matDialog
+          .open(UiDialogsComponent, {
+            data: {
+              title: "Error",
+              message: err.message
+                ? err.message
+                : "Actividad ya está en proceso, no es posible editar dichos valores",
+            },
+            width: "450px",
+          })
+          .afterClosed()
+          .subscribe(() => (this.loadLoading = false));
+      }
+    );
   }
 
   getEquiposData(id: number): void {
     this.equiposService.getEquipos({ id: id }).subscribe(async (resp) => {
       const currentEquipo = await resp.body.data.find((x: any) => x.id === id);
-      setEquiposData(this.form, currentEquipo);
+      if (currentEquipo) {
+        this.currentDevice = id;
+        setEquiposData(this.form, currentEquipo);
+      } else {
+        this.matDialog
+          .open(UiDialogsComponent, {
+            data: { title: "Error", message: "Equipo inválido" },
+            width: "450px",
+          })
+          .afterClosed()
+          .subscribe(() =>
+            this.form.controls["equipo"].setValue(this.currentDevice)
+          );
+      }
     });
   }
 
@@ -271,9 +324,20 @@ export class ActivityAddEditComponent implements OnInit {
       idModelo: new FormControl(),
       tipo_equipo: new FormControl(),
     });
+    this.form.controls["tipo_mantenimiento"].disable();
+
+    if (this.isEdit) {
+      this.form.controls["numero_bl"].disable();
+      this.form.controls["fechaEstimadaFin"].disable();
+      this.form.controls["duracion"].disable();
+      this.form.controls["fechaRealIni"].disable();
+      this.form.controls["fechaRealFin"].disable();
+      this.form.controls["duracionReal"].disable();
+      this.form.controls["comentariosTecnico"].disable();
+    }
 
     setTimeout(() => {
-      if (this.isEdit) this.disableFormControl();
+      //if (this.isEdit) this.disableFormControl();
     }, 2000);
   }
 

@@ -3,4 +3,5 @@ export interface Response {
   body: any;
   code: number;
   error: string;
+  message?: string;
 }

@@ -24,7 +24,7 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         regex: "2",
         placeholder: "Ingrese Correo",
         minCaracteres: 1,
-        maxCaracteres: 50,
+        maxCaracteres: 100,
       };
     case 2:
       return {
@@ -45,6 +45,8 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         ...paramData,
         idParametro: 4,
         regex: "",
+        minCaracteres: null,
+        maxCaracteres: null,
       };
 
     case 5:
@@ -52,12 +54,16 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         ...paramData,
         idParametro: 5,
         regex: "",
+        minCaracteres: null,
+        maxCaracteres: null,
       };
     case 6:
       return {
         ...paramData,
         idParametro: 6,
         regex: "",
+        minCaracteres: null,
+        maxCaracteres: null,
       };
 
     case 7:
@@ -65,6 +71,8 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         ...paramData,
         idParametro: 7,
         regex: "",
+        minCaracteres: null,
+        maxCaracteres: null,
       };
 
     case 8:
@@ -72,6 +80,8 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         ...paramData,
         idParametro: 8,
         regex: "",
+        minCaracteres: null,
+        maxCaracteres: null,
       };
 
     case 9:
@@ -79,6 +89,8 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         ...paramData,
         idParametro: 9,
         regex: "",
+        minCaracteres: null,
+        maxCaracteres: null,
       };
 
     case 10:
@@ -86,6 +98,8 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         ...paramData,
         idParametro: 10,
         regex: "",
+        minCaracteres: null,
+        maxCaracteres: null,
       };
   }
 }

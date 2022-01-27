@@ -106,8 +106,8 @@ export class ActivitiesService {
     );
   }
 
-  postCargaIndividual(data: ActivityI): Observable<Response[]> {
-    return this.http.post<Response[]>(
+  postCargaIndividual(data: ActivityI): Observable<Response> {
+    return this.http.post<Response>(
       environment.apiUrl + "/Actividades/CargaIndividual",
       data
     );

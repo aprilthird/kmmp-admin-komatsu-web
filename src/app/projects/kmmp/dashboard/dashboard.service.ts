@@ -1,13 +1,19 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
-import { Observable } from "rxjs";
+import moment from "moment";
+import { BehaviorSubject, Observable } from "rxjs";
 import { FakeDbService } from "../fake-db/fake-db.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class DashboardService {
+  _rangeDate: BehaviorSubject<any> = new BehaviorSubject({
+    endDate: moment().format("yyyy-MM-DD"),
+    startDate: moment().subtract(14, "days").format("yyyy-MM-DD"),
+  });
+
   constructor(private http: HttpClient, private fakeDB: FakeDbService) {}
 
   /**FAKE SERVICES */

@@ -102,7 +102,7 @@
             <mat-form-field class="w-1/5">
               <mat-label class="font-bold">Tipo mantenimiento</mat-label>
               <mat-select
-                *ngIf="!isEdit"
+                *ngIf="enableTipoMtto"
                 formControlName="tipo_mantenimiento"
                 [value]="form.controls['tipo_mantenimiento'].value"
                 [disabled]="form.controls['actividad'].value === ''"
@@ -115,7 +115,7 @@
               </mat-select>
 
               <input
-                *ngIf="isEdit"
+                *ngIf="!enableTipoMtto"
                 matInput
                 formControlName="tipo_mantenimiento"
               />

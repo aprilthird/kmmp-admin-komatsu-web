@@ -13,12 +13,12 @@ export function getValues(form: FormGroup): string {
 }
 
 export function setEquiposData(form: FormGroup, currentEquipo: any): void {
-  form.controls["modelo"].setValue(currentEquipo.modelo);
-  form.controls["flota"].setValue(currentEquipo.flota);
-  form.controls["tipo_equipo"].setValue(currentEquipo.tipoEquipo);
-  form.controls["idModelo"].setValue(currentEquipo.idModelo);
-  form.controls["idFlota"].setValue(currentEquipo.idFlota);
-  form.controls["idTipoEquipo"].setValue(currentEquipo.idTipoEquipo);
+  form.controls["modelo"].setValue(currentEquipo?.modelo);
+  form.controls["flota"].setValue(currentEquipo?.flota);
+  form.controls["tipo_equipo"].setValue(currentEquipo?.tipoEquipo);
+  form.controls["idModelo"].setValue(currentEquipo?.idModelo);
+  form.controls["idFlota"].setValue(currentEquipo?.idFlota);
+  form.controls["idTipoEquipo"].setValue(currentEquipo?.idTipoEquipo);
   form.controls["modelo"].disable();
   form.controls["flota"].disable();
   form.controls["tipo_equipo"].disable();

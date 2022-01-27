@@ -46,7 +46,7 @@
           <a class="prose font-bold">Del {{ start }} al {{ end }}</a>
         </div>
         <div class="flex flex-wrap gap-5 justify-end mb-6">
-          <mat-form-field>
+          <!--<mat-form-field>
             <mat-select [value]="data.request_type[0].name">
               <mat-option
                 *ngFor="let option of data.request_type"
@@ -54,14 +54,41 @@
                 >{{ option.name }}</mat-option
               >
             </mat-select>
+          </mat-form-field>-->
+          <mat-form-field class="w-44">
+            <mat-select
+              [formControl]="tipo_solicitud"
+              [value]="tipo_solicitud"
+              placeholder="Por tipo de solicitud"
+            >
+              <mat-option
+                *ngFor="let tipoSolicitud of tipo_solicitudes"
+                [value]="tipoSolicitud.id"
+                >{{ tipoSolicitud.nombre }}</mat-option
+              >
+            </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <!--<mat-form-field class="w-44">
             <mat-select [value]="data.activity_class[0].name">
               <mat-option
                 *ngFor="let option of data.activity_class"
                 [value]="option.name"
                 >{{ option.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>-->
+
+          <mat-form-field class="w-44">
+            <mat-select
+              [formControl]="clase_actividad"
+              [value]="clase_actividad"
+              placeholder="Por clase de actividad"
+            >
+              <mat-option
+                *ngFor="let claseActividad of clase_actividades"
+                [value]="claseActividad.id"
+                >{{ claseActividad.nombre }}</mat-option
               >
             </mat-select>
           </mat-form-field>

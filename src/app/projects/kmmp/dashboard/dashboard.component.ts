@@ -20,6 +20,8 @@ import {
   ApexTooltip,
 } from "ng-apexcharts";
 import { Observable } from "rxjs";
+import { ActivitiesService } from "../actividades/activities.service";
+import { ClaseActividadService } from "../maestros/clase-actividad/clase-actividad.service";
 import { DashboardService } from "./dashboard.service";
 
 //FAKE DATA
@@ -58,11 +60,17 @@ export class DashboardComponent implements OnInit {
   _allNoExecuted = true;
   start: string;
   end: string;
+  tipo_solicitudes: any[] = ["---"];
+  tipo_solicitud = new FormControl("");
+  clase_actividades: any[] = ["---"];
+  clase_actividad = new FormControl("");
 
   constructor(
     private _router: Router,
     private _userService: UserService,
-    private _dashboardService: DashboardService
+    private _dashboardService: DashboardService,
+    private serviceAct: ActivitiesService,
+    private claseActividadService: ClaseActividadService
   ) {
     this._userService.user$;
   }
@@ -87,6 +95,11 @@ export class DashboardComponent implements OnInit {
     this._userService.user$.subscribe((user: User) => {
       this.user = user;
     });
+
+    this.dateRange.patchValue(this._dashboardService._rangeDate.getValue());
+    this.displayStringDate(true);
+    this.getTipoSolicitud();
+    this.getClaseActividades();
   }
 
   changeDate(): void {
@@ -109,17 +122,37 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  private displayStringDate(): void {
+  private displayStringDate(init?: boolean): void {
     if (this.dateRange.controls["startDate"].value) {
-      this.start = new Date(
-        this.dateRange.controls["startDate"].value._d
-      ).toLocaleDateString("en-US");
+      this.start = !init
+        ? new Date(
+            this.dateRange.controls["startDate"].value._d
+          ).toLocaleDateString("en-US")
+        : new Date(
+            this.dateRange.controls["startDate"].value
+          ).toLocaleDateString("en-US");
     }
     if (this.dateRange.controls["endDate"].value) {
-      this.end = new Date(
-        this.dateRange.controls["endDate"].value._d
-      ).toLocaleDateString("en-US");
+      this.end = !init
+        ? new Date(
+            this.dateRange.controls["endDate"].value._d
+          ).toLocaleDateString("en-US")
+        : new Date(this.dateRange.controls["endDate"].value).toLocaleDateString(
+            "en-US"
+          );
     }
+  }
+
+  private getTipoSolicitud(): void {
+    this.serviceAct.getResources(7).subscribe((resp) => {
+      this.tipo_solicitudes = resp.body;
+    });
+  }
+
+  getClaseActividades(): void {
+    this.claseActividadService.getClaseActividad().subscribe((resp) => {
+      this.clase_actividades = resp.body.data;
+    });
   }
 
   allFlotas(event: MatTabChangeEvent): void {
