@@ -126,7 +126,7 @@
                 ></ng-container>
               </ul>
 
-              <ng-template #recursiveListAppTmpl let-list="listApp">
+              <ng-template #recursiveListAppTmpl let-listApp="listApp">
                 <li
                   *ngFor="let item of listApp"
                   [ngStyle]="{

@@ -189,7 +189,6 @@ export class EditarPerfilComponent implements OnInit {
     this.sendCheckRequest(value);
 
     if (value.activo) {
-      //let parent = [...this.list, ...this.listApp].find(
       let parent = [...this.list, ...this.listApp].find(
         (x) => x?.index === value?.index && x.type === value.type
       );
