@@ -37,10 +37,11 @@
                 matSort
                 matSortDisableClear
               >
+                <div class="">Nombre</div>
                 <div class="">Usuario</div>
                 <div class="">Instalaciones</div>
-                <!--<div class="">Asignado</div>-->
                 <div class="">Fecha de registro</div>
+                <div>Editar</div>
                 <div>Asignaciones</div>
               </div>
 
@@ -52,14 +53,15 @@
                   <div
                     class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b justify-between"
                   >
-                    <!-- Modificado Por -->
                     <div class="truncate">
-                      {{ dispositivo.usuario }}
+                      {{ dispositivo?.nombre }}
+                    </div>
+                    <div class="truncate">
+                      {{ dispositivo?.usuario }}
                     </div>
 
-                    <!-- Modificado Por -->
                     <div class="truncate">
-                      {{ dispositivo.instalaciones }}
+                      {{ dispositivo?.instalaciones }}
                     </div>
 
                     <!-- Modificado Por -->
@@ -79,7 +81,21 @@
 
                     <!-- Modificado Por -->
                     <div class="truncate">
-                      {{ dispositivo.fechaReg | date: "dd/MM/yy  h:mma" }}
+                      {{ dispositivo?.fechaReg | date: "dd/MM/yy  h:mma" }}
+                    </div>
+
+                    <div class="truncate">
+                      <button
+                        class="min-w-7 w-7 min-h-7 h-7 mr-1"
+                        mat-icon-button
+                        matTooltip="Editar dispositivo"
+                        (click)="editDevice(dispositivo)"
+                      >
+                        <mat-icon
+                          class="icon-size-5 text-primary-500"
+                          [svgIcon]="'heroicons_outline:pencil'"
+                        ></mat-icon>
+                      </button>
                     </div>
 
                     <div>

@@ -8,6 +8,7 @@ import {
 } from "app/core/types/http.types";
 import { environment } from "environments/environment";
 import { tap } from "rxjs/operators";
+import { getInboxParams } from "../../maestros/maestro-model";
 
 @Injectable({ providedIn: "root" })
 export class DispositivosService {
@@ -35,23 +36,27 @@ export class DispositivosService {
    * Obtener el listado de usuarios
    */
   getDispositivos(
-    { page, pageSize, ...filter }: ParamsPagination | any = {
+    { page, pageSize }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<any[]>> {
+    let currentFilter;
+    getInboxParams.filter.tipo = 2;
+
+    if (!page) {
+      currentFilter = { ...getInboxParams };
+    } else {
+      currentFilter = {
+        ...getInboxParams,
+        page,
+        pageSize,
+      };
+    }
     return this._httpClient
       .post<PaginationResponse<any[]>>(
         environment.apiUrl + "/Administracion/ObtenerDispositivos",
-        {
-          page: 0,
-          pageSize: 10,
-          filter: {
-            fechaFin: "2022-02-01",
-            fechaIni: "2021-12-27",
-            tipo: 2,
-          },
-        }
+        { page, pageSize, ...currentFilter }
       )
       .pipe(
         tap((response) => {

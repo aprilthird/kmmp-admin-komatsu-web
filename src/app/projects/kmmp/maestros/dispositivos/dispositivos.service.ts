@@ -5,6 +5,7 @@ import {
   ParamsPagination,
 } from "app/core/types/http.types";
 import { Pagination } from "app/core/types/list.types";
+import { Response } from "app/shared/models/general-model";
 import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
@@ -42,12 +43,9 @@ export class DispositivosService {
     return this._pagination.asObservable();
   }
 
-  postDispositivo(dispositivo): Observable<any> {
-    const endpoint = "/Administracion/CrudDispositivos/" + 0;
-    return this.http.post<PaginationResponse<DispositivoI[]>>(
-      "https://development-kmp.ws.solera.pe" + endpoint,
-      dispositivo
-    );
+  postDispositivo(data): Observable<Response> {
+    const endpoint = environment.apiUrl + "/Administracion/GuardarDispositivo";
+    return this.http.post<Response>(endpoint, data);
   }
 
   getDispositivo(

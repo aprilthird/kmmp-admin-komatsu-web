@@ -51,6 +51,7 @@ import { InnerHeaderComponent } from "./inner-header/inner-header.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { TipoEquiposComponent } from "./tipo-equipos/tipo-equipos.component";
 import { DialogAddTipoEquipoComponent } from "./tipo-equipos/dialog-add-tipo-equipo/dialog-add-tipo-equipo.component";
+import { DialogEditDeviceComponent } from './dispositivos/dialog-edit-device/dialog-edit-device.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { DialogAddTipoEquipoComponent } from "./tipo-equipos/dialog-add-tipo-equ
     InnerHeaderComponent,
     TipoEquiposComponent,
     DialogAddTipoEquipoComponent,
+    DialogEditDeviceComponent,
   ],
   imports: [
     CommonModule,

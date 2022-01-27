@@ -1,3 +1,5 @@
+import moment from "moment";
+
 interface GetInbox {
   page: number | 0;
   pageSize: number | 10;
@@ -28,8 +30,8 @@ export const getInboxParams: GetInbox = {
     nombre: "",
     estado: 0,
     tipo: 1,
-    fechaIni: "2021-08-01",
-    fechaFin: "2022-02-01",
+    fechaIni: moment().subtract(3, "years").format("yyyy-MM-DD"),
+    fechaFin: moment().format("yyyy-MM-DD"),
     codigo: "",
   },
 };

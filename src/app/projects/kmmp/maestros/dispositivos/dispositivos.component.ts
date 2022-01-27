@@ -8,6 +8,7 @@ import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { DispositivosService } from "../../ajustes/dispositivos/dispositivos.services";
 import { DialogAddDispositivosComponent } from "./dialog-add-dispositivos/dialog-add-dispositivos.component";
+import { DialogEditDeviceComponent } from "./dialog-edit-device/dialog-edit-device.component";
 import { DispositivoI } from "./dispositivo-model";
 
 @Component({
@@ -27,7 +28,8 @@ export class DispositivosComponent implements OnInit {
     public _permissonService: PermissionService,
     private _routeActived: ActivatedRoute,
     private _dispositivosServices: DispositivosService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private _router: Router
   ) {
     this.getDispositivos();
   }
@@ -66,6 +68,32 @@ export class DispositivosComponent implements OnInit {
     this.matDialog.open(DialogAddDispositivosComponent, {
       width: "400px",
       data: deviceDataEvent,
+    });
+  }
+
+  editDevice(device): void {
+    this.matDialog
+      .open(DialogEditDeviceComponent, {
+        data: device,
+        width: "450px",
+      })
+      .afterClosed()
+      .subscribe(() => this.loadData());
+  }
+
+  changePage(pagination: any): void {
+    this._router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this._router.onSameUrlNavigation = "reload";
+
+    const params = this._routeActived.snapshot.params;
+    this._router.navigate(["/admin/maestros/dispositivos"], {
+      queryParams: {
+        ...params,
+        pageSize: pagination.pageSize,
+        page: pagination.pageIndex,
+      },
     });
   }
 }
