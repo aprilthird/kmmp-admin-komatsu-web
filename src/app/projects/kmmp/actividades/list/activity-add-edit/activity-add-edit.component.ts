@@ -207,6 +207,9 @@ export class ActivityAddEditComponent implements OnInit {
               this.loadLoading = false;
               this.router.navigate(["/admin/actividades/list"]);
             });
+        } else {
+          this.loadLoading = false;
+          this.router.navigate(["/admin/actividades/list"]);
         }
       },
       (err) => {
