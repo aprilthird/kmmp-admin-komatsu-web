@@ -33,31 +33,41 @@ export class VerticalGroupComponent implements OnInit {
     this.isLoading = true;
     let column: number;
     let row: number;
+    let paramProps: any;
 
-    const rows = await this.groupData.parametros.map((data) => data.fila);
+    const rows = await this.groupData.parametros
+      .filter((data) => data.activo)
+      .map((data) => data.fila);
     const highestRow = Math.max.apply(null, rows);
     row = highestRow + 1;
+    const count = this.groupData.parametros.map((x) => x.activo);
+    const textLength = count.length + 1;
 
     if (this.groupData.parametros && this.groupData.parametros.length === 0) {
       row = 1;
       column = 1;
+      paramProps = [
+        {
+          ...GeneralParams,
+          label: "texto " + textLength,
+          fila: row,
+          columna: column,
+          idGrupo: this.groupData.id,
+        },
+      ];
+    } else {
+      paramProps = [
+        {
+          ...this.groupData.parametros[highestRow - 1],
+          id: 0,
+          fila: row,
+        },
+      ];
     }
-
-    const count = this.groupData.parametros.map((x) => x.activo);
-    const textLength = count.length + 1;
-
     this._editarFormatoService
       .createDato({
         ...this.groupData,
-        parametros: [
-          {
-            ...GeneralParams,
-            label: "texto " + textLength,
-            fila: row,
-            columna: column,
-            idGrupo: this.groupData.id,
-          },
-        ],
+        parametros: paramProps,
       })
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(() => {
