@@ -37,7 +37,7 @@
           [ngStyle]="{ 'margin-left': dynamicFitImage, width: dinamycWidth }"
         />
         <button
-          *ngIf="!preview && editable"
+          *ngIf="!preview && editable && type !== 'upload'"
           mat-icon-button
           (click)="removePicture()"
         >
