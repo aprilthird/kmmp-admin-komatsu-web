@@ -43,8 +43,10 @@ export class ListComponent implements OnInit {
   changePage(): void {}
 
   getActivities(): void {
+    this.isLoading = true;
     this.activitiesService.getActivities().subscribe((_activities: any) => {
       this.activities = _activities.body.data;
+      this.isLoading = false;
     });
   }
 
@@ -132,10 +134,13 @@ export class ListComponent implements OnInit {
     });
   }
 
-  postponeActivity(activityId: number): void {
-    this.matDialog.open(PostponeComponent, {
-      data: activityId,
-      width: "450px",
-    });
+  postponeActivity(activity: any): void {
+    this.matDialog
+      .open(PostponeComponent, {
+        data: activity,
+        width: "450px",
+      })
+      .afterClosed()
+      .subscribe(() => this.getActivities());
   }
 }

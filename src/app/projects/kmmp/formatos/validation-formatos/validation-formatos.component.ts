@@ -69,6 +69,7 @@ export class ValidationFormatosComponent implements OnInit {
   sections: any[] = [];
   currentSectionData: any;
   loadingReport: boolean;
+  asignation: any;
 
   constructor(
     private matDialog: MatDialog,
@@ -106,6 +107,7 @@ export class ValidationFormatosComponent implements OnInit {
       this._editarFormatoService
         .getAbrirAsignacion(this.formatoId)
         .subscribe(async (x: any) => {
+          this.asignation = await x.body;
           this.sections = await x.body.secciones.filter(
             (section) => section.activo
           );
@@ -419,6 +421,7 @@ export class ValidationFormatosComponent implements OnInit {
     });
 
     const payload = {
+      ...this.asignation,
       secciones: data,
       idFormato: data[0].grupos[0].parametros[0].idFormato,
       idActividadFormato: Number(this.formatoId),

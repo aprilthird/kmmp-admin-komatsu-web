@@ -177,4 +177,9 @@ export class ActivitiesService {
     const endpoint = environment.apiUrl + "/Mantenimiento/Postergar";
     return this.http.post<Response>(endpoint, data);
   }
+
+  postponeReason(): Observable<Response> {
+    const endpoint = environment.apiUrl + "/Actividades/ObtenerRecursos";
+    return this.http.post<Response>(endpoint, { id: 16 });
+  }
 }

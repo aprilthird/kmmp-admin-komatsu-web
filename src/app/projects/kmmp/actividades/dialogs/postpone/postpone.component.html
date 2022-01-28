@@ -12,15 +12,21 @@
 
       <mat-form-field floatLabel="always" class="w-100-p">
         <mat-label class="capitalize">Motivo</mat-label>
-        <mat-select placeholder="Seleccione el motivo" #singleSelect>
+        <mat-select
+          (selectionChange)="setReason($event)"
+          placeholder="Seleccione el motivo"
+          #singleSelect
+        >
           <mat-option>
             <ngx-mat-select-search
               [searching]="searchLoader"
             ></ngx-mat-select-search>
           </mat-option>
-          <mat-option *ngFor="let item of items" [value]="item?.id">
-            {{ item?.nombre }}
-          </mat-option>
+          <ng-container *ngIf="reasons$ | async as reasons">
+            <mat-option *ngFor="let item of reasons.body" [value]="item">
+              {{ item?.nombre }}
+            </mat-option>
+          </ng-container>
         </mat-select>
       </mat-form-field>
     </div>
@@ -38,8 +44,9 @@
       [color]="'primary'"
       class="w-24"
       (click)="postpone()"
+      [disabled]="isLoading || !reason"
     >
-      <span> Postergar </span>
+      <span *ngIf="!isLoading"> Postergar </span>
       <mat-progress-spinner
         *ngIf="isLoading"
         [diameter]="24"
