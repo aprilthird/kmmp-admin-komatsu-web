@@ -144,6 +144,26 @@
                 <mat-error> {{ getErrorMessage("psw") }} </mat-error>
               </mat-form-field>
             </div>
+
+            <div
+              class="flex flex-col md:flex-row w-full"
+              *ngIf="form.controls.idsCliente.value"
+            >
+              <mat-form-field
+                floatLabel="always"
+                class="w-full md:w-1/4 md:pl-8"
+              >
+                <mat-label>Clientes</mat-label>
+                <mat-select formControlName="idsCliente" multiple>
+                  <mat-option
+                    *ngFor="let client of clients"
+                    [value]="client?.id"
+                  >
+                    {{ client?.nombre }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
         </div>
 

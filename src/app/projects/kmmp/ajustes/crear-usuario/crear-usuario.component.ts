@@ -10,6 +10,7 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { MaestrosService } from "../../maestros/maestros.service";
 import { CrearUsuarioService } from "./crear-usuario.service";
 
 interface Perfil {
@@ -43,6 +44,7 @@ export class CrearUsuarioComponent implements OnInit {
   isEdit: boolean = false;
   loading$: Observable<boolean>;
   alert: any;
+  clients = [{ id: 1, nombre: "hola" }];
 
   perfiles: Perfil[] = [];
   form: FormGroup = this.fb.group({
@@ -59,6 +61,7 @@ export class CrearUsuarioComponent implements OnInit {
     apellidos: ["", Validators.required],
     correo: ["", [Validators.required, Validators.email]],
     roles: [], // Roles será la lista general de roles
+    idsCliente: [],
     plataformas: new FormArray(
       [new FormControl(false), new FormControl(false)],
       minSelectedCheckboxes(1)
@@ -81,8 +84,10 @@ export class CrearUsuarioComponent implements OnInit {
     private fb: FormBuilder,
     private crearUsuarioService: CrearUsuarioService,
     private activatedRoute: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _maestrosService: MaestrosService
   ) {
+    this.getClients();
     this.init();
   }
 
@@ -106,8 +111,16 @@ export class CrearUsuarioComponent implements OnInit {
         .getUsuario(this.activatedRoute.snapshot.params.id)
         .pipe(takeUntil(this._unsubscribeAll))
         .subscribe((response) => {
-          const { usr, nombres, apellidos, correo, usuarioRoles, web, movil } =
-            response.body;
+          const {
+            usr,
+            nombres,
+            apellidos,
+            correo,
+            usuarioRoles,
+            web,
+            movil,
+            idsCliente,
+          } = response.body;
           this.form.setValue({
             usr,
             nombres,
@@ -117,17 +130,31 @@ export class CrearUsuarioComponent implements OnInit {
             roles: usuarioRoles,
             usuarioRoles: this.generateRoles(usuarioRoles),
             plataformas: [web, movil],
+            idsCliente: idsCliente ? idsCliente : [],
+            //idsCliente: this.clients.map((client) => client.id),
           });
           this.form.addControl(
             "id",
             new FormControl(this.activatedRoute.snapshot.params.id)
           );
+
+          console.log(this.form.value);
+
+          /*this.form.controls.cliente.patchValue(
+            this.clients.map((client) => client.id)
+          );*/
         });
     }
   }
 
   ngOnInit(): void {
     this.passwordPattern();
+  }
+
+  getClients(): void {
+    this._maestrosService
+      .getClients()
+      .subscribe((resp) => (this.clients = resp.body.data));
   }
 
   /**
@@ -244,4 +271,6 @@ export class CrearUsuarioComponent implements OnInit {
 
     return control.hasError("email") ? "Formato de correo incorrecto" : "";
   }
+
+  byClient(e): void {}
 }

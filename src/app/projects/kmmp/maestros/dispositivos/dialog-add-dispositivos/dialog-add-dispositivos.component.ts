@@ -21,7 +21,6 @@ export class DialogAddDispositivosComponent implements OnInit {
   form: FormGroup;
   matErrorMsg = "Dato obligatorio";
   bays = [];
-  idBahias = [];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   baysAssigned: any[] = [];
 

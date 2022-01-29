@@ -28,6 +28,8 @@ import { FuseAlertModule } from "@fuse/components/alert";
 import { FuseConfirmationModule } from "@fuse/services/confirmation";
 import { MatListModule } from "@angular/material/list";
 import { SharedModule } from "app/shared/shared.module";
+import { MatSelectModule } from "@angular/material/select";
+import { NgxMatSelectSearchModule } from "ngx-mat-select-search";
 import { EditarPerfilComponent } from "./editar-perfil/editar-perfil.component";
 import { CrearUsuarioComponent } from "./crear-usuario/crear-usuario.component";
 //import { InnerHeaderComponent } from "app/shared/ui/inner-header/inner-header.component";
@@ -65,6 +67,8 @@ import { CrearUsuarioComponent } from "./crear-usuario/crear-usuario.component";
     FuseAlertModule,
     FuseConfirmationModule,
     MatListModule,
+    MatSelectModule,
+    NgxMatSelectSearchModule,
     //InnerHeaderComponent,
     SharedModule,
   ],
