@@ -45,6 +45,7 @@ export class PostponeComponent implements OnInit {
       idMotivoPostergado: this.reason.id,
       motivoPostergado: this.reason.nombre,
       descripcion: this.reason.nombre,
+      postergado: true,
     };
     this._activitiesService.postponeActivity(payload).subscribe(
       () => {

@@ -46,7 +46,6 @@ export class CrearUsuarioComponent implements OnInit {
   loading$: Observable<boolean>;
   alert: any;
   clients = [];
-  @ViewChild("multiSelectClients") multiSelectClients: any;
 
   perfiles: Perfil[] = [];
   form: FormGroup = this.fb.group({
@@ -127,15 +126,7 @@ export class CrearUsuarioComponent implements OnInit {
             usuarioCliente,
           } = response.body;
 
-          usuarioCliente.forEach((client) => {
-            this.clients.push({
-              idCliente: client.idCliente,
-              idUsuario: Number(this.id),
-              activo: client.activo,
-              id: client.id,
-              nombre: client.nombre,
-            });
-          });
+          this.updateIds(usuarioCliente);
 
           this.form.setValue({
             usr,
@@ -179,8 +170,21 @@ export class CrearUsuarioComponent implements OnInit {
     const payload = this.clients.filter(
       (x) => x.id !== 0 || (x.id === 0 && x.activo)
     );
-    this.crearUsuarioService.bindClientToUser(payload).subscribe(() => {
-      //this.multiSelectClients.close();
+    this.crearUsuarioService.bindClientToUser(payload).subscribe((resp) => {
+      this.updateIds(resp.body);
+    });
+  }
+
+  updateIds(data): void {
+    this.clients = [];
+    data.forEach((client) => {
+      this.clients.push({
+        idCliente: client.idCliente,
+        idUsuario: Number(this.id),
+        activo: client.activo,
+        id: client.id,
+        nombre: client.nombre,
+      });
     });
   }
 

@@ -76,6 +76,10 @@
               <ng-container *ngFor="let actividad of activities; let i = index">
                 <div
                   class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b justify-between"
+                  [ngClass]="{ 'postpone-activity': actividad.postergado }"
+                  [matTooltip]="
+                    actividad.postergado ? 'ACTIVIDAD POSTERGADA' : ''
+                  "
                 >
                   <div>
                     <mat-checkbox
@@ -179,6 +183,7 @@
                       </button>
 
                       <button
+                        *ngIf="!actividad.postergado"
                         mat-menu-item
                         (click)="postponeActivity(actividad)"
                       >

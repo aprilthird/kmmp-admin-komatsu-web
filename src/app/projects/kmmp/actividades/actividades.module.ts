@@ -29,6 +29,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatRippleModule } from "@angular/material/core";
 import { MatInputModule } from "@angular/material/input";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 import {
   NgxMatDatetimePickerModule,
@@ -44,7 +45,7 @@ import { NgxMatSelectSearchModule } from "ngx-mat-select-search";
 import { FilterDialogComponent } from "./filter/filter-dialog/filter-dialog.component";
 import { UploadActivityDialogComponent } from "./dialogs/upload-activity-dialog/upload-activity-dialog.component";
 import { MassiveUploadComponent } from "./dialogs/massive-upload/massive-upload.component";
-import { PostponeComponent } from './dialogs/postpone/postpone.component';
+import { PostponeComponent } from "./dialogs/postpone/postpone.component";
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { PostponeComponent } from './dialogs/postpone/postpone.component';
     MatRippleModule,
     MatInputModule,
     NgxMatDatetimePickerModule,
+    MatTooltipModule,
     FuseConfirmationModule,
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,
