@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { HttpResponse } from "app/core/types/http.types";
 import { Perfil } from "app/core/types/perfil.types";
+import { Response } from "app/shared/models/general-model";
 import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
@@ -71,5 +72,10 @@ export class CrearUsuarioService {
           this._loading.next(false);
         })
       );
+  }
+
+  bindClientToUser(data): Observable<Response> {
+    const endpoint = environment.apiUrl + "/Seguridad/AsociarCliente";
+    return this._httpClient.post<Response>(endpoint, data);
   }
 }

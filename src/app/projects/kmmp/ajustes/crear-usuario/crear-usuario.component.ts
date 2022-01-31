@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -7,6 +7,7 @@ import {
   ValidatorFn,
   Validators,
 } from "@angular/forms";
+import { MatSelectChange } from "@angular/material/select";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -44,7 +45,8 @@ export class CrearUsuarioComponent implements OnInit {
   isEdit: boolean = false;
   loading$: Observable<boolean>;
   alert: any;
-  clients = [{ id: 1, nombre: "hola" }];
+  clients = [];
+  @ViewChild("multiSelectClients") multiSelectClients: any;
 
   perfiles: Perfil[] = [];
   form: FormGroup = this.fb.group({
@@ -61,7 +63,7 @@ export class CrearUsuarioComponent implements OnInit {
     apellidos: ["", Validators.required],
     correo: ["", [Validators.required, Validators.email]],
     roles: [], // Roles será la lista general de roles
-    idsCliente: [],
+    idsCliente: new FormControl(),
     plataformas: new FormArray(
       [new FormControl(false), new FormControl(false)],
       minSelectedCheckboxes(1)
@@ -71,6 +73,8 @@ export class CrearUsuarioComponent implements OnInit {
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   submitted: boolean;
+  id: any;
+  test: any[] = [];
 
   get rolesFormArray() {
     return this.form.controls.usuarioRoles as FormArray;
@@ -87,7 +91,6 @@ export class CrearUsuarioComponent implements OnInit {
     private _router: Router,
     private _maestrosService: MaestrosService
   ) {
-    this.getClients();
     this.init();
   }
 
@@ -106,12 +109,14 @@ export class CrearUsuarioComponent implements OnInit {
       });
 
     if (this.activatedRoute.snapshot.params.id) {
+      this.id = Number(this.activatedRoute.snapshot.params.id);
       this.isEdit = true;
       this.crearUsuarioService
         .getUsuario(this.activatedRoute.snapshot.params.id)
         .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((response) => {
+        .subscribe((response: any) => {
           const {
+            id,
             usr,
             nombres,
             apellidos,
@@ -119,8 +124,19 @@ export class CrearUsuarioComponent implements OnInit {
             usuarioRoles,
             web,
             movil,
-            idsCliente,
+            usuarioCliente,
           } = response.body;
+
+          usuarioCliente.forEach((client) => {
+            this.clients.push({
+              idCliente: client.idCliente,
+              idUsuario: Number(this.id),
+              activo: client.activo,
+              id: client.id,
+              nombre: client.nombre,
+            });
+          });
+
           this.form.setValue({
             usr,
             nombres,
@@ -130,19 +146,18 @@ export class CrearUsuarioComponent implements OnInit {
             roles: usuarioRoles,
             usuarioRoles: this.generateRoles(usuarioRoles),
             plataformas: [web, movil],
-            idsCliente: idsCliente ? idsCliente : [],
-            //idsCliente: this.clients.map((client) => client.id),
+            idsCliente: [],
           });
+          this.form.controls.idsCliente.patchValue([
+            ...usuarioCliente.map((usrClient) => {
+              if (usrClient.id > 0 && usrClient.activo)
+                return usrClient.idCliente;
+            }),
+          ]);
           this.form.addControl(
             "id",
             new FormControl(this.activatedRoute.snapshot.params.id)
           );
-
-          console.log(this.form.value);
-
-          /*this.form.controls.cliente.patchValue(
-            this.clients.map((client) => client.id)
-          );*/
         });
     }
   }
@@ -151,10 +166,22 @@ export class CrearUsuarioComponent implements OnInit {
     this.passwordPattern();
   }
 
-  getClients(): void {
-    this._maestrosService
-      .getClients()
-      .subscribe((resp) => (this.clients = resp.body.data));
+  setSelectionChange(e: MatSelectChange): void {
+    this.clients.map((x) => {
+      if (e.value.includes(x.idCliente)) {
+        x.activo = true;
+        return x;
+      } else {
+        x.activo = false;
+        return x;
+      }
+    });
+    const payload = this.clients.filter(
+      (x) => x.id !== 0 || (x.id === 0 && x.activo)
+    );
+    this.crearUsuarioService.bindClientToUser(payload).subscribe(() => {
+      //this.multiSelectClients.close();
+    });
   }
 
   /**
@@ -229,6 +256,7 @@ export class CrearUsuarioComponent implements OnInit {
           ...body,
           web: plataformas[0],
           movil: plataformas[1],
+          //idsCliente: this.clients,
           psw: this.isEdit ? "0000" : psw, // Se envia 0000 por defecto pero esto no actualiza la contraseña
         })
         .subscribe((response) => {

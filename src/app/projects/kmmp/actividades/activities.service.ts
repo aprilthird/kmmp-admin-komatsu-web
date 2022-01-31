@@ -44,7 +44,7 @@ const getInboxParams: GetInbox = {
     estado: 0,
     tipo: 1,
     fechaIni: "2021-08-01",
-    fechaFin: "2022-02-01",
+    fechaFin: "2022-03-01",
     codigo: "",
   },
 };

@@ -63,7 +63,7 @@
                       class="example-margin mr-3 w-48 overflow-hidden text-ellipsis h-6"
                       [color]="'primary'"
                       [formControlName]="i"
-                      >{{ perfiles[i].nombre }}</mat-checkbox
+                      >{{ perfiles[i]?.nombre }}</mat-checkbox
                     >
                   </ng-container>
                 </div>
@@ -145,19 +145,21 @@
               </mat-form-field>
             </div>
 
-            <div
-              class="flex flex-col md:flex-row w-full"
-              *ngIf="form.controls.idsCliente.value"
-            >
+            <div class="flex flex-col md:flex-row w-full">
               <mat-form-field
                 floatLabel="always"
                 class="w-full md:w-1/4 md:pl-8"
               >
                 <mat-label>Clientes</mat-label>
-                <mat-select formControlName="idsCliente" multiple>
+                <mat-select
+                  #multiSelectClients
+                  formControlName="idsCliente"
+                  (selectionChange)="setSelectionChange($event)"
+                  multiple
+                >
                   <mat-option
                     *ngFor="let client of clients"
-                    [value]="client?.id"
+                    [value]="client.idCliente"
                   >
                     {{ client?.nombre }}
                   </mat-option>
