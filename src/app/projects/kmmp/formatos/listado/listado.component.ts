@@ -120,6 +120,10 @@ export class ListadoComponent implements OnInit, OnDestroy {
     });
   }
 
+  duplicateFormat(id: number): void {
+    this._listadoService.duplicateFormat(id).subscribe(() => this.loadData());
+  }
+
   openFilter(): void {
     this.dialog.open(FilterDialogComponent, { width: "370px" });
   }

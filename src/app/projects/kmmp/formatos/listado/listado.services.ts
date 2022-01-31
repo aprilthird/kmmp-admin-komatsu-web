@@ -88,4 +88,9 @@ export class ListadoService {
         })
       );
   }
+
+  duplicateFormat(idFormat: number): Observable<Response> {
+    const endpoint = environment.apiUrl + "/Core/DuplicarFormato/" + idFormat;
+    return this._httpClient.get<Response>(endpoint);
+  }
 }
