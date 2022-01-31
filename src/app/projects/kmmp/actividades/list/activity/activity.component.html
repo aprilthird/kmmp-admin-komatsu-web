@@ -183,15 +183,17 @@
           <span
             class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50"
           >
-            <span class="leading-relaxed whitespace-nowrap">Observada</span>
+            <span class="leading-relaxed whitespace-nowrap">{{
+              activityInfo?.nestado ? activityInfo?.nestado : "Sin empezar"
+            }}</span>
           </span>
         </div>
         <div class="flex flex-row justify-between items-center">
           <mat-progress-bar
             class="h-2 w-3/4 rounded-full"
-            [value]="activityInfo?.avance"
+            [value]="totalAdvance()"
           ></mat-progress-bar>
-          <span>{{ activityInfo?.avance }}%</span>
+          <span>{{ totalAdvance() }}%</span>
         </div>
       </div>
     </div>

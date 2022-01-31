@@ -35,6 +35,7 @@ export class ActivityComponent implements OnInit {
   private getActivityData(id: number): void {
     this.activitiesService.getActivity(id).subscribe((resp: any) => {
       this.activityInfo = resp.body;
+      this.totalAdvance();
     });
   }
   async removeFormat(index: number) {
@@ -103,5 +104,14 @@ export class ActivityComponent implements OnInit {
           });
         }
       });
+  }
+
+  totalAdvance(): number {
+    return (
+      this.activityInfo.formatos
+        .filter((format) => format.activo)
+        .reduce((x, y) => x.avance + y.avance) /
+      this.activityInfo.formatos.filter((format) => format.activo).length
+    );
   }
 }
