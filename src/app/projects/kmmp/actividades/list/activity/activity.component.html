@@ -40,7 +40,7 @@
 
         <div class="flex flex-col">
           <span class="text-md text-secondary">Fecha de carga</span>
-          <span class="font-semibold">{{ activityInfo?.fechaCarga }}</span>
+          <span class="font-semibold">{{ activityInfo?.fechaReg }}</span>
         </div>
       </div>
     </div>
@@ -181,10 +181,17 @@
         <div class="flex flex-row justify-between">
           <div class="text-md text-secondary w-3/4">Porcentaje de avance</div>
           <span
-            class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50"
+            class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase"
+            [ngClass]="{
+              'bg-green-200': activityData?.nestado === 'Validada',
+              'bg-red-200': activityData?.nestado === 'Observada',
+              'bg-gray-200': activityData?.nestado === 'Sin Empezar',
+              'bg-gray-200': !activityData?.nestado,
+              'bg-yellow-200': activityData?.nestado === 'En Proceso'
+            }"
           >
             <span class="leading-relaxed whitespace-nowrap">{{
-              activityInfo?.nestado ? activityInfo?.nestado : "Sin empezar"
+              activityData?.nestado ? activityData?.nestado : "Sin empezar"
             }}</span>
           </span>
         </div>

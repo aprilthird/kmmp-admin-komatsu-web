@@ -6,4 +6,5 @@ export interface ClientI {
   estado?: number;
   nestado?: string;
   id?: number;
+  img?: string;
 }

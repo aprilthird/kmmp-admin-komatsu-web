@@ -19,6 +19,7 @@ import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.componen
 export class ActivityComponent implements OnInit {
   @Input() isEdit: boolean = false;
   @Input() activityData: ActivityFake;
+  nestado: string;
   activityInfo: any = [];
   constructor(
     private activitiesService: ActivitiesService,
@@ -30,6 +31,7 @@ export class ActivityComponent implements OnInit {
 
   ngOnInit(): void {
     this.getActivityData(this.activityData.id);
+    this.nestado = this.activityData.nestado;
   }
 
   private getActivityData(id: number): void {

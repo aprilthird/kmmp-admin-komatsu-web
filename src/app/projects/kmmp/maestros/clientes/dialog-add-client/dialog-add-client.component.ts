@@ -14,6 +14,7 @@ import { ClientI } from "./../client-model";
 //SERVICES
 import { MaestrosService } from "../../maestros.service";
 import { Subject } from "rxjs";
+import { AzureService } from "app/core/azure/azure.service";
 
 @Component({
   selector: "app-dialog-add-client",
@@ -33,7 +34,8 @@ export class DialogAddClientComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     public matdialigRef: MatDialogRef<DialogAddClientComponent>,
-    private maestroService: MaestrosService
+    private maestroService: MaestrosService,
+    private _azureService: AzureService
   ) {
     if (this.data) {
       this.isEdit = true;
@@ -50,6 +52,7 @@ export class DialogAddClientComponent implements OnInit {
       razon: new FormControl(this.initData?.razon, Validators.required),
       ubicacion: new FormControl(this.initData?.ubicacion, Validators.required),
       estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
+      img: new FormControl(),
     });
   }
 
@@ -91,5 +94,23 @@ export class DialogAddClientComponent implements OnInit {
     }
 
     return true;
+  }
+
+  setImage(src: string): string {
+    return this._azureService.getResourceUrlComplete(src);
+  }
+
+  async onFileChange(e) {
+    if (e) {
+      const { target } = e;
+      const file = target.files[0];
+      const blob = new Blob([file], { type: file.type });
+      try {
+        const response = await this._azureService.uploadFile(blob, file.name);
+        this.form.get("img").setValue(response.uuidFileName);
+      } catch (e) {}
+    } else {
+      this.form.get("img").setValue("");
+    }
   }
 }

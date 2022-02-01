@@ -67,6 +67,17 @@
         }}</mat-error>
       </mat-form-field>
 
+      <div class="w-full">
+        <span class="text-gray-800 font-medium">Logo cliente</span>
+        <input
+          type="file"
+          accept="image/*"
+          class="image"
+          #fileInput
+          (change)="onFileChange($event)"
+        />
+      </div>
+
       <div class="flex justify-between mt-2">
         <span>Estado</span>
         <mat-slide-toggle

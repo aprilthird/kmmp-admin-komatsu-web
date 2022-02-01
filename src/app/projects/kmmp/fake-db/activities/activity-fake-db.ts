@@ -60,6 +60,7 @@ export interface ActivityFake {
   duracion_2: string;
   comentarios_tecnico: string;
   checked?: boolean;
+  nestado?: string;
 }
 
 export const FormatosData: FormatosFake[] = [
