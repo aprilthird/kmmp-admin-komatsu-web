@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { Formato } from "app/core/types/formatos.types";
 import { Pagination } from "app/core/types/list.types";
+import { Response } from "app/shared/models/general-model";
+import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { FilterDialogComponent } from "../../actividades/filter/filter-dialog/filter-dialog.component";
@@ -121,7 +123,15 @@ export class ListadoComponent implements OnInit, OnDestroy {
   }
 
   duplicateFormat(id: number): void {
-    this._listadoService.duplicateFormat(id).subscribe(() => this.loadData());
+    this._listadoService.duplicateFormat(id).subscribe((resp) => {
+      if (resp.success) {
+        this.loadData();
+      } else {
+        this.dialog.open(UiDialogsComponent, {
+          data: { title: "Error", message: resp?.message },
+        });
+      }
+    });
   }
 
   openFilter(): void {

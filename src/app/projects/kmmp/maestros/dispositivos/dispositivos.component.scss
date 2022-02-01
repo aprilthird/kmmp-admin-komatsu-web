@@ -9,11 +9,29 @@
     }
   
     @screen lg {
-      grid-template-columns: 80px 80px 50px 125px 50px 70px  ;
+      grid-template-columns: 125px 125px 50px 105px 50px 70px  ;
     }
   
     @screen xl {
-      grid-template-columns: 80px 80px 50px 125px 50px 70px  ;
+      grid-template-columns: 125px 125px 50px 125px 50px 70px  ;
     }
+  }
+
+  .truncate-overflow {
+    --max-lines: 3;
+    //position: relative;
+    max-height: calc(var(--lh) * var(--max-lines));
+    overflow: hidden;
+    padding-right: 1rem; /* space for ellipsis */
+    max-height: 4.5em;
+    text-overflow: ellipsis;
+  }
+  
+  .truncate-overflow::after {
+    content: "...";
+    position: absolute;
+    background:inherit;
+    bottom:0;
+    right:0;
   }
   

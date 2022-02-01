@@ -107,11 +107,15 @@ export class ActivityComponent implements OnInit {
   }
 
   totalAdvance(): number {
-    return (
-      this.activityInfo.formatos
-        .filter((format) => format.activo)
-        .reduce((x, y) => x.avance + y.avance) /
-      this.activityInfo.formatos.filter((format) => format.activo).length
-    );
+    const sumAdvance = this.activityInfo.formatos
+      .filter((format) => format.activo)
+      .map((x) => x.avance)
+      .reduce((total, currentValue) => total + currentValue);
+
+    const formatsLength = this.activityInfo.formatos.filter(
+      (format) => format.activo
+    ).length;
+
+    return Math.round(sumAdvance / formatsLength);
   }
 }

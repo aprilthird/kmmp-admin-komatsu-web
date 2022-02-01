@@ -6,6 +6,7 @@ import {
   ParamsPagination,
 } from "app/core/types/http.types";
 import { Pagination } from "app/core/types/list.types";
+import { Response } from "app/shared/models/general-model";
 import { environment } from "environments/environment";
 import moment from "moment";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -60,8 +61,8 @@ export class ListadoService {
       .post<PaginationResponse<Formato[]>>(
         environment.apiUrl + "/Core/ObtenerFormatosPaginado",
         {
-          page: 0,
-          pageSize: 10,
+          page,
+          pageSize,
           filter: {
             idClaseActividad,
             idCliente,

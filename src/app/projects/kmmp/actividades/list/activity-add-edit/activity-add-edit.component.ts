@@ -24,6 +24,7 @@ import { TipoFormulario } from "app/shared/models/form-activity";
 import { MatDialog } from "@angular/material/dialog";
 import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { Response } from "app/shared/models/general-model";
+import { BayI } from "../../models/bays-model";
 
 @Component({
   selector: "activity-add-edit",
@@ -86,9 +87,24 @@ export class ActivityAddEditComponent implements OnInit {
   private getActivityData(id: number) {
     this.serviceAct.getActivity(id).subscribe((resp: any) => {
       this.activityInfo = resp.body;
-      setTimeout(() => {
-        this.getEquiposData(this.activityInfo.idEquipo);
-      }, 1500);
+      this.getEquiposData(resp.body.idEquipo);
+      if (this.isEdit) {
+        this.setActivityData();
+        setTimeout(() => {
+          this.serviceAct
+            .getList(2, this.activityInfo.idCliente)
+            .subscribe((resp) => {
+              this.equiposOpt = resp.body.data;
+
+              this.form.controls.cliente.setValue(this.activityInfo.idCliente);
+              setTimeout(() => {
+                this.form.controls.idEquipo.setValue(
+                  this.activityInfo.idEquipo
+                );
+              }, 250);
+            });
+        }, 1000);
+      }
     });
   }
 
@@ -106,30 +122,19 @@ export class ActivityAddEditComponent implements OnInit {
         this.clientsOpt = result[0];
         //this.equiposOpt = result[1];
         this.clase_actividadesOpt = result[2];
-        this.bahiasOpt = result[3];
+        //this.bahiasOpt = result[3];
         this.modelosOpt = result[4];
         this.flotasOpt = result[5];
         this.tipo_equiposOpt = result[6];
         this.isLoading = false;
 
-        this.setActivityData();
+        //this.setActivityData();
         this.bahiasOpt.unshift({
           id: null,
           nombre: "----NINGUNA----",
         });
       }
     );
-    if (this.isEdit) {
-      setTimeout(() => {
-        this.serviceAct
-          .getList(2, this.activityInfo.idCliente)
-          .subscribe((resp) => {
-            this.equiposOpt = resp.body.data;
-          });
-
-        this.form.controls.equipo.setValue(this.activityInfo.idEquipo);
-      }, 2000);
-    }
   }
 
   getTipoMtto(idClaseActividad): void {
@@ -288,14 +293,18 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   setBay(clientId: number) {
-    this.bahiasOpt = this.bahiasOpt.filter((bay) => bay.idCliente === clientId);
-    this.bahiasOpt.unshift({
-      id: null,
-      nombre: "----NINGUNA----",
+    let bays: BayI[] = [];
+    this.serviceAct.getList(4).subscribe((resp) => {
+      bays = resp.body.data;
+      this.bahiasOpt = bays.filter((bay) => bay.idCliente === clientId);
+      this.bahiasOpt.unshift({
+        id: null,
+        nombre: "----NINGUNA----",
+      });
     });
-
     this.serviceAct.getList(2, clientId).subscribe((resp) => {
       this.equiposOpt = resp.body.data;
+      this.form.controls.idEquipo.setValue(null);
     });
   }
 
@@ -307,13 +316,14 @@ export class ActivityAddEditComponent implements OnInit {
         this.activityInfo?.idCliente,
         Validators.required
       ),
-      equipo: new FormControl(this.activityInfo?.idEquipo, Validators.required),
-
       actividad: new FormControl(
         this.activityInfo?.idClaseActividad,
         Validators.required
       ),
-      idEquipo: new FormControl(),
+      idEquipo: new FormControl(
+        this.activityInfo?.idEquipo,
+        Validators.required
+      ),
       idTipoEquipo: new FormControl(),
       tipo_mantenimiento: new FormControl(
         this.activityInfo?.idTipoMantenimiento,
@@ -353,17 +363,13 @@ export class ActivityAddEditComponent implements OnInit {
       this.form.controls["duracionReal"].disable();
       this.form.controls["comentariosTecnico"].disable();
     }
-
-    setTimeout(() => {
-      //if (this.isEdit) this.disableFormControl();
-    }, 2000);
   }
 
   private getParams(): ActivityI {
     const params: ActivityI = {
       asignado: this.form.controls["bahia_asignada"].value ? true : false,
       cliente: JSON.stringify(this.form.controls["cliente"].value),
-      idEquipo: this.form.controls["equipo"].value,
+      idEquipo: this.form.controls["idEquipo"].value,
       flota: this.form.controls["flota"].value,
       idFlota: Number(this.form.controls["idFlota"].value),
       idTipoEquipo: this.form.controls["idTipoEquipo"].value,

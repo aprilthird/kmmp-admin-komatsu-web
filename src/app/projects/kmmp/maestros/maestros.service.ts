@@ -80,7 +80,6 @@ export class MaestrosService {
       )
       .pipe(
         tap((response) => {
-          console.log(response);
           this._pagination.next({
             ...this._pagination.getValue(),
             page,
@@ -97,8 +96,6 @@ export class MaestrosService {
   }
 
   getList(tipo, idCliente?: number): Observable<any[]> {
-    console.log(tipo);
-    console.log(idCliente);
     return this.http.post<any[]>(
       environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
       {

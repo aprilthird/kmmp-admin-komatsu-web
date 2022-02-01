@@ -52,8 +52,8 @@
             <mat-form-field class="w-1/4">
               <mat-label class="font-bold">Equipo</mat-label>
               <mat-select
-                formControlName="equipo"
-                [value]="form.controls['equipo'].value"
+                formControlName="idEquipo"
+                [value]="form.controls['idEquipo'].value"
                 (selectionChange)="getEquiposData($event.value)"
               >
                 <mat-option

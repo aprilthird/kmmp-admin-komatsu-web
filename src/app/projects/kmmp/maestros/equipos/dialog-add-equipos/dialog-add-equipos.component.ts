@@ -55,7 +55,6 @@ export class DialogAddEquiposComponent implements OnInit {
       this.isEdit = true;
       this.initData = this.data;
       this.equipoId = this.data.id;
-      this.clientSelected(this.initData?.idCliente);
     }
     this.getSelectsData();
     this.form = this.fb.group({
@@ -65,11 +64,13 @@ export class DialogAddEquiposComponent implements OnInit {
         this.initData?.idTipoEquipo,
         Validators.required
       ),
-      modelo: new FormControl(this.initData?.modelo, Validators.required),
+
       idModelo: new FormControl(this.initData?.idModelo, Validators.required),
       idFlota: new FormControl(this.initData?.idFlota, Validators.required),
-      //cliente: new FormControl(this.initData?.idCliente, Validators.required),
       idCliente: new FormControl(this.initData?.idCliente, Validators.required),
+      modelo: new FormControl(this.initData?.modelo),
+      cliente: new FormControl(this.initData?.cliente),
+      horometro: new FormControl(this.initData?.horometro),
       estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
     });
   }
@@ -91,27 +92,17 @@ export class DialogAddEquiposComponent implements OnInit {
     forkJoin([cli, mod, flt, t_e]).subscribe(async (resp) => {
       this.clientesData = await resp[0];
       this.modelosData = await resp[1];
-      //this.flotasData = await resp[2];
       this.tipo_equipos = await resp[3];
       this.isLoading = false;
 
       if (this.isEdit) {
-        //this.setDinamycData();
-        //this.setInitModelo(this.initData?.modelo);
-        if (this.data) {
-          this.form.controls.idFlota.setValue(this.initData?.idFlota);
-          this.form.controls.idCliente.setValue(
-            this.clientesData.find(
-              (client) => client.nombre === this.initData?.cliente
-            ).nombre
-          );
-        }
+        this.clientSelected(this.initData?.idCliente);
       }
     });
   }
 
   submit(isEdit): void {
-    this.form.controls["cliente"].enable();
+    //this.form.controls["cliente"].enable();
     this.form.controls["modelo"].setValue(
       this.setModeloName(Number(this.form.controls["idModelo"].value))
     );
@@ -192,6 +183,9 @@ export class DialogAddEquiposComponent implements OnInit {
     this.maestServ.getList(6, idCliente).subscribe((resp: any) => {
       this.flotasData = resp.body.data;
     });
+    this.form.controls.cliente.setValue(
+      this.clientesData.find((x) => x.id === idCliente).nombre
+    );
   }
 
   setModelo(event: MatSelectChange): void {
