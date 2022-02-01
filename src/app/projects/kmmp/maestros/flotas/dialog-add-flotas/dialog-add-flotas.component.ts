@@ -42,7 +42,13 @@ export class DialogAddFlotasComponent implements OnInit {
     this.form = this.fb.group({
       nombre: new FormControl(this.initData?.nombre, Validators.required),
       idCliente: new FormControl(this.initData?.idCliente, Validators.required),
-      estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
+      estado: new FormControl(
+        !this.initData?.nestado
+          ? 1
+          : this.initData?.nestado === "Activo"
+          ? 1
+          : 0
+      ),
     });
 
     this.setCliente();

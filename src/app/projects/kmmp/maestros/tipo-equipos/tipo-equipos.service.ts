@@ -86,8 +86,15 @@ export class TipoEquiposService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
+          const document = [...response.body.data].map((x) => {
+            return {
+              ID: x.id,
+              nombre: x.nombre,
+              estado: x.nestado,
+            };
+          });
           this.tipo_equipos.next(response.body.data);
-          this.maestroService.currentTableData.next(response.body.data);
+          this.maestroService.currentTableData.next(document);
         })
       );
   }

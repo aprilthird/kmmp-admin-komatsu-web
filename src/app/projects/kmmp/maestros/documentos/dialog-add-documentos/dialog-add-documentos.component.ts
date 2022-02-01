@@ -55,8 +55,13 @@ export class DialogAddDocumentosComponent implements OnInit {
         this.initData?.tipoMantenimiento,
         Validators.required
       ),
+
       activo: new FormControl(
-        this.initData?.nestado === "Activo" ? true : false
+        !this.initData?.nestado
+          ? true
+          : this.initData?.nestado === "Activo"
+          ? true
+          : false
       ),
       idCliente: new FormControl(this.initData?.idCliente),
       mime: new FormControl("documento"),

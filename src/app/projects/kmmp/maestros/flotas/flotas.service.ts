@@ -86,8 +86,15 @@ export class FlotasService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
+          const document = [...response.body.data].map((x) => {
+            return {
+              nombre: x.nombre,
+              cliente: x.cliente,
+              estado: x.nestado,
+            };
+          });
           this.flotas.next(response.body.data);
-          this.maestroService.currentTableData.next(response.body.data);
+          this.maestroService.currentTableData.next(document);
         })
       );
   }

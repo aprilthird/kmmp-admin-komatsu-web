@@ -71,7 +71,13 @@ export class DialogAddEquiposComponent implements OnInit {
       modelo: new FormControl(this.initData?.modelo),
       cliente: new FormControl(this.initData?.cliente),
       horometro: new FormControl(this.initData?.horometro),
-      estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
+      estado: new FormControl(
+        !this.initData?.nestado
+          ? 1
+          : this.initData?.nestado === "Activo"
+          ? 1
+          : 0
+      ),
     });
   }
 

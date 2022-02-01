@@ -91,8 +91,19 @@ export class DocumentosService {
             ),
           });
 
+          const document = [...response.body.data].map((x) => {
+            return {
+              nombre: x.nombre,
+              cliente: x.cliente,
+              modelo: x.modelo,
+              clase_actividad: x.actividad,
+              tipo_mantenimiento: x.tipoMantenimiento,
+              estado: x.nestado,
+            };
+          });
+
           this.documentos.next(response.body.data);
-          this.maestroService.currentTableData.next(response.body.data);
+          this.maestroService.currentTableData.next(document);
         })
       );
   }

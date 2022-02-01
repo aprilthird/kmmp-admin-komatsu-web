@@ -88,8 +88,19 @@ export class EquiposService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
+          const document = [...response.body.data].map((x) => {
+            return {
+              nombre: x.nombre,
+              TAG: x.tag,
+              modelo: x.modelo,
+              flota: x.flota,
+              cliente: x.cliente,
+              horometro: x.horometro,
+              estado: x.nestado,
+            };
+          });
           this.equipos.next(response.body.data);
-          this.maestroService.currentTableData.next(response.body.data);
+          this.maestroService.currentTableData.next(document);
         })
       );
   }

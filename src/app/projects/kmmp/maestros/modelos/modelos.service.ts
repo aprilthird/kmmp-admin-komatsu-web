@@ -86,9 +86,14 @@ export class ModelosService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
-          console.log("modelos - ", response.body.data);
+          const document = [...response.body.data].map((x) => {
+            return {
+              nombre: x.nombre,
+              estado: x.nestado,
+            };
+          });
           this.modelos.next(response.body.data);
-          this.maestroService.currentTableData.next(response.body.data);
+          this.maestroService.currentTableData.next(document);
         })
       );
   }

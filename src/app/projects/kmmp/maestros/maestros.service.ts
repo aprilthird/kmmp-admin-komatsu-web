@@ -89,8 +89,17 @@ export class MaestrosService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
+          const document = [...response.body.data].map((x) => {
+            return {
+              nombre: x.nombre,
+              estado: x.nestado,
+              ruc: x.ruc,
+              razon_social: x.razon,
+              ubicacion: x.ubicacion,
+            };
+          });
           this.clients.next(response.body.data);
-          this.currentTableData.next(response.body.data);
+          this.currentTableData.next(document);
         })
       );
   }

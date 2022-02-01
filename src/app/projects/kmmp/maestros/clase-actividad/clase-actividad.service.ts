@@ -117,8 +117,14 @@ export class ClaseActividadService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
+          const document = [...response.body.data].map((x) => {
+            return {
+              nombre: x.nombre,
+              estado: x.nestado,
+            };
+          });
           this.clase_actividades.next(response.body.data);
-          this.maestroService.currentTableData.next(response.body.data);
+          this.maestroService.currentTableData.next(document);
         })
       );
   }

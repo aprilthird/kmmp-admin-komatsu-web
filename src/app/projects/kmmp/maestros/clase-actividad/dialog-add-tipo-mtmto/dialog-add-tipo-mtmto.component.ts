@@ -32,7 +32,7 @@ export class DialogAddTipoMtmtoComponent implements OnInit {
     this.form = this.fb.group({
       codigo: new FormControl("", Validators.required),
       descripcion: new FormControl("", Validators.required),
-      estado: new FormControl(""),
+      estado: new FormControl(1),
     });
   }
 

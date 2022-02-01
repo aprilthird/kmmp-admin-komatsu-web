@@ -87,7 +87,14 @@ export class BahiasService {
             ),
           });
           this.bahias.next(response.body.data);
-          this.maestroService.currentTableData.next(response.body.data);
+          const document = [...response.body.data].map((x) => {
+            return {
+              nombre: x.nombre,
+              cliente: x.cliente,
+              estado: x.nestado,
+            };
+          });
+          this.maestroService.currentTableData.next(document);
         })
       );
   }
