@@ -79,7 +79,7 @@ export class ActivitiesService {
     this._activities.next([newData, ...data.source.value]);
   }
 
-  getList(tipo): Observable<Response> {
+  getList(tipo, idCliente?: number): Observable<Response> {
     return this.http.post<Response>(
       environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
       {
@@ -87,6 +87,7 @@ export class ActivitiesService {
         filter: {
           ...getInboxParams.filter,
           tipo: tipo,
+          idCliente: idCliente,
         },
       }
     );

@@ -96,7 +96,9 @@ export class MaestrosService {
       );
   }
 
-  getList(tipo): Observable<any[]> {
+  getList(tipo, idCliente?: number): Observable<any[]> {
+    console.log(tipo);
+    console.log(idCliente);
     return this.http.post<any[]>(
       environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
       {
@@ -104,6 +106,7 @@ export class MaestrosService {
         filter: {
           ...getInboxParams.filter,
           tipo: tipo,
+          idCliente: idCliente,
         },
       }
     );

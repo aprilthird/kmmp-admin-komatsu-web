@@ -10,4 +10,5 @@ export interface EquipoI {
   idModelo?: number;
   idTipoEquipo?: number;
   idFlota: number;
+  idCliente?: number;
 }

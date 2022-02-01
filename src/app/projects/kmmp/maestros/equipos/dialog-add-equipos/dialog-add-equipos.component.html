@@ -7,6 +7,31 @@
   </div>
   <div mat-dialog-content class="pb-6">
     <div class="flex flex-col w-full">
+      <mat-form-field floatLabel="always" class="w-100-p">
+        <mat-label class="prose">Cliente</mat-label>
+        <!--<input matInput type="text" formControlName="cliente" />-->
+        <mat-select
+          formControlName="idCliente"
+          (selectionChange)="clientSelected($event.value)"
+        >
+          <mat-option *ngFor="let client of clientesData" [value]="client.id">{{
+            client.nombre
+          }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.controls['idCliente'].invalid">{{
+          matErrorMsg
+        }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-100-p">
+        <mat-label class="prose">Flota</mat-label>
+        <mat-select formControlName="idFlota">
+          <mat-option *ngFor="let flota of flotasData" [value]="flota.id">{{
+            flota.nombre
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <!-- Nombre -->
 
       <mat-form-field floatLabel="always" class="w-100-p">
@@ -61,26 +86,6 @@
             modelo.nombre
           }}</mat-option>
         </mat-select>
-      </mat-form-field>
-
-      <mat-form-field class="w-100-p">
-        <mat-label class="prose">Flota</mat-label>
-        <mat-select
-          formControlName="idFlota"
-          (selectionChange)="flotaSelected($event)"
-        >
-          <mat-option *ngFor="let flota of flotasData" [value]="flota.id">{{
-            flota.nombre
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label class="prose">Cliente</mat-label>
-        <input matInput type="text" formControlName="cliente" />
-        <mat-error *ngIf="form.controls['cliente'].invalid">{{
-          matErrorMsg
-        }}</mat-error>
       </mat-form-field>
 
       <div class="flex justify-between mt-2">

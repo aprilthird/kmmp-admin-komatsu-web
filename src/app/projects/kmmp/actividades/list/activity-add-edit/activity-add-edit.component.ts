@@ -104,7 +104,7 @@ export class ActivityAddEditComponent implements OnInit {
     forkJoin([clients, equipos, c_act, bahias, modelos, flotas, t_e]).subscribe(
       (result) => {
         this.clientsOpt = result[0];
-        this.equiposOpt = result[1];
+        //this.equiposOpt = result[1];
         this.clase_actividadesOpt = result[2];
         this.bahiasOpt = result[3];
         this.modelosOpt = result[4];
@@ -119,6 +119,17 @@ export class ActivityAddEditComponent implements OnInit {
         });
       }
     );
+    if (this.isEdit) {
+      setTimeout(() => {
+        this.serviceAct
+          .getList(2, this.activityInfo.idCliente)
+          .subscribe((resp) => {
+            this.equiposOpt = resp.body.data;
+          });
+
+        this.form.controls.equipo.setValue(this.activityInfo.idEquipo);
+      }, 2000);
+    }
   }
 
   getTipoMtto(idClaseActividad): void {
@@ -281,6 +292,10 @@ export class ActivityAddEditComponent implements OnInit {
     this.bahiasOpt.unshift({
       id: null,
       nombre: "----NINGUNA----",
+    });
+
+    this.serviceAct.getList(2, clientId).subscribe((resp) => {
+      this.equiposOpt = resp.body.data;
     });
   }
 

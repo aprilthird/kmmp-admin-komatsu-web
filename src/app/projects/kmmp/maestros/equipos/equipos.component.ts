@@ -91,7 +91,6 @@ export class EquiposComponent implements OnInit {
   }
 
   edit(equipo): void {
-    console.log("equipo ", equipo);
     this.matDialog
       .open(DialogAddEquiposComponent, {
         width: "400px",

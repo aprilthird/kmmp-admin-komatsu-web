@@ -21,6 +21,7 @@ import { EquipoI } from "../equipo-model";
 import { EquiposService } from "../equipos.service";
 import { ModelosService } from "../../modelos/modelos.service";
 import { ModeloI } from "../../modelos/modelo-model";
+import { Response } from "app/shared/models/general-model";
 
 @Component({
   selector: "app-dialog-add-equipos",
@@ -36,7 +37,7 @@ export class DialogAddEquiposComponent implements OnInit {
   isLoading: boolean;
   cliente: string;
   horometro: string;
-
+  clientesData: any;
   modelosData: any;
   flotasData: any;
   tipo_equipos: any;
@@ -54,7 +55,7 @@ export class DialogAddEquiposComponent implements OnInit {
       this.isEdit = true;
       this.initData = this.data;
       this.equipoId = this.data.id;
-      console.log("this.data ", this.data);
+      this.clientSelected(this.initData?.idCliente);
     }
     this.getSelectsData();
     this.form = this.fb.group({
@@ -67,12 +68,10 @@ export class DialogAddEquiposComponent implements OnInit {
       modelo: new FormControl(this.initData?.modelo, Validators.required),
       idModelo: new FormControl(this.initData?.idModelo, Validators.required),
       idFlota: new FormControl(this.initData?.idFlota, Validators.required),
-      cliente: new FormControl(this.initData?.cliente, Validators.required),
-      idCliente: new FormControl(),
+      //cliente: new FormControl(this.initData?.idCliente, Validators.required),
+      idCliente: new FormControl(this.initData?.idCliente, Validators.required),
       estado: new FormControl(this.initData?.nestado === "Activo" ? 1 : 0),
     });
-
-    this.form.controls["cliente"].disable();
   }
 
   ngOnInit(): void {}
@@ -84,19 +83,29 @@ export class DialogAddEquiposComponent implements OnInit {
 
   getSelectsData(): void {
     this.isLoading = true;
+    const cli = this.maestServ.getList(1).pipe(map((x: any) => x.body.data));
     const mod = this.maestServ.getList(5).pipe(map((x: any) => x.body.data));
     const flt = this.maestServ.getList(6).pipe(map((x: any) => x.body.data));
     const t_e = this.maestServ.getList(3).pipe(map((x: any) => x.body.data));
 
-    forkJoin([mod, flt, t_e]).subscribe(async (resp) => {
-      this.modelosData = await resp[0];
-      this.flotasData = await resp[1];
-      this.tipo_equipos = await resp[2];
+    forkJoin([cli, mod, flt, t_e]).subscribe(async (resp) => {
+      this.clientesData = await resp[0];
+      this.modelosData = await resp[1];
+      //this.flotasData = await resp[2];
+      this.tipo_equipos = await resp[3];
       this.isLoading = false;
 
       if (this.isEdit) {
-        this.setDinamycData();
+        //this.setDinamycData();
         //this.setInitModelo(this.initData?.modelo);
+        if (this.data) {
+          this.form.controls.idFlota.setValue(this.initData?.idFlota);
+          this.form.controls.idCliente.setValue(
+            this.clientesData.find(
+              (client) => client.nombre === this.initData?.cliente
+            ).nombre
+          );
+        }
       }
     });
   }
@@ -126,7 +135,7 @@ export class DialogAddEquiposComponent implements OnInit {
     );
 
     this.form.controls["cliente"].setValue(currentClient.cliente);
-    this.setClientId();
+    //this.setClientId();
     this.setModelotId();
   }
 
@@ -177,6 +186,12 @@ export class DialogAddEquiposComponent implements OnInit {
 
     this.form.controls["cliente"].setValue(currentClient.cliente);
     this.form.controls["idCliente"].setValue(currentClient.id);
+  }
+
+  clientSelected(idCliente: number): void {
+    this.maestServ.getList(6, idCliente).subscribe((resp: any) => {
+      this.flotasData = resp.body.data;
+    });
   }
 
   setModelo(event: MatSelectChange): void {
