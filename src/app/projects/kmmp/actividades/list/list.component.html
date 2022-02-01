@@ -137,11 +137,12 @@
                     <span
                       class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase text-green-800 dark:text-green-50"
                       [ngClass]="{
-                        'bg-green-200': actividad?.nestado === 'Validada',
+                        'bg-yellow-200': !actividad?.nestado,
+                        'bg-yellow-200': actividad?.nestado === 'Sin Empezar',
                         'bg-red-200': actividad?.nestado === 'Observada',
-                        'bg-gray-200': actividad?.nestado === 'Sin Empezar',
-                        'bg-gray-200': !actividad?.nestado,
-                        'bg-yellow-200': actividad?.nestado === 'En Proceso'
+                        'bg-green-200': actividad?.nestado === 'En Proceso',
+                        'bg-blue-200': actividad?.nestado === 'Validada',
+                        'bg-blue-200': actividad?.nestado === 'Terminada'
                       }"
                     >
                       <span class="leading-relaxed whitespace-nowrap">
