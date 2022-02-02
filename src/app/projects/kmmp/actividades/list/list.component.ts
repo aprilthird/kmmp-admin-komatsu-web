@@ -3,7 +3,7 @@ import { MatCheckbox } from "@angular/material/checkbox";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { Pagination } from "app/core/types/list.types";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { ActivityFake } from "../../fake-db/activities/activity-fake-db";
 import { EditarFormatoService } from "../../formatos/editar-formato/editar-formato.service";
 import { ActivitiesService } from "../activities.service";
@@ -16,8 +16,10 @@ import { PostponeComponent } from "../dialogs/postpone/postpone.component";
   styleUrls: ["./list.component.scss"],
 })
 export class ListComponent implements OnInit {
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
   asignaciones$: Observable<any[]>;
   pagination$: Observable<Pagination>;
+  actividades$: Observable<any[]>;
   isLoading = false;
 
   activities: any[];
@@ -37,15 +39,29 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadData();
     this.getActivities();
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   changePage(): void {}
 
   getActivities(): void {
     this.isLoading = true;
-    this.activitiesService.getActivities().subscribe((_activities: any) => {
-      this.activities = _activities.body.data;
+
+    this.activitiesService._activities.subscribe((activities: any) => {
+      this.activities = activities;
+      this.isLoading = false;
+    });
+  }
+
+  loadData() {
+    this.isLoading = true;
+    this.activitiesService.getActivities().subscribe(() => {
       this.isLoading = false;
     });
   }

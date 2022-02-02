@@ -53,7 +53,7 @@ export class UsuariosService {
           page,
           pageSize,
           filter: {
-            usr: usr,
+            nombre: usr,
             fechaInicio: moment().subtract(1, "years").format("yyyy-MM-DD"),
             fechaFin: moment().format("yyyy-MM-DD"),
           },

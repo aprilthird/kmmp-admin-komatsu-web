@@ -18,7 +18,7 @@ import { FilterI } from "./../../../../shared/models/filters-model";
 })
 export class ListadoService {
   _formatos: BehaviorSubject<any[]> = new BehaviorSubject(null);
-  _filter: BehaviorSubject<FilterI> = new BehaviorSubject(null);
+  _filter: BehaviorSubject<any> = new BehaviorSubject(null);
   _pagination: BehaviorSubject<any> = new BehaviorSubject({
     length: 0,
     size: 10,
@@ -57,6 +57,7 @@ export class ListadoService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<Formato[]>> {
+    this._filter.next({ idCliente, idClaseActividad, idModelo });
     return this._httpClient
       .post<PaginationResponse<Formato[]>>(
         environment.apiUrl + "/Core/ObtenerFormatosPaginado",
@@ -67,6 +68,7 @@ export class ListadoService {
             idClaseActividad,
             idCliente,
             idModelo,
+
             fechaInicio: moment().subtract(1, "years").format("yyyy-MM-DD"),
             fechaFin: moment().format("yyyy-MM-DD"),
           },

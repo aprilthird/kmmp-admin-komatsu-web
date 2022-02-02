@@ -1,14 +1,21 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { PaginationResponse } from "app/core/types/http.types";
+import {
+  PaginationResponse,
+  ParamsPagination,
+} from "app/core/types/http.types";
 import { Response } from "app/shared/models/general-model";
+import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";
 import moment from "moment";
 
 import { BehaviorSubject, Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 
 import { ActivitiesData } from "../fake-db/activities/activity-fake-db";
+import { ListadoService } from "../formatos/listado/listado.services";
 import { DispositivoI } from "../maestros/dispositivos/dispositivo-model";
+import { MaestrosService } from "../maestros/maestros.service";
 
 import { Activity as ActivityI } from "./models/activities-model";
 
@@ -55,9 +62,13 @@ const getInboxParams: GetInbox = {
 })
 export class ActivitiesService {
   preloadedFormats: BehaviorSubject<any> = new BehaviorSubject(null);
-  _activities: BehaviorSubject<any> = new BehaviorSubject(ActivitiesData);
+  _activities: BehaviorSubject<any[]> = new BehaviorSubject(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private _listadoService: ListadoService,
+    private shared: SharedService
+  ) {}
 
   get preloadedFormats$(): Observable<any> {
     return this.preloadedFormats.asObservable();
@@ -71,9 +82,9 @@ export class ActivitiesService {
     return this._activities.asObservable();
   }
 
-  set activities$(data) {
+  /*set activities$(data) {
     this._activities.next(data);
-  }
+  }*/
 
   addNewActivity(newData) {
     let data: any = this._activities.asObservable();
@@ -115,22 +126,61 @@ export class ActivitiesService {
     );
   }
 
-  getActivities(): Observable<any[]> {
-    return this.http.post<any[]>(
-      environment.apiUrl + "/Actividades/BandejaActividades",
-      {
+  getActivities(
+    {
+      page,
+      pageSize,
+      idClaseActividad,
+      idCliente,
+      idModelo,
+      idEquipo,
+      idEstado,
+      idTipoSolicitud,
+    }: ParamsPagination | any = {
+      page: 0,
+      pageSize: 10,
+    }
+  ): Observable<any[]> {
+    this._listadoService._filter.next({
+      idClaseActividad,
+      idModelo,
+      idEquipo,
+      idEstado,
+      idTipoSolicitud,
+    });
+
+    return this.http
+      .post<any[]>(environment.apiUrl + "/Actividades/BandejaActividades", {
         ...getInboxParams,
         filter: {
           fechaIni: moment().subtract(3, "years").format("yyyy-MM-DD"),
           fechaFin: moment().format("yyyy-MM-DD"),
+          idClaseActividad,
+          idModelo,
+          idEquipo,
+          idEstado,
+          idTipoSolicitud,
         },
-      }
-    );
-    /*.pipe(
+      })
+      .pipe(
         tap((resp: any) => {
           this._activities.next(resp.body.data);
+          const document = [...resp.body.data].map((x) => {
+            return {
+              equipo: x.equipo,
+              tipoEquipo: x.tipoEquipo,
+              modelo: x.modelo,
+              claseActividad: x.claseActividad,
+              tipoMantenimiento: x.tipoMantenimiento,
+              bahia: x.bahia,
+              estado: x.nestado,
+              tipoSolicitud: x.tipoSolicitud,
+            };
+          });
+
+          this.shared.currentTableData.next(document);
         })
-      );*/
+      );
   }
 
   getActivity(id: number): Observable<any[]> {
@@ -146,7 +196,6 @@ export class ActivitiesService {
   }
 
   asignMultipleActivities(data): Observable<any> {
-    console.log(data);
     const endpoint =
       environment.apiUrl + "/Actividades/AsignarActividadesABahia";
     return this.http.post(endpoint, data);

@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ListadoService } from "app/projects/kmmp/formatos/listado/listado.services";
 import { forkJoin } from "rxjs";
 import { map } from "rxjs/operators";
@@ -22,19 +22,29 @@ export class FilterDialogComponent implements OnInit {
   clientes: any;
   equipoOpt: any;
   filterService: FilterI;
+  isLoading: boolean;
+  estadosOpt: any;
+  tipoSolicitudOpt: any;
 
   constructor(
     private fb: FormBuilder,
     public matdialigRef: MatDialogRef<FilterDialogComponent>,
     private serviceAct: ActivitiesService,
-    private listadoService: ListadoService
+    private listadoService: ListadoService,
+    private _activitiesService: ActivitiesService,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.form = this.fb.group({
-      idCliente: new FormControl(0),
-      idModelo: new FormControl(0),
-      idEquipo: new FormControl(0),
-      idClaseActividad: new FormControl(0),
+      idModelo: new FormControl(undefined),
+      idClaseActividad: new FormControl(undefined),
     });
+    if (this.data.source === "activities") {
+      this.form.addControl("idEquipo", new FormControl(undefined));
+      this.form.addControl("idEstado", new FormControl(undefined));
+      this.form.addControl("idTipoSolicitud", new FormControl(undefined));
+    } else if (this.data.source === "formats") {
+      this.form.addControl("idCliente", new FormControl(undefined));
+    }
   }
 
   ngOnInit(): void {
@@ -49,48 +59,66 @@ export class FilterDialogComponent implements OnInit {
     let modelos = this.serviceAct.getList(5).pipe(map((x: any) => x.body.data));
     let c_act = this.serviceAct.getList(7).pipe(map((x: any) => x.body.data));
     let cliente = this.serviceAct.getList(1).pipe(map((x: any) => x.body.data));
+    let estados = this.serviceAct
+      .getResources(10)
+      .pipe(map((x: any) => x.body));
+    let tipoSolicitudes = this.serviceAct
+      .getResources(7)
+      .pipe(map((x: any) => x.body));
 
-    forkJoin([equipo, modelos, c_act, cliente]).subscribe((result: any) => {
+    forkJoin([
+      equipo,
+      modelos,
+      c_act,
+      cliente,
+      estados,
+      tipoSolicitudes,
+    ]).subscribe((result: any) => {
       this.equipoOpt = result[0];
       this.modelosOpt = result[1];
       this.actividadOpt = result[2];
       this.clientes = result[3];
+      this.estadosOpt = result[4];
+      this.tipoSolicitudOpt = result[5];
       this.loading = false;
     });
   }
 
+  getFilters(): void {
+    this.listadoService._filter.subscribe((filter) => {
+      this.form.patchValue(filter);
+    });
+  }
+
   applyFilters(): void {
-    this.listadoService
-      .getFormatos({
-        ...this.form.value,
-      })
-      .subscribe((resp) => {
-        this.listadoService._filter.next(this.form.value);
-        this.matdialigRef.close();
-      });
+    this.isLoading = true;
+    if (this.data.source === "activities") {
+      this._activitiesService
+        .getActivities({ ...this.form.value })
+        .subscribe(() => {
+          this.listadoService._filter.next(this.form.value);
+          this.isLoading = false;
+          this.matdialigRef.close();
+        });
+    } else if (this.data.source === "formats") {
+      this.listadoService
+        .getFormatos({
+          ...this.form.value,
+        })
+        .subscribe(() => {
+          this.listadoService._filter.next(this.form.value);
+          this.isLoading = false;
+          this.matdialigRef.close();
+        });
+    }
   }
 
   wipeFilters(): void {
     Object.keys(this.form.controls).forEach((key) => {
-      this.form.get(key).setValue("");
-      this.listadoService._filter.next(null);
+      this.form.get(key).setValue(undefined);
     });
-  }
 
-  private getFilters(): void {
-    this.listadoService._filter.subscribe((resp) => {
-      this.filterService = resp;
-      if (this.filterService) {
-        this.setFilter(resp);
-      }
-    });
-  }
-
-  private setFilter(filter: FilterI): void {
-    this.form.controls["idModelo"].setValue(filter.modelo);
-    this.form.controls["idEquipo"].setValue(filter.equipo);
-    this.form.controls["idClaseActividad"].setValue(filter.actividad);
-    this.form.controls["estados"].setValue(filter.estado);
+    this.listadoService._filter.next(this.form.controls.value);
   }
 }
 

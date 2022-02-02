@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { Formato } from "app/core/types/formatos.types";
 import { Pagination } from "app/core/types/list.types";
-import { Response } from "app/shared/models/general-model";
 import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -24,6 +23,7 @@ export class ListadoComponent implements OnInit, OnDestroy {
   formatos$: Observable<any[]>;
   pagination$: Observable<Pagination>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  filtered: boolean;
 
   constructor(
     private _router: Router,
@@ -42,6 +42,7 @@ export class ListadoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadData();
+    this.isFiltered();
   }
 
   loadData() {
@@ -54,7 +55,6 @@ export class ListadoComponent implements OnInit, OnDestroy {
   }
 
   clickNewFormato(serviceData?) {
-    console.log("data to edit ", serviceData);
     const dialogRef = this.dialog.open(DialogAddFormatoComponent, {
       autoFocus: false,
       width: "376px",
@@ -85,7 +85,6 @@ export class ListadoComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.beforeClosed().subscribe((result) => {
-      console.log(result);
       if (result === "confirmed") {
         this.isLoading = true;
         this.dialogAddFormatoService
@@ -135,6 +134,24 @@ export class ListadoComponent implements OnInit, OnDestroy {
   }
 
   openFilter(): void {
-    this.dialog.open(FilterDialogComponent, { width: "370px" });
+    this.dialog.open(FilterDialogComponent, {
+      width: "370px",
+      data: { source: "formats" },
+    });
+  }
+
+  isFiltered() {
+    this._listadoService._filter
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((filter: any) => {
+        let isFilters = [];
+        if (filter) {
+          Object.values(filter).forEach((x) => {
+            if (x) isFilters.push(x);
+          });
+          if (isFilters.length > 0) this.filtered = true;
+          else this.filtered = false;
+        }
+      });
   }
 }

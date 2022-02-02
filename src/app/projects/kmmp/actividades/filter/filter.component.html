@@ -1,5 +1,10 @@
 <div class="flex gap-5">
-  <button mat-raised-button [color]="'secondary'" (click)="openFilter()">
+  <button
+    mat-raised-button
+    [color]="!filtered ? 'secondary' : 'primary'"
+    [matTooltip]="!filtered ? 'Filtrar' : 'Ver filtros'"
+    (click)="openFilter()"
+  >
     <mat-icon svgIcon="heroicons_outline:filter"></mat-icon>
     <span class="ml-2 mr-1">Filtrar</span>
   </button>

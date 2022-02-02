@@ -8,11 +8,16 @@ import { UploadActivityDialogComponent } from "../dialogs/upload-activity-dialog
   styleUrls: ["./upload-activities.component.scss"],
 })
 export class UploadActivitiesComponent implements OnInit {
+  isLoading: any;
   constructor(private matDialog: MatDialog) {}
 
   ngOnInit(): void {}
 
   openUploadAct(): void {
     this.matDialog.open(UploadActivityDialogComponent, { width: "400px" });
+  }
+
+  setLoading(loading): void {
+    this.isLoading = loading;
   }
 }

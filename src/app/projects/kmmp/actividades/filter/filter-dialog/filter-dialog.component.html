@@ -10,55 +10,129 @@
   </div>
 
   <div mat-dialog-content class="pb-6">
-    <div class="flex flex-col w-full">
-      <!--<mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label class="font-bold">Equipo</mat-label>
-        <mat-select formControlName="idEquipo" placeholder="Ingrese un equipo">
-          <mat-option *ngFor="let equipo of equipoOpt" [value]="equipo.id">{{
-            equipo.nombre
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field>-->
+    <ng-container [ngSwitch]="data?.source">
+      <ng-container *ngSwitchCase="'activities'">
+        <div class="flex flex-col w-full">
+          <mat-form-field floatLabel="always" class="w-100-p">
+            <mat-label class="font-bold">Modelo</mat-label>
+            <mat-select
+              formControlName="idModelo"
+              placeholder="Ingrese un modelo"
+            >
+              <mat-option
+                *ngFor="let modelo of modelosOpt"
+                [value]="modelo.id"
+                >{{ modelo.nombre }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
 
-      <mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label class="font-bold">Cliente</mat-label>
-        <mat-select
-          formControlName="idCliente"
-          placeholder="Ingrese un cliente"
-        >
-          <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">{{
-            cliente.nombre
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+          <mat-form-field floatLabel="always" class="w-100-p">
+            <mat-label class="font-bold">Equipo</mat-label>
+            <mat-select
+              formControlName="idEquipo"
+              placeholder="Ingrese un equipo"
+            >
+              <mat-option
+                *ngFor="let equipo of equipoOpt"
+                [value]="equipo.id"
+                >{{ equipo.nombre }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
 
-      <mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label class="font-bold">Modelo</mat-label>
-        <mat-select formControlName="idModelo" placeholder="Ingrese un modelo">
-          <mat-option *ngFor="let modelo of modelosOpt" [value]="modelo.id">{{
-            modelo.nombre
-          }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+          <mat-form-field floatLabel="always" class="w-100-p">
+            <mat-label class="font-bold">Clase de actividad</mat-label>
+            <mat-select
+              formControlName="idClaseActividad"
+              placeholder="Ingrese una actividad"
+            >
+              <mat-option
+                *ngFor="let actividad of actividadOpt"
+                [value]="actividad.id"
+                >{{ actividad.nombre }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
 
-      <mat-form-field floatLabel="always" class="w-100-p">
-        <mat-label class="font-bold">Clase de actividad</mat-label>
-        <mat-select
-          formControlName="idClaseActividad"
-          placeholder="Ingrese una actividad"
-        >
-          <mat-option
-            *ngFor="let actividad of actividadOpt"
-            [value]="actividad.id"
-            >{{ actividad.nombre }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
+          <mat-form-field floatLabel="always" class="w-100-p">
+            <mat-label class="font-bold">Tipo solicitud</mat-label>
+            <mat-select
+              formControlName="idTipoSolicitud"
+              placeholder="Ingrese un tipo de solicitud"
+            >
+              <mat-option
+                *ngFor="let tipoSolicitud of tipoSolicitudOpt"
+                [value]="tipoSolicitud.id"
+                >{{ tipoSolicitud.nombre }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
 
+          <mat-form-field floatLabel="always" class="w-100-p">
+            <mat-label class="font-bold">Estado</mat-label>
+            <mat-select
+              formControlName="idEstado"
+              placeholder="Ingrese un estado"
+            >
+              <mat-option
+                *ngFor="let estado of estadosOpt"
+                [value]="estado.id"
+                >{{ estado.nombre }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="'formats'">
+        <div class="flex flex-col w-full">
+          <mat-form-field floatLabel="always" class="w-100-p">
+            <mat-label class="font-bold">Cliente</mat-label>
+            <mat-select
+              formControlName="idCliente"
+              placeholder="Ingrese un cliente"
+            >
+              <mat-option
+                *ngFor="let cliente of clientes"
+                [value]="cliente.id"
+                >{{ cliente.nombre }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field floatLabel="always" class="w-100-p">
+            <mat-label class="font-bold">Modelo</mat-label>
+            <mat-select
+              formControlName="idModelo"
+              placeholder="Ingrese un modelo"
+            >
+              <mat-option
+                *ngFor="let modelo of modelosOpt"
+                [value]="modelo.id"
+                >{{ modelo.nombre }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field floatLabel="always" class="w-100-p">
+            <mat-label class="font-bold">Clase de actividad</mat-label>
+            <mat-select
+              formControlName="idClaseActividad"
+              placeholder="Ingrese una actividad"
+            >
+              <mat-option
+                *ngFor="let actividad of actividadOpt"
+                [value]="actividad.id"
+                >{{ actividad.nombre }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </ng-container>
       <a class="underline cursor-pointer" (click)="wipeFilters()">
         <span class="font-semibold">Eliminar filtros</span>
       </a>
-    </div>
+    </ng-container>
   </div>
   <div mat-dialog-actions class="flex justify-end px-6 bg-gray-100">
     <button
@@ -73,7 +147,13 @@
       [color]="'primary'"
       class="w-32"
       (click)="applyFilters()"
+      [disabled]="isLoading"
     >
+      <mat-progress-spinner
+        *ngIf="isLoading"
+        [diameter]="24"
+        [mode]="'indeterminate'"
+      ></mat-progress-spinner>
       <span> Aplicar filtros </span>
     </button>
   </div>

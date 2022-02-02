@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { SharedModule } from "app/shared/shared.module";
+import { FormsModule } from "@angular/forms";
 
 //COMPONENTS
 import { CommonModule } from "@angular/common";
@@ -86,6 +87,7 @@ import { PostponeComponent } from "./dialogs/postpone/postpone.component";
     FuseConfirmationModule,
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,
+    FormsModule,
   ],
 })
 export class ActividadesModule {}
