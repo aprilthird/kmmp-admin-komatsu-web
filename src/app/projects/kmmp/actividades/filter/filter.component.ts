@@ -4,6 +4,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { ListadoService } from "../../formatos/listado/listado.services";
+import { ActivitiesService } from "../activities.service";
 import { FilterDialogComponent } from "./filter-dialog/filter-dialog.component";
 
 @Component({
@@ -23,7 +24,8 @@ export class FilterComponent implements OnInit {
   filtered: boolean;
   constructor(
     private matDialog: MatDialog,
-    private _listadoService: ListadoService
+    private _listadoService: ListadoService,
+    private _activitiesService: ActivitiesService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,11 @@ export class FilterComponent implements OnInit {
   }
   changeDate(): void {
     this.range.emit(this.dateRange.value);
+    const startDate = new Date(this.dateRange.controls["startDate"].value);
+    const endDate = new Date(this.dateRange.controls["endDate"].value);
+    if (Number(setFormatDate(endDate).split("-")[0]) > 2020) {
+      this.loadInbox(setFormatDate(startDate), setFormatDate(endDate));
+    }
   }
 
   isFiltered() {
@@ -54,4 +61,26 @@ export class FilterComponent implements OnInit {
         }
       });
   }
+
+  loadInbox(fechaInicio: string, fechaFin: string) {
+    return this._activitiesService
+      .getActivities({ fechaInicio, fechaFin })
+      .subscribe(() => {});
+  }
+}
+
+function setFormatDate(date: Date): string {
+  const currentMonth = Number(date.getMonth()) + 1;
+  return (
+    date.getFullYear() +
+    "-" +
+    addZero(currentMonth) +
+    "-" +
+    addZero(date.getUTCDate())
+  );
+}
+
+function addZero(value): string {
+  if (value < 10) return "0" + value;
+  return value;
 }

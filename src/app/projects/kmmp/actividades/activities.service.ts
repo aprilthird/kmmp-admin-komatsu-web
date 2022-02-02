@@ -136,6 +136,8 @@ export class ActivitiesService {
       idEquipo,
       idEstado,
       idTipoSolicitud,
+      fechaInicio,
+      fechaFin,
     }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
@@ -153,8 +155,10 @@ export class ActivitiesService {
       .post<any[]>(environment.apiUrl + "/Actividades/BandejaActividades", {
         ...getInboxParams,
         filter: {
-          fechaIni: moment().subtract(3, "years").format("yyyy-MM-DD"),
-          fechaFin: moment().format("yyyy-MM-DD"),
+          fechaIni: fechaInicio
+            ? fechaInicio
+            : moment().subtract(3, "years").format("yyyy-MM-DD"),
+          fechaFin: fechaFin ? fechaFin : moment().format("yyyy-MM-DD"),
           idClaseActividad,
           idModelo,
           idEquipo,
