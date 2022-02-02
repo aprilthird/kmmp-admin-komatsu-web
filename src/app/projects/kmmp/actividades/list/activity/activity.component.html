@@ -49,7 +49,7 @@
     <div class="flex ml-1.5 gap-5">
       <div class="flex flex-col gap-5">
         <div class="flex flex-col mr-4">
-          <span class="text-md text-secondary">Fecha estimada</span>
+          <span class="text-md text-secondary">Fecha de inicio</span>
           <span class="font-semibold"
             >{{ activityInfo?.fechaEstimadaIni }} -
             {{ activityInfo?.fechaEstimadaFin }}</span
@@ -57,7 +57,7 @@
         </div>
 
         <div class="flex flex-col mr-4">
-          <span class="text-md text-secondary">Fecha y hora reales</span>
+          <span class="text-md text-secondary">Fecha y hora fin</span>
           <div class="flex flex-col">
             <span class="text-red-600 font-bold">{{
               activityInfo?.fechaRealIni
@@ -70,10 +70,10 @@
       </div>
 
       <div class="flex flex-col gap-5">
-        <div class="flex flex-col">
+        <!--<div class="flex flex-col">
           <span class="text-md text-secondary">Duración estimada</span>
           <span class="font-semibold">{{ activityInfo?.duracion }}</span>
-        </div>
+        </div>-->
 
         <div class="flex flex-col">
           <span class="text-md text-secondary">Duración</span>
@@ -84,14 +84,14 @@
       </div>
     </div>
     <hr />
-    <div class="flex flex-col ml-1.5 gap-5">
+    <!--<div class="flex flex-col ml-1.5 gap-5">
       <div class="flex flex-col mb-2">
         <div class="text-md text-secondary">Cometarios del técnico</div>
         <span class="font-semibold">{{
           activityInfo?.comentariosTecnico
         }}</span>
       </div>
-    </div>
+    </div>-->
   </div>
 
   <div
@@ -164,11 +164,11 @@
           }}</span>
         </button>
 
-        <button class="mr-8" mat-raised-button [color]="'primary'" disabled>
+        <!--<button class="mr-8" mat-raised-button [color]="'primary'" disabled>
           <mat-icon [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
 
           <span class="ml-2 mr-1">Validar actividad</span>
-        </button>
+        </button>-->
       </div>
     </div>
     <div>
