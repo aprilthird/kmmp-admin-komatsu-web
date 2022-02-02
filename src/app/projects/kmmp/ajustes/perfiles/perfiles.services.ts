@@ -57,8 +57,16 @@ export class PerfilesService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
+          const document = [...response.body].map((x) => {
+            return {
+              Nombre: x.nombre,
+              Numero_usuarios: x.numUsuarios,
+              Creado: x.fechaReg,
+              Modificado_por: x.usuarioMod,
+            };
+          });
           this._perfiles.next(response.body);
-          this.shared.currentTableData.next(response.body);
+          this.shared.currentTableData.next(document);
         })
       );
   }

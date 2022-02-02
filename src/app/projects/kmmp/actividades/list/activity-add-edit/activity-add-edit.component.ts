@@ -153,30 +153,23 @@ export class ActivityAddEditComponent implements OnInit {
 
   addSingleActivity(): void {
     this.loadLoading = true;
-    this.serviceAct
-      .postCargaIndividual(this.getParams())
-      .subscribe((resp: any) => {
+    this.serviceAct.postCargaIndividual(this.getParams()).subscribe(
+      (resp: any) => {
         this.loadLoading = false;
         if (resp.code >= 500) {
-          const dialogRef = this._fuseConfirmationService.open({
-            title: "Carga de actividad",
-            message: resp.message,
-            icon: {
-              name: "mat_outline:error_outline",
-              color: "primary",
-            },
-            actions: {
-              cancel: {
-                label: "Ok",
-              },
-            },
-            dismissible: true,
+          this.matDialog.open(UiDialogsComponent, {
+            data: { title: "Error", message: resp.message },
           });
-          dialogRef.beforeClosed().subscribe(() => {});
         }
 
         this.router.navigate(["/admin/actividades/list"]);
-      });
+      },
+      (err) => {
+        this.matDialog.open(UiDialogsComponent, {
+          data: { title: "Error", message: err.message },
+        });
+      }
+    );
   }
 
   removeOS(index: number): void {
@@ -259,7 +252,7 @@ export class ActivityAddEditComponent implements OnInit {
           })
           .afterClosed()
           .subscribe(() =>
-            this.form.controls["equipo"].setValue(this.currentDevice)
+            this.form.controls["idEquipo"].setValue(this.currentDevice)
           );
       }
     });

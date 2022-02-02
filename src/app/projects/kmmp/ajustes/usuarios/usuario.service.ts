@@ -70,8 +70,16 @@ export class UsuariosService {
               response.body.totalRecords / this._pagination.getValue().size
             ),
           });
+          const document = [...response.body.data].map((x) => {
+            return {
+              Usuario: x.usr,
+              Perfil: x.rol,
+              Creado: x.fechaReg,
+              Modificado: x.fechaMod,
+            };
+          });
           this._usuarios.next(response.body.data);
-          this.shared.currentTableData.next(response.body.data);
+          this.shared.currentTableData.next(document);
         })
       );
   }
