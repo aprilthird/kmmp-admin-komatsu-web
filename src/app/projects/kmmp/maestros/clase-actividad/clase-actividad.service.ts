@@ -6,6 +6,7 @@ import {
 } from "app/core/types/http.types";
 import { Pagination } from "app/core/types/list.types";
 import { environment } from "environments/environment";
+import moment from "moment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { getInboxParams } from "../maestro-model";
@@ -69,8 +70,8 @@ export class ClaseActividadService {
         estado: 0,
         tipo: 9,
         idClaseActividad: idClaseActividad,
-        fechaFin: "2022-02-01",
-        fechaIni: "2021-08-01",
+        fechaIni: moment().subtract(3, "years").format("yyyy-MM-DD"),
+        fechaFin: moment().format("yyyy-MM-DD"),
       },
     };
     const endpoint =

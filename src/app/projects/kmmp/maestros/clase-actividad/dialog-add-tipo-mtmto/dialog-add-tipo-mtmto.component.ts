@@ -30,40 +30,63 @@ export class DialogAddTipoMtmtoComponent implements OnInit {
     public matdialigRef: MatDialogRef<DialogAddTipoMtmtoComponent>
   ) {
     this.form = this.fb.group({
-      codigo: new FormControl("", Validators.required),
-      descripcion: new FormControl("", Validators.required),
-      estado: new FormControl(1),
+      codigo: new FormControl(this.data?.dataEdit?.nombre, Validators.required),
+      descripcion: new FormControl(
+        this.data?.dataEdit?.descripcion,
+        Validators.required
+      ),
+      estado: new FormControl(
+        this.data?.dataEdit?.nestado === "Activo" ? 1 : 0
+      ),
     });
   }
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
 
   submit(): void {
     this.isLoading = true;
-    const params = {
-      estado: this.form.controls["estado"].value ? 1 : 0,
-      codido: this.form.controls["codigo"].value,
-      descripcion: this.form.controls["descripcion"].value,
-      nombre: this.form.controls["codigo"].value,
-      idClaseActividad: this.data.idClase,
-      filter: {
-        idClaseActividad: this.data.idClase,
-        tipo: 8,
-        nombre: this.form.controls["codigo"].value,
+    let payload;
+    if (this.data?.dataEdit) {
+      payload = {
+        ...this.data.dataEdit,
         estado: this.form.controls["estado"].value ? 1 : 0,
+        codido: this.form.controls["codigo"].value,
         descripcion: this.form.controls["descripcion"].value,
-      },
-    };
+        nombre: this.form.controls["codigo"].value,
+        idClaseActividad: this.data.idClase,
+        filter: {
+          idClaseActividad: this.data.idClase,
+          tipo: 8,
+          nombre: this.form.controls["codigo"].value,
+          estado: this.form.controls["estado"].value ? 1 : 0,
+          descripcion: this.form.controls["descripcion"].value,
+        },
+      };
+    } else {
+      payload = {
+        estado: this.form.controls["estado"].value ? 1 : 0,
+        codido: this.form.controls["codigo"].value,
+        descripcion: this.form.controls["descripcion"].value,
+        nombre: this.form.controls["codigo"].value,
+        idClaseActividad: this.data.idClase,
+        filter: {
+          idClaseActividad: this.data.idClase,
+          tipo: 8,
+          nombre: this.form.controls["codigo"].value,
+          estado: this.form.controls["estado"].value ? 1 : 0,
+          descripcion: this.form.controls["descripcion"].value,
+        },
+      };
+    }
+
     this.claseActividadService
-      .postTipoMantenimeinto(params)
+      .postTipoMantenimeinto(payload)
       .subscribe((resp) => {
-        console.log(resp);
         this.isLoading = false;
         this.matdialigRef.close();
       });

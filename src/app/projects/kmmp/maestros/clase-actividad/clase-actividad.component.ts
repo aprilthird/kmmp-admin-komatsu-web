@@ -99,10 +99,8 @@ export class ClaseActividadComponent implements OnInit {
     this.claseActividadService
       .getTipoMantenimiento(actividad.id)
       .subscribe((tipoMttos) => {
-        console.log(tipoMttos);
         this.tipoMttos = tipoMttos.body.data;
       });
-    console.log(this.selectedActivity);
     if (
       this.selectedActivity &&
       this.selectedActivity.nombre === actividad.nombre
@@ -113,12 +111,12 @@ export class ClaseActividadComponent implements OnInit {
     this.selectedActivity = actividad;
   }
 
-  createTipoMantenimeinto(): void {
+  createTipoMantenimeinto(params?): void {
     this.matDialog
       .open(DialogAddTipoMtmtoComponent, {
         width: "400px",
         maxHeight: "100vh",
-        data: { idClase: this.idClaseActv },
+        data: { idClase: this.idClaseActv, dataEdit: params },
       })
       .afterClosed()
       .subscribe(() => this.loadData());

@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { PaginationResponse } from "app/core/types/http.types";
 import { Response } from "app/shared/models/general-model";
 import { environment } from "environments/environment";
+import moment from "moment";
 
 import { BehaviorSubject, Observable } from "rxjs";
 
@@ -120,8 +121,8 @@ export class ActivitiesService {
       {
         ...getInboxParams,
         filter: {
-          fechaIni: "2021-08-01",
-          fechaFin: "2022-02-01",
+          fechaIni: moment().subtract(3, "years").format("yyyy-MM-DD"),
+          fechaFin: moment().format("yyyy-MM-DD"),
         },
       }
     );
