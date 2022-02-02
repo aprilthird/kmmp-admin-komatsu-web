@@ -41,7 +41,7 @@ export class UsuariosService {
    * Obtener el listado de usuarios
    */
   getUsuarios(
-    { page, pageSize, ...filter }: ParamsPagination | any = {
+    { page, pageSize, usr }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
@@ -53,7 +53,7 @@ export class UsuariosService {
           page,
           pageSize,
           filter: {
-            nombre: null,
+            usr: usr,
             fechaInicio: moment().subtract(1, "years").format("yyyy-MM-DD"),
             fechaFin: moment().format("yyyy-MM-DD"),
           },

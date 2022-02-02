@@ -99,7 +99,7 @@ export class InnerHeaderComponent implements OnInit {
         return this.docs.getDocumentos({ nombre: query });
 
       case "usuarios":
-        return this._usuariosService.getUsuarios({ nombre: query });
+        return this._usuariosService.getUsuarios({ usr: query });
 
       default:
         return [];

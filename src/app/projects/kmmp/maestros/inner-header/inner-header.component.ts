@@ -38,7 +38,8 @@ export class InnerHeaderComponent implements OnInit {
     private modelosService: ModelosService,
     private tipoEquiposService: TipoEquiposService,
     private documentoService: DocumentosService,
-    private exportExcelService: ExportExcelService
+    private exportExcelService: ExportExcelService,
+    private userService: UsuariosService
   ) {}
 
   ngOnInit(): void {
@@ -98,6 +99,9 @@ export class InnerHeaderComponent implements OnInit {
 
       case "documentos":
         return this.documentoService.getDocumentos({ nombre: query });
+
+      case "usuarios":
+        return this.userService.getUsuarios({ usr: query });
 
       default:
         return [];
