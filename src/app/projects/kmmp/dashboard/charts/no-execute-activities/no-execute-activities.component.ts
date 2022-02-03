@@ -16,8 +16,10 @@ export class NoExecuteActivitiesComponent implements OnInit {
   @ViewChild("stackedChartNoActv") stackedChartNoActv: ChartComponent;
   public noActivitiesExec: Partial<StackedBarChartOptions>;
   constructor(private dashboardservices: DashboardService) {
-    //this.noActivitiesExec = NoCompletedActvBarChart;
-    this.noActivitiesExec = this.dashboardservices.getAllNoExecutedActv();
+    this.dashboardservices.activitiesNoCompleted$.subscribe((resp) => {
+      delete resp.chart.width;
+      this.noActivitiesExec = resp;
+    });
   }
 
   ngOnInit(): void {}

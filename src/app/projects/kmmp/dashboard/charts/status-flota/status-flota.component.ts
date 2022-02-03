@@ -29,7 +29,10 @@ export class StatusFlotaComponent implements OnInit {
   public chartOptions: Partial<GroupBarChartOptions>;
 
   constructor(private dashboardServices: DashboardService) {
-    this.chartOptions = this.dashboardServices.getAllStatusFlota();
+    this.dashboardServices.statusFlota$.subscribe((resp) => {
+      this.chartOptions = resp;
+      delete this.chartOptions.chart.width;
+    });
   }
 
   ngOnInit(): void {}

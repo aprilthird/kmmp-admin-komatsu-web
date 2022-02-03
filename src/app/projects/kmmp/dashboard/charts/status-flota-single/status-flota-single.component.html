@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
 <div class="flex flex-col md:flex-row justify-center items-center gap-40">
-  <div id="pieChart">
+  <div *ngIf="pieChartData" id="pieChart">
     <apx-chart
       [series]="pieChartData.series"
       [chart]="pieChartData.chart"
@@ -12,7 +12,7 @@
       [title]="general"
     ></apx-chart>
   </div>
-  <div id="barChart">
+  <div *ngIf="basicBarChartData" id="barChart">
     <apx-chart
       [series]="basicBarChartData.series"
       [chart]="basicBarChartData.chart"

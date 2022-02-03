@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { MenuPermissionGuard } from "app/core/permission/guards/menu-permission.guard";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { DashboardResolver } from "./dashboard/dashboard.resolver";
 import { HomeComponent } from "./home/home.component";
 import { KmmpComponent } from "./kmmp.component";
 
@@ -35,6 +36,9 @@ const routes: Routes = [
       {
         path: "",
         component: DashboardComponent,
+        resolve: {
+          initialData: DashboardResolver,
+        },
         canActivate: [MenuPermissionGuard],
       },
     ],

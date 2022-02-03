@@ -1,7 +1,8 @@
 export interface FlotaI {
-  nombre: string;
-  cliente: string;
-  estado: boolean;
+  nombre?: string;
+  cliente?: string;
+  estado?: boolean;
   nestado?: string;
-  idCliente: number;
+  idCliente?: number;
+  id?: number;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
+import { MatSelectChange } from "@angular/material/select";
 import { MatTabChangeEvent } from "@angular/material/tabs";
 import { Router } from "@angular/router";
 import { UserService } from "app/core/user/user.service";
@@ -19,9 +20,12 @@ import {
   ApexFill,
   ApexTooltip,
 } from "ng-apexcharts";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { ActivitiesService } from "../actividades/activities.service";
 import { ClaseActividadService } from "../maestros/clase-actividad/clase-actividad.service";
+import { FlotaI } from "../maestros/flotas/flota-model";
+import { MaestrosService } from "../maestros/maestros.service";
 import { DashboardService } from "./dashboard.service";
 
 //FAKE DATA
@@ -52,6 +56,8 @@ export class DashboardComponent implements OnInit {
   });
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
+  flotas: FlotaI[] = [];
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   user: User;
   isLoading: boolean;
@@ -60,19 +66,28 @@ export class DashboardComponent implements OnInit {
   _allNoExecuted = true;
   start: string;
   end: string;
-  tipo_solicitudes: any[] = ["---"];
-  tipo_solicitud = new FormControl("");
-  clase_actividades: any[] = ["---"];
-  clase_actividad = new FormControl("");
+  tipo_solicitudes: any[] = [];
+  idTipoSolicitud = new FormControl(undefined);
+  clase_actividades: any[] = [];
+  idClaseActividad = new FormControl(undefined);
+  filter: {
+    fechaIni: string;
+    fechaFin: string;
+    idClaseActividad?: number;
+    idTipoSolicitud?: number;
+  };
+  isLoadingNoExc: boolean;
 
   constructor(
     private _router: Router,
     private _userService: UserService,
     private _dashboardService: DashboardService,
     private serviceAct: ActivitiesService,
-    private claseActividadService: ClaseActividadService
+    private claseActividadService: ClaseActividadService,
+    private _maestrosService: MaestrosService
   ) {
     this._userService.user$;
+    this.getFlotas();
   }
 
   ngOnInit(): void {
@@ -102,31 +117,47 @@ export class DashboardComponent implements OnInit {
     this.getClaseActividades();
   }
 
-  changeDate(): void {
+  change(): void {
     const startDate = new Date(this.dateRange.controls["startDate"].value);
     const endDate = new Date(this.dateRange.controls["endDate"].value);
     this.displayStringDate();
 
-    const filter = {
-      fechaInicio: setFormatDate(startDate),
+    this.filter = {
+      fechaIni: setFormatDate(startDate),
       fechaFin: setFormatDate(endDate),
+      idClaseActividad: this.idClaseActividad.value
+        ? this.idClaseActividad.value
+        : undefined,
+      idTipoSolicitud: this.idTipoSolicitud.value
+        ? this.idTipoSolicitud.value
+        : undefined,
     };
     if (Number(setFormatDate(endDate).split("-")[0]) > 2020) {
-      this._dashboardService.getStatusFlota(filter).subscribe(() => {});
+      this._dashboardService.getStatusFlota(this.filter).subscribe(() => {});
 
-      this._dashboardService.getCodigoDemora(filter).subscribe(() => {});
+      this._dashboardService.getCodigoDemora(this.filter).subscribe(() => {});
 
       this._dashboardService
-        .getActividadesNoEjecutadas(filter)
+        .getActividadesNoEjecutadas(this.filter)
         .subscribe(() => {});
     }
+  }
+
+  changeActivity(e: MatSelectChange): void {
+    this.idClaseActividad.setValue(e.value);
+    this.change();
+  }
+
+  changeRequest(e: MatSelectChange): void {
+    this.idTipoSolicitud.setValue(e.value);
+    this.change();
   }
 
   private displayStringDate(init?: boolean): void {
     if (this.dateRange.controls["startDate"].value) {
       this.start = !init
         ? new Date(
-            this.dateRange.controls["startDate"].value._d
+            this.dateRange.controls["startDate"].value
           ).toLocaleDateString("en-US")
         : new Date(
             this.dateRange.controls["startDate"].value
@@ -134,13 +165,20 @@ export class DashboardComponent implements OnInit {
     }
     if (this.dateRange.controls["endDate"].value) {
       this.end = !init
-        ? new Date(
-            this.dateRange.controls["endDate"].value._d
-          ).toLocaleDateString("en-US")
+        ? new Date(this.dateRange.controls["endDate"].value).toLocaleDateString(
+            "en-US"
+          )
         : new Date(this.dateRange.controls["endDate"].value).toLocaleDateString(
             "en-US"
           );
     }
+  }
+
+  getFlotas(): void {
+    this._maestrosService.getList(6).subscribe((resp: any) => {
+      this.flotas = resp.body.data;
+      this.flotas.unshift({ id: 999, nombre: "Todas" });
+    });
   }
 
   private getTipoSolicitud(): void {
@@ -155,11 +193,17 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  allFlotas(event: MatTabChangeEvent): void {
+  selectFlotas(event: MatTabChangeEvent): void {
     if (event.index === 0) {
       this._allFlotas = true;
     } else {
+      this.isLoading = true;
       this._allFlotas = false;
+      this._dashboardService
+        .getStatusFlotaById(
+          this.flotas.find((flota) => flota.nombre === event.tab.textLabel).id
+        )
+        .subscribe(() => (this.isLoading = false));
     }
   }
 
@@ -167,7 +211,11 @@ export class DashboardComponent implements OnInit {
     if (event.index === 0) {
       this._allNoExecuted = true;
     } else {
+      this.isLoadingNoExc = true;
       this._allNoExecuted = false;
+      this._dashboardService
+        .getNoExecuteActivitiesyState(this.filter)
+        .subscribe(() => (this.isLoadingNoExc = false));
     }
   }
 

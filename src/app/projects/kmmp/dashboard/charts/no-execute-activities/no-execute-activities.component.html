@@ -1,4 +1,4 @@
-<div id="stackedChartNoActv">
+<div *ngIf="noActivitiesExec" id="stackedChartNoActv">
   <apx-chart
     [series]="noActivitiesExec.series"
     [chart]="noActivitiesExec.chart"

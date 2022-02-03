@@ -14,17 +14,17 @@
       Hola, {{ user?.nombres }}
     </div>
 
-    <button mat-raised-button [color]="'primary'">
+    <!-- <button mat-raised-button [color]="'primary'">
       <mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
       <span class="ml-2 mr-1">Exportar</span>
-    </button>
+    </button>-->
   </div>
   <div class="flex items-center ml-6 pt-4">
     <div class="px-4 py-2 rounded-tl-xl overflow-hidden bg-hover">
       <div class="sm:text-lg leading-6 truncate">Todos los clientes</div>
     </div>
     <div class="ml-px rounded-tr-xl bg-hover">
-      <button [matMenuTriggerFor]="projectsMenu" mat-icon-button>
+      <button mat-icon-button>
         <mat-icon svgIcon="heroicons_outline:chevron-down"></mat-icon>
       </button>
       <mat-menu #projectsMenu="matMenu">
@@ -57,9 +57,9 @@
           </mat-form-field>-->
           <mat-form-field class="w-44">
             <mat-select
-              [formControl]="tipo_solicitud"
-              [value]="tipo_solicitud"
+              [formControl]="idTipoSolicitud"
               placeholder="Por tipo de solicitud"
+              (selectionChange)="changeRequest($event)"
             >
               <mat-option
                 *ngFor="let tipoSolicitud of tipo_solicitudes"
@@ -81,9 +81,9 @@
 
           <mat-form-field class="w-44">
             <mat-select
-              [formControl]="clase_actividad"
-              [value]="clase_actividad"
+              [formControl]="idClaseActividad"
               placeholder="Por clase de actividad"
+              (selectionChange)="changeActivity($event)"
             >
               <mat-option
                 *ngFor="let claseActividad of clase_actividades"
@@ -120,7 +120,7 @@
                 hidden
                 formControlName="endDate"
                 class="mat-date-ranage-input-width"
-                (dateChange)="changeDate()"
+                (dateChange)="change()"
               />
             </mat-date-range-input>
             <span class="ml-2 mr-1">Elegir fecha</span>
@@ -138,22 +138,25 @@
       <div
         class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl mt-4"
       >
-        <div class="flex sm:flex-col md:flex-row justify-between">
-          <h1 class="prose font-bold">Status por flota 1/2</h1>
+        <div class="flex sm:flex-col md:flex-row justify-between gap-5">
+          <div class="md:w-1/5">
+            <h1 class="prose font-bold">Status por flota</h1>
+          </div>
+
           <mat-tab-group
-            (selectedTabChange)="allFlotas($event)"
-            class="sm:px-2 flex sm:items-center md:items-end"
+            (selectedTabChange)="selectFlotas($event)"
+            class="sm:px-2 flex overflow-auto md:w-4/5"
             [animationDuration]="'0'"
           >
             <!-- Home -->
-            <mat-tab label="Todas"> </mat-tab>
-            <mat-tab label="Auxiliar"> </mat-tab>
-            <mat-tab label="Camiones"> </mat-tab>
-            <mat-tab label="Palas"> </mat-tab>
-            <mat-tab label="Cargadores WA800"> </mat-tab>
+            <mat-tab *ngFor="let flota of flotas" [label]="flota.nombre">
+            </mat-tab>
           </mat-tab-group>
         </div>
-
+        <mat-progress-bar
+          *ngIf="isLoading"
+          [mode]="'indeterminate'"
+        ></mat-progress-bar>
         <app-status-flota
           *ngIf="_allFlotas"
           class="overflow-x-auto"
@@ -173,11 +176,13 @@
           >
             <!-- Home -->
             <mat-tab label="Todas"> </mat-tab>
-            <mat-tab label="Postergadas"> </mat-tab>
             <mat-tab label="No ejecutadas"> </mat-tab>
           </mat-tab-group>
         </div>
-
+        <mat-progress-bar
+          *ngIf="isLoadingNoExc"
+          [mode]="'indeterminate'"
+        ></mat-progress-bar>
         <no-execute-activities *ngIf="_allNoExecuted"></no-execute-activities>
         <no-execute-activities-single
           *ngIf="!_allNoExecuted"

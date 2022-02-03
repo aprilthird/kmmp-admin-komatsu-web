@@ -24,7 +24,7 @@ export class StatusFlotaSingleComponent implements OnInit {
   };
 
   general = {
-    text: "General - auxiliar",
+    text: "General",
   };
 
   state = {
@@ -32,8 +32,12 @@ export class StatusFlotaSingleComponent implements OnInit {
   };
 
   constructor(private dashboardServices: DashboardService) {
-    this.pieChartData = dashboardServices.getSingleStatusFlota();
-    this.basicBarChartData = dashboardServices.getSingleBarStatusFlota();
+    this.dashboardServices.statusFlotaId$.subscribe((x) => {
+      if (x) {
+        this.basicBarChartData = x.estatusPorFlotaGeneral;
+        this.pieChartData = x.estatusPorFlotaPorEstado;
+      }
+    });
   }
 
   ngOnInit(): void {}

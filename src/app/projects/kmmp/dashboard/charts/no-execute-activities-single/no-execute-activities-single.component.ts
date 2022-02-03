@@ -20,15 +20,20 @@ export class NoExecuteActivitiesSingleComponent implements OnInit {
   public basicBarCharHortData: Partial<BasicBarChartOptions>;
 
   Postergadas = {
-    text: "Postergadas 150",
+    text: "Estados",
   };
   Causas = {
     text: "Causas",
   };
 
   constructor(private dashboardService: DashboardService) {
-    this.basicBarChartData = this.dashboardService.getPosponedNoExecutedActv();
-    this.basicBarCharHortData = this.dashboardService.getCausesNoExecutedActv();
+    this.dashboardService.activitiesNoCompletedByState$.subscribe((resp) => {
+      if (resp) {
+        resp.estado.plotOptions.bar = { horizontal: false };
+        this.basicBarChartData = resp.estado;
+        this.basicBarCharHortData = resp.causas;
+      }
+    });
   }
 
   ngOnInit(): void {}

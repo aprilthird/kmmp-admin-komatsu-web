@@ -1,24 +1,9 @@
 <div
-  class="
-    grid grid-cols-1
-    sm:grid-cols-2
-    md:grid-cols-5
-    gap-6
-    w-full
-    min-w-0
-    md:mt-4
-  "
+  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 w-full min-w-0 md:mt-4"
 >
   <!-- Summary -->
   <div
-    class="
-      flex flex-col flex-auto
-      p-6
-      bg-card
-      shadow
-      rounded-2xl
-      overflow-hidden
-    "
+    class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
   >
     <div class="flex items-start justify-between"></div>
     <div class="flex flex-col items-center mt-2">
@@ -26,49 +11,28 @@
         <span class="font-bold">Total</span>
       </div>
       <div
-        class="
-          text-7xl
-          sm:text-8xl
-          font-bold
-          tracking-tight
-          leading-none
-          text-gray-500
-        "
+        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-gray-500"
       >
-        21
+        {{ summary.totalEjecutadas + summary.totalNoEjecutadas }}
       </div>
       <div class="text-lg font-medium text-blue-600 dark:text-blue-500">
-        11 Ejecutadas
+        {{ summary.totalEjecutadas }} Ejecutadas
       </div>
       <div class="text-lg font-medium text-red-600 dark:text-red-500">
-        10 No ejecutadas
+        {{ summary.totalNoEjecutadas }} No ejecutadas
       </div>
     </div>
   </div>
 
   <div
-    class="
-      flex flex-col flex-auto
-      p-6
-      bg-card
-      shadow
-      rounded-2xl
-      overflow-hidden
-    "
+    class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
   >
     <div class="flex items-start justify-between"></div>
     <div class="flex flex-col items-center mt-2">
       <div
-        class="
-          text-7xl
-          sm:text-8xl
-          font-bold
-          tracking-tight
-          leading-none
-          text-amber-500
-        "
+        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-amber-500"
       >
-        24
+        {{ summary.sinEmpezar }}
       </div>
       <div class="text-lg font-medium text-amber-600 dark:text-amber-500">
         Sin empezar
@@ -80,28 +44,14 @@
   </div>
 
   <div
-    class="
-      flex flex-col flex-auto
-      p-6
-      bg-card
-      shadow
-      rounded-2xl
-      overflow-hidden
-    "
+    class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
   >
     <div class="flex items-start justify-between"></div>
     <div class="flex flex-col items-center mt-2">
       <div
-        class="
-          text-7xl
-          sm:text-8xl
-          font-bold
-          tracking-tight
-          leading-none
-          text-green-500
-        "
+        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-green-500"
       >
-        38
+        {{ summary.enProceso }}
       </div>
       <div class="text-lg font-medium text-green-600 dark:text-green-500">
         En proceso
@@ -113,28 +63,14 @@
   </div>
 
   <div
-    class="
-      flex flex-col flex-auto
-      p-6
-      bg-card
-      shadow
-      rounded-2xl
-      overflow-hidden
-    "
+    class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
   >
     <div class="flex items-start justify-between"></div>
     <div class="flex flex-col items-center mt-2">
       <div
-        class="
-          text-7xl
-          sm:text-8xl
-          font-bold
-          tracking-tight
-          leading-none
-          text-red-500
-        "
+        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-red-500"
       >
-        17
+        {{ summary.observadas }}
       </div>
       <div class="text-lg font-medium text-red-600 dark:text-red-500">
         Observadas
@@ -146,28 +82,14 @@
   </div>
 
   <div
-    class="
-      flex flex-col flex-auto
-      p-6
-      bg-card
-      shadow
-      rounded-2xl
-      overflow-hidden
-    "
+    class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden"
   >
     <div class="flex items-start justify-between"></div>
     <div class="flex flex-col items-center mt-2">
       <div
-        class="
-          text-7xl
-          sm:text-8xl
-          font-bold
-          tracking-tight
-          leading-none
-          text-blue-500
-        "
+        class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500"
       >
-        15
+        {{ summary.validadas }}
       </div>
       <div class="text-lg font-medium text-blue-600 dark:text-blue-500">
         Validadas

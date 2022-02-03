@@ -1,5 +1,5 @@
 <div class="flex flex-col md:flex-row justify-center items-center gap-40">
-  <div id="barChart">
+  <div *ngIf="basicBarChartData" id="barChart">
     <apx-chart
       [series]="basicBarChartData.series"
       [chart]="basicBarChartData.chart"
@@ -10,7 +10,7 @@
     ></apx-chart>
   </div>
 
-  <div id="barChartHor">
+  <div *ngIf="basicBarCharHortData" id="barChartHor">
     <apx-chart
       [series]="basicBarCharHortData.series"
       [chart]="basicBarCharHortData.chart"
