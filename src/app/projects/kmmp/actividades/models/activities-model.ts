@@ -39,6 +39,8 @@ export interface Activity {
   fechaRealFin?: any;
   fechaRealIni?: any;
   fechaEstimadaFin?: any;
+  fechaHoraIniReal?: any;
+  fechaHoraFinReal?: any;
 }
 
 export interface MultipleBaysI {

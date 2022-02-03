@@ -40,7 +40,9 @@
 
         <div class="flex flex-col">
           <span class="text-md text-secondary">Fecha de carga</span>
-          <span class="font-semibold">{{ activityInfo?.fechaReg }}</span>
+          <span class="font-semibold">{{
+            activityInfo?.fechaReg | date: "dd/MM/yy"
+          }}</span>
         </div>
       </div>
     </div>
@@ -49,21 +51,17 @@
     <div class="flex ml-1.5 gap-5">
       <div class="flex flex-col gap-5">
         <div class="flex flex-col mr-4">
-          <span class="text-md text-secondary">Fecha de inicio</span>
-          <span class="font-semibold"
-            >{{ activityInfo?.fechaEstimadaIni }} -
-            {{ activityInfo?.fechaEstimadaFin }}</span
-          >
+          <span class="text-md text-secondary">Fecha y hora inicio</span>
+          <span class="font-semibold">{{
+            activityInfo?.fechaHoraIniReal
+          }}</span>
         </div>
 
         <div class="flex flex-col mr-4">
           <span class="text-md text-secondary">Fecha y hora fin</span>
           <div class="flex flex-col">
             <span class="text-red-600 font-bold">{{
-              activityInfo?.fechaRealIni
-            }}</span>
-            <span class="text-red-600 font-bold">{{
-              activityInfo?.fechaRealFin
+              activityInfo?.fechaHoraFinReal
             }}</span>
           </div>
         </div>
@@ -77,9 +75,7 @@
 
         <div class="flex flex-col">
           <span class="text-md text-secondary">Duración</span>
-          <span class="text-red-600 font-bold">{{
-            activityInfo?.duracionReal
-          }}</span>
+          <span class="text-red-600 font-bold">{{ getTimeDiff() }} horas</span>
         </div>
       </div>
     </div>

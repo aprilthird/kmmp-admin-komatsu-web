@@ -332,9 +332,9 @@ export class ActivityAddEditComponent implements OnInit {
       os: new FormControl(this.activityInfo?.nos),
       pe: new FormControl(this.activityInfo?.npe),
       fechaEstimadaFin: new FormControl(this.activityInfo?.fechaEstimadaFin),
-      duracion: new FormControl(this.activityInfo?.duracion),
-      fechaRealIni: new FormControl(this.activityInfo?.fechaRealIni),
-      fechaRealFin: new FormControl(this.activityInfo?.fechaRealFin),
+      duracion: new FormControl(this.getTimeDiff()),
+      fechaRealIni: new FormControl(this.activityInfo?.fechaHoraIniReal),
+      fechaRealFin: new FormControl(this.activityInfo?.fechaHoraFinReal),
       duracionReal: new FormControl(this.activityInfo?.duracionReal),
       comentariosTecnico: new FormControl(
         this.activityInfo?.comentariosTecnico
@@ -389,5 +389,13 @@ export class ActivityAddEditComponent implements OnInit {
       params["id"] = 0;
     }
     return params;
+  }
+
+  getTimeDiff(): number {
+    return Math.abs(
+      (new Date(this.activityInfo?.fechaHoraFinReal).getTime() -
+        new Date(this.activityInfo?.fechaHoraIniReal).getTime()) /
+        3600000
+    );
   }
 }

@@ -37,6 +37,7 @@ export class ActivityComponent implements OnInit {
   private getActivityData(id: number): void {
     this.activitiesService.getActivity(id).subscribe((resp: any) => {
       this.activityInfo = resp.body;
+      this.getTimeDiff();
       this.totalAdvance();
     });
   }
@@ -119,5 +120,13 @@ export class ActivityComponent implements OnInit {
     ).length;
 
     return Math.round(sumAdvance / formatsLength);
+  }
+
+  getTimeDiff(): number {
+    return Math.abs(
+      (new Date(this.activityInfo?.fechaHoraFinReal).getTime() -
+        new Date(this.activityInfo?.fechaHoraIniReal).getTime()) /
+        3600000
+    );
   }
 }
