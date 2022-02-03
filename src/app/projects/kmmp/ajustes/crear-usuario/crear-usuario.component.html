@@ -48,6 +48,14 @@
                 <mat-label>Usuario</mat-label>
                 <input matInput formControlName="usr" autocomplete="off" />
                 <mat-error> {{ getErrorMessage("usr") }} </mat-error>
+                <mat-icon
+                  *ngIf="!isEdit && form.controls.usr.value.length > 2"
+                  class="cursor-pointer"
+                  matTooltip="Validar y autocompletar usuario"
+                  svgIcon="heroicons_outline:clipboard-check"
+                  (click)="autoCheckUsr()"
+                  [color]="'primary'"
+                ></mat-icon>
               </mat-form-field>
               <div class="w-full md:w-3/4 md:pl-8 pr-8 font-medium">
                 <mat-label>Perfiles</mat-label>

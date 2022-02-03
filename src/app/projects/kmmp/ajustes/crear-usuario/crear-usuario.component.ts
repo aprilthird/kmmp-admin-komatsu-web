@@ -161,6 +161,22 @@ export class CrearUsuarioComponent implements OnInit {
     this.usrField();
   }
 
+  autoCheckUsr(): void {
+    this.crearUsuarioService
+      .getClintInfo(this.form.controls.usr.value)
+      .subscribe((usrData: any) => {
+        if (usrData) {
+          this.form.controls.nombres.setValue(usrData.givenName);
+          this.form.controls.apellidos.setValue(usrData.surname);
+          this.form.controls.correo.setValue(usrData.mail);
+        } else {
+          this.form.controls.nombres.setValue("");
+          this.form.controls.apellidos.setValue("");
+          this.form.controls.correo.setValue("");
+        }
+      });
+  }
+
   getClients(): void {
     this._maestrosService
       .getClients({ pageSize: 200, page: 0 })
