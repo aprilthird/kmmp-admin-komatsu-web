@@ -75,6 +75,7 @@ export class CrearUsuarioComponent implements OnInit {
   submitted: boolean;
   id: any;
   test: any[] = [];
+  assignClients: any[] = [];
 
   get rolesFormArray() {
     return this.form.controls.usuarioRoles as FormArray;
@@ -151,11 +152,25 @@ export class CrearUsuarioComponent implements OnInit {
             new FormControl(this.activatedRoute.snapshot.params.id)
           );
         });
+    } else {
+      this.getClients();
     }
   }
 
   ngOnInit(): void {
-    this.passwordPattern();
+    this.usrField();
+  }
+
+  getClients(): void {
+    this._maestrosService
+      .getClients({ pageSize: 200, page: 0 })
+      .subscribe((clients) => {
+        this.clients = clients.body.data;
+        this.clients.map((x) => {
+          x.idCliente = x.id;
+          x.id = 0;
+        });
+      });
   }
 
   setSelectionChange(e: MatSelectChange): void {
@@ -168,12 +183,17 @@ export class CrearUsuarioComponent implements OnInit {
         return x;
       }
     });
+
     const payload = this.clients.filter(
       (x) => x.id !== 0 || (x.id === 0 && x.activo)
     );
-    this.crearUsuarioService.bindClientToUser(payload).subscribe((resp) => {
-      this.updateIds(resp.body);
-    });
+    if (this.isEdit) {
+      this.crearUsuarioService.bindClientToUser(payload).subscribe((resp) => {
+        this.updateIds(resp.body);
+      });
+    } else {
+      this.assignClients = payload;
+    }
   }
 
   updateIds(data): void {
@@ -199,13 +219,9 @@ export class CrearUsuarioComponent implements OnInit {
     this._unsubscribeAll.complete();
   }
 
-  passwordPattern(): void {
+  usrField(): void {
     if (!this.isEdit) {
       this.form.controls["usr"].enable();
-      this.form.controls["psw"].setValidators([
-        Validators.required,
-        Validators.pattern(/(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{6,20}/),
-      ]);
     } else {
       this.form.controls["usr"].disable();
     }
@@ -265,22 +281,24 @@ export class CrearUsuarioComponent implements OnInit {
           psw: this.isEdit ? "0000" : psw, // Se envia 0000 por defecto pero esto no actualiza la contraseña
         })
         .subscribe((response) => {
-          this.submitted = true;
-          this.alert = {
-            type: response.success ? "success" : "error",
-            message: response.success
-              ? `Se ha ${
-                  this.isEdit ? "editado" : "creado"
-                } correctamente el usuario`
-              : response.message,
-          };
-
-          setTimeout(() => {
-            if (response.message !== "El usuario ya existe") {
-              this.alert = null;
-              this._router.navigateByUrl("/admin/ajustes/usuarios");
+          if (!this.isEdit) {
+            this.assignClients.map((x) => (x.idUsuario = response.body.id));
+            if (this.assignClients.length > 0) {
+              this.crearUsuarioService
+                .bindClientToUser(this.assignClients)
+                .subscribe((resp) => {
+                  this.updateIds(resp.body);
+                  this.submitted = true;
+                  this.messageRedirect(response);
+                });
+            } else {
+              this.submitted = true;
+              this.messageRedirect(response);
             }
-          }, 2500);
+          } else {
+            this.submitted = true;
+            this.messageRedirect(response);
+          }
         });
     }
   }
@@ -303,6 +321,22 @@ export class CrearUsuarioComponent implements OnInit {
     }
 
     return control.hasError("email") ? "Formato de correo incorrecto" : "";
+  }
+
+  private messageRedirect(response): void {
+    this.alert = {
+      type: response.success ? "success" : "error",
+      message: response.success
+        ? `Se ha ${this.isEdit ? "editado" : "creado"} correctamente el usuario`
+        : response.message,
+    };
+
+    setTimeout(() => {
+      if (response.message !== "El usuario ya existe") {
+        this.alert = null;
+        this._router.navigateByUrl("/admin/ajustes/usuarios");
+      }
+    }, 2500);
   }
 
   byClient(e): void {}

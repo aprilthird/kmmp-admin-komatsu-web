@@ -59,7 +59,7 @@ export class MaestrosService {
   }
 
   getClients(
-    { page, pageSize, nombre, ...filter }: ParamsPagination | any = {
+    { page, pageSize, nombre }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
@@ -76,7 +76,7 @@ export class MaestrosService {
     return this.http
       .post<PaginationResponse<any[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
-        { page, pageSize, ...currentFilter }
+        { ...currentFilter, page, pageSize }
       )
       .pipe(
         tap((response) => {
