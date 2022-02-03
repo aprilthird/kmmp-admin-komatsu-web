@@ -17,7 +17,25 @@ export class DeleyedCodeComponent implements OnInit {
   public delayCode: Partial<StackedBarChartOptions>;
 
   constructor(private dashboardService: DashboardService) {
-    this.delayCode = this.dashboardService.getDelayedCode();
+    this.dashboardService.delayedCode$.subscribe((x) => {
+      x.xaxis = {
+        categories: ["Detalle de demora"],
+        labels: {
+          formatter: function (val) {
+            return val + "K";
+          },
+        },
+      };
+
+      x.yaxis = {
+        title: {
+          text: undefined,
+        },
+      };
+      if (x) {
+        this.delayCode = x;
+      }
+    });
   }
 
   ngOnInit(): void {}

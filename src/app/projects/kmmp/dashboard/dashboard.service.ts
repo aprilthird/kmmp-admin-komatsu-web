@@ -20,6 +20,7 @@ export class DashboardService {
   _summary: BehaviorSubject<any> = new BehaviorSubject(null);
   _statusflotaById: BehaviorSubject<any> = new BehaviorSubject(null);
   _activitiesNoCompleted: BehaviorSubject<any> = new BehaviorSubject(null);
+  _delayedCode: BehaviorSubject<any> = new BehaviorSubject(null);
   _activitiesNoCompletedByState: BehaviorSubject<any> = new BehaviorSubject(
     null
   );
@@ -44,6 +45,10 @@ export class DashboardService {
 
   get activitiesNoCompletedByState$(): Observable<any> {
     return this._activitiesNoCompletedByState.asObservable();
+  }
+
+  get delayedCode$(): Observable<any> {
+    return this._delayedCode.asObservable();
   }
 
   /**FAKE SERVICES */
@@ -128,14 +133,17 @@ export class DashboardService {
       environment.apiUrl + "/Reportes/ActividadesNoEjecutadasPorEstado";
     return this.http.post<Response>(endpoint, filter).pipe(
       tap((noCompletedByState) => {
-        console.log("noCompletedByState ", noCompletedByState);
         this._activitiesNoCompletedByState.next(noCompletedByState);
       })
     );
   }
 
-  getCodigoDemora(filter): Observable<Response> {
+  getCodigoDemora(filter = this._rangeDate.getValue()): Observable<Response> {
     const endpoint = environment.apiUrl + "/Reportes/CodigosDeDemoras";
-    return this.http.post<Response>(endpoint, filter);
+    return this.http.post<Response>(endpoint, filter).pipe(
+      tap((delayedCode) => {
+        this._delayedCode.next(delayedCode);
+      })
+    );
   }
 }

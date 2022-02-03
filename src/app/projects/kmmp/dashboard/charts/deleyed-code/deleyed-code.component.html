@@ -1,4 +1,4 @@
-<div id="stackedChartDelay">
+<div *ngIf="delayCode" id="stackedChartDelay">
   <apx-chart
     [series]="delayCode.series"
     [chart]="delayCode.chart"

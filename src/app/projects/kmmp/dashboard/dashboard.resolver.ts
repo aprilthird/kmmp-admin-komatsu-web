@@ -20,6 +20,7 @@ export class DashboardResolver implements Resolve<boolean> {
     return forkJoin([
       this.dashboardService.getStatusFlota(),
       this.dashboardService.getActividadesNoEjecutadas(),
+      this.dashboardService.getCodigoDemora(),
     ]);
   }
 }
