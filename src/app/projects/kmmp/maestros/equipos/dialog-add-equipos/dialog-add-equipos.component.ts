@@ -90,10 +90,18 @@ export class DialogAddEquiposComponent implements OnInit {
 
   getSelectsData(): void {
     this.isLoading = true;
-    const cli = this.maestServ.getList(1).pipe(map((x: any) => x.body.data));
-    const mod = this.maestServ.getList(5).pipe(map((x: any) => x.body.data));
-    const flt = this.maestServ.getList(6).pipe(map((x: any) => x.body.data));
-    const t_e = this.maestServ.getList(3).pipe(map((x: any) => x.body.data));
+    const cli = this.maestServ
+      .getList({ tipo: 1, pageSize: 999 })
+      .pipe(map((x: any) => x.body.data));
+    const mod = this.maestServ
+      .getList({ tipo: 5, pageSize: 999 })
+      .pipe(map((x: any) => x.body.data));
+    const flt = this.maestServ
+      .getList({ tipo: 6, pageSize: 999 })
+      .pipe(map((x: any) => x.body.data));
+    const t_e = this.maestServ
+      .getList({ tipo: 3, pageSize: 999 })
+      .pipe(map((x: any) => x.body.data));
 
     forkJoin([cli, mod, flt, t_e]).subscribe(async (resp) => {
       this.clientesData = await resp[0];
@@ -186,9 +194,11 @@ export class DialogAddEquiposComponent implements OnInit {
   }
 
   clientSelected(idCliente: number): void {
-    this.maestServ.getList(6, idCliente).subscribe((resp: any) => {
-      this.flotasData = resp.body.data;
-    });
+    this.maestServ
+      .getList({ tipo: 6, idCliente: idCliente, pageSize: 999 })
+      .subscribe((resp: any) => {
+        this.flotasData = resp.body.data;
+      });
     this.form.controls.cliente.setValue(
       this.clientesData.find((x) => x.id === idCliente).nombre
     );

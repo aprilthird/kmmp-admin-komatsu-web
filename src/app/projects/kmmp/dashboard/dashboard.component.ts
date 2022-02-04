@@ -175,10 +175,12 @@ export class DashboardComponent implements OnInit {
   }
 
   getFlotas(): void {
-    this._maestrosService.getList(6).subscribe((resp: any) => {
-      this.flotas = resp.body.data;
-      this.flotas.unshift({ id: 999, nombre: "Todas" });
-    });
+    this._maestrosService
+      .getList({ tipo: 6, pageSize: 999 })
+      .subscribe((resp: any) => {
+        this.flotas = resp.body.data;
+        this.flotas.unshift({ id: 999, nombre: "Todas" });
+      });
   }
 
   private getTipoSolicitud(): void {
@@ -188,9 +190,11 @@ export class DashboardComponent implements OnInit {
   }
 
   getClaseActividades(): void {
-    this.claseActividadService.getClaseActividad().subscribe((resp) => {
-      this.clase_actividades = resp.body.data;
-    });
+    this.claseActividadService
+      .getClaseActividad({ pageSize: 999 })
+      .subscribe((resp) => {
+        this.clase_actividades = resp.body.data;
+      });
   }
 
   selectFlotas(event: MatTabChangeEvent): void {

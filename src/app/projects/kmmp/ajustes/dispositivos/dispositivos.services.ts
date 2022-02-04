@@ -41,22 +41,15 @@ export class DispositivosService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<any[]>> {
-    let currentFilter;
-    getInboxParams.filter.tipo = 2;
-
-    if (!page) {
-      currentFilter = { ...getInboxParams };
-    } else {
-      currentFilter = {
-        ...getInboxParams,
-        page,
-        pageSize,
-      };
-    }
     return this._httpClient
       .post<PaginationResponse<any[]>>(
         environment.apiUrl + "/Administracion/ObtenerDispositivos",
-        { page, pageSize, ...currentFilter }
+        {
+          ...getInboxParams,
+          page,
+          pageSize,
+          filter: { ...getInboxParams.filter, tipo: 2 },
+        }
       )
       .pipe(
         tap((response) => {

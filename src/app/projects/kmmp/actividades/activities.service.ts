@@ -12,10 +12,8 @@ import moment from "moment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 
-import { ActivitiesData } from "../fake-db/activities/activity-fake-db";
 import { ListadoService } from "../formatos/listado/listado.services";
 import { DispositivoI } from "../maestros/dispositivos/dispositivo-model";
-import { MaestrosService } from "../maestros/maestros.service";
 
 import { Activity as ActivityI } from "./models/activities-model";
 
@@ -41,7 +39,7 @@ interface GetInbox {
 
 const getInboxParams: GetInbox = {
   page: 0,
-  pageSize: 200,
+  pageSize: 999,
   offset: 0,
   next: 0,
   filter: {
@@ -51,8 +49,8 @@ const getInboxParams: GetInbox = {
     nombre: "",
     estado: 0,
     tipo: 1,
-    fechaIni: "2021-08-01",
-    fechaFin: "2022-03-01",
+    fechaIni: moment().subtract(3, "years").format("yyyy-MM-DD"),
+    fechaFin: moment().format("yyyy-MM-DD"),
     codigo: "",
   },
 };

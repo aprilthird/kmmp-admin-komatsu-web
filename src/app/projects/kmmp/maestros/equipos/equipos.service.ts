@@ -52,30 +52,20 @@ export class EquiposService {
   }
 
   getEquipos(
-    { page, pageSize, nombre, id, ...filter }: ParamsPagination | any = {
+    { page, pageSize, nombre, id }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<EquipoI[]>> {
-    let currentFilter;
-    getInboxParams.filter.tipo = 2;
-    getInboxParams.filter.nombre = nombre;
-    getInboxParams.filter.id = id;
-
-    if (!page) {
-      currentFilter = { ...getInboxParams };
-    } else {
-      currentFilter = {
-        ...getInboxParams,
-        page,
-        pageSize,
-      };
-    }
-
     return this.http
       .post<PaginationResponse<EquipoI[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
-        { page, pageSize, ...currentFilter }
+        {
+          ...getInboxParams,
+          page,
+          pageSize,
+          filter: { ...getInboxParams.filter, nombre, tipo: 2, id: id },
+        }
       )
       .pipe(
         tap((response) => {

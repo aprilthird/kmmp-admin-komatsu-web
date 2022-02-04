@@ -239,23 +239,27 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   getEquiposData(id: number): void {
-    this.equiposService.getEquipos({ id: id }).subscribe(async (resp) => {
-      const currentEquipo = await resp.body.data.find((x: any) => x.id === id);
-      if (currentEquipo) {
-        this.currentDevice = id;
-        setEquiposData(this.form, currentEquipo);
-      } else {
-        this.matDialog
-          .open(UiDialogsComponent, {
-            data: { title: "Error", message: "Equipo inválido" },
-            width: "450px",
-          })
-          .afterClosed()
-          .subscribe(() =>
-            this.form.controls["idEquipo"].setValue(this.currentDevice)
-          );
-      }
-    });
+    this.equiposService
+      .getEquipos({ id: id, pageSize: 999 })
+      .subscribe(async (resp) => {
+        const currentEquipo = await resp.body.data.find(
+          (x: any) => x.id === id
+        );
+        if (currentEquipo) {
+          this.currentDevice = id;
+          setEquiposData(this.form, currentEquipo);
+        } else {
+          this.matDialog
+            .open(UiDialogsComponent, {
+              data: { title: "Error", message: "Equipo inválido" },
+              width: "450px",
+            })
+            .afterClosed()
+            .subscribe(() =>
+              this.form.controls["idEquipo"].setValue(this.currentDevice)
+            );
+        }
+      });
   }
 
   private disableFormControl(): void {

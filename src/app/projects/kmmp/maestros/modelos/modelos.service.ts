@@ -57,23 +57,15 @@ export class ModelosService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<ModeloI[]>> {
-    let currentFilter;
-    getInboxParams.filter.tipo = 5;
-    getInboxParams.filter.nombre = nombre;
-
-    if (!page) {
-      currentFilter = { ...getInboxParams };
-    } else {
-      currentFilter = {
-        ...getInboxParams,
-        page,
-        pageSize,
-      };
-    }
     return this.http
       .post<PaginationResponse<ModeloI[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
-        { page, pageSize, ...currentFilter }
+        {
+          ...getInboxParams,
+          page,
+          pageSize,
+          filter: { ...getInboxParams.filter, nombre, tipo: 5 },
+        }
       )
       .pipe(
         tap((response) => {

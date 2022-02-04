@@ -57,23 +57,15 @@ export class FlotasService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<FlotaI[]>> {
-    let currentFilter;
-    getInboxParams.filter.tipo = 6;
-    getInboxParams.filter.nombre = nombre;
-
-    if (!page) {
-      currentFilter = { ...getInboxParams };
-    } else {
-      currentFilter = {
-        ...getInboxParams,
-        page,
-        pageSize,
-      };
-    }
     return this.http
       .post<PaginationResponse<FlotaI[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
-        { page, pageSize, ...currentFilter }
+        {
+          ...getInboxParams,
+          page,
+          pageSize,
+          filter: { ...getInboxParams.filter, nombre, tipo: 6 },
+        }
       )
       .pipe(
         tap((response) => {

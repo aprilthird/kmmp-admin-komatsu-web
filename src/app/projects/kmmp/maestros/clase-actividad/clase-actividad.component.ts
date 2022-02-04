@@ -97,7 +97,7 @@ export class ClaseActividadComponent implements OnInit {
     this.tipoMttos = [];
     this.idClaseActv = actividad.id;
     this.claseActividadService
-      .getTipoMantenimiento(actividad.id)
+      .getTipoMantenimiento({ idClaseActividad: actividad.id, pageSize: 999 })
       .subscribe((tipoMttos) => {
         this.tipoMttos = tipoMttos.body.data;
       });

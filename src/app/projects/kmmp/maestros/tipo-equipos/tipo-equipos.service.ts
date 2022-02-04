@@ -57,23 +57,15 @@ export class TipoEquiposService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<TipoEquipoI[]>> {
-    let currentFilter;
-    getInboxParams.filter.tipo = 3;
-    getInboxParams.filter.nombre = nombre;
-
-    if (!page) {
-      currentFilter = { ...getInboxParams };
-    } else {
-      currentFilter = {
-        ...getInboxParams,
-        page,
-        pageSize,
-      };
-    }
     return this.http
       .post<PaginationResponse<TipoEquipoI[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
-        { page, pageSize, ...currentFilter }
+        {
+          ...getInboxParams,
+          page,
+          pageSize,
+          filter: { ...getInboxParams.filter, nombre, tipo: 3 },
+        }
       )
       .pipe(
         tap((response) => {

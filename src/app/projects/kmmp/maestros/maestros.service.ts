@@ -64,19 +64,15 @@ export class MaestrosService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<ClientI[]>> {
-    let currentFilter;
-    getInboxParams.filter.tipo = 1;
-    getInboxParams.filter.nombre = nombre;
-
-    if (!page) {
-      currentFilter = { ...getInboxParams };
-    } else {
-      currentFilter = { ...getInboxParams, page, pageSize };
-    }
     return this.http
       .post<PaginationResponse<any[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
-        { ...currentFilter, page, pageSize }
+        {
+          ...getInboxParams,
+          page,
+          pageSize,
+          filter: { ...getInboxParams.filter, nombre, tipo: 1 },
+        }
       )
       .pipe(
         tap((response) => {
@@ -104,11 +100,17 @@ export class MaestrosService {
       );
   }
 
-  getList(tipo, idCliente?: number): Observable<any[]> {
+  getList(
+    { tipo, idCliente, pageSize }: ParamsPagination | any = {
+      page: 0,
+      pageSize: 10,
+    }
+  ): Observable<any[]> {
     return this.http.post<any[]>(
       environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
       {
         ...getInboxParams,
+        pageSize,
         filter: {
           ...getInboxParams.filter,
           tipo: tipo,

@@ -57,23 +57,15 @@ export class BahiasService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<BahiaI[]>> {
-    let currentFilter;
-    getInboxParams.filter.tipo = 4;
-    getInboxParams.filter.nombre = nombre;
-
-    if (!page) {
-      currentFilter = { ...getInboxParams };
-    } else {
-      currentFilter = {
-        ...getInboxParams,
-        page,
-        pageSize,
-      };
-    }
     return this.http
       .post<PaginationResponse<BahiaI[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
-        { page, pageSize, ...currentFilter }
+        {
+          ...getInboxParams,
+          page,
+          pageSize,
+          filter: { ...getInboxParams.filter, nombre, tipo: 4 },
+        }
       )
       .pipe(
         tap((response) => {

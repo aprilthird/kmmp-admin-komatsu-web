@@ -62,8 +62,14 @@ export class ClaseActividadService {
     );
   }
 
-  getTipoMantenimiento(idClaseActividad): Observable<any> {
+  getTipoMantenimiento(
+    { idClaseActividad, pageSize }: ParamsPagination | any = {
+      page: 0,
+      pageSize: 10,
+    }
+  ): Observable<any> {
     const filter = {
+      pageSize,
       filter: {
         id: 0,
         idUsuario: 0,
@@ -85,26 +91,18 @@ export class ClaseActividadService {
       pageSize: 10,
     }
   ): Observable<PaginationResponse<ClaseActividadI[]>> {
-    let currentFilter;
-    getInboxParams.filter.tipo = 7;
-    getInboxParams.filter.nombre = nombre;
-
-    if (!page) {
-      currentFilter = { ...getInboxParams };
-    } else {
-      currentFilter = {
-        ...getInboxParams,
-        page,
-        pageSize,
-      };
-    }
     return this.http
       .post<PaginationResponse<ClaseActividadI[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
         {
+          ...getInboxParams,
           page,
           pageSize,
-          ...currentFilter,
+          filter: {
+            ...getInboxParams.filter,
+            nombre,
+            tipo: 7,
+          },
         }
       )
       .pipe(

@@ -62,9 +62,11 @@ export class DialogAddBahiasComponent implements OnInit {
   }
 
   private setCliente(): void {
-    this.maestServ.getList(1).subscribe((resp: any) => {
-      this.clienteOptions = resp.body.data;
-    });
+    this.maestServ
+      .getList({ tipo: 1, pageSize: 999 })
+      .subscribe((resp: any) => {
+        this.clienteOptions = resp.body.data;
+      });
   }
 
   submit(isEdit): void {
