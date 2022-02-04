@@ -61,6 +61,7 @@ export interface ActivityFake {
   comentarios_tecnico: string;
   checked?: boolean;
   nestado?: string;
+  bahia?: string;
 }
 
 export const FormatosData: FormatosFake[] = [

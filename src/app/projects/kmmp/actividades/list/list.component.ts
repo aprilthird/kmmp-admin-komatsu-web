@@ -20,7 +20,7 @@ export class ListComponent implements OnInit {
   asignaciones$: Observable<any[]>;
   pagination$: Observable<Pagination>;
   actividades$: Observable<any[]>;
-  isLoading = false;
+  isLoading: boolean;
 
   activities: any[];
   assignToBay: boolean;
@@ -55,7 +55,6 @@ export class ListComponent implements OnInit {
 
     this.activitiesService._activities.subscribe((activities: any) => {
       this.activities = activities;
-      this.isLoading = false;
     });
   }
 
@@ -97,9 +96,11 @@ export class ListComponent implements OnInit {
     if (index || index === 0) {
       this.activities[index].checked = event.checked;
     } else {
-      this.activities.map(
-        (activity: ActivityFake) => (activity.checked = event.checked)
-      );
+      this.activities
+        .filter(
+          (activity: ActivityFake) => !activity.bahia || activity.bahia === ""
+        )
+        .map((activity: ActivityFake) => (activity.checked = event.checked));
     }
     /**Enable asign to bay button */
     if (
@@ -158,6 +159,14 @@ export class ListComponent implements OnInit {
         width: "450px",
       })
       .afterClosed()
-      .subscribe(() => this.getActivities());
+      .subscribe(() => {
+        this.loadData();
+      });
+  }
+
+  checkSomeUncheck(): boolean {
+    return this.activities.some(
+      (activity) => !activity.bahia || activity.bahia === ""
+    );
   }
 }
