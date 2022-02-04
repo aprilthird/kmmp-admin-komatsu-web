@@ -16,17 +16,22 @@
   </div>
   <div class="flex items-center ml-6 pt-4">
     <div class="px-4 py-2 rounded-tl-xl overflow-hidden bg-hover">
-      <div class="sm:text-lg leading-6 truncate">Todos los clientes</div>
+      <div class="sm:text-lg leading-6 truncate">{{ client }}</div>
     </div>
     <div class="ml-px rounded-tr-xl bg-hover">
-      <button mat-icon-button>
+      <button [matMenuTriggerFor]="projectsMenu" mat-icon-button>
         <mat-icon svgIcon="heroicons_outline:chevron-down"></mat-icon>
       </button>
       <mat-menu #projectsMenu="matMenu">
-        <button mat-menu-item>Cliente 1</button>
-        <button mat-menu-item>Cliente 2</button>
-        <button mat-menu-item>Cliente 3</button>
-        <button mat-menu-item>Cliente 4</button>
+        <ng-container *ngIf="clients$ | async as clients">
+          <button
+            *ngFor="let client of clients"
+            mat-menu-item
+            (click)="setClient(client)"
+          >
+            {{ client.nombre }}
+          </button>
+        </ng-container>
       </mat-menu>
     </div>
   </div>

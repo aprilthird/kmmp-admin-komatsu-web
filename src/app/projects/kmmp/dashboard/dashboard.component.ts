@@ -20,7 +20,8 @@ import {
   ApexFill,
   ApexTooltip,
 } from "ng-apexcharts";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { ActivitiesService } from "../actividades/activities.service";
 import { ClaseActividadService } from "../maestros/clase-actividad/clase-actividad.service";
 import { FlotaI } from "../maestros/flotas/flota-model";
@@ -57,6 +58,8 @@ export class DashboardComponent implements OnInit {
   public chartOptions: Partial<ChartOptions>;
   flotas: FlotaI[] = [];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  clients$: Observable<any>;
+  client = "Todos los clientes";
 
   user: User;
   isLoading: boolean;
@@ -74,8 +77,10 @@ export class DashboardComponent implements OnInit {
     fechaFin: string;
     idClaseActividad?: number;
     idTipoSolicitud?: number;
+    idCliente?: number;
   };
   isLoadingNoExc: boolean;
+  idCliente: any;
 
   constructor(
     private _router: Router,
@@ -87,6 +92,7 @@ export class DashboardComponent implements OnInit {
   ) {
     this._userService.user$;
     this.getFlotas();
+    this.getClients();
   }
 
   ngOnInit(): void {
@@ -120,6 +126,12 @@ export class DashboardComponent implements OnInit {
     this._unsubscribeAll.complete();
   }
 
+  getClients(): void {
+    this.clients$ = this._maestrosService.clients$.pipe(
+      takeUntil(this._unsubscribeAll)
+    );
+  }
+
   change(): void {
     const startDate = new Date(this.dateRange.controls["startDate"].value);
     const endDate = new Date(this.dateRange.controls["endDate"].value);
@@ -134,6 +146,7 @@ export class DashboardComponent implements OnInit {
       idTipoSolicitud: this.idTipoSolicitud.value
         ? this.idTipoSolicitud.value
         : undefined,
+      idCliente: this.idCliente ? this.idCliente : undefined,
     };
     if (Number(setFormatDate(endDate).split("-")[0]) > 2020) {
       this._dashboardService.getStatusFlota(this.filter).subscribe(() => {});
@@ -144,6 +157,12 @@ export class DashboardComponent implements OnInit {
         .getActividadesNoEjecutadas(this.filter)
         .subscribe(() => {});
     }
+  }
+
+  setClient(client): void {
+    this.idCliente = client.id;
+    this.client = client.nombre;
+    this.change();
   }
 
   changeActivity(e: MatSelectChange): void {
