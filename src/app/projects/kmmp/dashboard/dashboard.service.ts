@@ -93,14 +93,15 @@ export class DashboardService {
     const endpoint = environment.apiUrl + "/Reportes/EstatusFlotas";
     return this.http.post<Response>(endpoint, filter).pipe(
       tap((statusFlota: any) => {
-        this._statusXflota.next(statusFlota.estatusFlotas);
+        console.log(statusFlota.body);
+        this._statusXflota.next(statusFlota?.body?.estatusFlotas);
         this._summary.next({
-          observadas: statusFlota.observadas,
-          sinEmpezar: statusFlota.sinEmpezar,
-          totalEjecutadas: statusFlota.totalEjecutadas,
-          totalNoEjecutadas: statusFlota.totalNoEjecutadas,
-          validadas: statusFlota.validadas,
-          enProceso: statusFlota.enProceso,
+          observadas: statusFlota?.body?.observadas,
+          sinEmpezar: statusFlota?.body?.sinEmpezar,
+          totalEjecutadas: statusFlota?.body?.totalEjecutadas,
+          totalNoEjecutadas: statusFlota?.body?.totalNoEjecutadas,
+          validadas: statusFlota?.body?.validadas,
+          enProceso: statusFlota?.body?.enProceso,
         });
       })
     );
