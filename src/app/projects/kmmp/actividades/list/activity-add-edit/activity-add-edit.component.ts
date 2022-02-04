@@ -7,15 +7,11 @@ import {
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { forkJoin } from "rxjs";
+import { forkJoin, Subject } from "rxjs";
 import { map } from "rxjs/operators";
-
-//SERVICES
 import { ActivitiesService } from "../../activities.service";
 import { EquiposService } from "app/projects/kmmp/maestros/equipos/equipos.service";
-//MODELS
 import { Activity as ActivityI } from "./../../models/activities-model";
-import { FuseConfirmationService } from "@fuse/services/confirmation";
 import {
   getValues,
   setEquiposData,
@@ -52,9 +48,8 @@ export class ActivityAddEditComponent implements OnInit {
   flotasOpt = [];
   tipo_mttoOpt = [];
   tipo_solicitudes = [];
-  currentTypeMtto: number;
   currentDevice: number;
-  enableTipoMtto: boolean;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -62,7 +57,6 @@ export class ActivityAddEditComponent implements OnInit {
     private router: Router,
     private serviceAct: ActivitiesService,
     private equiposService: EquiposService,
-    private _fuseConfirmationService: FuseConfirmationService,
     private matDialog: MatDialog
   ) {
     this.setActivityData();
@@ -72,6 +66,11 @@ export class ActivityAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.getInboxes();
     this.getTipoSolicitud();
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   private getActivityId() {
@@ -110,29 +109,22 @@ export class ActivityAddEditComponent implements OnInit {
 
   private getInboxes(): void {
     let clients = this.serviceAct.getList(1).pipe(map((x: any) => x.body.data));
-    let equipos = this.serviceAct.getList(2).pipe(map((x: any) => x.body.data));
     let t_e = this.serviceAct.getList(3).pipe(map((x: any) => x.body.data));
     let bahias = this.serviceAct.getList(4).pipe(map((x: any) => x.body.data));
     let modelos = this.serviceAct.getList(5).pipe(map((x: any) => x.body.data));
     let flotas = this.serviceAct.getList(6).pipe(map((x: any) => x.body.data));
     let c_act = this.serviceAct.getList(7).pipe(map((x: any) => x.body.data));
 
-    forkJoin([clients, equipos, c_act, bahias, modelos, flotas, t_e]).subscribe(
+    forkJoin([clients, c_act, bahias, modelos, flotas, t_e]).subscribe(
       (result) => {
         this.clientsOpt = result[0];
-        //this.equiposOpt = result[1];
-        this.clase_actividadesOpt = result[2];
-        //this.bahiasOpt = result[3];
-        this.modelosOpt = result[4];
-        this.flotasOpt = result[5];
-        this.tipo_equiposOpt = result[6];
+        this.clase_actividadesOpt = result[1];
+        this.bahiasOpt = result[2];
+        this.modelosOpt = result[3];
+        this.flotasOpt = result[4];
+        this.tipo_equiposOpt = result[5];
         this.isLoading = false;
-
-        //this.setActivityData();
-        this.bahiasOpt.unshift({
-          id: null,
-          nombre: "----NINGUNA----",
-        });
+        this.setEmptyBay();
       }
     );
   }
@@ -140,7 +132,6 @@ export class ActivityAddEditComponent implements OnInit {
   getTipoMtto(idClaseActividad, e?): void {
     this.serviceAct.getTipoMtto(9, idClaseActividad).subscribe((resp: any) => {
       this.tipo_mttoOpt = resp.body.data;
-      this.enableTipoMtto = true;
     });
     if (e) {
       this.form.controls.tipo_mantenimiento.setValue("");
@@ -151,93 +142,6 @@ export class ActivityAddEditComponent implements OnInit {
     this.serviceAct.getResources(7).subscribe((resp) => {
       this.tipo_solicitudes = resp.body;
     });
-  }
-
-  addSingleActivity(): void {
-    this.loadLoading = true;
-    this.serviceAct.postCargaIndividual(this.getParams()).subscribe(
-      (resp: any) => {
-        this.loadLoading = false;
-        if (resp.code >= 500) {
-          this.matDialog.open(UiDialogsComponent, {
-            data: { title: "Error", message: resp.message },
-          });
-        }
-
-        this.router.navigate(["/admin/actividades/list"]);
-      },
-      (err) => {
-        this.matDialog.open(UiDialogsComponent, {
-          data: { title: "Error", message: err.message },
-        });
-      }
-    );
-  }
-
-  removeOS(index: number): void {
-    this.service_orders.splice(index, 1);
-    this.formOS.removeControl("1");
-  }
-
-  addOS(): void {
-    if (this.service_orders.length === 1) {
-      this.formOS.addControl("1", new FormControl());
-      this.service_orders.push("");
-    }
-  }
-
-  removePE(index: number): void {
-    this.pe_items.splice(index, 1);
-    this.formPE.removeControl("1");
-  }
-
-  addPE(): void {
-    if (this.pe_items.length === 1) {
-      this.formPE.addControl("1", new FormControl());
-      this.pe_items.push("");
-    }
-  }
-
-  saveActivity(): void {
-    this.loadLoading = true;
-    this.serviceAct.postCargaIndividual(this.getParams()).subscribe(
-      (resp: Response) => {
-        if (!resp.success) {
-          this.matDialog
-            .open(UiDialogsComponent, {
-              data: {
-                title: "Error",
-                message: resp.message
-                  ? resp.message
-                  : "Actividad ya está en proceso, no es posible editar dichos valores",
-              },
-              width: "450px",
-            })
-            .afterClosed()
-            .subscribe(() => {
-              this.loadLoading = false;
-              this.router.navigate(["/admin/actividades/list"]);
-            });
-        } else {
-          this.loadLoading = false;
-          this.router.navigate(["/admin/actividades/list"]);
-        }
-      },
-      (err) => {
-        this.matDialog
-          .open(UiDialogsComponent, {
-            data: {
-              title: "Error",
-              message: err.message
-                ? err.message
-                : "Actividad ya está en proceso, no es posible editar dichos valores",
-            },
-            width: "450px",
-          })
-          .afterClosed()
-          .subscribe(() => (this.loadLoading = false));
-      }
-    );
   }
 
   getEquiposData(id: number): void {
@@ -264,12 +168,6 @@ export class ActivityAddEditComponent implements OnInit {
       });
   }
 
-  private disableFormControl(): void {
-    Object.keys(this.form.controls).forEach((key) => {
-      if (key !== TipoFormulario.DESCRIPCION) this.form.controls[key].disable();
-    });
-  }
-
   private setDynamicFormFromString(type: string): void {
     let form: FormGroup;
     if (type === TipoFormulario.NOS) form = this.formOS;
@@ -289,22 +187,6 @@ export class ActivityAddEditComponent implements OnInit {
         else this.pe_items.push("");
       }
     }
-  }
-
-  setBay(clientId: number) {
-    let bays: BayI[] = [];
-    this.serviceAct.getList(4).subscribe((resp) => {
-      bays = resp.body.data;
-      this.bahiasOpt = bays.filter((bay) => bay.idCliente === clientId);
-      this.bahiasOpt.unshift({
-        id: null,
-        nombre: "----NINGUNA----",
-      });
-    });
-    this.serviceAct.getList(2, clientId).subscribe((resp) => {
-      this.equiposOpt = resp.body.data;
-      this.form.controls.idEquipo.setValue(null);
-    });
   }
 
   private setActivityData(): void {
@@ -371,10 +253,6 @@ export class ActivityAddEditComponent implements OnInit {
     }
   }
 
-  getTipoMttoName(): void {
-    this.getTipoMtto(this.form.controls.actividad.value);
-  }
-
   private getParams(): ActivityI {
     const params: ActivityI = {
       asignado: this.form.controls["bahia_asignada"].value ? true : false,
@@ -408,11 +286,122 @@ export class ActivityAddEditComponent implements OnInit {
     return params;
   }
 
+  private setEmptyBay(): void {
+    this.bahiasOpt.unshift({
+      id: null,
+      nombre: "----NINGUNA----",
+    });
+  }
+
+  private getTipoMttoName(): void {
+    this.getTipoMtto(this.form.controls.actividad.value);
+  }
+
+  addSingleActivity(): void {
+    this.loadLoading = true;
+    this.serviceAct.postCargaIndividual(this.getParams()).subscribe(
+      (resp: any) => {
+        this.loadLoading = false;
+        if (resp.code >= 500) {
+          this.matDialog.open(UiDialogsComponent, {
+            data: { title: "Error", message: resp.message },
+          });
+        }
+
+        this.router.navigate(["/admin/actividades/list"]);
+      },
+      (err) => {
+        this.matDialog.open(UiDialogsComponent, {
+          data: { title: "Error", message: err.message },
+        });
+      }
+    );
+  }
+
+  saveActivity(): void {
+    this.loadLoading = true;
+    this.serviceAct.postCargaIndividual(this.getParams()).subscribe(
+      (resp: Response) => {
+        if (!resp.success) {
+          this.matDialog
+            .open(UiDialogsComponent, {
+              data: {
+                title: "Error",
+                message: resp.message
+                  ? resp.message
+                  : "Actividad ya está en proceso, no es posible editar dichos valores",
+              },
+              width: "450px",
+            })
+            .afterClosed()
+            .subscribe(() => {
+              this.loadLoading = false;
+              this.router.navigate(["/admin/actividades/list"]);
+            });
+        } else {
+          this.loadLoading = false;
+          this.router.navigate(["/admin/actividades/list"]);
+        }
+      },
+      (err) => {
+        this.matDialog
+          .open(UiDialogsComponent, {
+            data: {
+              title: "Error",
+              message: err.message
+                ? err.message
+                : "Actividad ya está en proceso, no es posible editar dichos valores",
+            },
+            width: "450px",
+          })
+          .afterClosed()
+          .subscribe(() => (this.loadLoading = false));
+      }
+    );
+  }
+
+  setBay(clientId: number) {
+    let bays: BayI[] = [];
+    this.serviceAct.getList(4).subscribe((resp) => {
+      bays = resp.body.data;
+      this.bahiasOpt = bays.filter((bay) => bay.idCliente === clientId);
+      this.setEmptyBay();
+    });
+    this.serviceAct.getList(2, clientId).subscribe((resp) => {
+      this.equiposOpt = resp.body.data;
+      this.form.controls.idEquipo.setValue(null);
+    });
+  }
+
   getTimeDiff(): number {
     return Math.abs(
       (new Date(this.activityInfo?.fechaHoraFinReal).getTime() -
         new Date(this.activityInfo?.fechaHoraIniReal).getTime()) /
         3600000
     );
+  }
+
+  removeOS(index: number): void {
+    this.service_orders.splice(index, 1);
+    this.formOS.removeControl("1");
+  }
+
+  addOS(): void {
+    if (this.service_orders.length === 1) {
+      this.formOS.addControl("1", new FormControl());
+      this.service_orders.push("");
+    }
+  }
+
+  removePE(index: number): void {
+    this.pe_items.splice(index, 1);
+    this.formPE.removeControl("1");
+  }
+
+  addPE(): void {
+    if (this.pe_items.length === 1) {
+      this.formPE.addControl("1", new FormControl());
+      this.pe_items.push("");
+    }
   }
 }

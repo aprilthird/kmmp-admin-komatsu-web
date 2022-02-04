@@ -20,8 +20,7 @@ import {
   ApexFill,
   ApexTooltip,
 } from "ng-apexcharts";
-import { Observable, Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 import { ActivitiesService } from "../actividades/activities.service";
 import { ClaseActividadService } from "../maestros/clase-actividad/clase-actividad.service";
 import { FlotaI } from "../maestros/flotas/flota-model";
@@ -104,7 +103,6 @@ export class DashboardComponent implements OnInit {
         },
       },
     };
-    this._prepareChartData();
 
     // Subscribe to user changes
     this._userService.user$.subscribe((user: User) => {
@@ -115,6 +113,11 @@ export class DashboardComponent implements OnInit {
     this.displayStringDate(true);
     this.getTipoSolicitud();
     this.getClaseActividades();
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   change(): void {
@@ -228,66 +231,6 @@ export class DashboardComponent implements OnInit {
    *
    * @private
    */
-  private _prepareChartData(): void {
-    this.chartOptions = {
-      series: [
-        {
-          name: "Net Profit",
-          data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
-        },
-        {
-          name: "Revenue",
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
-        },
-      ],
-      chart: {
-        type: "bar",
-        height: 350,
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "55%",
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ["transparent"],
-      },
-      xaxis: {
-        categories: [
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-        ],
-      },
-      yaxis: {
-        title: {
-          text: "$ (thousands)",
-        },
-      },
-      fill: {
-        opacity: 1,
-      },
-      tooltip: {
-        y: {
-          formatter: function (val) {
-            return "$ " + val + " thousands";
-          },
-        },
-      },
-    };
-  }
 
   /**
    * Fix the SVG fill references. This fix must be applied to all ApexCharts

@@ -13,11 +13,6 @@
       </button>
       Hola, {{ user?.nombres }}
     </div>
-
-    <!-- <button mat-raised-button [color]="'primary'">
-      <mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon>
-      <span class="ml-2 mr-1">Exportar</span>
-    </button>-->
   </div>
   <div class="flex items-center ml-6 pt-4">
     <div class="px-4 py-2 rounded-tl-xl overflow-hidden bg-hover">
@@ -46,15 +41,6 @@
           <a class="prose font-bold">Del {{ start }} al {{ end }}</a>
         </div>
         <div class="flex flex-wrap gap-5 justify-end mb-6">
-          <!--<mat-form-field>
-            <mat-select [value]="data.request_type[0].name">
-              <mat-option
-                *ngFor="let option of data.request_type"
-                [value]="option.name"
-                >{{ option.name }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>-->
           <mat-form-field class="w-44">
             <mat-select
               [formControl]="idTipoSolicitud"
@@ -69,16 +55,6 @@
             </mat-select>
           </mat-form-field>
 
-          <!--<mat-form-field class="w-44">
-            <mat-select [value]="data.activity_class[0].name">
-              <mat-option
-                *ngFor="let option of data.activity_class"
-                [value]="option.name"
-                >{{ option.name }}</mat-option
-              >
-            </mat-select>
-          </mat-form-field>-->
-
           <mat-form-field class="w-44">
             <mat-select
               [formControl]="idClaseActividad"
@@ -92,8 +68,6 @@
               >
             </mat-select>
           </mat-form-field>
-
-          <!--<fuse-date-range></fuse-date-range>-->
 
           <button
             mat-raised-button
@@ -198,7 +172,7 @@
         <deleyed-code class="sm:max-w-sm xl:max-w-none"></deleyed-code>
       </div>
 
-      <div
+      <!-- <div
         class="sm:col-span-2 md:col-span-4 flex flex-col flex-auto items-center justify-start p-6 bg-card shadow rounded-2xl mt-4 overflow-x-auto"
       >
         <div class="flex justify-between w-full">
@@ -214,7 +188,7 @@
           </mat-form-field>
         </div>
         <app-adhesion class="sm:max-w-sm xl:max-w-none"></app-adhesion>
-      </div>
+      </div>-->
     </div>
   </div>
 </div>

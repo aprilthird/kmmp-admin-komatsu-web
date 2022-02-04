@@ -93,7 +93,6 @@ export class DashboardService {
     const endpoint = environment.apiUrl + "/Reportes/EstatusFlotas";
     return this.http.post<Response>(endpoint, filter).pipe(
       tap((statusFlota: any) => {
-        console.log(statusFlota.body);
         this._statusXflota.next(statusFlota?.body?.estatusFlotas);
         this._summary.next({
           observadas: statusFlota?.body?.observadas,
