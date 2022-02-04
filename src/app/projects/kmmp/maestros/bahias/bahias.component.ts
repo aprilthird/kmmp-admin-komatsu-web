@@ -5,6 +5,7 @@ import { PermissionService } from "app/core/permission/permission.service";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { MaestrosService } from "../maestros.service";
 import { BahiaI } from "./bahia-model";
 import { BahiasService } from "./bahias.service";
 import { DialogAddBahiasComponent } from "./dialog-add-bahias/dialog-add-bahias.component";
@@ -27,7 +28,8 @@ export class BahiasComponent implements OnInit {
     private _routeActived: ActivatedRoute,
     private _router: Router,
     private matDialog: MatDialog,
-    private bahiasService: BahiasService
+    private bahiasService: BahiasService,
+    private _maestrosService: MaestrosService
   ) {
     this.getBabias();
   }
@@ -95,5 +97,14 @@ export class BahiasComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(() => this.loadData());
+  }
+
+  pageSizeOpt(): number[] {
+    const totalrecords = this._maestrosService.totalRecords.getValue();
+    let pageSize = [5, 10, 25, 100];
+    if (totalrecords > 100) {
+      pageSize.push(totalrecords);
+    }
+    return pageSize;
   }
 }

@@ -9,6 +9,7 @@ import { Response } from "app/shared/models/general-model";
 import { environment } from "environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
+import { MaestrosService } from "../maestros.service";
 import {
   DispositivoI,
   DispositivoResponse,
@@ -29,7 +30,10 @@ export class DispositivosService {
     endIndex: 0,
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private maestroService: MaestrosService
+  ) {}
 
   get dispositivos$(): Observable<DispositivoI[]> {
     return this.dispositivos.asObservable();
@@ -71,6 +75,7 @@ export class DispositivosService {
             ),
           });
           this.dispositivos.next(response.body.data);
+          this.maestroService.totalRecords.next(response.body.totalRecords);
         })
       );
   }

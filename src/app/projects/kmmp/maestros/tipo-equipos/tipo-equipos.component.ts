@@ -5,6 +5,7 @@ import { PermissionService } from "app/core/permission/permission.service";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { MaestrosService } from "../maestros.service";
 import { DialogAddTipoEquipoComponent } from "./dialog-add-tipo-equipo/dialog-add-tipo-equipo.component";
 import { TipoEquipoI } from "./model-tipo-equipo";
 import { TipoEquiposService } from "./tipo-equipos.service";
@@ -27,7 +28,8 @@ export class TipoEquiposComponent implements OnInit {
     private _routeActived: ActivatedRoute,
     private _router: Router,
     private matDialog: MatDialog,
-    private tipoEquipoService: TipoEquiposService
+    private tipoEquipoService: TipoEquiposService,
+    private _maestrosService: MaestrosService
   ) {
     this.getTipoEquipo();
   }
@@ -99,5 +101,14 @@ export class TipoEquiposComponent implements OnInit {
 
   setLoading(loading): void {
     this.isLoading = loading;
+  }
+
+  pageSizeOpt(): number[] {
+    const totalrecords = this._maestrosService.totalRecords.getValue();
+    let pageSize = [5, 10, 25, 100];
+    if (totalrecords > 100) {
+      pageSize.push(totalrecords);
+    }
+    return pageSize;
   }
 }

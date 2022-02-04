@@ -87,6 +87,7 @@ export class FlotasService {
           });
           this.flotas.next(response.body.data);
           this.maestroService.currentTableData.next(document);
+          this.maestroService.totalRecords.next(response.body.totalRecords);
         })
       );
   }

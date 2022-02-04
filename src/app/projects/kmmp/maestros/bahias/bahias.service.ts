@@ -87,6 +87,7 @@ export class BahiasService {
             };
           });
           this.maestroService.currentTableData.next(document);
+          this.maestroService.totalRecords.next(response.body.totalRecords);
         })
       );
   }

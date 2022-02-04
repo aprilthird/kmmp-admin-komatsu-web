@@ -124,6 +124,7 @@ export class ClaseActividadService {
           });
           this.clase_actividades.next(response.body.data);
           this.maestroService.currentTableData.next(document);
+          this.maestroService.totalRecords.next(response.body.totalRecords);
         })
       );
   }

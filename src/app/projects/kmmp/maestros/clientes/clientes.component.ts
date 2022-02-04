@@ -124,4 +124,13 @@ export class ClientesComponent implements OnInit {
       .afterClosed()
       .subscribe(() => this.loadData());
   }
+
+  pageSizeOpt(): number[] {
+    const totalrecords = this.maestroServices.totalRecords.getValue();
+    let pageSize = [5, 10, 25, 100];
+    if (totalrecords > 100) {
+      pageSize.push(totalrecords);
+    }
+    return pageSize;
+  }
 }

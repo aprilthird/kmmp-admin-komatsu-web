@@ -89,7 +89,7 @@
               <mat-select
                 formControlName="actividad"
                 [value]="form.controls['actividad'].value"
-                (selectionChange)="getTipoMtto($event.value)"
+                (selectionChange)="getTipoMtto($event.value, 'event')"
               >
                 <mat-option
                   *ngFor="let actividad of clase_actividadesOpt"
@@ -102,9 +102,7 @@
             <mat-form-field class="w-1/5">
               <mat-label class="font-bold">Tipo mantenimiento</mat-label>
               <mat-select
-                *ngIf="enableTipoMtto"
                 formControlName="tipo_mantenimiento"
-                [value]="form.controls['tipo_mantenimiento'].value"
                 [disabled]="form.controls['actividad'].value === ''"
               >
                 <mat-option
@@ -114,11 +112,6 @@
                 >
               </mat-select>
 
-              <input
-                *ngIf="!enableTipoMtto"
-                matInput
-                formControlName="tipo_mantenimiento"
-              />
               <mat-error *ngIf="!isEdit && tipo_mttoOpt.length === 0"
                 >No existen tipo de mantenimeintos para dicha clase de
                 actividad!</mat-error
@@ -359,7 +352,7 @@
               mat-raised-button
               [color]="'primary'"
               (click)="saveActivity()"
-              [disabled]="loadLoading"
+              [disabled]="form.invalid || loadLoading"
             >
               <mat-progress-spinner
                 *ngIf="loadLoading"

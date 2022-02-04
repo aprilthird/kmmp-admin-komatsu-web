@@ -5,6 +5,7 @@ import { PermissionService } from "app/core/permission/permission.service";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { MaestrosService } from "../maestros.service";
 import { DialogAddModelosComponent } from "./dialog-add-modelos/dialog-add-modelos.component";
 import { ModeloI } from "./modelo-model";
 import { ModelosService } from "./modelos.service";
@@ -27,7 +28,8 @@ export class ModelosComponent implements OnInit {
     private _routeActived: ActivatedRoute,
     private _router: Router,
     private matDialog: MatDialog,
-    private modelosService: ModelosService
+    private modelosService: ModelosService,
+    private _maestrosService: MaestrosService
   ) {
     this.getModelos();
   }
@@ -97,5 +99,14 @@ export class ModelosComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(() => this.loadData());
+  }
+
+  pageSizeOpt(): number[] {
+    const totalrecords = this._maestrosService.totalRecords.getValue();
+    let pageSize = [5, 10, 25, 100];
+    if (totalrecords > 100) {
+      pageSize.push(totalrecords);
+    }
+    return pageSize;
   }
 }

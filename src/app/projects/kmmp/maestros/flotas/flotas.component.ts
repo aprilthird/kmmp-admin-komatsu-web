@@ -5,6 +5,7 @@ import { PermissionService } from "app/core/permission/permission.service";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { MaestrosService } from "../maestros.service";
 import { DialogAddFlotasComponent } from "./dialog-add-flotas/dialog-add-flotas.component";
 import { FlotaI } from "./flota-model";
 import { FlotasService } from "./flotas.service";
@@ -27,7 +28,8 @@ export class FlotasComponent implements OnInit {
     private _routeActived: ActivatedRoute,
     private _router: Router,
     private matDialog: MatDialog,
-    private flotasService: FlotasService
+    private flotasService: FlotasService,
+    private _maestrosService: MaestrosService
   ) {
     this.getFlotas();
   }
@@ -99,5 +101,14 @@ export class FlotasComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(() => this.loadData());
+  }
+
+  pageSizeOpt(): number[] {
+    const totalrecords = this._maestrosService.totalRecords.getValue();
+    let pageSize = [5, 10, 25, 100];
+    if (totalrecords > 100) {
+      pageSize.push(totalrecords);
+    }
+    return pageSize;
   }
 }

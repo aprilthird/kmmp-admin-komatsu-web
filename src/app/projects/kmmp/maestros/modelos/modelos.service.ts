@@ -86,6 +86,7 @@ export class ModelosService {
           });
           this.modelos.next(response.body.data);
           this.maestroService.currentTableData.next(document);
+          this.maestroService.totalRecords.next(response.body.totalRecords);
         })
       );
   }

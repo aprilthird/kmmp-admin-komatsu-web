@@ -6,6 +6,7 @@ import { PermissionService } from "app/core/permission/permission.service";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { MaestrosService } from "../maestros.service";
 
 import { DialogAddEquiposComponent } from "./dialog-add-equipos/dialog-add-equipos.component";
 import { EquipoI } from "./equipo-model";
@@ -29,7 +30,8 @@ export class EquiposComponent implements OnInit {
     public _permissonService: PermissionService,
     private _routeActived: ActivatedRoute,
     private _router: Router,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private _maestrosService: MaestrosService
   ) {
     this.getEquipos();
   }
@@ -98,5 +100,14 @@ export class EquiposComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(() => this.loadData());
+  }
+
+  pageSizeOpt(length: number): number[] {
+    const totalrecords = this._maestrosService.totalRecords.getValue();
+    let pageSize = [5, 10, 25, 100];
+    if (totalrecords > 100) {
+      pageSize.push(totalrecords);
+    }
+    return pageSize;
   }
 }

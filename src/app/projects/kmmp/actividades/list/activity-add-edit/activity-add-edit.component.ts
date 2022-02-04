@@ -137,12 +137,14 @@ export class ActivityAddEditComponent implements OnInit {
     );
   }
 
-  getTipoMtto(idClaseActividad): void {
+  getTipoMtto(idClaseActividad, e?): void {
     this.serviceAct.getTipoMtto(9, idClaseActividad).subscribe((resp: any) => {
       this.tipo_mttoOpt = resp.body.data;
       this.enableTipoMtto = true;
-      this.form.controls["tipo_mantenimiento"].enable();
     });
+    if (e) {
+      this.form.controls.tipo_mantenimiento.setValue("");
+    }
   }
 
   private getTipoSolicitud(): void {
@@ -349,7 +351,14 @@ export class ActivityAddEditComponent implements OnInit {
       idModelo: new FormControl(),
       tipo_equipo: new FormControl(),
     });
-    this.form.controls["tipo_mantenimiento"].disable();
+
+    if (
+      this.form.controls.actividad.value &&
+      this.form.controls.actividad.value !== null &&
+      this.isEdit
+    ) {
+      this.getTipoMttoName();
+    }
 
     if (this.isEdit) {
       this.form.controls["numero_bl"].disable();
@@ -360,6 +369,10 @@ export class ActivityAddEditComponent implements OnInit {
       this.form.controls["duracionReal"].disable();
       this.form.controls["comentariosTecnico"].disable();
     }
+  }
+
+  getTipoMttoName(): void {
+    this.getTipoMtto(this.form.controls.actividad.value);
   }
 
   private getParams(): ActivityI {

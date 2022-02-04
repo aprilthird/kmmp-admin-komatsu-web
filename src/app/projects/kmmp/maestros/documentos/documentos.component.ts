@@ -6,6 +6,7 @@ import { PermissionService } from "app/core/permission/permission.service";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { MaestrosService } from "../maestros.service";
 import { DialogAddDocumentosComponent } from "./dialog-add-documentos/dialog-add-documentos.component";
 import { DocumentosService } from "./documentos.service";
 
@@ -28,7 +29,8 @@ export class DocumentosComponent implements OnInit {
     private _router: Router,
     private matDialog: MatDialog,
     private documentService: DocumentosService,
-    private _fuseConfirmationService: FuseConfirmationService
+    private _fuseConfirmationService: FuseConfirmationService,
+    private _maestrosService: MaestrosService
   ) {
     this.getBabias();
   }
@@ -134,5 +136,14 @@ export class DocumentosComponent implements OnInit {
         });
       }
     });
+  }
+
+  pageSizeOpt(): number[] {
+    const totalrecords = this._maestrosService.totalRecords.getValue();
+    let pageSize = [5, 10, 25, 100];
+    if (totalrecords > 100) {
+      pageSize.push(totalrecords);
+    }
+    return pageSize;
   }
 }

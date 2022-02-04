@@ -7,6 +7,7 @@ import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { DispositivosService } from "../../ajustes/dispositivos/dispositivos.services";
+import { MaestrosService } from "../maestros.service";
 import { DialogAddDispositivosComponent } from "./dialog-add-dispositivos/dialog-add-dispositivos.component";
 import { DialogEditDeviceComponent } from "./dialog-edit-device/dialog-edit-device.component";
 import { DispositivoI } from "./dispositivo-model";
@@ -29,7 +30,8 @@ export class DispositivosComponent implements OnInit {
     private _routeActived: ActivatedRoute,
     private _dispositivosServices: DispositivosService,
     private matDialog: MatDialog,
-    private _router: Router
+    private _router: Router,
+    private _maestrosService: MaestrosService
   ) {
     this.getDispositivos();
   }
@@ -95,5 +97,14 @@ export class DispositivosComponent implements OnInit {
         page: pagination.pageIndex,
       },
     });
+  }
+
+  pageSizeOpt(): number[] {
+    const totalrecords = this._maestrosService.totalRecords.getValue();
+    let pageSize = [5, 10, 25, 100];
+    if (totalrecords > 100) {
+      pageSize.push(totalrecords);
+    }
+    return pageSize;
   }
 }

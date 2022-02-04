@@ -5,6 +5,7 @@ import { PermissionService } from "app/core/permission/permission.service";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { MaestrosService } from "../maestros.service";
 import { ClaseActividadI } from "./clase-actividad-model";
 import { ClaseActividadService } from "./clase-actividad.service";
 import { DialogAddClaseActividadComponent } from "./dialog-add-clase-actividad/dialog-add-clase-actividad.component";
@@ -31,7 +32,8 @@ export class ClaseActividadComponent implements OnInit {
     private _routeActived: ActivatedRoute,
     private _router: Router,
     private matDialog: MatDialog,
-    private claseActividadService: ClaseActividadService
+    private claseActividadService: ClaseActividadService,
+    private _maestrosService: MaestrosService
   ) {
     this.getClaseActividades();
   }
@@ -130,5 +132,14 @@ export class ClaseActividadComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(() => this.loadData());
+  }
+
+  pageSizeOpt(): number[] {
+    const totalrecords = this._maestrosService.totalRecords.getValue();
+    let pageSize = [5, 10, 25, 100];
+    if (totalrecords > 100) {
+      pageSize.push(totalrecords);
+    }
+    return pageSize;
   }
 }

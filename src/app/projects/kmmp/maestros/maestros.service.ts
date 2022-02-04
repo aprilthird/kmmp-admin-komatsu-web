@@ -25,6 +25,7 @@ export class MaestrosService {
     endIndex: 0,
   });
   currentTableData: BehaviorSubject<any[]> = new BehaviorSubject(null);
+  totalRecords: BehaviorSubject<number> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) {}
 
@@ -96,6 +97,7 @@ export class MaestrosService {
           });
           this.clients.next(response.body.data);
           this.currentTableData.next(document);
+          this.totalRecords.next(response.body.totalRecords);
         })
       );
   }

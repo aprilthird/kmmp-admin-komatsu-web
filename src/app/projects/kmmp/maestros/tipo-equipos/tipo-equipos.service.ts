@@ -87,6 +87,7 @@ export class TipoEquiposService {
           });
           this.tipo_equipos.next(response.body.data);
           this.maestroService.currentTableData.next(document);
+          this.maestroService.totalRecords.next(response.body.totalRecords);
         })
       );
   }

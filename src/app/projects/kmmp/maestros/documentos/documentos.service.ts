@@ -96,6 +96,7 @@ export class DocumentosService {
 
           this.documentos.next(response.body.data);
           this.maestroService.currentTableData.next(document);
+          this.maestroService.totalRecords.next(response.body.totalRecords);
         })
       );
   }

@@ -3,5 +3,5 @@ export const getPagination = (params: any) => {
     page: params.page,
     startIndex: 0,
     endIndex: 0,
-  }
-}
+  };
+};

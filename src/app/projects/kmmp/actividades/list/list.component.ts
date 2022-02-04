@@ -79,6 +79,7 @@ export class ListComponent implements OnInit {
         this.activities.map(
           (activity: ActivityFake) => (activity.checked = false)
         );
+        this.loadData();
       });
   }
 
