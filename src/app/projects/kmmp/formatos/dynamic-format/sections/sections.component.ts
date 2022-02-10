@@ -39,7 +39,6 @@ export class SectionsComponent implements OnInit {
   }
 
   postGroup(pos?: string): void {
-    const long = this.grupos.length + 1;
     this._editarFormatoService
       .createGrupo({
         id: 0,
@@ -47,7 +46,7 @@ export class SectionsComponent implements OnInit {
         idSeccion: this.sectionData.id,
         parametros: [],
         pos: pos,
-        nombre: "Grupo " + long,
+        nombre: "Nuevo Grupo",
       })
       .subscribe(() => {
         this.loadGrupos();

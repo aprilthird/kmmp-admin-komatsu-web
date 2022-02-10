@@ -110,8 +110,6 @@ export class DialogAddFormatoComponent implements OnInit {
         idTipoMantenimiento,
       });
     }
-
-    this.form.controls["idTipoMantenimiento"].disable();
   }
 
   setTipoMtto(idClaseActividad: number, isEvent?: boolean): void {
