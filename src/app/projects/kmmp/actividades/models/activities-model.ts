@@ -28,7 +28,6 @@ export interface Activity {
   flota?: number;
   modelo?: number;
   actividad?: string;
-  fechaEstimadaIni?: any;
   idFlota?: number;
   idTipoEquipo?: number;
   tipo_equipo?: string;
@@ -39,6 +38,7 @@ export interface Activity {
   fechaRealFin?: any;
   fechaRealIni?: any;
   fechaEstimadaFin?: any;
+  fechaEstimadaIni?: any;
   fechaHoraIniReal?: any;
   fechaHoraFinReal?: any;
 }

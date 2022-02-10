@@ -244,32 +244,64 @@
           <hr />
 
           <div *ngIf="isEdit" class="flex flex-row justify-start gap-10 mb-5">
-            <!-- <mat-form-field class="w-1/4">
-              <mat-label class="font-bold">Fecha estimada</mat-label>
+            <mat-form-field class="w-1/4">
+              <mat-label class="font-bold">Fecha estimada Inicio</mat-label>
               <input
                 matInput
-                [matDatepicker]="datepicker1"
+                [matDatepicker]="datepickerEst1"
+                formControlName="fechaEstimadaIni"
+              />
+
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="datepickerEst1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #datepickerEst1>
+                <mat-datepicker-actions>
+                  <button mat-button matDatepickerCancel>Cancel</button>
+                  <button
+                    (click)="dateChange()"
+                    mat-raised-button
+                    color="primary"
+                    matDatepickerApply
+                  >
+                    Aplicar
+                  </button>
+                </mat-datepicker-actions>
+              </mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="w-1/4">
+              <mat-label class="font-bold">Fecha estimada Final</mat-label>
+              <input
+                matInput
+                [matDatepicker]="datepickerEst2"
                 formControlName="fechaEstimadaFin"
               />
 
               <mat-datepicker-toggle
                 matSuffix
-                [for]="datepicker1"
+                [for]="datepickerEst2"
               ></mat-datepicker-toggle>
-              <mat-datepicker #datepicker1>
+              <mat-datepicker #datepickerEst2>
                 <mat-datepicker-actions>
                   <button mat-button matDatepickerCancel>Cancel</button>
-                  <button mat-raised-button color="primary" matDatepickerApply>
+                  <button
+                    (click)="dateChange()"
+                    mat-raised-button
+                    color="primary"
+                    matDatepickerApply
+                  >
                     Aplicar
                   </button>
                 </mat-datepicker-actions>
               </mat-datepicker>
-            </mat-form-field>-->
+            </mat-form-field>
 
-            <!--<mat-form-field class="w-1/4">
+            <mat-form-field class="w-1/4">
               <mat-label class="font-bold">Duración estimado</mat-label>
               <input matInput value="12:00" formControlName="duracion" />
-            </mat-form-field>-->
+            </mat-form-field>
           </div>
 
           <div *ngIf="isEdit" class="flex flex-row justify-start gap-10 mb-5">
@@ -280,7 +312,7 @@
               <input
                 matInput
                 [matDatepicker]="datepicker2"
-                formControlName="fechaRealIni"
+                formControlName="fechaHoraIniReal"
               />
 
               <mat-datepicker-toggle
@@ -302,7 +334,7 @@
               <input
                 matInput
                 [matDatepicker]="datepicker3"
-                formControlName="fechaRealFin"
+                formControlName="fechaHoraFinReal"
               />
 
               <mat-datepicker-toggle
@@ -321,7 +353,7 @@
 
             <mat-form-field class="w-1/4">
               <mat-label class="font-bold">Duración Real</mat-label>
-              <input matInput value="12:00" formControlName="duracion" />
+              <input matInput value="12:00" formControlName="duracionReal" />
             </mat-form-field>
           </div>
 

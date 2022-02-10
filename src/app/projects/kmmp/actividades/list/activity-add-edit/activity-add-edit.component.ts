@@ -220,9 +220,10 @@ export class ActivityAddEditComponent implements OnInit {
       os: new FormControl(this.activityInfo?.nos),
       pe: new FormControl(this.activityInfo?.npe),
       fechaEstimadaFin: new FormControl(this.activityInfo?.fechaEstimadaFin),
-      duracion: new FormControl(this.getTimeDiff()),
-      fechaRealIni: new FormControl(this.activityInfo?.fechaHoraIniReal),
-      fechaRealFin: new FormControl(this.activityInfo?.fechaHoraFinReal),
+      fechaEstimadaIni: new FormControl(this.activityInfo?.fechaEstimadaIni),
+      duracion: new FormControl(this.activityInfo?.duracion),
+      fechaHoraIniReal: new FormControl(this.activityInfo?.fechaHoraIniReal),
+      fechaHoraFinReal: new FormControl(this.activityInfo?.fechaHoraFinReal),
       duracionReal: new FormControl(this.activityInfo?.duracionReal),
       comentariosTecnico: new FormControl(
         this.activityInfo?.comentariosTecnico
@@ -234,6 +235,20 @@ export class ActivityAddEditComponent implements OnInit {
       tipo_equipo: new FormControl(),
     });
 
+    this.form.controls.duracion.setValue(
+      this.getTimeDiff(
+        this.activityInfo?.fechaEstimadaIni,
+        this.activityInfo?.fechaEstimadaFin
+      )
+    );
+
+    this.form.controls.duracionReal.setValue(
+      this.getTimeDiff(
+        this.activityInfo?.fechaHoraIniReal,
+        this.activityInfo?.fechaHoraFinReal
+      )
+    );
+
     if (
       this.form.controls.actividad.value &&
       this.form.controls.actividad.value !== null &&
@@ -244,11 +259,10 @@ export class ActivityAddEditComponent implements OnInit {
 
     if (this.isEdit) {
       this.form.controls["numero_bl"].disable();
-      this.form.controls["fechaEstimadaFin"].disable();
-      this.form.controls["duracion"].disable();
-      this.form.controls["fechaRealIni"].disable();
-      this.form.controls["fechaRealFin"].disable();
+      this.form.controls["fechaHoraIniReal"].disable();
+      this.form.controls["fechaHoraFinReal"].disable();
       this.form.controls["duracionReal"].disable();
+      this.form.controls["duracion"].disable();
       this.form.controls["comentariosTecnico"].disable();
     }
   }
@@ -266,6 +280,13 @@ export class ActivityAddEditComponent implements OnInit {
       idBahia: this.form.controls["bahia_asignada"].value,
       idTipoSolicitud: this.form.controls["tipo_solicitud"].value,
       descripcion: this.form.controls["descripcion_actividad"].value,
+      fechaEstimadaFin: this.form.controls["fechaEstimadaFin"].value,
+      fechaEstimadaIni: this.form.controls["fechaEstimadaIni"].value,
+
+      fechaHoraFinReal: this.form.controls["fechaHoraFinReal"].value,
+      fechaHoraIniReal: this.form.controls["fechaHoraIniReal"].value,
+
+      duracion: this.form.controls["duracion"].value,
       nbl: this.form.controls["numero_bl"].value,
       nos: getValues(this.formOS),
       npe: getValues(this.formPE),
@@ -373,11 +394,9 @@ export class ActivityAddEditComponent implements OnInit {
     });
   }
 
-  getTimeDiff(): number {
+  getTimeDiff(dateIni, dateFin): number {
     return Math.abs(
-      (new Date(this.activityInfo?.fechaHoraFinReal).getTime() -
-        new Date(this.activityInfo?.fechaHoraIniReal).getTime()) /
-        3600000
+      (new Date(dateIni).getTime() - new Date(dateFin).getTime()) / 3600000
     );
   }
 
@@ -403,5 +422,15 @@ export class ActivityAddEditComponent implements OnInit {
       this.formPE.addControl("1", new FormControl());
       this.pe_items.push("");
     }
+  }
+  dateChange(): void {
+    setTimeout(() => {
+      this.form.controls.duracion.setValue(
+        this.getTimeDiff(
+          this.form.controls.fechaEstimadaIni.value,
+          this.form.controls.fechaEstimadaFin.value
+        )
+      );
+    }, 250);
   }
 }

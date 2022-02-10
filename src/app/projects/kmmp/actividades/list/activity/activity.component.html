@@ -68,26 +68,44 @@
       </div>
 
       <div class="flex flex-col gap-5">
-        <!--<div class="flex flex-col">
-          <span class="text-md text-secondary">Duración estimada</span>
-          <span class="font-semibold">{{ activityInfo?.duracion }}</span>
-        </div>-->
-
         <div class="flex flex-col">
           <span class="text-md text-secondary">Duración</span>
           <span class="text-red-600 font-bold">{{ getTimeDiff() }} horas</span>
         </div>
       </div>
     </div>
-    <hr />
-    <!--<div class="flex flex-col ml-1.5 gap-5">
-      <div class="flex flex-col mb-2">
-        <div class="text-md text-secondary">Cometarios del técnico</div>
-        <span class="font-semibold">{{
-          activityInfo?.comentariosTecnico
-        }}</span>
+
+    <div class="flex ml-1.5 gap-5 mt-5">
+      <div class="flex flex-col gap-5">
+        <div class="flex flex-col mr-4">
+          <span class="text-md text-secondary"
+            >Fecha y hora estimada inicio</span
+          >
+          <span class="font-semibold">{{
+            activityInfo?.fechaEstimadaIni
+          }}</span>
+        </div>
+
+        <div class="flex flex-col mr-4">
+          <span class="text-md text-secondary">Fecha y hora estimada fin</span>
+          <div class="flex flex-col">
+            <span class="text-red-600 font-bold">{{
+              activityInfo?.fechaHoraFinReal
+            }}</span>
+          </div>
+        </div>
       </div>
-    </div>-->
+
+      <div class="flex flex-col gap-5">
+        <div class="flex flex-col">
+          <span class="text-md text-secondary">Duración estimada</span>
+          <span class="text-red-600 font-bold"
+            >{{ getTimeEstimatedDiff() }} horas</span
+          >
+        </div>
+      </div>
+    </div>
+    <hr />
   </div>
 
   <div

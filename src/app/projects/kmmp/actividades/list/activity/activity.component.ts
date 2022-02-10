@@ -129,4 +129,12 @@ export class ActivityComponent implements OnInit {
         3600000
     );
   }
+
+  getTimeEstimatedDiff(): number {
+    return Math.abs(
+      (new Date(this.activityInfo?.fechaEstimadaIni).getTime() -
+        new Date(this.activityInfo?.fechaEstimadaFin).getTime()) /
+        3600000
+    );
+  }
 }
