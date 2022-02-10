@@ -106,6 +106,10 @@ export class DialogAddDocumentosComponent implements OnInit {
       this.clase_actividadesOpt = result[2];
       this.tipo_mttoOpt = result[3];
       this.isLoading = false;
+
+      if (!this.isEdit) {
+        this.clientsOpt = this.clientsOpt.filter((x) => x.nestado === "Activo");
+      }
     });
   }
 

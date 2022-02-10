@@ -109,6 +109,12 @@ export class DialogAddEquiposComponent implements OnInit {
       this.tipo_equipos = await resp[3];
       this.isLoading = false;
 
+      if (!this.isEdit) {
+        this.clientesData = this.clientesData.filter(
+          (x) => x.nestado === "Activo"
+        );
+      }
+
       if (this.isEdit) {
         this.clientSelected(this.initData?.idCliente);
       }

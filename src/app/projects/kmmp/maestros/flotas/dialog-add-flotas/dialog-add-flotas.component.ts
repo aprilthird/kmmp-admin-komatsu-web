@@ -67,6 +67,12 @@ export class DialogAddFlotasComponent implements OnInit {
       .getList({ tipo: 1, pageSize: 999 })
       .subscribe((resp: any) => {
         this.clienteOptions = resp.body.data;
+
+        if (!this.isEdit) {
+          this.clienteOptions = resp.body.data.filter(
+            (x) => x.nestado === "Activo"
+          );
+        }
       });
   }
 
