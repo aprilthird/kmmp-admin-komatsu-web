@@ -47,6 +47,7 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         regex: "",
         minCaracteres: null,
         maxCaracteres: null,
+        dato: null,
       };
 
     case 5:
@@ -73,6 +74,7 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         regex: "",
         minCaracteres: null,
         maxCaracteres: null,
+        dato: null,
       };
 
     case 8:
