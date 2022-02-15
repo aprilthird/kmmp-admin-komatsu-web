@@ -361,7 +361,7 @@ export class ValidationFormatosComponent implements OnInit {
               : false;
 
             //this.setParamConfig(parametro, j, k);
-            //
+            
           }
         });
       });
