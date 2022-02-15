@@ -360,7 +360,7 @@ export class ValidationFormatosComponent implements OnInit {
               ? parametro.observar
               : false;
 
-            this.setParamConfig(parametro, j, k);
+            //this.setParamConfig(parametro, j, k);
           }
         });
       });
