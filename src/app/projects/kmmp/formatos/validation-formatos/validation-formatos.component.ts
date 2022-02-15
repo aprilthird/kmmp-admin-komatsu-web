@@ -1,5 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
@@ -354,10 +359,38 @@ export class ValidationFormatosComponent implements OnInit {
             this.obserForm[`${this.getParametroControl({ j, k })}`] = true
               ? parametro.observar
               : false;
+
+            this.setParamConfig(parametro, j, k);
           }
         });
       });
     });
+  }
+
+  setParamConfig(parametro, j: number, k: number): void {
+    parametro.editable
+      ? this.form.controls[`${this.getParametroControl({ j, k })}`].enable()
+      : this.form.controls[`${this.getParametroControl({ j, k })}`].disable();
+
+    this.form.controls[`${this.getParametroControl({ j, k })}`].setValidators([
+      parametro.obligatorio &&
+      parametro.idParametro !== TipoParametro.UPLOAD &&
+      parametro.idParametro !== TipoParametro.FIRMA &&
+      parametro.idParametro !== TipoParametro.IMAGEN
+        ? Validators.required
+        : Validators.nullValidator,
+      Validators.minLength(
+        parametro.minCaracteres ? parametro.minCaracteres : 0
+      ),
+      Validators.maxLength(
+        parametro.maxCaracteres ? parametro.maxCaracteres : 2000
+      ),
+      !parametro.regex || parametro.regex === ""
+        ? Validators.nullValidator
+        : parametro.regex === "2"
+        ? Validators.email
+        : Validators.pattern(/^\d{8}(?:[-\s]\d{4})?$/),
+    ]);
   }
 
   isObserve(j, k) {
@@ -399,10 +432,7 @@ export class ValidationFormatosComponent implements OnInit {
 
         grupo.parametros.forEach((parametro, k) => {
           if (parametro.activo) {
-            if (
-              parametro.idParametro === TipoParametro.UPLOAD ||
-              parametro.idParametro === TipoParametro.IMAGEN
-            ) {
+            if (parametro.idParametro === TipoParametro.IMAGEN) {
               this.checkImgParam(parametro, j, k);
             } else if (parametro.idParametro === TipoParametro.FIRMA) {
               this.checkSignParam(paramIdx, parametro, indexGroup, k, j);
@@ -410,7 +440,7 @@ export class ValidationFormatosComponent implements OnInit {
               parametro.valor = this.form.get(
                 this.getParametroControl({ j, k })
               ).value;
-            } else {
+            } else if (parametro.idParametro !== TipoParametro.UPLOAD) {
               parametro.valor = String(
                 this.form.get(this.getParametroControl({ j, k })).value
               );
@@ -440,7 +470,7 @@ export class ValidationFormatosComponent implements OnInit {
     parametro.valor = String(
       this.form.get(this.getParametroControl({ j, k })).value
     );
-    if (!parametro.valor || parametro.valor === "") {
+    if (!parametro.valor || parametro.valor === "null") {
       this.form
         .get(this.getParametroControl({ j, k }))
         .setValue(parametro.dato);

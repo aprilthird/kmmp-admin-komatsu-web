@@ -333,6 +333,9 @@
                                           parametro.placeholder
                                         }}"
                                       />
+                                      <mat-error>
+                                        {{ getErrorMessage(getParametroControl({j, k})) }}
+                                      </mat-error>
                                     </mat-form-field>
 
                                     <!-- NUMERICO -->
@@ -376,6 +379,9 @@
                                           parametro.placeholder
                                         }}"
                                       ></textarea>
+                                      <mat-error>
+                                        {{ getErrorMessage(getParametroControl({j, k})) }}
+                                      </mat-error>
                                     </mat-form-field>
 
                                     <!-- UPLOAD (ARCHIVO) -->
@@ -458,6 +464,7 @@
                                           parametro.placeholder
                                         }}"
                                         formControlName="{{ getParametroControl({j, k})}}"
+                                        readonly
                                       />
                                       <mat-error>
                                         {{ getErrorMessage(getParametroControl({j, k})) }}
@@ -498,10 +505,10 @@
                                         [editable]="editable(j)"
                                         [type]="'imagen'"
                                         [image]="
-                                          parametro.valor !== '' &&
-                                          parametro.valor !== null
-                                            ? setImage(parametro.valor)
-                                            : setImage(parametro.dato)
+                                          !parametro.valor ||
+                                          parametro.valor === 'null'
+                                            ? setImage(parametro.dato)
+                                            : setImage(parametro.valor)
                                         "
                                         [loading]="filesLoading[getParametroControl({j, k})]"
                                         (sourceFile)="onChageFile($event, getParametroControl({j, k}))"

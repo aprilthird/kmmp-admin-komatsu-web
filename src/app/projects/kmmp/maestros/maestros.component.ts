@@ -32,10 +32,10 @@ export class MaestrosComponent implements OnInit {
     });
 
     this.menuData[0].children.push({
-      id: "maestros.equipos",
-      title: "Equipos",
+      id: "maestros.flotas",
+      title: "Flotas",
       type: "basic",
-      link: "/admin/maestros/equipos",
+      link: "/admin/maestros/flotas",
     });
 
     this.menuData[0].children.push({
@@ -46,13 +46,6 @@ export class MaestrosComponent implements OnInit {
     });
 
     this.menuData[0].children.push({
-      id: "maestros.bahias",
-      title: "Bahias",
-      type: "basic",
-      link: "/admin/maestros/bahias",
-    });
-
-    this.menuData[0].children.push({
       id: "maestros.modelos",
       title: "Modelos",
       type: "basic",
@@ -60,10 +53,10 @@ export class MaestrosComponent implements OnInit {
     });
 
     this.menuData[0].children.push({
-      id: "maestros.flotas",
-      title: "Flotas",
+      id: "maestros.equipos",
+      title: "Equipos",
       type: "basic",
-      link: "/admin/maestros/flotas",
+      link: "/admin/maestros/equipos",
     });
 
     this.menuData[0].children.push({
@@ -71,6 +64,13 @@ export class MaestrosComponent implements OnInit {
       title: "Clase de actividad",
       type: "basic",
       link: "/admin/maestros/clase_actividades",
+    });
+
+    this.menuData[0].children.push({
+      id: "maestros.bahias",
+      title: "Bahias",
+      type: "basic",
+      link: "/admin/maestros/bahias",
     });
 
     this.menuData[0].children.push({
