@@ -77,21 +77,23 @@
 
     <div class="flex ml-1.5 gap-5 mt-5">
       <div class="flex flex-col gap-5">
-        <div class="flex flex-col mr-4">
+        <!-- <div class="flex flex-col mr-4">
           <span class="text-md text-secondary"
             >Fecha y hora estimada inicio</span
           >
           <span class="font-semibold">{{
             activityInfo?.fechaEstimadaIni
           }}</span>
-        </div>
+        </div> -->
 
         <div class="flex flex-col mr-4">
-          <span class="text-md text-secondary">Fecha y hora estimada fin</span>
+          <span class="text-md text-secondary">Fecha estimada</span>
           <div class="flex flex-col">
-            <span class="text-red-600 font-bold">{{
-              activityInfo?.fechaHoraFinReal
-            }}</span>
+            <span class="text-red-600 font-bold"
+              >{{ activityInfo?.fechaEstimadaIni | date: "dd/MM/yy" }}
+              -
+              {{ activityInfo?.fechaEstimadaFin | date: "dd/MM/yy" }}</span
+            >
           </div>
         </div>
       </div>

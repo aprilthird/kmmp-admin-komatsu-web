@@ -253,6 +253,7 @@
                 matInput
                 [matDatepicker]="datepickerEst1"
                 formControlName="fechaEstimadaIni"
+                readonly
               />
 
               <mat-datepicker-toggle
@@ -280,6 +281,7 @@
                 matInput
                 [matDatepicker]="datepickerEst2"
                 formControlName="fechaEstimadaFin"
+                readonly
               />
 
               <mat-datepicker-toggle
@@ -302,7 +304,7 @@
             </mat-form-field>
 
             <mat-form-field class="w-1/4">
-              <mat-label class="font-bold">Duración estimado</mat-label>
+              <mat-label class="font-bold">Duración estimada</mat-label>
               <input matInput value="12:00" formControlName="duracion" />
             </mat-form-field>
           </div>
