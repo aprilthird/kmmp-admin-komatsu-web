@@ -223,6 +223,8 @@ export class ActivityAddEditComponent implements OnInit {
       duracion: new FormControl(this.activityInfo?.duracion),
       fechaHoraIniReal: new FormControl(this.activityInfo?.fechaHoraIniReal),
       fechaHoraFinReal: new FormControl(this.activityInfo?.fechaHoraFinReal),
+      fechaEstimadaIni: new FormControl(this.activityInfo?.fechaEstimadaIni),
+      fechaEstimadaFin: new FormControl(this.activityInfo?.fechaEstimadaFin),
       duracionReal: new FormControl(this.activityInfo?.duracionReal),
       comentariosTecnico: new FormControl(
         this.activityInfo?.comentariosTecnico
@@ -233,17 +235,6 @@ export class ActivityAddEditComponent implements OnInit {
       idModelo: new FormControl(),
       tipo_equipo: new FormControl(),
     });
-
-    if (this.isEdit) {
-      this.form.addControl(
-        "fechaEstimadaIni",
-        new FormControl(this.activityInfo?.fechaEstimadaIni)
-      );
-      this.form.addControl(
-        "fechaEstimadaFin",
-        new FormControl(this.activityInfo?.fechaEstimadaFin)
-      );
-    }
 
     this.form.controls.duracion.setValue(
       this.getTimeDiff(
@@ -290,8 +281,12 @@ export class ActivityAddEditComponent implements OnInit {
       idBahia: this.form.controls["bahia_asignada"].value,
       idTipoSolicitud: this.form.controls["tipo_solicitud"].value,
       descripcion: this.form.controls["descripcion_actividad"].value,
-      // fechaEstimadaFin: this.form.controls["fechaEstimadaFin"].value,
-      // fechaEstimadaIni: this.form.controls["fechaEstimadaIni"].value,
+      fechaEstimadaFin: this.form.controls["fechaEstimadaFin"].value
+        ? this.form.controls["fechaEstimadaFin"].value
+        : moment().format("yyyy-MM-DD"),
+      fechaEstimadaIni: this.form.controls["fechaEstimadaIni"].value
+        ? this.form.controls["fechaEstimadaIni"].value
+        : moment().subtract(3, "years").format("yyyy-MM-DD"),
 
       fechaHoraFinReal: this.form.controls["fechaHoraFinReal"].value
         ? this.form.controls["fechaHoraFinReal"].value
@@ -315,12 +310,6 @@ export class ActivityAddEditComponent implements OnInit {
     };
     if (this.isEdit) {
       params["id"] = this.idActivity;
-      params["fechaEstimadaFin"] = this.form.controls["fechaEstimadaFin"].value
-        ? this.form.controls["fechaEstimadaFin"].value
-        : moment().format("yyyy-MM-DD");
-      params["fechaEstimadaIni"] = this.form.controls["fechaEstimadaIni"].value
-        ? this.form.controls["fechaEstimadaIni"].value
-        : moment().subtract(3, "years").format("yyyy-MM-DD");
     } else {
       params["id"] = 0;
     }
@@ -415,9 +404,11 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   getTimeDiff(dateIni, dateFin): number {
-    return Math.abs(
+    let diff = Math.abs(
       (new Date(dateIni).getTime() - new Date(dateFin).getTime()) / 3600000
     );
+    if (isNaN(diff)) return 0;
+    else return Math.round(diff);
   }
 
   removeOS(index: number): void {

@@ -48,6 +48,7 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         minCaracteres: null,
         maxCaracteres: null,
         dato: null,
+        valor: null,
       };
 
     case 5:
@@ -75,6 +76,7 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         minCaracteres: null,
         maxCaracteres: null,
         dato: null,
+        valor: null,
       };
 
     case 8:

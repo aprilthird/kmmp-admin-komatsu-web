@@ -62,7 +62,7 @@ export class NavigationService {
 
           // Función permite la navegación de manera visual en la vista
           const getNavigation = (e) => {
-            if (!e.activo || e.nombre === "Perfil") return [];
+            if (!e.activo || e.movil) return [];
 
             // Si la navegación tiene ruta se agrega como permiso a dicha ruta
             if (e.ruta) {
