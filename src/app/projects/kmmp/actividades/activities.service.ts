@@ -49,7 +49,7 @@ const getInboxParams: GetInbox = {
     nombre: "",
     estado: 0,
     tipo: 1,
-    fechaIni: moment().subtract(3, "years").format("yyyy-MM-DD"),
+    fechaIni: moment().subtract(5, "years").format("yyyy-MM-DD"),
     fechaFin: moment().format("yyyy-MM-DD"),
     codigo: "",
   },
@@ -61,6 +61,7 @@ const getInboxParams: GetInbox = {
 export class ActivitiesService {
   preloadedFormats: BehaviorSubject<any> = new BehaviorSubject(null);
   _activities: BehaviorSubject<any[]> = new BehaviorSubject(null);
+  _dateRange: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(
     private http: HttpClient,
@@ -155,7 +156,7 @@ export class ActivitiesService {
         filter: {
           fechaIni: fechaInicio
             ? fechaInicio
-            : moment().subtract(3, "years").format("yyyy-MM-DD"),
+            : moment().subtract(5, "years").format("yyyy-MM-DD"),
           fechaFin: fechaFin ? fechaFin : moment().format("yyyy-MM-DD"),
           idClaseActividad,
           idModelo,
@@ -181,6 +182,12 @@ export class ActivitiesService {
           });
 
           this.shared.currentTableData.next(document);
+          this._dateRange.next({
+            fechaInicio: fechaInicio
+              ? fechaInicio
+              : moment().subtract(5, "years").format("yyyy-MM-DD"),
+            fechaFin: fechaFin ? fechaFin : moment().format("yyyy-MM-DD"),
+          });
         })
       );
   }

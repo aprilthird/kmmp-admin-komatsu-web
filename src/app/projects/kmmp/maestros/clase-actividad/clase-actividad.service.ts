@@ -76,7 +76,7 @@ export class ClaseActividadService {
         estado: 0,
         tipo: 9,
         idClaseActividad: idClaseActividad,
-        fechaIni: moment().subtract(3, "years").format("yyyy-MM-DD"),
+        fechaIni: moment().subtract(5, "years").format("yyyy-MM-DD"),
         fechaFin: moment().format("yyyy-MM-DD"),
       },
     };

@@ -30,7 +30,7 @@ export const getInboxParams: GetInbox = {
     nombre: "",
     estado: 0,
     tipo: 1,
-    fechaIni: moment().subtract(3, "years").format("yyyy-MM-DD"),
+    fechaIni: moment().subtract(5, "years").format("yyyy-MM-DD"),
     fechaFin: moment().format("yyyy-MM-DD"),
     codigo: "",
   },

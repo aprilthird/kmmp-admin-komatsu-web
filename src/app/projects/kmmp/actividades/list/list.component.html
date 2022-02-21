@@ -20,7 +20,8 @@
         class="flex flex-wrap gap-5 mt-5 xl:my-none"
         *ngIf="!assignToBay; else assign"
       >
-        <app-filter (range)="daterange($event)"></app-filter>
+        <!-- <app-filter (range)="daterange($event)"></app-filter> -->
+        <app-filter></app-filter>
         <upload-print-activities class="pr-8"></upload-print-activities>
       </div>
       <ng-template #assign>

@@ -63,6 +63,11 @@ export class ListComponent implements OnInit {
     this.activitiesService.getActivities().subscribe(() => {
       this.isLoading = false;
     });
+
+    this.activitiesService._dateRange.subscribe(() => {
+      this.start = this.activitiesService._dateRange.getValue()?.fechaInicio;
+      this.end = this.activitiesService._dateRange.getValue()?.fechaFin;
+    });
   }
 
   openAssignment(): void {
