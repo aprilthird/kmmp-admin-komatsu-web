@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatCheckbox } from "@angular/material/checkbox";
 import { MatDialog } from "@angular/material/dialog";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Pagination } from "app/core/types/list.types";
 import { Observable, Subject } from "rxjs";
 import { ActivityFake } from "../../fake-db/activities/activity-fake-db";
@@ -35,8 +35,11 @@ export class ListComponent implements OnInit {
     private matDialog: MatDialog,
     private activitiesService: ActivitiesService,
     private editarFormatoService: EditarFormatoService,
-    private router: Router
-  ) {}
+    private _router: Router,
+    private _routeActived: ActivatedRoute
+  ) {
+    this.pagination$ = this.activitiesService.pagination$;
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -48,8 +51,6 @@ export class ListComponent implements OnInit {
     this._unsubscribeAll.complete();
   }
 
-  changePage(): void {}
-
   getActivities(): void {
     this.isLoading = true;
 
@@ -60,9 +61,11 @@ export class ListComponent implements OnInit {
 
   loadData() {
     this.isLoading = true;
-    this.activitiesService.getActivities().subscribe(() => {
-      this.isLoading = false;
-    });
+    this.activitiesService
+      .getActivities(this._routeActived.snapshot.queryParams)
+      .subscribe(() => {
+        this.isLoading = false;
+      });
 
     this.activitiesService._dateRange.subscribe(() => {
       this.start = this.activitiesService._dateRange.getValue()?.fechaInicio;
@@ -149,7 +152,7 @@ export class ListComponent implements OnInit {
         .subscribe((secciones: any) => {
           if (secciones.body.secciones.length > 0) {
             seccion = secciones.body.secciones[0].id;
-            this.router.navigate([
+            this._router.navigate([
               `/admin/actividades/validation/${activity}/${format}/${seccion}`,
             ]);
           }
@@ -173,5 +176,27 @@ export class ListComponent implements OnInit {
     return this.activities.some(
       (activity) => !activity.bahia || activity.bahia === ""
     );
+  }
+
+  changePage(pagination: any) {
+    this._router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this._router.onSameUrlNavigation = "reload";
+
+    const params = this._routeActived.snapshot.params;
+    this._router.navigate(["/admin/actividades/list"], {
+      queryParams: {
+        ...params,
+        pageSize: pagination.pageSize,
+        page: pagination.pageIndex,
+      },
+    });
+
+    console.log("saasas ", {
+      ...params,
+      pageSize: pagination.pageSize,
+      page: pagination.pageIndex,
+    });
   }
 }

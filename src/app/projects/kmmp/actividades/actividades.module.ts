@@ -31,6 +31,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatRippleModule } from "@angular/material/core";
 import { MatInputModule } from "@angular/material/input";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatPaginatorModule } from "@angular/material/paginator";
 
 import {
   NgxMatDatetimePickerModule,
@@ -88,6 +89,7 @@ import { PostponeComponent } from "./dialogs/postpone/postpone.component";
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,
     FormsModule,
+    MatPaginatorModule,
   ],
 })
 export class ActividadesModule {}

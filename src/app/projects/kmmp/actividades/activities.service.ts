@@ -4,6 +4,7 @@ import {
   PaginationResponse,
   ParamsPagination,
 } from "app/core/types/http.types";
+import { Pagination } from "app/core/types/list.types";
 import { Response } from "app/shared/models/general-model";
 import { SharedService } from "app/shared/shared.service";
 import { environment } from "environments/environment";
@@ -62,6 +63,14 @@ export class ActivitiesService {
   preloadedFormats: BehaviorSubject<any> = new BehaviorSubject(null);
   _activities: BehaviorSubject<any[]> = new BehaviorSubject(null);
   _dateRange: BehaviorSubject<any> = new BehaviorSubject(null);
+  _pagination: BehaviorSubject<any> = new BehaviorSubject({
+    length: 0,
+    size: 10,
+    page: 0,
+    lastPage: 0,
+    startIndex: 0,
+    endIndex: 0,
+  });
 
   constructor(
     private http: HttpClient,
@@ -79,6 +88,10 @@ export class ActivitiesService {
 
   get activities$(): Observable<any> {
     return this._activities.asObservable();
+  }
+
+  get pagination$(): Observable<Pagination> {
+    return this._pagination.asObservable();
   }
 
   /*set activities$(data) {
@@ -153,6 +166,8 @@ export class ActivitiesService {
     return this.http
       .post<any[]>(environment.apiUrl + "/Actividades/BandejaActividades", {
         ...getInboxParams,
+        pageSize: pageSize,
+        page: page,
         filter: {
           fechaIni: fechaInicio
             ? fechaInicio
@@ -187,6 +202,16 @@ export class ActivitiesService {
               ? fechaInicio
               : moment().subtract(5, "years").format("yyyy-MM-DD"),
             fechaFin: fechaFin ? fechaFin : moment().format("yyyy-MM-DD"),
+          });
+
+          this._pagination.next({
+            ...this._pagination.getValue(),
+            page,
+            size: pageSize,
+            length: resp.body.totalRecords,
+            lastPage: Math.ceil(
+              resp.body.totalRecords / this._pagination.getValue().size
+            ),
           });
         })
       );
