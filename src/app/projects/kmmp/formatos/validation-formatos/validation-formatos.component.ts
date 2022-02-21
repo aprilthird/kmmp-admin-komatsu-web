@@ -14,6 +14,7 @@ import { TipoParametro } from "app/core/types/formatos.types";
 import { Estados } from "app/shared/config/codigos";
 import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { environment } from "environments/environment";
+import { Moment } from "moment";
 import { Subject } from "rxjs";
 
 import { ActivitiesService } from "../../actividades/activities.service";
@@ -402,7 +403,8 @@ export class ValidationFormatosComponent implements OnInit {
                 this.form.addControl(
                   `${this.getParametroControl({ i, j, k })}`,
                   new FormControl({
-                    value: this.convertDate(parametro.valor),
+                    //value: this.convertDate(parametro.valor),
+                    value: parametro.valor,
                     disabled: true,
                   })
                 );
@@ -561,11 +563,22 @@ export class ValidationFormatosComponent implements OnInit {
             } else if (parametro.idParametro === TipoParametro.FIRMA) {
               this.checkSignParam(paramIdx, parametro, indexGroup, k, j);
             } else if (parametro.idParametro === TipoParametro.FECHA) {
-              parametro.valor = this.form.get(
-                this.getParametroControl({ i, j, k })
-              ).value;
-            } //else if (parametro.idParametro !== TipoParametro.UPLOAD) {
-            else if (
+              // parametro.valor = this.form.get(
+              //   this.getParametroControl({ i, j, k })
+              // ).value;
+
+              if (typeof parametro.valor === "string") {
+                parametro.valor = this.form.get(
+                  this.getParametroControl({ i, j, k })
+                ).value;
+              } else {
+                parametro.valor = this.setNoTouchedDate(
+                  (parametro.valor = this.form.get(
+                    this.getParametroControl({ i, j, k })
+                  ).value)
+                );
+              }
+            } else if (
               parametro.idParametro !== TipoParametro.LABEL &&
               parametro.idParametro !== TipoParametro.UPLOAD
             ) {
@@ -910,6 +923,10 @@ export class ValidationFormatosComponent implements OnInit {
         this.onSubmit(event, groupIdx, paramIdx);
       }
     });
+  }
+
+  setNoTouchedDate(time: Moment): string {
+    return `${time.year}-${time.month}-${time.day}`;
   }
 
   printPdf(): void {
