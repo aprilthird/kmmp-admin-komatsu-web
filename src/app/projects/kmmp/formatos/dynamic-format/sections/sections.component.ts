@@ -47,6 +47,7 @@ export class SectionsComponent implements OnInit {
         parametros: [],
         pos: pos,
         nombre: "Nuevo Grupo",
+        activo: true,
       })
       .subscribe(() => {
         this.loadGrupos();

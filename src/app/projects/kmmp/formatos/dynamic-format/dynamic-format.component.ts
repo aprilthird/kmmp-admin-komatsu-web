@@ -75,6 +75,7 @@ export class DynamicFormatComponent implements OnInit {
         {
           idFormato: this.idFormat,
           nombre: sectionName,
+          activo: true,
         },
         true
       )
