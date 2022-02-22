@@ -81,6 +81,7 @@
             *ngIf="group.activo"
             class="list-box w-full"
             [groupData]="group"
+            (currentGroupused)="currentGroupused($event)"
           ></app-groups>
         </ng-container>
       </div>

@@ -1,5 +1,14 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  QueryList,
+  SimpleChanges,
+  ViewChildren,
+} from "@angular/core";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
 import { GeneralParams } from "app/shared/models/formatos";
 import { Subject } from "rxjs";
@@ -13,6 +22,8 @@ import { SectionsComponent } from "../../sections.component";
 })
 export class HorizontalGroupComponent implements OnInit {
   @Input() groupData: any;
+  @Output() currentGroupTouched = new EventEmitter(null);
+  @ViewChildren(`scrollend`) scrollFrame: QueryList<HTMLElement>;
   lowestRow: number;
   lowestColumn: number;
   highestColumn: number;
@@ -48,6 +59,7 @@ export class HorizontalGroupComponent implements OnInit {
   }
 
   async addColumn() {
+    this.currentGroupTouched.emit(this.groupData.id);
     this.isLoading = true;
     const columns = [...this.groupData.parametros].map((data) => data.columna);
     //const highestColumn = Math.max.apply(null, columns);

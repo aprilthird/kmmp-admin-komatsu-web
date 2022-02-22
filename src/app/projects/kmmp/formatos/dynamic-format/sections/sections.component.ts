@@ -1,4 +1,11 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewChildren,
+} from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { ActivatedRoute } from "@angular/router";
@@ -6,6 +13,7 @@ import { EditarFormatoService } from "../../editar-formato/editar-formato.servic
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { FormatosService } from "../../formatos.service";
 import { GroupI } from "app/shared/models/formatos";
+import { GroupsComponent } from "./groups/groups.component";
 
 @Component({
   selector: "app-sections",
@@ -20,6 +28,10 @@ export class SectionsComponent implements OnInit {
   grupos: any[] = [];
   edit: boolean;
   @ViewChild("nameInput") el: ElementRef;
+  @ViewChildren(GroupsComponent) myValue: GroupsComponent;
+  rendered: boolean;
+  scrollContainer: HTMLElement;
+  currentGroupId: number;
 
   constructor(
     private _activedRoute: ActivatedRoute,
@@ -63,6 +75,26 @@ export class SectionsComponent implements OnInit {
       .subscribe((response) => {
         this.isLoading = false;
         this.grupos = response.body;
+        setTimeout(() => {
+          if (this.rendered) {
+            const element = this.myValue["_results"].find(
+              (group) => group.groupData.id === this.currentGroupId
+            );
+            let el: ElementRef<HTMLElement> =
+              element["myValue"]["_results"][0]["scrollFrame"];
+            if (el) {
+              this.scrollContainer = el["_results"][0].nativeElement;
+
+              this.scrollContainer.scroll({
+                left: 20000,
+                behavior: "auto",
+              });
+            }
+          }
+          if (!this.rendered) {
+            this.rendered = true;
+          }
+        });
       });
 
     this.isLoading = false;
@@ -136,5 +168,9 @@ export class SectionsComponent implements OnInit {
 
   isActiveGroup(): boolean {
     return this.grupos.some((x) => x.activo);
+  }
+
+  currentGroupused(e: number): void {
+    this.currentGroupId = e;
   }
 }
