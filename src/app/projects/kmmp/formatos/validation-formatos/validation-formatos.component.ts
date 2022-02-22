@@ -572,11 +572,18 @@ export class ValidationFormatosComponent implements OnInit {
                   this.getParametroControl({ i, j, k })
                 ).value;
               } else {
-                parametro.valor = this.setNoTouchedDate(
-                  (parametro.valor = this.form.get(
+                if (
+                  typeof this.form.get(this.getParametroControl({ i, j, k }))
+                    .value === "string"
+                ) {
+                  parametro.valor = this.setNoTouchedDate(
+                    this.form.get(this.getParametroControl({ i, j, k })).value
+                  );
+                } else {
+                  parametro.valor = this.form.get(
                     this.getParametroControl({ i, j, k })
-                  ).value)
-                );
+                  ).value;
+                }
               }
             } else if (
               parametro.idParametro !== TipoParametro.LABEL &&
