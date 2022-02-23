@@ -82,6 +82,7 @@
             class="list-box w-full"
             [groupData]="group"
             (currentGroupused)="currentGroupused($event)"
+            (isColumnAdded)="isColumnAddedFn($event)"
           ></app-groups>
         </ng-container>
       </div>

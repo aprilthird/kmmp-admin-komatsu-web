@@ -18,10 +18,15 @@
       </div>
     </div>
   </div>
-  //
+
+  <div class="w-full mb-8 px-8" *ngIf="alert">
+    <fuse-alert [appearance]="'soft'" [type]="alert?.type" class="bg-green-100">
+      {{ alert?.message }}
+    </fuse-alert>
+  </div>
+
   <!-- Main -->
   <div class="flex flex-auto overflow-hidden justify-between">
-    <!-- Products list -->
     <div
       class="flex flex-col flex-auto justify-between items-center overflow-hidden bg-gray-100 h-auto"
     >
@@ -53,8 +58,13 @@
             (click)="uploadFile()"
             mat-raised-button
             [color]="'primary'"
-            [disabled]="file === ''"
+            [disabled]="file === '' || isLoading"
           >
+            <mat-progress-spinner
+              *ngIf="isLoading"
+              [diameter]="24"
+              [mode]="'indeterminate'"
+            ></mat-progress-spinner>
             <span class="ml-2 mr-1">Guardar</span>
           </button>
         </div>

@@ -38,6 +38,7 @@
   </ng-container>
   <ng-container *ngIf="groupData.pos === 'h'">
     <app-horizontal-group
+      (isColumnAdded)="isColumnAddedFn($event)"
       (currentGroupTouched)="currentGroupTouched($event)"
       [groupData]="groupData"
     ></app-horizontal-group>

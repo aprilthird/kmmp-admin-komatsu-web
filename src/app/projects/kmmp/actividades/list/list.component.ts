@@ -30,6 +30,7 @@ export class ListComponent implements OnInit {
   start = new Date().toLocaleDateString("es-ES");
   end = new Date().toLocaleDateString("es-ES");
   checkAllBays: boolean;
+  isRendered: boolean;
 
   constructor(
     private matDialog: MatDialog,
@@ -92,10 +93,14 @@ export class ListComponent implements OnInit {
 
   checkAllFn(): boolean {
     let value = false;
-    const activWithBahia = this.activities.filter((x) => x.bahia);
-    if (activWithBahia.every((x) => x.checked)) {
-      value = true;
+    if (!this.isRendered) {
+      this.isRendered = true;
+      const activWithBahia = this.activities.filter((x) => x.bahia);
+      if (activWithBahia.every((x) => x.checked)) {
+        value = true;
+      }
     }
+
     return value;
   }
 

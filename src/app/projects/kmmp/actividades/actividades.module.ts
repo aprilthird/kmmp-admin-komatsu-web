@@ -41,6 +41,7 @@ import {
 
 //FUSE
 import { FuseConfirmationModule } from "@fuse/services/confirmation";
+import { FuseAlertModule } from "@fuse/components/alert";
 
 //NGX INPUT SEARCH
 import { NgxMatSelectSearchModule } from "ngx-mat-select-search";
@@ -90,6 +91,7 @@ import { PostponeComponent } from "./dialogs/postpone/postpone.component";
     NgxMatTimepickerModule,
     FormsModule,
     MatPaginatorModule,
+    FuseAlertModule,
   ],
 })
 export class ActividadesModule {}

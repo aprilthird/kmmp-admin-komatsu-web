@@ -32,6 +32,7 @@ export class SectionsComponent implements OnInit {
   rendered: boolean;
   scrollContainer: HTMLElement;
   currentGroupId: number;
+  isColumnAdded: any;
 
   constructor(
     private _activedRoute: ActivatedRoute,
@@ -80,15 +81,18 @@ export class SectionsComponent implements OnInit {
             const element = this.myValue["_results"].find(
               (group) => group.groupData.id === this.currentGroupId
             );
-            let el: ElementRef<HTMLElement> =
-              element["myValue"]["_results"][0]["scrollFrame"];
-            if (el) {
-              this.scrollContainer = el["_results"][0].nativeElement;
+            if (element) {
+              let el: ElementRef<HTMLElement> =
+                element["myValue"]["_results"][0]["scrollFrame"];
 
-              this.scrollContainer.scroll({
-                left: 20000,
-                behavior: "auto",
-              });
+              if (el && this.isColumnAdded) {
+                this.scrollContainer = el["_results"][0].nativeElement;
+
+                this.scrollContainer.scroll({
+                  left: 20000,
+                  behavior: "auto",
+                });
+              }
             }
           }
           if (!this.rendered) {
@@ -172,5 +176,9 @@ export class SectionsComponent implements OnInit {
 
   currentGroupused(e: number): void {
     this.currentGroupId = e;
+  }
+
+  isColumnAddedFn(event): void {
+    this.isColumnAdded = event;
   }
 }
