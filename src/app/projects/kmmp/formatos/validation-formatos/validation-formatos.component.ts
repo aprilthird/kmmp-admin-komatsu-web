@@ -563,27 +563,68 @@ export class ValidationFormatosComponent implements OnInit {
             } else if (parametro.idParametro === TipoParametro.FIRMA) {
               this.checkSignParam(paramIdx, parametro, indexGroup, k, j);
             } else if (parametro.idParametro === TipoParametro.FECHA) {
-              // parametro.valor = this.form.get(
-              //   this.getParametroControl({ i, j, k })
-              // ).value;
+              // if (typeof parametro.valor === "string") {
+              //   parametro.valor = this.form.get(
+              //     this.getParametroControl({ i, j, k })
+              //   ).value;
+              // } else {
+              //   if (
+              //     typeof this.form.get(this.getParametroControl({ i, j, k }))
+              //       .value === "string"
+              //   ) {
+              //     parametro.valor = this.setNoTouchedDate(
+              //       this.form.get(this.getParametroControl({ i, j, k })).value
+              //     );
+              //   } else {
+              //     parametro.valor = this.form.get(
+              //       this.getParametroControl({ i, j, k })
+              //     ).value;
+              //   }
+              // }
 
-              if (typeof parametro.valor === "string") {
+              if (
+                typeof this.form.get(this.getParametroControl({ i, j, k }))
+                  .value === "object"
+              ) {
+                if (parametro.valor !== null) {
+                  if (parametro.valor.indexOf("function") > -1) {
+                    if (
+                      this.form.get(this.getParametroControl({ i, j, k }))
+                        .value === null
+                    ) {
+                      parametro.valor = null;
+                    } else {
+                      parametro.valor = this.convertDate(
+                        this.form.get(this.getParametroControl({ i, j, k }))
+                          .value
+                      );
+                    }
+                  } else {
+                    if (parametro.valor !== "") {
+                      parametro.valor = this.convertDate(
+                        this.form.get(this.getParametroControl({ i, j, k }))
+                          .value
+                      );
+                    } else {
+                      parametro.valor = null;
+                    }
+                  }
+                } else {
+                  if (
+                    this.form.get(this.getParametroControl({ i, j, k }))
+                      .value === null
+                  ) {
+                    parametro.valor = null;
+                  } else {
+                    parametro.valor = this.convertDate(
+                      this.form.get(this.getParametroControl({ i, j, k })).value
+                    );
+                  }
+                }
+              } else {
                 parametro.valor = this.form.get(
                   this.getParametroControl({ i, j, k })
                 ).value;
-              } else {
-                if (
-                  typeof this.form.get(this.getParametroControl({ i, j, k }))
-                    .value === "string"
-                ) {
-                  parametro.valor = this.setNoTouchedDate(
-                    this.form.get(this.getParametroControl({ i, j, k })).value
-                  );
-                } else {
-                  parametro.valor = this.form.get(
-                    this.getParametroControl({ i, j, k })
-                  ).value;
-                }
               }
             } else if (
               parametro.idParametro !== TipoParametro.LABEL &&
