@@ -226,12 +226,12 @@ export class ActivityAddEditComponent implements OnInit {
       fechaEstimadaIni: new FormControl(
         this.activityInfo?.fechaEstimadaIni
           ? this.activityInfo?.fechaEstimadaIni
-          : moment().format("yyyy-MM-DD")
+          : moment().format("yyyy-MM-DD 00:00:00")
       ),
       fechaEstimadaFin: new FormControl(
         this.activityInfo?.fechaEstimadaFin
           ? this.activityInfo?.fechaEstimadaFin
-          : moment().format("yyyy-MM-DD")
+          : moment().format("yyyy-MM-DD 00:00:00")
       ),
       duracionReal: new FormControl(this.activityInfo?.duracionReal),
       comentariosTecnico: new FormControl(
