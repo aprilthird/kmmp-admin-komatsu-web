@@ -106,7 +106,6 @@ export class DocumentosComponent implements OnInit {
 
   delete(doc): void {
     doc.estado = 0;
-    console.log(doc);
 
     const dialogRef = this._fuseConfirmationService.open({
       title: "Eliminar usuario",

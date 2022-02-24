@@ -103,7 +103,6 @@ export class DialogAddDatoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("- ", this.edit);
     if (this.edit.idParametro === TipoParametro.LABEL) {
       this.form.get("visible").disable();
       this.form.controls["obligatorio"].disable();
@@ -175,7 +174,6 @@ export class DialogAddDatoComponent implements OnInit {
           }
         },
         (error) => {
-          console.log("error", error);
           this.loading = false;
         }
       );

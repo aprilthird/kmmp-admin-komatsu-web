@@ -163,7 +163,6 @@ export class DialogAddDocumentosComponent implements OnInit {
       (x: any) => e.value === x.id
     ).nombre;
     this.form.controls["cliente"].setValue(currentClientId);
-    console.log(this.form.value);
   }
 
   setModel(e): void {
@@ -171,7 +170,6 @@ export class DialogAddDocumentosComponent implements OnInit {
       (x: any) => e.value === x.id
     ).nombre;
     this.form.controls["modelo"].setValue(currentModelId);
-    console.log(this.form.value);
   }
 
   setActivity(e): void {
@@ -179,7 +177,6 @@ export class DialogAddDocumentosComponent implements OnInit {
       (x: any) => e.value === x.id
     ).nombre;
     this.form.controls["actividad"].setValue(currentActivityId);
-    console.log(this.form.value);
   }
 
   setTipoMtto(e): void {
@@ -187,6 +184,5 @@ export class DialogAddDocumentosComponent implements OnInit {
       (x: any) => e.value === x.id
     ).nombre;
     this.form.controls["tipo_mantenimiento"].setValue(currentTipoMttoId);
-    console.log(this.form.value);
   }
 }

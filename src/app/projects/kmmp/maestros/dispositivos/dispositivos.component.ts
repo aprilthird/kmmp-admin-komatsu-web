@@ -66,7 +66,6 @@ export class DispositivosComponent implements OnInit {
   }
 
   assignDevice(deviceDataEvent: MatSelect): void {
-    console.log("deviceDataEvent ", deviceDataEvent);
     this.matDialog.open(DialogAddDispositivosComponent, {
       width: "400px",
       data: deviceDataEvent,

@@ -59,7 +59,6 @@ export class UploadFileComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("simplechanges ", changes);
     if (changes["loading"]) {
       this.loading = changes["loading"].currentValue;
       if (!this.loading && this._file !== "") {

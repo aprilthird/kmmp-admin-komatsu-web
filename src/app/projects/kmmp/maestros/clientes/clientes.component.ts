@@ -90,7 +90,6 @@ export class ClientesComponent implements OnInit {
   }
 
   edit(cliente): void {
-    console.log(cliente);
     this.matDialog
       .open(DialogAddClientComponent, {
         width: "400px",

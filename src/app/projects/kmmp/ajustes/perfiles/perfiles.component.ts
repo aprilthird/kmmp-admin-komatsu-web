@@ -108,7 +108,6 @@ export class PerfilesComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.beforeClosed().subscribe((result) => {
-      console.log(result);
       if (result === "confirmed") {
         this.isLoading = true;
         this._perfilesServices

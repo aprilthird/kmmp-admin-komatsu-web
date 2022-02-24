@@ -197,11 +197,5 @@ export class ListComponent implements OnInit {
         page: pagination.pageIndex,
       },
     });
-
-    console.log("saasas ", {
-      ...params,
-      pageSize: pagination.pageSize,
-      page: pagination.pageIndex,
-    });
   }
 }
