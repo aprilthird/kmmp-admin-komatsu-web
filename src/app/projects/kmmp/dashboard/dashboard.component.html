@@ -128,7 +128,10 @@
             [animationDuration]="'0'"
           >
             <!-- Home -->
-            <mat-tab *ngFor="let flota of flotas" [label]="flota.nombre">
+            <mat-tab
+              *ngFor="let flota of flotas; let i = index"
+              [label]="flota"
+            >
             </mat-tab>
           </mat-tab-group>
         </div>

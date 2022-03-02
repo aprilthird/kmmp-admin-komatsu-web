@@ -24,6 +24,9 @@ export class DashboardService {
   _activitiesNoCompletedByState: BehaviorSubject<any> = new BehaviorSubject(
     null
   );
+  _categories: BehaviorSubject<any> = new BehaviorSubject(null);
+  _seriesStatus: BehaviorSubject<any> = new BehaviorSubject(null);
+  _currentSingleStatus: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient, private fakeDB: FakeDbService) {}
 
@@ -49,6 +52,18 @@ export class DashboardService {
 
   get delayedCode$(): Observable<any> {
     return this._delayedCode.asObservable();
+  }
+
+  get categorie$(): Observable<any> {
+    return this._categories.asObservable();
+  }
+
+  get currentSingleStatus$(): Observable<any> {
+    return this._currentSingleStatus.asObservable();
+  }
+
+  set currentSingleStatus$(data) {
+    this._currentSingleStatus.next(data);
   }
 
   /**FAKE SERVICES */
@@ -94,6 +109,10 @@ export class DashboardService {
     return this.http.post<Response>(endpoint, filter).pipe(
       tap((statusFlota: any) => {
         this._statusXflota.next(statusFlota?.body?.estatusFlotas);
+        this._categories.next(
+          statusFlota?.body?.estatusFlotas?.xaxis?.categories
+        );
+        this._seriesStatus.next(statusFlota?.body?.estatusFlotas?.series);
         this._summary.next({
           observadas: statusFlota?.body?.observadas,
           sinEmpezar: statusFlota?.body?.sinEmpezar,

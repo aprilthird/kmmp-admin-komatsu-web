@@ -26,6 +26,7 @@ import { ActivitiesService } from "../actividades/activities.service";
 import { ClaseActividadService } from "../maestros/clase-actividad/clase-actividad.service";
 import { FlotaI } from "../maestros/flotas/flota-model";
 import { MaestrosService } from "../maestros/maestros.service";
+import { Status } from "./dashboaard.config";
 import { DashboardService } from "./dashboard.service";
 
 //FAKE DATA
@@ -56,7 +57,8 @@ export class DashboardComponent implements OnInit {
   });
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
-  flotas: FlotaI[] = [];
+  //flotas: FlotaI[] = [];
+  flotas: string[] = [];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   clients$: Observable<any>;
   client = "Todos los clientes";
@@ -197,11 +199,18 @@ export class DashboardComponent implements OnInit {
   }
 
   getFlotas(): void {
-    this._maestrosService
-      .getList({ tipo: 6, pageSize: 999 })
-      .subscribe((resp: any) => {
-        this.flotas = resp.body.data;
-        this.flotas.unshift({ id: 999, nombre: "Todas" });
+    // this._maestrosService
+    //   .getList({ tipo: 6, pageSize: 999 })
+    //   .subscribe((resp: any) => {
+    //     this.flotas = resp.body.data;
+    //     this.flotas.unshift({ id: 999, nombre: "Todas" });
+    //   });
+
+    this._dashboardService.categorie$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((flotas) => {
+        this.flotas = flotas;
+        this.flotas.unshift("Todas");
       });
   }
 
@@ -223,13 +232,31 @@ export class DashboardComponent implements OnInit {
     if (event.index === 0) {
       this._allFlotas = true;
     } else {
-      this.isLoading = true;
+      //this.isLoading = true;
       this._allFlotas = false;
-      this._dashboardService
-        .getStatusFlotaById(
-          this.flotas.find((flota) => flota.nombre === event.tab.textLabel).id
-        )
-        .subscribe(() => (this.isLoading = false));
+      // this._dashboardService
+      //   .getStatusFlotaById(
+      //     this.flotas.find((flota) => flota.nombre === event.tab.textLabel).id
+      //   )
+      //   .subscribe(() => (this.isLoading = false));
+
+      const series = this._dashboardService._seriesStatus.getValue();
+      const executed = series.find((x) => x.name === Status.EXECUTED)["data"][
+        event.index - 1
+      ];
+      const noExecuted = series.find((x) => x.name === Status.NO_EXECUTED)[
+        "data"
+      ][event.index - 1];
+
+      const postponed = series.find((x) => x.name === Status.POSTPONED)["data"][
+        event.index - 1
+      ];
+
+      this._dashboardService._currentSingleStatus.next([
+        executed,
+        noExecuted,
+        postponed,
+      ]);
     }
   }
 
