@@ -1,4 +1,5 @@
 import { Route } from "@angular/router";
+import { MsalGuard } from "@azure/msal-angular";
 import { InitialDataResolver } from "./app.resolvers";
 import { AuthGuard } from "./core/auth/guards/auth.guard";
 import { NoAuthGuard } from "./core/auth/guards/noAuth.guard";
@@ -72,9 +73,9 @@ export const dcpRoutes: Route[] = [
         path: "pagina-no-encontrada",
         pathMatch: "full",
         loadChildren: () =>
-          import(
-            "app/modules/error/error-404/error-404.module"
-          ).then((m) => m.Error404Module),
+          import("app/modules/error/error-404/error-404.module").then(
+            (m) => m.Error404Module
+          ),
       },
       { path: "**", redirectTo: "pagina-no-encontrada" },
     ],
@@ -83,6 +84,16 @@ export const dcpRoutes: Route[] = [
 
 export const kmmpRoutes: Route[] = [
   ...commonRoutes,
+  {
+    path: "redirecting",
+    pathMatch: "full",
+    //redirectTo: "admin/informes/list",
+
+    loadChildren: () =>
+      import("app/modules/auth/redirecting/redirecting.module").then(
+        (m) => m.AuthRedircetingnModule
+      ),
+  },
   {
     path: "",
     component: LayoutComponent,
@@ -99,15 +110,16 @@ export const kmmpRoutes: Route[] = [
         path: "admin",
         loadChildren: (): any =>
           import("app/projects/kmmp/kmmp.module").then((m) => m.KmmpModule),
+        canActivate: [MsalGuard],
       },
       // 404 & Catch all
       {
         path: "pagina-no-encontrada",
         pathMatch: "full",
         loadChildren: () =>
-          import(
-            "app/modules/error/error-404/error-404.module"
-          ).then((m) => m.Error404Module),
+          import("app/modules/error/error-404/error-404.module").then(
+            (m) => m.Error404Module
+          ),
       },
       { path: "**", redirectTo: "pagina-no-encontrada" },
     ],

@@ -11,6 +11,15 @@ export const environment = {
   azureContaineName: "kmmp",
   azureSas:
     "sp=rwd&st=2022-01-20T15:00:28Z&se=2022-03-31T23:00:28Z&spr=https&sv=2020-08-04&sr=c&sig=kkhJ2sTkGzX%2B4i8NQRJK8LIYpdYIEIoPnFTmiWOe2I8%3D",
+
+  officeTenant: {
+    clientIdAzure: "df3c881e-0c3f-457e-a355-8d8d0d61ea1c",
+    objectIdAzure: "ad5d0da5-a703-4e32-973e-e9358533a4a8",
+    redirectUrl: "https://development-kmmp-admin.solera.pe/",
+    postLogoutRedirectUri: "https://development-kmmp-admin.solera.pe/",
+    tenantId: "807307b4-6a4c-4b3d-97fd-7c78330bba23",
+    microsoftUri: "https://login.microsoftonline.com",
+  },
 };
 
 /*
