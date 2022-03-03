@@ -26,19 +26,25 @@ export class AzureAuthService {
     const isIE =
       window.navigator.userAgent.indexOf("MSIE ") > -1 ||
       window.navigator.userAgent.indexOf("Trident/") > -1;
-    const redirectURL = "/admin/informes/list";
 
     if (!isIE) {
-      //setTimeout(async () => {
-      await this.redirecting().then(async (res: any) => {
-        console.log(res.account.username);
-        await this._authService
-          .signIn({ usr: "solera", psw: "1234" })
-          //.signInAD(res.account.username)
-          .toPromise()
-          .then(() => this._navigationService.get().toPromise());
-      });
-      //});
+      await this.redirecting()
+        .then(async (res: any) => {
+          await this._authService
+            .signIn({ usr: "solera", psw: "1234" })
+            //.signInAD(res.account.username)
+            .toPromise()
+            .then(() => this._navigationService.get().toPromise());
+        })
+        .catch((err) => {
+          if (err === "User is already logged in.") {
+            setTimeout(() => {
+              this._router.navigate(["admin"]);
+            }, 250);
+          } else {
+            this._router.navigate(["sign-in"]);
+          }
+        });
 
       this.msalBroadcastService.inProgress$
         .pipe(
@@ -48,7 +54,8 @@ export class AzureAuthService {
         )
         .subscribe((resp) => {
           console.log(resp);
-          this.authService.loginRedirect();
+          this._router.navigate(["admin"]);
+          //this.authService.loginPopup();
         });
     } else {
       this.authService.loginPopup;
@@ -64,7 +71,14 @@ export class AzureAuthService {
 
   private loginPopUp() {
     return new Promise<any>((res) => {
-      this.authService.loginPopup().subscribe(async (resp) => res(resp));
+      this.authService.loginPopup().subscribe(
+        async (resp) => res(resp),
+        (err) => {
+          // sessionStorage.clear();
+          // localStorage.clear();
+          this._router.navigate(["sign-out"]);
+        }
+      );
     });
   }
 }
