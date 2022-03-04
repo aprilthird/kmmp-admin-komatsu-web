@@ -27,39 +27,35 @@ export class AzureAuthService {
       window.navigator.userAgent.indexOf("MSIE ") > -1 ||
       window.navigator.userAgent.indexOf("Trident/") > -1;
 
-    if (!isIE) {
-      await this.redirecting()
-        .then(async (res: any) => {
-          await this._authService
-            .signIn({ usr: "solera", psw: "1234" })
-            //.signInAD(res.account.username)
-            .toPromise()
-            .then(() => this._navigationService.get().toPromise());
-        })
-        .catch((err) => {
-          if (err === "User is already logged in.") {
-            setTimeout(() => {
-              this._router.navigate(["admin"]);
-            }, 250);
-          } else {
-            this._router.navigate(["sign-in"]);
-          }
-        });
+    //if (!isIE) {
+    await this.redirecting()
+      .then(async (res: any) => {
+        await this._authService
+          .signInAD(res.account.username)
+          .toPromise()
+          .then(() => this._navigationService.get().toPromise());
+      })
+      .catch((err) => {
+        if (err === "User is already logged in.") {
+          setTimeout(() => {
+            this._router.navigate(["admin"]);
+          }, 250);
+        } else {
+          this._router.navigate(["sign-in"]);
+        }
+      });
 
-      this.msalBroadcastService.inProgress$
-        .pipe(
-          filter(
-            (status: InteractionStatus) => status === InteractionStatus.None
-          )
-        )
-        .subscribe((resp) => {
-          console.log(resp);
-          this._router.navigate(["admin"]);
-          //this.authService.loginPopup();
-        });
-    } else {
-      this.authService.loginPopup;
-    }
+    this.msalBroadcastService.inProgress$
+      .pipe(
+        filter((status: InteractionStatus) => status === InteractionStatus.None)
+      )
+      .subscribe((resp) => {
+        this._router.navigate(["admin"]);
+        //this.authService.loginPopup();
+      });
+    // } else {
+    //   this.authService.loginPopup;
+    // }
   }
 
   private redirecting() {

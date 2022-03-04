@@ -31,6 +31,10 @@ export class StatusFlotaComponent implements OnInit {
   constructor(private dashboardServices: DashboardService) {
     this.dashboardServices.statusFlota$.subscribe((resp) => {
       this.chartOptions = resp;
+      this.chartOptions.xaxis.categories =
+        this.chartOptions.xaxis.categories.filter((x) => x !== "Todas");
+
+      this.chartOptions.color = ["#85B6FF", "#12239E", "#7275b0"];
       delete this.chartOptions.chart.width;
     });
   }

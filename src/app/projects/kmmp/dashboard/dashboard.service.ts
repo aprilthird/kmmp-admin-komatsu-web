@@ -27,6 +27,8 @@ export class DashboardService {
   _categories: BehaviorSubject<any> = new BehaviorSubject(null);
   _seriesStatus: BehaviorSubject<any> = new BehaviorSubject(null);
   _currentSingleStatus: BehaviorSubject<any> = new BehaviorSubject(null);
+  _postponed: BehaviorSubject<any> = new BehaviorSubject(null);
+  _noExecuted: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient, private fakeDB: FakeDbService) {}
 
@@ -136,11 +138,22 @@ export class DashboardService {
 
   getActividadesNoEjecutadas(
     filter = this._rangeDate.getValue()
-  ): Observable<Response> {
+  ): Observable<any> {
     const endpoint = environment.apiUrl + "/Reportes/ActividadesNoCompletadas";
-    return this.http.post<Response>(endpoint, filter).pipe(
+    return this.http.post<any>(endpoint, filter).pipe(
       tap((noCompleted) => {
         this._activitiesNoCompleted.next(noCompleted);
+        this._postponed.next(
+          noCompleted.series.map((x) => {
+            return [x.name, x.data[0]];
+          })
+        );
+
+        this._noExecuted.next(
+          noCompleted.series.map((x) => {
+            return [x.name, x.data[1]];
+          })
+        );
       })
     );
   }

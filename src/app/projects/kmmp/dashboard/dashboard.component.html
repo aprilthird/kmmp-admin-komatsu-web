@@ -158,16 +158,15 @@
           >
             <!-- Home -->
             <mat-tab label="Todas"> </mat-tab>
+            <mat-tab label="Postergadas"> </mat-tab>
             <mat-tab label="No ejecutadas"> </mat-tab>
           </mat-tab-group>
         </div>
-        <mat-progress-bar
-          *ngIf="isLoadingNoExc"
-          [mode]="'indeterminate'"
-        ></mat-progress-bar>
+
         <no-execute-activities *ngIf="_allNoExecuted"></no-execute-activities>
         <no-execute-activities-single
           *ngIf="!_allNoExecuted"
+          [postponed]="postponed"
         ></no-execute-activities-single>
       </div>
 

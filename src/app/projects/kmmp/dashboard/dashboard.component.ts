@@ -83,6 +83,7 @@ export class DashboardComponent implements OnInit {
   };
   isLoadingNoExc: boolean;
   idCliente: any;
+  postponed: boolean;
 
   constructor(
     private _router: Router,
@@ -266,9 +267,10 @@ export class DashboardComponent implements OnInit {
     } else {
       this.isLoadingNoExc = true;
       this._allNoExecuted = false;
-      this._dashboardService
-        .getNoExecuteActivitiesyState(this.filter)
-        .subscribe(() => (this.isLoadingNoExc = false));
+      this.postponed = event.index === 1 ? true : false;
+      // this._dashboardService
+      //   .getNoExecuteActivitiesyState(this.filter)
+      //   .subscribe(() => (this.isLoadingNoExc = false));
     }
   }
 

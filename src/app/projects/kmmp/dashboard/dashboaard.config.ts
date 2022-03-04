@@ -84,6 +84,10 @@ export const BasiBarChart = {
   plotOptions: {
     bar: {
       horizontal: false,
+      colors: {
+        backgroundBarColors: [],
+        ranges: [],
+      },
     },
   },
   dataLabels: {
@@ -91,5 +95,50 @@ export const BasiBarChart = {
   },
   xaxis: {
     categories: ["Ejecutado", "No ejecutado", "Postergado"],
+  },
+};
+
+export const Postponed: any = {
+  colors: ["red", "black"],
+  fill: {
+    colors: ["red", "black"],
+  },
+  series: [
+    {
+      name: "basic",
+      data: [400, 300, 220, 65, 400, 300, 220, 65],
+    },
+  ],
+  chart: {
+    type: "bar",
+    height: 350,
+    width: 450,
+    stacked: false,
+  },
+  plotOptions: {
+    bar: {
+      horizontal: false,
+      columnWidth: null,
+      endingShape: null,
+      colors: {
+        backgroundBarColors: [],
+        ranges: [],
+      },
+    },
+  },
+  dataLabels: {
+    enable: false,
+  },
+  xaxis: {
+    categories: [
+      "Preventivo",
+      "Backlog",
+      "Camb Comp",
+      "Inspección",
+      "Lavado",
+      "Observaciones",
+      "Predictivo",
+      "Pre-PM",
+    ],
   },
 };
