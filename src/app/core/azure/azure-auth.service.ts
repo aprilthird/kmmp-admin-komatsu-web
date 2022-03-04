@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { MsalBroadcastService, MsalService } from "@azure/msal-angular";
 import { InteractionStatus } from "@azure/msal-browser";
+import { initPathToRedirect } from "app/shared/utils/initPath";
 import { filter } from "rxjs/operators";
 import { AuthService } from "../auth/auth.service";
 import { NavigationService } from "../navigation/navigation.service";
@@ -38,7 +39,10 @@ export class AzureAuthService {
       .catch((err) => {
         if (err === "User is already logged in.") {
           setTimeout(() => {
-            this._router.navigate(["admin"]);
+            // Navigate to the redirect url
+            this._router.navigateByUrl(initPathToRedirect());
+
+            //this._router.navigate(["admin"]);
           }, 250);
         } else {
           this._router.navigate(["sign-in"]);
@@ -50,7 +54,13 @@ export class AzureAuthService {
         filter((status: InteractionStatus) => status === InteractionStatus.None)
       )
       .subscribe((resp) => {
-        this._router.navigate(["admin"]);
+        setTimeout(() => {
+          // Navigate to the redirect url
+          this._router.navigateByUrl(initPathToRedirect());
+
+          //this._router.navigate(["admin"]);
+        }, 250);
+        //this._router.navigate(["admin"]);
         //this.authService.loginPopup();
       });
     // } else {

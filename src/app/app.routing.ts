@@ -5,10 +5,11 @@ import { AuthGuard } from "./core/auth/guards/auth.guard";
 import { NoAuthGuard } from "./core/auth/guards/noAuth.guard";
 import { MenuPermissionGuard } from "./core/permission/guards/menu-permission.guard";
 import { LayoutComponent } from "./layout/layout.component";
+import { initPath } from "./shared/utils/initPath";
 
 export const commonRoutes = [
-  { path: "", pathMatch: "full", redirectTo: "admin" },
-  { path: "signed-in-redirect", pathMatch: "full", redirectTo: "admin" },
+  { path: "", pathMatch: "full", redirectTo: initPath() },
+  { path: "signed-in-redirect", pathMatch: "full", redirectTo: initPath() },
   {
     path: "",
     canActivate: [NoAuthGuard],
