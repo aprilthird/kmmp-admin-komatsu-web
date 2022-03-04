@@ -153,6 +153,7 @@ export class CrearUsuarioComponent implements OnInit {
           );
         });
     } else {
+      this.form.controls["psw"].setValidators(Validators.required);
       this.getClients();
     }
   }
