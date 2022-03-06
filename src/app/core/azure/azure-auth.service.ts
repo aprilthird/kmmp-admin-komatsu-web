@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { MsalBroadcastService, MsalService } from "@azure/msal-angular";
 import { InteractionStatus } from "@azure/msal-browser";
+import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { initPathToRedirect } from "app/shared/utils/initPath";
 import { filter } from "rxjs/operators";
 import { AuthService } from "../auth/auth.service";
@@ -16,6 +18,7 @@ export class AzureAuthService {
     private msalBroadcastService: MsalBroadcastService,
     private _authService: AuthService,
     private _navigationService: NavigationService,
+    private _matDialog: MatDialog,
     private _router: Router
   ) {}
 
@@ -29,23 +32,42 @@ export class AzureAuthService {
       window.navigator.userAgent.indexOf("Trident/") > -1;
 
     //if (!isIE) {
-    await this.redirecting()
+    this.redirecting()
       .then(async (res: any) => {
         await this._authService
+          //.signIn({ usr: "solera", psw: "12345" })
           .signInAD(res.account.username)
           .toPromise()
-          .then(() => this._navigationService.get().toPromise());
+          .then(() =>
+            this._navigationService
+              .get()
+              .toPromise()
+              .then(() => this._router.navigateByUrl(initPathToRedirect()))
+          )
+          .catch(async () => {
+            const dialog = this._matDialog.open(UiDialogsComponent, {
+              width: "600px",
+              data: {
+                title: "Error",
+                message: `Usuario ${res.account.username} no puede conectarse al sistema, al cerrar éste mensaje, favor cierre sesión de éste ususrio en la siguiente ventana de Windows y contacte al administrador del sistema`,
+              },
+            });
+            await dialog
+              .afterClosed()
+              .toPromise()
+              .then(() =>
+                this.authService
+                  .logout()
+                  .toPromise()
+                  .then(() => this._router.navigate(["sign-in"]))
+              );
+          });
       })
-      .catch((err) => {
+      .catch(async (err) => {
         if (err === "User is already logged in.") {
-          setTimeout(() => {
-            // Navigate to the redirect url
-            this._router.navigateByUrl(initPathToRedirect());
-
-            //this._router.navigate(["admin"]);
-          }, 250);
+          this._router.navigateByUrl(initPathToRedirect());
         } else {
-          this._router.navigate(["sign-in"]);
+          this.authService.logout().toPromise();
         }
       });
 
@@ -54,12 +76,10 @@ export class AzureAuthService {
         filter((status: InteractionStatus) => status === InteractionStatus.None)
       )
       .subscribe((resp) => {
-        setTimeout(() => {
-          // Navigate to the redirect url
-          this._router.navigateByUrl(initPathToRedirect());
+        // Navigate to the redirect url
+        this._router.navigateByUrl(initPathToRedirect());
 
-          //this._router.navigate(["admin"]);
-        }, 250);
+        //this._router.navigate(["admin"]);
         //this._router.navigate(["admin"]);
         //this.authService.loginPopup();
       });
