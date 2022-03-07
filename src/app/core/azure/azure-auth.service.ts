@@ -35,7 +35,7 @@ export class AzureAuthService {
     this.redirecting()
       .then(async (res: any) => {
         await this._authService
-          //.signIn({ usr: "solera", psw: "12345" })
+          //.signIn({ usr: "solera", psw: "1234" })
           .signInAD(res.account.username)
           .toPromise()
           .then(() =>

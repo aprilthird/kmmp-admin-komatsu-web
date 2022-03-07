@@ -677,14 +677,21 @@ export class ValidationFormatosComponent implements OnInit {
       parametro.valor = String(
         this.form.get(this.getParametroControl({ i, j, k })).value
       );
+
       if (
         !parametro.valor ||
         parametro.valor === "" ||
         parametro.valor === "null"
       ) {
-        this.form
-          .get(this.getParametroControl({ i, j, k }))
-          .setValue(parametro.dato);
+        if (parametro.dato) {
+          this.form
+            .get(this.getParametroControl({ i, j, k }))
+            .setValue(parametro.dato);
+        } else {
+          this.form
+            .get(this.getParametroControl({ i, j, k }))
+            .setValue(undefined);
+        }
       }
     }
   }

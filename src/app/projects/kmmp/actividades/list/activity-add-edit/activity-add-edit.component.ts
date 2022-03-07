@@ -294,14 +294,14 @@ export class ActivityAddEditComponent implements OnInit {
         : moment().format("yyyy-MM-DD:00:00:00"),
       fechaEstimadaIni: this.form.controls["fechaEstimadaIni"].value
         ? this.form.controls["fechaEstimadaIni"].value
-        : moment().subtract(3, "years").format("yyyy-MM-DD:00:00:00"),
+        : moment().subtract(0, "days").format("yyyy-MM-DD:00:00:00"),
 
       fechaHoraFinReal: this.form.controls["fechaHoraFinReal"].value
         ? this.form.controls["fechaHoraFinReal"].value
         : moment().format("yyyy-MM-DD"),
       fechaHoraIniReal: this.form.controls["fechaHoraIniReal"].value
         ? this.form.controls["fechaHoraIniReal"].value
-        : moment().subtract(3, "years").format("yyyy-MM-DD"),
+        : moment().subtract(0, "days").format("yyyy-MM-DD"),
 
       duracion: this.form.controls["duracion"].value,
       nbl: this.form.controls["numero_bl"].value,
