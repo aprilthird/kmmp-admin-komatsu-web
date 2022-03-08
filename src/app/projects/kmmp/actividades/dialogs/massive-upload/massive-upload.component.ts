@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FuseAlertType } from "@fuse/components/alert";
 import { environment } from "environments/environment";
+import moment from "moment";
 
 //SERVICES
 import { ActivitiesService } from "../../activities.service";
@@ -14,7 +15,9 @@ import { ActivitiesService } from "../../activities.service";
 export class MassiveUploadComponent implements OnInit {
   //file = new FormControl(Validators.required);
   file: any = "";
-  fileFormat = `https://appinformes.blob.core.windows.net/kmmp/carga%20masiva?${environment.azureSas}`;
+  fileFormat = `https://appinformes.blob.core.windows.net/kmmp/carga%20masiva?${moment()}&${
+    environment.azureSas
+  }`;
   isLoading: boolean;
   alert: { type: FuseAlertType; message: string };
   fileName: string;
@@ -29,8 +32,8 @@ export class MassiveUploadComponent implements OnInit {
       (resp) => {
         this.isLoading = false;
 
-        const badRecords = resp.body.filter((record) => record.error);
-        const successRecords = resp.body.filter((record) => !record.error);
+        const badRecords = resp.body.filter((record) => record?.error);
+        const successRecords = resp.body.filter((record) => !record?.error);
 
         if (successRecords.length === resp.body.length) {
           this.alert = {
