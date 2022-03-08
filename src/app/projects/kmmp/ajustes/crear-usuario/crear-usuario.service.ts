@@ -84,4 +84,9 @@ export class CrearUsuarioService {
       environment.apiUrl + "/Seguridad/ADObtenerUsuario?usr=" + usr;
     return this._httpClient.get<Response>(endpoint);
   }
+
+  // validateUser(usr: string): Observable<Response> {
+  //   const endpoint = environment.apiUrl + "/Seguridad/ValidarUsuarioAD/" + usr;
+  //   return this._httpClient.get<Response>(endpoint);
+  // }
 }

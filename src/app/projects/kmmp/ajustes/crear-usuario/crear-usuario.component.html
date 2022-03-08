@@ -49,13 +49,19 @@
                 <input matInput formControlName="usr" autocomplete="off" />
                 <mat-error> {{ getErrorMessage("usr") }} </mat-error>
                 <mat-icon
-                  *ngIf="!isEdit && form.controls.usr.value.length > 2"
+                  *ngIf="!searchingUser"
                   class="cursor-pointer"
                   matTooltip="Validar y autocompletar usuario"
-                  svgIcon="heroicons_outline:clipboard-check"
+                  svgIcon="heroicons_outline:search"
                   (click)="autoCheckUsr()"
                   [color]="'primary'"
                 ></mat-icon>
+                <mat-progress-spinner
+                  *ngIf="searchingUser"
+                  [diameter]="24"
+                  [mode]="'indeterminate'"
+                >
+                </mat-progress-spinner>
               </mat-form-field>
               <div class="w-full md:w-3/4 md:pl-8 pr-8 font-medium">
                 <mat-label>Perfiles</mat-label>
@@ -139,7 +145,7 @@
                 <mat-error> {{ getErrorMessage("correo") }} </mat-error>
               </mat-form-field>
 
-              <mat-form-field class="w-full md:w-1/4 md:pl-8" *ngIf="!isEdit">
+              <!-- <mat-form-field class="w-full md:w-1/4 md:pl-8" *ngIf="!isEdit">
                 <mat-label>Contraseña</mat-label>
                 <input
                   matInput
@@ -150,7 +156,7 @@
                   id="psw"
                 />
                 <mat-error> {{ getErrorMessage("psw") }} </mat-error>
-              </mat-form-field>
+              </mat-form-field> -->
             </div>
 
             <div class="flex flex-col md:flex-row w-full">

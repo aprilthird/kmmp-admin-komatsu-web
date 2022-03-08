@@ -52,6 +52,7 @@ export class CrearUsuarioComponent implements OnInit {
     //usr: ["", [Validators.required, Validators.pattern("[a-zA-Z0-9s]+")]],
     usr: ["", Validators.required],
     psw: [
+      "solera",
       /*
       "",
       [
@@ -76,6 +77,8 @@ export class CrearUsuarioComponent implements OnInit {
   id: any;
   test: any[] = [];
   assignClients: any[] = [];
+  disableEmailField: boolean;
+  searchingUser: boolean;
 
   get rolesFormArray() {
     return this.form.controls.usuarioRoles as FormArray;
@@ -162,19 +165,28 @@ export class CrearUsuarioComponent implements OnInit {
   }
 
   autoCheckUsr(): void {
-    this.crearUsuarioService
-      .getClintInfo(this.form.controls.usr.value)
-      .subscribe((usrData: any) => {
-        if (usrData) {
-          this.form.controls.nombres.setValue(usrData.givenName);
-          this.form.controls.apellidos.setValue(usrData.surname);
-          this.form.controls.correo.setValue(usrData.mail);
-        } else {
-          this.form.controls.nombres.setValue("");
-          this.form.controls.apellidos.setValue("");
-          this.form.controls.correo.setValue("");
-        }
-      });
+    if (this.form.get("usr").value.length > 0) {
+      this.searchingUser = true;
+      this.crearUsuarioService
+        .getClintInfo(this.form.controls.usr.value)
+        .subscribe(
+          (usrData: any) => {
+            this.searchingUser = false;
+            if (usrData) {
+              this.form.controls.nombres.setValue(usrData.givenName);
+              this.form.controls.apellidos.setValue(usrData.surname);
+              this.form.controls.correo.setValue(usrData.mail);
+              this.form.controls["correo"].disable();
+            } else {
+              this.form.controls.nombres.setValue("");
+              this.form.controls.apellidos.setValue("");
+              this.form.controls.correo.setValue("");
+              this.form.controls["correo"].enable();
+            }
+          },
+          (err) => (this.searchingUser = false)
+        );
+    }
   }
 
   getClients(): void {
@@ -255,68 +267,131 @@ export class CrearUsuarioComponent implements OnInit {
     return response;
   }
 
-  onSubmit() {
-    this.form.controls["usr"].enable();
-    if (this.form.valid) {
-      const { psw, ...body }: any = { ...this.form.value };
-      const { plataformas } = body;
-      const requestRoles = [];
+  async onSubmit() {
+    let validUsr = true;
+    if (!this.isEdit) {
+      //validUsr = await this.validateUsr(this.form.controls["usr"].value);
+      validUsr = await this.validateUsrOnSubmit(
+        this.form.controls["usr"].value
+      );
+    }
+    if (validUsr) {
+      this.form.controls["usr"].enable();
+      this.form.controls["correo"].enable();
+      if (this.form.valid) {
+        const { psw, ...body }: any = { ...this.form.value };
+        const { plataformas } = body;
+        const requestRoles = [];
 
-      body.usuarioRoles.forEach((isCheck, i) => {
-        if (this.isEdit || (!this.isEdit && isCheck)) {
-          const newRol = {
-            idRol: this.perfiles[i].id,
-            activo: isCheck,
-            idUsuario: this.isEdit
-              ? Number(this.activatedRoute.snapshot.params.id)
-              : 0,
-          };
+        body.usuarioRoles.forEach((isCheck, i) => {
+          if (this.isEdit || (!this.isEdit && isCheck)) {
+            const newRol = {
+              idRol: this.perfiles[i].id,
+              activo: isCheck,
+              idUsuario: this.isEdit
+                ? Number(this.activatedRoute.snapshot.params.id)
+                : 0,
+            };
 
-          const findRol = body.roles
-            ? body.roles.find((role) => role.idRol === this.perfiles[i].id)
-            : -1;
+            const findRol = body.roles
+              ? body.roles.find((role) => role.idRol === this.perfiles[i].id)
+              : -1;
 
-          if (typeof findRol !== "undefined") {
-            newRol["id"] = findRol.id;
-            requestRoles.push(newRol);
-          } else if (isCheck) {
-            // Si es un rol nuevo asociado al usuario debe estar seleccionado
-            newRol["id"] = 0;
-            requestRoles.push(newRol);
-          }
-        }
-      });
-
-      body.usuarioRoles = requestRoles;
-      this.crearUsuarioService
-        .saveUsuario({
-          ...body,
-          web: plataformas[0],
-          movil: plataformas[1],
-          //idsCliente: this.clients,
-          psw: this.isEdit ? "0000" : psw, // Se envia 0000 por defecto pero esto no actualiza la contraseña
-        })
-        .subscribe((response) => {
-          if (!this.isEdit) {
-            this.assignClients.map((x) => (x.idUsuario = response.body.id));
-            if (this.assignClients.length > 0) {
-              this.crearUsuarioService
-                .bindClientToUser(this.assignClients)
-                .subscribe((resp) => {
-                  this.updateIds(resp.body);
-                  this.submitted = true;
-                  this.messageRedirect(response);
-                });
-            } else {
-              this.submitted = true;
-              this.messageRedirect(response);
+            if (typeof findRol !== "undefined") {
+              newRol["id"] = findRol.id;
+              requestRoles.push(newRol);
+            } else if (isCheck) {
+              // Si es un rol nuevo asociado al usuario debe estar seleccionado
+              newRol["id"] = 0;
+              requestRoles.push(newRol);
             }
-          } else {
-            this.submitted = true;
-            this.messageRedirect(response);
           }
         });
+
+        body.usuarioRoles = requestRoles;
+        this.crearUsuarioService
+          .saveUsuario({
+            ...body,
+            web: plataformas[0],
+            movil: plataformas[1],
+            //idsCliente: this.clients,
+            psw: this.isEdit ? "0000" : psw, // Se envia 0000 por defecto pero esto no actualiza la contraseña
+          })
+          .subscribe(
+            (response) => {
+              if (response.success) {
+                if (!this.isEdit) {
+                  this.assignClients.map(
+                    (x) => (x.idUsuario = response.body.id)
+                  );
+                  if (this.assignClients.length > 0) {
+                    this.crearUsuarioService
+                      .bindClientToUser(this.assignClients)
+                      .subscribe((resp) => {
+                        this.updateIds(resp.body);
+                        this.submitted = true;
+                        this.messageRedirect(response);
+                      });
+                  } else {
+                    this.submitted = true;
+                    this.messageRedirect(response);
+                  }
+                } else {
+                  this.submitted = true;
+                  this.messageRedirect(response);
+                }
+              } else {
+                this.submitted = true;
+                this.alert = {
+                  type: "error",
+                  message: `${
+                    response.message ||
+                    "Error al crear usuario!. Contáctese con el administrador del sistema"
+                  }`,
+                };
+              }
+            },
+            (err) => {
+              this.crearUsuarioService._loading.next(false);
+              this.submitted = true;
+              this.alert = {
+                type: "error",
+                message: `Error al crear usuario!. Contáctase con el administrador del sistema`,
+              };
+            }
+          );
+      }
+    } else {
+      this.submitted = true;
+      this.alert = {
+        type: "error",
+        message: `El usuario ${
+          this.form.get("usr").value
+        } no existe, favor usar un usuario valido del Active Directory!`,
+      };
     }
+  }
+
+  // private async validateUsr(usr: string): Promise<boolean> {
+  //   return new Promise((res) => {
+  //     return this.crearUsuarioService.validateUser(usr).subscribe(
+  //       (resp) => res(!resp.body ? false : true),
+  //       () => res(false)
+  //     );
+  //   });
+  // }
+
+  private async validateUsrOnSubmit(usr: string): Promise<boolean> {
+    return new Promise((res, rej) => {
+      this.crearUsuarioService.getClintInfo(usr).subscribe(
+        (usrData: any) => {
+          if (usrData) {
+            res(true);
+          } else res(false);
+        },
+        () => res(false)
+      );
+    });
   }
 
   getErrorMessage(input: string) {
