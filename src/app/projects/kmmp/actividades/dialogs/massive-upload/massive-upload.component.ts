@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FuseAlertType } from "@fuse/components/alert";
+import { MassiveLoad } from "app/shared/config/massiveLoad";
 import { environment } from "environments/environment";
 import moment from "moment";
 
@@ -20,7 +21,10 @@ export class MassiveUploadComponent implements OnInit {
   }`;
   isLoading: boolean;
   alert: { type: FuseAlertType; message: string };
+  errorMessages: { type: FuseAlertType; message: string };
   fileName: string;
+  badRecords: any[] = [];
+  successRecords: any[] = [];
 
   constructor(private _activitiesService: ActivitiesService) {}
 
@@ -32,22 +36,18 @@ export class MassiveUploadComponent implements OnInit {
       (resp) => {
         this.isLoading = false;
 
-        const badRecords = resp.body.filter((record) => record?.error);
-        const successRecords = resp.body.filter((record) => !record?.error);
+        this.badRecords = resp.body.filter((record) => record?.error);
+        this.successRecords = resp.body.filter((record) => !record?.error);
 
-        if (successRecords.length === resp.body.length) {
+        if (this.successRecords.length === resp.body.length) {
           this.alert = {
             type: "success",
-            message: `${
-              resp.message
-                ? resp.message
-                : "Todos los registros han sido cargados!"
-            }`,
+            message: `${resp.message ? resp.message : MassiveLoad.ALL_SUCCESS}`,
           };
         } else {
           this.alert = {
             type: "warning",
-            message: `${successRecords.length} registros exitosos, ${badRecords.length} registros no han sido procesados!`,
+            message: `${this.successRecords.length} ${MassiveLoad.SOME_SUCCESS}, ${this.badRecords.length} ${MassiveLoad.SOME_WRONG}`,
           };
         }
       },

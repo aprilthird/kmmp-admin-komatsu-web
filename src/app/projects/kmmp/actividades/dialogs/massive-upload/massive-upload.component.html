@@ -20,9 +20,25 @@
   </div>
 
   <div class="w-full mb-8 px-8" *ngIf="alert">
-    <fuse-alert [appearance]="'soft'" [type]="alert?.type" class="bg-green-100">
+    <fuse-alert
+      [appearance]="'soft'"
+      [type]="alert?.type"
+      class="bg-green-100 mb-0.5"
+      [ngClass]="{ 'bg-green-100': alert?.type === 'success' }"
+    >
       {{ alert?.message }}
     </fuse-alert>
+  </div>
+
+  <div
+    class="w-full mb-8 px-8 overflow-y-auto max-h-40"
+    *ngIf="badRecords.length > 0"
+  >
+    <ng-container *ngFor="let errorRecord of badRecords">
+      <fuse-alert [appearance]="'soft'" [type]="'error'" class="mb-0.5">
+        {{ errorRecord?.errorMsg }}
+      </fuse-alert>
+    </ng-container>
   </div>
 
   <!-- Main -->
