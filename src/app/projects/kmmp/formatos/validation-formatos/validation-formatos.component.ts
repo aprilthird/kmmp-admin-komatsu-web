@@ -548,52 +548,76 @@ export class ValidationFormatosComponent implements OnInit {
 
   onSubmit(e: MouseEvent, indexGroup: number, paramIdx?: number): void {
     this.submitEditGroup[`${indexGroup}`] = true;
+    const idx = this.currentSectionData.index - 1;
     const data = [...this.sections];
 
     data.forEach((seccion, i) => {
-      seccion.grupos.forEach((grupo, j) => {
-        if (indexGroup === j) {
-          this.groups[j] = false;
-        }
+      if (i === idx) {
+        seccion.grupos.forEach((grupo, j) => {
+          if (indexGroup === j) {
+            this.groups[j] = false;
+          }
 
-        grupo.parametros.forEach((parametro, k) => {
-          if (parametro.activo) {
-            if (
-              parametro.idParametro === TipoParametro.IMAGEN ||
-              parametro.idParametro === TipoParametro.UPLOAD ||
-              parametro.idParametro === TipoParametro.FIRMA
-            ) {
-              this.checkImgParam(parametro, j, k);
-            }
-            // else if (parametro.idParametro === TipoParametro.FIRMA) {
-            //   this.checkSignParam(paramIdx, parametro, indexGroup, k, j);
-            // }
-            else if (parametro.idParametro === TipoParametro.FECHA) {
-              // if (typeof parametro.valor === "string") {
-              //   parametro.valor = this.form.get(
-              //     this.getParametroControl({ i, j, k })
-              //   ).value;
-              // } else {
-              //   if (
-              //     typeof this.form.get(this.getParametroControl({ i, j, k }))
-              //       .value === "string"
-              //   ) {
-              //     parametro.valor = this.setNoTouchedDate(
-              //       this.form.get(this.getParametroControl({ i, j, k })).value
-              //     );
-              //   } else {
-              //     parametro.valor = this.form.get(
-              //       this.getParametroControl({ i, j, k })
-              //     ).value;
-              //   }
-              // }
-
+          grupo.parametros.forEach((parametro, k) => {
+            if (parametro.activo) {
               if (
-                typeof this.form.get(this.getParametroControl({ i, j, k }))
-                  .value === "object"
+                parametro.idParametro === TipoParametro.IMAGEN ||
+                parametro.idParametro === TipoParametro.UPLOAD ||
+                parametro.idParametro === TipoParametro.FIRMA
               ) {
-                if (parametro.valor !== null) {
-                  if (parametro.valor.indexOf("function") > -1) {
+                this.checkImgParam(parametro, j, k);
+              }
+              // else if (parametro.idParametro === TipoParametro.FIRMA) {
+              //   this.checkSignParam(paramIdx, parametro, indexGroup, k, j);
+              // }
+              else if (parametro.idParametro === TipoParametro.FECHA) {
+                // if (typeof parametro.valor === "string") {
+                //   parametro.valor = this.form.get(
+                //     this.getParametroControl({ i, j, k })
+                //   ).value;
+                // } else {
+                //   if (
+                //     typeof this.form.get(this.getParametroControl({ i, j, k }))
+                //       .value === "string"
+                //   ) {
+                //     parametro.valor = this.setNoTouchedDate(
+                //       this.form.get(this.getParametroControl({ i, j, k })).value
+                //     );
+                //   } else {
+                //     parametro.valor = this.form.get(
+                //       this.getParametroControl({ i, j, k })
+                //     ).value;
+                //   }
+                // }
+
+                if (
+                  typeof this.form.get(this.getParametroControl({ i, j, k }))
+                    .value === "object"
+                ) {
+                  if (parametro.valor !== null) {
+                    if (parametro.valor.indexOf("function") > -1) {
+                      if (
+                        this.form.get(this.getParametroControl({ i, j, k }))
+                          .value === null
+                      ) {
+                        parametro.valor = null;
+                      } else {
+                        parametro.valor = this.convertDate(
+                          this.form.get(this.getParametroControl({ i, j, k }))
+                            .value
+                        );
+                      }
+                    } else {
+                      if (parametro.valor !== "") {
+                        parametro.valor = this.convertDate(
+                          this.form.get(this.getParametroControl({ i, j, k }))
+                            .value
+                        );
+                      } else {
+                        parametro.valor = null;
+                      }
+                    }
+                  } else {
                     if (
                       this.form.get(this.getParametroControl({ i, j, k }))
                         .value === null
@@ -605,43 +629,23 @@ export class ValidationFormatosComponent implements OnInit {
                           .value
                       );
                     }
-                  } else {
-                    if (parametro.valor !== "") {
-                      parametro.valor = this.convertDate(
-                        this.form.get(this.getParametroControl({ i, j, k }))
-                          .value
-                      );
-                    } else {
-                      parametro.valor = null;
-                    }
                   }
                 } else {
-                  if (
-                    this.form.get(this.getParametroControl({ i, j, k }))
-                      .value === null
-                  ) {
-                    parametro.valor = null;
-                  } else {
-                    parametro.valor = this.convertDate(
-                      this.form.get(this.getParametroControl({ i, j, k })).value
-                    );
-                  }
+                  parametro.valor = this.form.get(
+                    this.getParametroControl({ i, j, k })
+                  ).value;
                 }
-              } else {
-                parametro.valor = this.form.get(
-                  this.getParametroControl({ i, j, k })
-                ).value;
-              }
-            } else if (parametro.idParametro !== TipoParametro.LABEL) {
-              if (this.form.get(this.getParametroControl({ i, j, k }))) {
-                parametro.valor = String(
-                  this.form.get(this.getParametroControl({ i, j, k })).value
-                );
+              } else if (parametro.idParametro !== TipoParametro.LABEL) {
+                if (this.form.get(this.getParametroControl({ i, j, k }))) {
+                  parametro.valor = String(
+                    this.form.get(this.getParametroControl({ i, j, k })).value
+                  );
+                }
               }
             }
-          }
+          });
         });
-      });
+      }
     });
 
     const payload = {

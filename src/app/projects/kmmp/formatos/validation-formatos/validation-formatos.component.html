@@ -702,7 +702,10 @@
                                         </div>
                                         <!--SELECT--->
                                         <mat-icon
-                                          *ngIf="observation[j]"
+                                          *ngIf="
+                                            observation[j] ||
+                                            parametro.comentarios
+                                          "
                                           [matTooltip]="observeToolTip(j, k)"
                                           [ngClass]="{
                                             'text-red-600':
