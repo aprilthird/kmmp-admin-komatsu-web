@@ -230,7 +230,7 @@
                                       _permissonService.hasPermissonAccion(
                                         '/admin/actividades/list',
                                         'Comentar'
-                                      )
+                                      ) && !validateSection()
                                     "
                                   >
                                     <mat-icon
@@ -247,7 +247,7 @@
                                     "
                                   >
                                     <button
-                                      *ngIf="!groups[j]"
+                                      *ngIf="!groups[j] && !validateSection()"
                                       mat-raised-button
                                       [color]="'secondary'"
                                       (click)="edit(j)"
