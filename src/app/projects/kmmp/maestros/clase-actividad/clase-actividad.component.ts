@@ -89,13 +89,16 @@ export class ClaseActividadComponent implements OnInit {
   deleteClaseActividad(): void {}
 
   createClaseActividad(): void {
-    this.matDialog.open(DialogAddClaseActividadComponent, {
-      width: "400px",
-      maxHeight: "100vh",
-    });
+    this.matDialog
+      .open(DialogAddClaseActividadComponent, {
+        width: "400px",
+        maxHeight: "100vh",
+      })
+      .afterClosed()
+      .subscribe(() => this.loadData());
   }
 
-  toggleDetails(actividad): void {
+  toggleDetails(actividad?): void {
     this.tipoMttos = [];
     this.idClaseActv = actividad.id;
     this.claseActividadService
@@ -114,14 +117,19 @@ export class ClaseActividadComponent implements OnInit {
   }
 
   createTipoMantenimeinto(params?): void {
-    this.matDialog
-      .open(DialogAddTipoMtmtoComponent, {
-        width: "400px",
-        maxHeight: "100vh",
-        data: { idClase: this.idClaseActv, dataEdit: params },
-      })
-      .afterClosed()
-      .subscribe(() => this.loadData());
+    const dialog = this.matDialog.open(DialogAddTipoMtmtoComponent, {
+      width: "400px",
+      maxHeight: "100vh",
+      data: { idClase: this.idClaseActv, dataEdit: params },
+    });
+
+    dialog.afterClosed().subscribe(() => {
+      const returnedData = dialog.componentInstance.tipoMttoCreated;
+      this.tipoMttos = this.tipoMttos.filter(
+        (tipoMtto) => tipoMtto.id !== returnedData.id
+      );
+      this.tipoMttos.push(dialog.componentInstance.tipoMttoCreated);
+    });
   }
 
   edit(equipo): void {

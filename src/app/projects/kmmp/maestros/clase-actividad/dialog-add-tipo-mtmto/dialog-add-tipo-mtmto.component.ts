@@ -17,6 +17,7 @@ import { ClaseActividadService } from "../clase-actividad.service";
 export class DialogAddTipoMtmtoComponent implements OnInit {
   form: FormGroup;
   matErrorMsg = "Dato obligatorio";
+  tipoMttoCreated: any;
 
   isEdit: boolean;
   claseActividadId: number;
@@ -87,6 +88,7 @@ export class DialogAddTipoMtmtoComponent implements OnInit {
     this.claseActividadService
       .postTipoMantenimeinto(payload)
       .subscribe((resp) => {
+        this.tipoMttoCreated = resp.body;
         this.isLoading = false;
         this.matdialigRef.close();
       });
