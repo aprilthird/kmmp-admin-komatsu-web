@@ -703,8 +703,9 @@
                                         <!--SELECT--->
                                         <mat-icon
                                           *ngIf="
-                                            observation[j] ||
-                                            parametro.comentarios
+                                            parametro.idParametro !== 8 &&
+                                            (observation[j] ||
+                                              parametro.comentarios)
                                           "
                                           [matTooltip]="observeToolTip(j, k)"
                                           [ngClass]="{
