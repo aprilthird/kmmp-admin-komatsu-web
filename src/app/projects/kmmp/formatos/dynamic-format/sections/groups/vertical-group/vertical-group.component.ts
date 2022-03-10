@@ -22,7 +22,9 @@ export class VerticalGroupComponent implements OnInit {
     private _groups: SectionsComponent
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log("");
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.groupData = changes.groupData.currentValue;
