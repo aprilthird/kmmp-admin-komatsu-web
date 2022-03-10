@@ -1,5 +1,13 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
 import { GeneralParams } from "app/shared/models/formatos";
 import { Subject } from "rxjs";
@@ -13,9 +21,12 @@ import { SectionsComponent } from "../../sections.component";
 })
 export class VerticalGroupComponent implements OnInit {
   @Input() groupData: any;
+  @Input() loadingTitle: boolean;
+  @Output() setTitle: EventEmitter<string> = new EventEmitter();
   isLoading: boolean;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   absoluteGroupData: any;
+  title: FormControl = new FormControl();
 
   constructor(
     private _editarFormatoService: EditarFormatoService,
@@ -23,15 +34,24 @@ export class VerticalGroupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("");
+    this.title.setValue(this.groupData.titulo);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.groupData = changes.groupData.currentValue;
-    this.absoluteGroupData = { ...this.groupData };
+    if (changes?.groupData) {
+      this.groupData = changes.groupData.currentValue;
+      this.absoluteGroupData = { ...this.groupData };
 
-    const activeParams = this.groupData.parametros.filter((x) => x.activo);
-    this.groupData = { ...this.groupData, parametros: activeParams };
+      const activeParams = this.groupData.parametros.filter((x) => x.activo);
+      this.groupData = { ...this.groupData, parametros: activeParams };
+    } else if (changes?.loadingTitle) {
+      this.loadingTitle = changes.loadingTitle.currentValue;
+    }
+  }
+
+  saveTitle(): void {
+    this.loadingTitle = true;
+    this.setTitle.emit(this.title.value);
   }
 
   async postParam() {

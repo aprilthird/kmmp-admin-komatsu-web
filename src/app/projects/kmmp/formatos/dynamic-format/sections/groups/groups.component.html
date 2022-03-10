@@ -34,12 +34,18 @@
     </div>
   </div>
   <ng-container *ngIf="groupData.pos === 'v'">
-    <app-vertical-group [groupData]="groupData"></app-vertical-group>
+    <app-vertical-group
+      [groupData]="groupData"
+      (setTitle)="saveTitle($event)"
+      [loadingTitle]="titleChanged"
+    ></app-vertical-group>
   </ng-container>
   <ng-container *ngIf="groupData.pos === 'h'">
     <app-horizontal-group
       (isColumnAdded)="isColumnAddedFn($event)"
       (currentGroupTouched)="currentGroupTouched($event)"
+      (setTitle)="saveTitle($event)"
+      [loadingTitle]="titleChanged"
       [groupData]="groupData"
     ></app-horizontal-group>
   </ng-container>

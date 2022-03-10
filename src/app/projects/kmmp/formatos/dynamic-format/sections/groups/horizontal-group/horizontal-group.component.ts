@@ -9,6 +9,7 @@ import {
   SimpleChanges,
   ViewChildren,
 } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
 import { GeneralParams } from "app/shared/models/formatos";
 import { Subject } from "rxjs";
@@ -22,8 +23,10 @@ import { SectionsComponent } from "../../sections.component";
 })
 export class HorizontalGroupComponent implements OnInit {
   @Input() groupData: any;
+  @Input() loadingTitle: boolean;
   @Output() currentGroupTouched = new EventEmitter(null);
   @Output() isColumnAdded: EventEmitter<boolean> = new EventEmitter(false);
+  @Output() setTitle: EventEmitter<string> = new EventEmitter();
   @ViewChildren(`scrollend`) scrollFrame: QueryList<HTMLElement>;
   lowestRow: number;
   lowestColumn: number;
@@ -32,6 +35,7 @@ export class HorizontalGroupComponent implements OnInit {
   rowsOfGrid = [];
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   highestRow: any;
+  title: FormControl = new FormControl();
 
   constructor(
     private _editarFormatoService: EditarFormatoService,
@@ -39,11 +43,21 @@ export class HorizontalGroupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.title.setValue(this.groupData.titulo);
     this.createGrid();
     this.firstColumnRow();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.groupData = changes.groupData.currentValue;
+    if (changes?.groupData) {
+      this.groupData = changes.groupData.currentValue;
+    } else if (changes?.loadingTitle) {
+      this.loadingTitle = changes.loadingTitle.currentValue;
+    }
+  }
+
+  saveTitle(): void {
+    this.loadingTitle = true;
+    this.setTitle.emit(this.title.value);
   }
 
   firstColumnRow(): void {

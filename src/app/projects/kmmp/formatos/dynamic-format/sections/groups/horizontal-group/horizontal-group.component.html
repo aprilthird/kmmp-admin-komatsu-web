@@ -27,7 +27,29 @@
           Agregar campo
         </button>
       </span>
+      <div>
+        <mat-form-field class="font-semibold w-100" floatLabel="always">
+          <input
+            matInput
+            type="text"
+            placeholder="Ingrese título"
+            [formControl]="title"
+          />
+          <mat-icon
+            *ngIf="!loadingTitle"
+            matTooltip="Guardar título"
+            class="cursor-pointer"
+            svgIcon="mat_outline:save"
+            (click)="saveTitle()"
+          ></mat-icon>
 
+          <mat-progress-spinner
+            *ngIf="loadingTitle"
+            [diameter]="24"
+            [mode]="'indeterminate'"
+          ></mat-progress-spinner>
+        </mat-form-field>
+      </div>
       <div
         *ngFor="let row of rowsOfGrid; let i = index"
         cdkDropListOrientation="horizontal"

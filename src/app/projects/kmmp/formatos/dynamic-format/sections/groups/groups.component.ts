@@ -31,6 +31,7 @@ export class GroupsComponent implements OnInit {
   @ViewChild("nameInput") el: ElementRef;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   @ViewChildren(HorizontalGroupComponent) myValue: HorizontalGroupComponent;
+  titleChanged: boolean;
 
   constructor(
     private _editFormat: EditarFormatoService,
@@ -103,5 +104,18 @@ export class GroupsComponent implements OnInit {
     setTimeout(() => {
       this.isColumnAdded.emit(event);
     });
+  }
+
+  saveTitle(event: any): void {
+    this._editFormat
+      .createGrupo({
+        ...this.groupData,
+        titulo: event,
+      })
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(
+        () => (this.titleChanged = false),
+        () => (this.titleChanged = false)
+      );
   }
 }
