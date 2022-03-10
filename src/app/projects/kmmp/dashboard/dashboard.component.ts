@@ -183,18 +183,18 @@ export class DashboardComponent implements OnInit {
       this.start = !init
         ? new Date(
             this.dateRange.controls["startDate"].value
-          ).toLocaleDateString("en-US")
+          ).toLocaleDateString("en-GB")
         : new Date(
             this.dateRange.controls["startDate"].value
-          ).toLocaleDateString("en-US");
+          ).toLocaleDateString("en-GB");
     }
     if (this.dateRange.controls["endDate"].value) {
       this.end = !init
         ? new Date(this.dateRange.controls["endDate"].value).toLocaleDateString(
-            "en-US"
+            "en-GB"
           )
         : new Date(this.dateRange.controls["endDate"].value).toLocaleDateString(
-            "en-US"
+            "en-GB"
           );
     }
   }

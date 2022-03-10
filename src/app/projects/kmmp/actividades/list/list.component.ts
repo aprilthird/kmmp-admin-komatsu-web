@@ -131,10 +131,10 @@ export class ListComponent implements OnInit {
 
   daterange(event): void {
     if (event.startDate) {
-      this.start = new Date(event.startDate._d).toLocaleDateString("en-US");
+      this.start = new Date(event.startDate._d).toLocaleDateString("en-GB");
     }
     if (event.endDate) {
-      this.end = new Date(event.endDate._d).toLocaleDateString("en-US");
+      this.end = new Date(event.endDate._d).toLocaleDateString("en-GB");
     }
   }
 

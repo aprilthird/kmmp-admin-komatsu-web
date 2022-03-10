@@ -53,7 +53,7 @@
         <div class="flex flex-col mr-4">
           <span class="text-md text-secondary">Fecha y hora inicio</span>
           <span class="font-semibold">{{
-            activityInfo?.fechaHoraIniReal
+            activityInfo?.fechaHoraIniReal | date: "dd/MM/yyyy hh:mm a"
           }}</span>
         </div>
 
@@ -61,7 +61,7 @@
           <span class="text-md text-secondary">Fecha y hora fin</span>
           <div class="flex flex-col">
             <span class="text-red-600 font-bold">{{
-              activityInfo?.fechaHoraFinReal
+              activityInfo?.fechaHoraFinReal | date: "dd/MM/yyyy hh:mm a"
             }}</span>
           </div>
         </div>

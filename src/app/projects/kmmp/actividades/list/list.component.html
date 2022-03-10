@@ -14,7 +14,10 @@
       </div>
       <div class="flex flex-col activities-container">
         <div class="text-4xl font-extrabold tracking-tight">Actividades</div>
-        <a class="prose font-bold">De semana {{ start }} al {{ end }}</a>
+        <a class="prose font-bold"
+          >De semana {{ start | date: "dd/MM/yyyy" }} al
+          {{ end | date: "dd/MM/yyyy" }}</a
+        >
       </div>
       <div
         class="flex flex-wrap gap-5 mt-5 xl:my-none"
