@@ -103,6 +103,7 @@ export class AuthService {
       .pipe(
         switchMap((response: any) => {
           this.NavigationService.get();
+          //
 
           // Store the access token in the local storage
           this.accessToken = response.body;
