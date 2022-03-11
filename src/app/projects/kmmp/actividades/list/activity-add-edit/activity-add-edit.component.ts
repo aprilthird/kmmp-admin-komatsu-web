@@ -22,6 +22,7 @@ import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.componen
 import { Response } from "app/shared/models/general-model";
 import { BayI } from "../../models/bays-model";
 import moment from "moment";
+import { getDateTime } from "app/shared/utils/dates-format";
 
 @Component({
   selector: "activity-add-edit",
@@ -67,6 +68,7 @@ export class ActivityAddEditComponent implements OnInit {
   ngOnInit(): void {
     this.getInboxes();
     this.getTipoSolicitud();
+    this.detectDateChanges();
   }
 
   ngOnDestroy(): void {
@@ -225,13 +227,13 @@ export class ActivityAddEditComponent implements OnInit {
       fechaHoraFinReal: new FormControl(this.activityInfo?.fechaHoraFinReal),
       fechaEstimadaIni: new FormControl(
         this.activityInfo?.fechaEstimadaIni
-          ? this.activityInfo?.fechaEstimadaIni
-          : moment().format("yyyy-MM-DD")
+        // ? this.activityInfo?.fechaEstimadaIni
+        // : moment().format("yyyy-MM-DD")
       ),
       fechaEstimadaFin: new FormControl(
         this.activityInfo?.fechaEstimadaFin
-          ? this.activityInfo?.fechaEstimadaFin
-          : moment().format("yyyy-MM-DD")
+        // ? this.activityInfo?.fechaEstimadaFin
+        // : moment().format("yyyy-MM-DD")
       ),
       duracionReal: new FormControl(this.activityInfo?.duracionReal),
       comentariosTecnico: new FormControl(
@@ -289,12 +291,17 @@ export class ActivityAddEditComponent implements OnInit {
       idBahia: this.form.controls["bahia_asignada"].value,
       idTipoSolicitud: this.form.controls["tipo_solicitud"].value,
       descripcion: this.form.controls["descripcion_actividad"].value,
-      fechaEstimadaFin: this.form.controls["fechaEstimadaFin"].value
-        ? this.form.controls["fechaEstimadaFin"].value
-        : moment().format("yyyy-MM-DD:00:00:00"),
-      fechaEstimadaIni: this.form.controls["fechaEstimadaIni"].value
-        ? this.form.controls["fechaEstimadaIni"].value
-        : moment().subtract(0, "days").format("yyyy-MM-DD:00:00:00"),
+      fechaEstimadaFin: getDateTime(
+        this.form.controls["fechaEstimadaFin"].value
+      ),
+
+      // ? this.form.controls["fechaEstimadaFin"].value
+      // : moment().format("yyyy-MM-DD:00:00:00"),
+      fechaEstimadaIni: getDateTime(
+        this.form.controls["fechaEstimadaIni"].value
+      ),
+      // ? this.form.controls["fechaEstimadaIni"].value
+      // : moment().subtract(0, "days").format("yyyy-MM-DD:00:00:00"),
 
       fechaHoraFinReal: this.form.controls["fechaHoraFinReal"].value
         ? this.form.controls["fechaHoraFinReal"].value
@@ -451,5 +458,27 @@ export class ActivityAddEditComponent implements OnInit {
         )
       );
     }, 250);
+  }
+
+  detectDateChanges(): void {
+    setTimeout(() => {
+      this.form.get("fechaEstimadaFin").valueChanges.subscribe((values) => {
+        this.form.controls.duracion.setValue(
+          this.getTimeDiff(
+            this.form.controls.fechaEstimadaIni.value,
+            this.form.controls.fechaEstimadaFin.value
+          )
+        );
+      });
+
+      this.form.get("fechaEstimadaIni").valueChanges.subscribe((values) => {
+        this.form.controls.duracion.setValue(
+          this.getTimeDiff(
+            this.form.controls.fechaEstimadaIni.value,
+            this.form.controls.fechaEstimadaFin.value
+          )
+        );
+      });
+    }, 3000);
   }
 }

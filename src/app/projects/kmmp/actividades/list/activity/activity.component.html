@@ -90,9 +90,11 @@
           <span class="text-md text-secondary">Fecha estimada</span>
           <div class="flex flex-col">
             <span class="text-red-600 font-bold"
-              >{{ activityInfo?.fechaEstimadaIni | date: "dd/MM/yy" }}
+              >{{ activityInfo?.fechaEstimadaIni | date: "dd/MM/yy hh:mm a" }}
               -
-              {{ activityInfo?.fechaEstimadaFin | date: "dd/MM/yy" }}</span
+              {{
+                activityInfo?.fechaEstimadaFin | date: "dd/MM/yy hh:mm a"
+              }}</span
             >
           </div>
         </div>

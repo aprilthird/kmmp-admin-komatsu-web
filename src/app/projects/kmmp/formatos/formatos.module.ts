@@ -46,12 +46,19 @@ import { DynamicFormatComponent } from "./dynamic-format/dynamic-format.componen
 import { SectionsComponent } from "./dynamic-format/sections/sections.component";
 import { GroupsComponent } from "./dynamic-format/sections/groups/groups.component";
 import { FieldsComponent } from "./dynamic-format/sections/groups/fields/fields.component";
-import { VerticalGroupComponent } from './dynamic-format/sections/groups/vertical-group/vertical-group.component';
-import { HorizontalGroupComponent } from './dynamic-format/sections/groups/horizontal-group/horizontal-group.component';
-import { OtherValidatorComponent } from './dynamic-format/dialog-components/other-validator/other-validator.component';
-import { ChipsSelectionComponent } from './dynamic-format/dialog-components/chips-selection/chips-selection.component';
-import { UploadImageComponent } from './dynamic-format/dialog-components/upload-image/upload-image.component';
-import { LabelEditableComponent } from './dynamic-format/sections/groups/fields/label-editable/label-editable.component';
+import { VerticalGroupComponent } from "./dynamic-format/sections/groups/vertical-group/vertical-group.component";
+import { HorizontalGroupComponent } from "./dynamic-format/sections/groups/horizontal-group/horizontal-group.component";
+import { OtherValidatorComponent } from "./dynamic-format/dialog-components/other-validator/other-validator.component";
+import { ChipsSelectionComponent } from "./dynamic-format/dialog-components/chips-selection/chips-selection.component";
+import { UploadImageComponent } from "./dynamic-format/dialog-components/upload-image/upload-image.component";
+import { LabelEditableComponent } from "./dynamic-format/sections/groups/fields/label-editable/label-editable.component";
+
+//DATETIME
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
+} from "@angular-material-components/datetime-picker";
 
 @NgModule({
   declarations: [
@@ -106,6 +113,9 @@ import { LabelEditableComponent } from './dynamic-format/sections/groups/fields/
     MatDatepickerModule,
     MatChipsModule,
     MatCheckboxModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule,
     MatMenuModule,
     SharedModule,
   ],

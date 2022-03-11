@@ -248,7 +248,7 @@
               <mat-label class="font-bold">Fecha estimada Inicio</mat-label>
               <input
                 matInput
-                [matDatepicker]="datepickerEst1"
+                [ngxMatDatetimePicker]="datepickerEst1"
                 formControlName="fechaEstimadaIni"
                 readonly
               />
@@ -257,7 +257,7 @@
                 matSuffix
                 [for]="datepickerEst1"
               ></mat-datepicker-toggle>
-              <mat-datepicker #datepickerEst1>
+              <!-- <mat-datepicker #datepickerEst1>
                 <mat-datepicker-actions>
                   <button mat-button matDatepickerCancel>Cancel</button>
                   <button
@@ -269,23 +269,34 @@
                     Aplicar
                   </button>
                 </mat-datepicker-actions>
-              </mat-datepicker>
+              </mat-datepicker> -->
+
+              <ngx-mat-datetime-picker
+                #datepickerEst1
+                [showSpinners]="true"
+                [showSeconds]="false"
+                [stepHour]="1"
+                [stepMinute]="1"
+                [stepSecond]="1"
+                [touchUi]="false"
+                color="primary"
+                [enableMeridian]="true"
+              >
+              </ngx-mat-datetime-picker>
             </mat-form-field>
 
             <mat-form-field class="w-1/4">
               <mat-label class="font-bold">Fecha estimada Final</mat-label>
               <input
                 matInput
-                [matDatepicker]="datepickerEst2"
+                [ngxMatDatetimePicker]="datepickerEst2"
                 formControlName="fechaEstimadaFin"
                 readonly
               />
 
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="datepickerEst2"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #datepickerEst2>
+              <mat-datepicker-toggle matSuffix [for]="datepickerEst2">
+              </mat-datepicker-toggle>
+              <!-- <mat-datepicker #datepickerEst2>
                 <mat-datepicker-actions>
                   <button mat-button matDatepickerCancel>Cancel</button>
                   <button
@@ -297,7 +308,20 @@
                     Aplicar
                   </button>
                 </mat-datepicker-actions>
-              </mat-datepicker>
+              </mat-datepicker> -->
+
+              <ngx-mat-datetime-picker
+                #datepickerEst2
+                [showSpinners]="true"
+                [showSeconds]="false"
+                [stepHour]="1"
+                [stepMinute]="1"
+                [stepSecond]="1"
+                [touchUi]="false"
+                color="primary"
+                [enableMeridian]="true"
+              >
+              </ngx-mat-datetime-picker>
             </mat-form-field>
 
             <mat-form-field class="w-1/4">
