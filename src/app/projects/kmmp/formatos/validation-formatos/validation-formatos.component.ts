@@ -76,6 +76,7 @@ export class ValidationFormatosComponent implements OnInit {
   currentSectionData: any;
   loadingReport: boolean;
   asignation: any;
+  groupTitles: FormGroup = this.fb.group({});
 
   constructor(
     private matDialog: MatDialog,
@@ -384,10 +385,16 @@ export class ValidationFormatosComponent implements OnInit {
     // });
 
     this.form = this.fb.group({});
+    this.groupTitles = this.fb.group({});
     const idx = this.currentSectionData.index - 1;
     this.sections.forEach((seccion, i) => {
       if (i === idx) {
         seccion.grupos.forEach((grupo, j) => {
+          this.groupTitles.addControl(
+            `${this.getGroupControl({ j })}`,
+            new FormControl(grupo?.titulo)
+          );
+
           this.observation[`${j}`] = false;
           grupo.parametros.forEach((parametro, k) => {
             if (parametro.activo) {
@@ -554,6 +561,9 @@ export class ValidationFormatosComponent implements OnInit {
     data.forEach((seccion, i) => {
       if (i === idx) {
         seccion.grupos.forEach((grupo, j) => {
+          grupo.titulo = this.groupTitles.get(
+            this.getGroupControl({ j })
+          ).value;
           if (indexGroup === j) {
             this.groups[j] = false;
           }
@@ -757,6 +767,9 @@ export class ValidationFormatosComponent implements OnInit {
 
   getParametroControl({ i, j, k }) {
     return `${String(i)}-${j}-${k}`;
+  }
+  getGroupControl({ j }) {
+    return String(j);
   }
 
   getEditButton({ i, j, k }) {

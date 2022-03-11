@@ -291,6 +291,16 @@
                               'grid flex-row': grupo.pos === 'h'
                             }"
                           >-->
+                              <form [formGroup]="groupTitles" novalidate>
+                                <mat-form-field class="w-1/2 font-semibold">
+                                  <input
+                                    matInput
+                                    type="text"
+                                    placeholder="Titulo"
+                                    formControlName="{{ getGroupControl({j}) }}"
+                                  />
+                                </mat-form-field>
+                              </form>
                               <div
                                 class="grid flex-row overflow-x-auto overflow-y-hidden w-full gap-4"
                               >
