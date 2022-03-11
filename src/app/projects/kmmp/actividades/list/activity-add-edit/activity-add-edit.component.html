@@ -341,46 +341,12 @@
               <mat-label class="font-bold"
                 >Fecha y hora real - Inicio</mat-label
               >
-              <input
-                matInput
-                [matDatepicker]="datepicker2"
-                formControlName="fechaHoraIniReal"
-              />
-
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="datepicker2"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #datepicker2>
-                <mat-datepicker-actions>
-                  <button mat-button matDatepickerCancel>Cancel</button>
-                  <button mat-raised-button color="primary" matDatepickerApply>
-                    Aplicar
-                  </button>
-                </mat-datepicker-actions>
-              </mat-datepicker>
+              <input matInput formControlName="fechaHoraIniReal" />
             </mat-form-field>
 
             <mat-form-field class="w-1/4">
               <mat-label class="font-bold">Fecha y hora real - Final</mat-label>
-              <input
-                matInput
-                [matDatepicker]="datepicker3"
-                formControlName="fechaHoraFinReal"
-              />
-
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="datepicker3"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #datepicker3>
-                <mat-datepicker-actions>
-                  <button mat-button matDatepickerCancel>Cancel</button>
-                  <button mat-raised-button color="primary" matDatepickerApply>
-                    Aplicar
-                  </button>
-                </mat-datepicker-actions>
-              </mat-datepicker>
+              <input matInput formControlName="fechaHoraFinReal" />
             </mat-form-field>
 
             <mat-form-field class="w-1/4">
