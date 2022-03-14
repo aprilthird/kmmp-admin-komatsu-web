@@ -1,12 +1,20 @@
 import { FormGroup } from "@angular/forms";
 
 export function getValues(form: FormGroup): string {
-  let stringValue: string = "";
+  let stringValue = "";
   Object.keys(form.controls).forEach((key: string, index: number) => {
     if (index > 0) {
-      stringValue = stringValue + ("," + form.get(key).value);
+      if (form.get(key).value !== null) {
+        if (stringValue !== "") {
+          stringValue = stringValue + ("," + form.get(key).value);
+        } else {
+          stringValue = stringValue + form.get(key).value;
+        }
+      }
     } else {
-      stringValue = stringValue + form.get(key).value;
+      if (form.get(key).value !== null) {
+        stringValue = stringValue + form.get(key).value;
+      }
     }
   });
   return stringValue;
