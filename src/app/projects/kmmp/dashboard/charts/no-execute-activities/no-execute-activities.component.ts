@@ -23,6 +23,9 @@ export class NoExecuteActivitiesComponent implements OnInit {
 
       this.noActivitiesExec.plotOptions.bar.colors = {};
       this.noActivitiesExec.plotOptions.bar.colors.backgroundBarColors = [];
+      this.noActivitiesExec.dataLabels = {
+        formatter: (val: any) => (val !== 0 ? val : ""),
+      };
 
       this.noActivitiesExec.plotOptions.bar.colors.ranges = [
         { from: 0, to: 10, color: "#00A7FF" },

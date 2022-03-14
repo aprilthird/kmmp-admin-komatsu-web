@@ -20,16 +20,22 @@ export class DeleyedCodeComponent implements OnInit {
     this.dashboardService.delayedCode$.subscribe((x) => {
       x.xaxis = {
         categories: ["Detalle de demora"],
-        labels: {
-          formatter: function (val) {
-            return val + "K";
-          },
-        },
+        // labels: {
+        //   formatter: function (val) {
+        //     return val + "K";
+        //   },
+        // },
       };
 
       x.yaxis = {
         title: {
           text: undefined,
+        },
+      };
+
+      x.dataLabels = {
+        formatter: function (val, opt) {
+          return val !== 0 ? val : "";
         },
       };
       if (x) {
