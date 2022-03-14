@@ -5,7 +5,7 @@
   class="flex flex-col md:flex-row justify-center items-center gap-40"
   *ngIf="!loading"
 >
-  <div id="pieChart" *ngIf="displayPieChart()">
+  <div id="pieChart">
     <apx-chart
       [series]="pieViewData?.series"
       [chart]="pieViewData?.chart"
@@ -16,7 +16,7 @@
       [title]="general"
     ></apx-chart>
   </div>
-  <div id="barChart" *ngIf="displayBarChart()">
+  <div id="barChart">
     <apx-chart
       [series]="BasiBarChart?.series"
       [chart]="BasiBarChart?.chart"

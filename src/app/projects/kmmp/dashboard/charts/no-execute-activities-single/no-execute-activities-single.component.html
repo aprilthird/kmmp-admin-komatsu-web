@@ -3,7 +3,7 @@
   class="flex flex-col md:flex-row justify-center items-center gap-40"
   *ngIf="!loading"
 >
-  <div id="barChart" *ngIf="displayPostponedChart()">
+  <div id="barChart">
     <apx-chart
       [series]="basicBarChartData.series"
       [chart]="basicBarChartData.chart"
@@ -14,7 +14,7 @@
     ></apx-chart>
   </div>
 
-  <div *ngIf="basicBarCharHortData" id="barChartHor">
+  <div id="barChartHor">
     <apx-chart
       [series]="basicBarCharHortData.series"
       [chart]="basicBarCharHortData.chart"

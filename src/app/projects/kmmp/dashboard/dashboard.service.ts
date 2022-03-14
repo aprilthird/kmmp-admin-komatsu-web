@@ -29,6 +29,8 @@ export class DashboardService {
   _currentSingleStatus: BehaviorSubject<any> = new BehaviorSubject(null);
   _postponed: BehaviorSubject<any> = new BehaviorSubject(null);
   _noExecuted: BehaviorSubject<any> = new BehaviorSubject(null);
+  _postponedCauses: BehaviorSubject<any> = new BehaviorSubject(null);
+  _noExecutedCauses: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient, private fakeDB: FakeDbService) {}
 
@@ -152,6 +154,18 @@ export class DashboardService {
         this._noExecuted.next(
           noCompleted.series.map((x) => {
             return [x.name, x.data[1]];
+          })
+        );
+
+        this._postponedCauses.next(
+          noCompleted.causasPostergadas.map((x) => {
+            return [x.nombre, x.total];
+          })
+        );
+
+        this._noExecutedCauses.next(
+          noCompleted.causasNoEjecutadas.map((x) => {
+            return [x.nombre, x.total];
           })
         );
       })

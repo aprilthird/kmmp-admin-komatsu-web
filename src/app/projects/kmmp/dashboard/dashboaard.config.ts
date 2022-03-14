@@ -142,3 +142,39 @@ export const Postponed: any = {
     ],
   },
 };
+
+export const CausesChart = {
+  colors: ["red", "black"],
+  fill: {
+    colors: ["red", "black"],
+  },
+  series: [
+    {
+      name: "basic",
+      data: [],
+    },
+  ],
+  chart: {
+    type: "bar",
+    height: 350,
+    width: 450,
+  },
+  plotOptions: {
+    bar: {
+      horizontal: true,
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  xaxis: {
+    categories: [],
+  },
+};
+
+export const ColorRangesPlotOptions = [
+  { from: 0, to: 10, color: "#00A7FF" },
+  { from: 10, to: 50, color: "#140A9A" },
+  { from: 51, to: 100, color: "#CBF266" },
+  { from: 101, to: 2000, color: "#140A9A" },
+];
