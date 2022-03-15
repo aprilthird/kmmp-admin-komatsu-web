@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 
 import { Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
-//SERVICES
+//SERVICESS
 import { ActivitiesService } from "../../activities.service";
 
 //MODELS
