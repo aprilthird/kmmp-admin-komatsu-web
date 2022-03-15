@@ -1,6 +1,14 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Response } from "app/shared/models/general-model";
 import { EditarFormatoService } from "../../editar-formato/editar-formato.service";
 
 @Component({
@@ -10,6 +18,8 @@ import { EditarFormatoService } from "../../editar-formato/editar-formato.servic
 })
 export class DialogAddCommentComponent implements OnInit {
   comment = new FormControl(this.data?.comment, Validators.required);
+  @Output() respCommetRequest: EventEmitter<Response> = new EventEmitter(null);
+
   constructor(
     public matDialog: MatDialogRef<DialogAddCommentComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -44,6 +54,8 @@ export class DialogAddCommentComponent implements OnInit {
     this.matDialog.close();
     this._editarFormatoService
       .saveAssignation(this.data.data)
-      .subscribe((resp) => this.matDialog.close());
+      .subscribe((resp) => {
+        this.respCommetRequest.emit(resp);
+      });
   }
 }

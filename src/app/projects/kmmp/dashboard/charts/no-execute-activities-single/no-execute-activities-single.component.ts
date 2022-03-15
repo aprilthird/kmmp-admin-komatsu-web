@@ -1,4 +1,6 @@
 import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 //import { ChartComponent } from "ng-apexcharts";
 
 //CONFIG
@@ -21,6 +23,7 @@ export class NoExecuteActivitiesSingleComponent implements OnInit {
   @Input() postponed: boolean;
   public basicBarCharHortData: Partial<BasicBarChartOptions> = CausesChart;
   basicBarChartData = Postponed;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   Postergadas = {
     text: "",
@@ -50,22 +53,24 @@ export class NoExecuteActivitiesSingleComponent implements OnInit {
 
   private setPostponedData(): void {
     this.Postergadas.text = "Postergadas";
-    this.dashboardService._postponed.subscribe((posponed) => {
-      this.loading = true;
-      if (posponed) {
-        this.basicBarChartData.plotOptions.bar = { horizontal: false };
-        this.basicBarChartData.series[0].data = posponed.map((x) => x[1]);
-        this.basicBarChartData.xaxis.categories = posponed.map((x) => x[0]);
-        this.basicBarChartData.plotOptions.bar.colors = {};
+    this.dashboardService._postponed
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((posponed) => {
+        this.loading = true;
+        if (posponed) {
+          this.basicBarChartData.plotOptions.bar = { horizontal: false };
+          this.basicBarChartData.series[0].data = posponed.map((x) => x[1]);
+          this.basicBarChartData.xaxis.categories = posponed.map((x) => x[0]);
+          this.basicBarChartData.plotOptions.bar.colors = {};
 
-        this.basicBarChartData.plotOptions.bar.colors.ranges =
-          ColorRangesPlotOptions;
-      }
+          this.basicBarChartData.plotOptions.bar.colors.ranges =
+            ColorRangesPlotOptions;
+        }
 
-      setTimeout(() => {
-        this.loading = false;
-      }, 500);
-    });
+        setTimeout(() => {
+          this.loading = false;
+        }, 500);
+      });
 
     this.dashboardService._postponedCauses.subscribe((postponedCauses) => {
       if (postponedCauses) {
@@ -85,21 +90,25 @@ export class NoExecuteActivitiesSingleComponent implements OnInit {
 
   private setNoExecutedData(): void {
     this.Postergadas.text = "No ejecutadas";
-    this.dashboardService._noExecuted.subscribe((_noExecuted) => {
-      this.loading = true;
-      if (_noExecuted) {
-        this.basicBarChartData.plotOptions.bar = { horizontal: false };
-        this.basicBarChartData.series[0].data = _noExecuted.map((x) => x[1]);
-        this.basicBarChartData.xaxis.categories = _noExecuted.map((x) => x[0]);
-        this.basicBarChartData.plotOptions.bar.colors = {};
-        this.basicBarChartData.plotOptions.bar.colors.ranges =
-          ColorRangesPlotOptions;
-      }
+    this.dashboardService._noExecuted
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((_noExecuted) => {
+        this.loading = true;
+        if (_noExecuted) {
+          this.basicBarChartData.plotOptions.bar = { horizontal: false };
+          this.basicBarChartData.series[0].data = _noExecuted.map((x) => x[1]);
+          this.basicBarChartData.xaxis.categories = _noExecuted.map(
+            (x) => x[0]
+          );
+          this.basicBarChartData.plotOptions.bar.colors = {};
+          this.basicBarChartData.plotOptions.bar.colors.ranges =
+            ColorRangesPlotOptions;
+        }
 
-      setTimeout(() => {
-        this.loading = false;
-      }, 500);
-    });
+        setTimeout(() => {
+          this.loading = false;
+        }, 500);
+      });
 
     this.dashboardService._noExecutedCauses.subscribe((noExecutedCauses) => {
       if (noExecutedCauses) {

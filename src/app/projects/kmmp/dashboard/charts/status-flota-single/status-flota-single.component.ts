@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ChartComponent } from "ng-apexcharts";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 //CONFIG
 import { SimplePieChartOptions, BasicBarChartOptions } from "../../chart-model";
@@ -22,6 +24,7 @@ export class StatusFlotaSingleComponent implements OnInit {
   //@ViewChild("barChart") barChart: ChartComponent;
   public pieChartData: Partial<SimplePieChartOptions>;
   public pieChartViewData: Partial<BasicBarChartOptions>;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   colors = ["#12239E", "#85B6FF"];
   legend = {
@@ -41,23 +44,25 @@ export class StatusFlotaSingleComponent implements OnInit {
   loading: boolean;
 
   constructor(private dashboardServices: DashboardService) {
-    this.dashboardServices._currentSingleStatus.subscribe((res) => {
-      this.loading = true;
-      this.pieViewData.series[0] = res[0];
-      this.pieViewData.series[1] = res[1] + res[2];
-      this.BasiBarChart.series[0].data = res;
+    this.dashboardServices._currentSingleStatus
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((res) => {
+        this.loading = true;
+        this.pieViewData.series[0] = res[0];
+        this.pieViewData.series[1] = res[1] + res[2];
+        this.BasiBarChart.series[0].data = res;
 
-      this.BasiBarChart.plotOptions.bar.colors.backgroundBarColors = [];
-      this.BasiBarChart.plotOptions.bar.colors.ranges = [
-        { from: 0, to: 10, color: "#00A7FF" },
-        { from: 10, to: 50, color: "#140A9A" },
-        { from: 51, to: 100, color: "#CBF266" },
-        { from: 101, to: 2000, color: "#140A9A" },
-      ];
-      setTimeout(() => {
-        this.loading = false;
-      }, 500);
-    });
+        this.BasiBarChart.plotOptions.bar.colors.backgroundBarColors = [];
+        this.BasiBarChart.plotOptions.bar.colors.ranges = [
+          { from: 0, to: 10, color: "#00A7FF" },
+          { from: 10, to: 50, color: "#140A9A" },
+          { from: 51, to: 100, color: "#CBF266" },
+          { from: 101, to: 2000, color: "#140A9A" },
+        ];
+        setTimeout(() => {
+          this.loading = false;
+        }, 500);
+      });
   }
 
   ngOnInit(): void {}

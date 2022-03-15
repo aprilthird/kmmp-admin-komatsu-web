@@ -663,7 +663,8 @@ export class ValidationFormatosComponent implements OnInit {
     });
   }
 
-  addComment(groupIdx: number, paramIdx: number, comment): void {
+  addComment(groupIdx: number, paramIdx: number, comment) {
+    this.submitEditGroup[`${groupIdx}`] = true;
     const data = {
       data: {
         ...this.data,
@@ -676,19 +677,17 @@ export class ValidationFormatosComponent implements OnInit {
       formatoId: this.formatoId,
       comment: comment,
     };
-    this.matDialog
-      .open(DialogAddCommentComponent, {
-        width: "500px",
-        data: data,
-      })
-      .afterClosed()
-      .subscribe(() => {
-        Object.keys(this.observation).forEach(
-          (key) => (this.observation[key] = false)
-        );
-
-        this.observeToolTip(groupIdx, paramIdx);
-      });
+    const dialog = this.matDialog.open(DialogAddCommentComponent, {
+      width: "500px",
+      data: data,
+    });
+    dialog.componentInstance.respCommetRequest.subscribe((resp) => {
+      this.submitEditGroup[`${groupIdx}`] = false;
+      Object.keys(this.observation).forEach(
+        (key) => (this.observation[key] = false)
+      );
+      this.observeToolTip(groupIdx, paramIdx);
+    });
   }
 
   postValidateFormat(): void {
