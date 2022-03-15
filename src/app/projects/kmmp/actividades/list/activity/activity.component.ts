@@ -10,6 +10,7 @@ import { ActivityFake } from "app/projects/kmmp/fake-db/activities/activity-fake
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
+import { Subject } from "rxjs";
 
 @Component({
   selector: "app-activity",
@@ -21,6 +22,8 @@ export class ActivityComponent implements OnInit {
   @Input() activityData: ActivityFake;
   nestado: string;
   activityInfo: any = [];
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
+
   constructor(
     private activitiesService: ActivitiesService,
     private router: Router,
@@ -32,6 +35,11 @@ export class ActivityComponent implements OnInit {
   ngOnInit(): void {
     this.getActivityData(this.activityData.id);
     this.nestado = this.activityData.nestado;
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   private getActivityData(id: number): void {

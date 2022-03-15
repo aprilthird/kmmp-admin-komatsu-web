@@ -3,7 +3,7 @@
 <mat-progress-bar *ngIf="loading" [mode]="'indeterminate'"></mat-progress-bar>
 <div
   class="flex flex-col md:flex-row justify-center items-center gap-40"
-  *ngIf="!loading"
+  *ngIf="!loading; else empty"
 >
   <div id="pieChart">
     <apx-chart
@@ -27,3 +27,7 @@
     ></apx-chart>
   </div>
 </div>
+
+<ng-template #empty>
+  <div class="h-80"></div>
+</ng-template>

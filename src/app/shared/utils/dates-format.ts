@@ -18,15 +18,16 @@ function addZero(value): string {
 
 export function getDateTime(date: string): string {
   let month: any = new Date(date).getMonth() + 1;
-  let day = new Date(date).getDate().toString();
+  let day: any = new Date(date).getDate();
 
   if (month < 10) {
     month = "0".concat(month);
   }
 
-  if (day.length === 0) {
+  if (day < 10) {
     day = "0".concat(day);
   }
+
   if (new Date(date).getFullYear() < 2010) {
     return moment().format("yyyy-MM-DDT00:00:00");
   } else {

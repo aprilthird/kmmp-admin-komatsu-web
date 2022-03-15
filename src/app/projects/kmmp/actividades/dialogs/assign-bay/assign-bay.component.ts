@@ -4,10 +4,11 @@ import {
   MAT_DIALOG_DATA,
   MatDialog,
 } from "@angular/material/dialog";
-import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { ActivitiesService } from "../../activities.service";
-import { ListComponent } from "../../list/list.component";
+import { dataToAssign } from "../config";
 import { BayI } from "./../../models/bays-model";
 
 @Component({
@@ -21,6 +22,7 @@ export class AssignBayComponent implements OnInit {
   items: BayI[] = [];
   preloadedFormatsData = [];
   dataToAssign: any;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
     public matdialigRef: MatDialogRef<AssignBayComponent>,
@@ -34,30 +36,17 @@ export class AssignBayComponent implements OnInit {
   ngOnInit(): void {}
 
   private getBays(): void {
-    this.activitiesService.getList(4).subscribe((resp: any) => {
-      this.items = resp.body.data;
-    });
+    this.activitiesService
+      .getList(4)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((resp: any) => {
+        this.items = resp.body.data;
+      });
   }
 
   setDataToAssign(event): void {
     this.dataToAssign = {
-      id: 0,
-      codigo: "string",
-      nombre: "string",
-      descripcion: "string",
-      visible: true,
-      activo: true,
-      asignado: true,
-      estado: 0,
-      subEstado: 0,
-      fechaReg: "2021-12-01T01:22:47.462Z",
-      fechaMod: "2021-12-01T01:22:47.462Z",
-      usuarioMod: "string",
-      usuarioReg: "string",
-      idUsuarioReg: 0,
-      idUsuarioMod: 0,
-      entidad: 0,
-      total: 0,
+      ...dataToAssign,
       idBahia: event.value,
       idsActividades: this.getIdActivities(),
     };
@@ -65,37 +54,40 @@ export class AssignBayComponent implements OnInit {
 
   assignToBay(): void {
     this.isLoading = true;
-    this.activitiesService.asignMultipleActivities(this.dataToAssign).subscribe(
-      (resp) => {
-        if (resp.code === 502) {
+    this.activitiesService
+      .asignMultipleActivities(this.dataToAssign)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(
+        (resp) => {
+          if (resp.code === 502) {
+            this.isLoading = false;
+            this._matDialog.open(UiDialogsComponent, {
+              width: "500px",
+              data: {
+                message: resp.message ? resp?.message : resp?.error,
+                title: "Error",
+                action: "/admin/actividades/list",
+              },
+            });
+            this.matdialigRef.close();
+          } else {
+            this.isLoading = false;
+            this.matdialigRef.close();
+          }
+        },
+        (err) => {
           this.isLoading = false;
           this._matDialog.open(UiDialogsComponent, {
             width: "500px",
             data: {
-              message: resp.message ? resp?.message : resp?.error,
+              message: err.message ? err.message : err.code,
               title: "Error",
               action: "/admin/actividades/list",
             },
           });
           this.matdialigRef.close();
-        } else {
-          this.isLoading = false;
-          this.matdialigRef.close();
         }
-      },
-      (err) => {
-        this.isLoading = false;
-        this._matDialog.open(UiDialogsComponent, {
-          width: "500px",
-          data: {
-            message: err.message ? err.message : err.code,
-            title: "Error",
-            action: "/admin/actividades/list",
-          },
-        });
-        this.matdialigRef.close();
-      }
-    );
+      );
   }
 
   private getIdActivities(): number[] {

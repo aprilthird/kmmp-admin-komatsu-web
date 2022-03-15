@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 import { FuseAlertType } from "@fuse/components/alert";
 import { MassiveLoad } from "app/shared/config/massiveLoad";
 import { environment } from "environments/environment";

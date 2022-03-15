@@ -365,6 +365,7 @@ export class ActivityAddEditComponent implements OnInit {
 
   saveActivity(): void {
     this.loadLoading = true;
+
     this.serviceAct.postCargaIndividual(this.getParams()).subscribe(
       (resp: Response) => {
         if (!resp.success) {
