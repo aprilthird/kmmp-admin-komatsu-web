@@ -19,6 +19,7 @@ import { EditarFormatoService } from "../../editar-formato/editar-formato.servic
 export class DialogAddCommentComponent implements OnInit {
   comment = new FormControl(this.data?.comment, Validators.required);
   @Output() respCommetRequest: EventEmitter<Response> = new EventEmitter(null);
+  loading: boolean;
 
   constructor(
     public matDialog: MatDialogRef<DialogAddCommentComponent>,
@@ -46,16 +47,24 @@ export class DialogAddCommentComponent implements OnInit {
   }
 
   async submit() {
+    this.loading = true;
     await this.updateObservedParam();
     const payload = {
       secciones: this.data.data,
       idFormato: this.data.formatoId,
     };
-    this.matDialog.close();
-    this._editarFormatoService
-      .saveAssignation(this.data.data)
-      .subscribe((resp) => {
+
+    this._editarFormatoService.saveAssignation(this.data.data).subscribe(
+      (resp) => {
+        this.matDialog.close();
+        this.loading = false;
         this.respCommetRequest.emit(resp);
-      });
+      },
+      (err) => {
+        this.matDialog.close();
+        this.loading = false;
+        this.respCommetRequest.emit(err);
+      }
+    );
   }
 }

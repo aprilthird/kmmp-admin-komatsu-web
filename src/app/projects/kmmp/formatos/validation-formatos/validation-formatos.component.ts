@@ -688,6 +688,10 @@ export class ValidationFormatosComponent implements OnInit {
       );
       this.observeToolTip(groupIdx, paramIdx);
     });
+
+    dialog
+      .afterClosed()
+      .subscribe(() => (this.submitEditGroup[`${groupIdx}`] = false));
   }
 
   postValidateFormat(): void {
