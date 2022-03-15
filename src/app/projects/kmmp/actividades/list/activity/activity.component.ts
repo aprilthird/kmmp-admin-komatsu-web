@@ -5,7 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 //SERVICESS
 import { ActivitiesService } from "../../activities.service";
 
-//MODELS
+//MODELSS
 import { ActivityFake } from "app/projects/kmmp/fake-db/activities/activity-fake-db";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
