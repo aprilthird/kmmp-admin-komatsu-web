@@ -20,6 +20,7 @@ export class LabelEditableComponent implements OnInit, AfterViewInit {
   @Input() visible: boolean;
   @Input() editable: boolean;
   @Input() label: string;
+  @Input() position: string;
   @Output() saveLabel: EventEmitter<any> = new EventEmitter(null);
   @ViewChild("nameInput") el: ElementRef;
   renderTemplate: boolean = false;

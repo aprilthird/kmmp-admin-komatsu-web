@@ -107,6 +107,7 @@ export class GroupsComponent implements OnInit {
   }
 
   saveTitle(event: any): void {
+    this.titleChanged = true;
     this._editFormat
       .createGrupo({
         ...this.groupData,

@@ -128,6 +128,8 @@ export class ClaseActividadComponent implements OnInit {
       this.tipoMttos = this.tipoMttos.filter(
         (tipoMtto) => tipoMtto.id !== returnedData.id
       );
+      dialog.componentInstance.tipoMttoCreated.nestado =
+        returnedData.estado === 1 ? "Activo" : "Desactivado";
       this.tipoMttos.push(dialog.componentInstance.tipoMttoCreated);
     });
   }

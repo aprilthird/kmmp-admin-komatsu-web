@@ -40,6 +40,10 @@ export class DialogAddTipoMtmtoComponent implements OnInit {
         this.data?.dataEdit?.nestado === "Activo" ? 1 : 0
       ),
     });
+
+    if (!this.data?.dataEdit) {
+      this.form.get("estado").setValue(1);
+    }
   }
 
   ngOnInit(): void {}

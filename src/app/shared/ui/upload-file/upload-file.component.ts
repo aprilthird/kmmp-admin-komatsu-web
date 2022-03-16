@@ -48,6 +48,7 @@ export class UploadFileComponent implements OnInit, OnChanges {
   @Input() image: SafeUrl = "";
   @Input() editable: boolean;
   @Input() preview: string;
+  @Input() position: string;
 
   _file: string = "";
   state = "default";

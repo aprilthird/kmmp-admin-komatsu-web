@@ -312,10 +312,12 @@
                                 >
                                   <ng-container *ngIf="parametro.activo">
                                     <div
-                                      class="flex w-60 min-w-60"
+                                      class="flex min-w-60"
                                       [ngClass]="{
                                         'mb-3': grupo.pos === 'v',
-                                        'mr-3': grupo.pos === 'h'
+                                        'mr-3': grupo.pos === 'h',
+                                        'w-100': grupo.pos === 'v',
+                                        'w-60': !grupo.pos || grupo.pos === 'h'
                                       }"
                                       [ngStyle]="{
                                         'grid-area':
@@ -429,6 +431,7 @@
                                             "
                                             [loading]="filesLoading[getParametroControl({ i,j, k})]"
                                             (sourceFile)="onChageFile($event, getParametroControl({ i,j, k}))"
+                                            [position]="grupo.pos"
                                           ></ui-upload-file>
                                         </div>
 
@@ -501,6 +504,7 @@
                                             "
                                             [loading]="filesLoading[getParametroControl({i,j, k})]"
                                             (sourceFile)="onChageFile($event, getParametroControl({i,j, k}))"
+                                            [position]="grupo.pos"
                                           ></ui-upload-file>
                                         </div>
 
@@ -529,6 +533,7 @@
                                             "
                                             [loading]="filesLoading[getParametroControl({ i,j, k})]"
                                             (sourceFile)="onChageFile($event, getParametroControl({ i,j, k}))"
+                                            [position]="grupo.pos"
                                           ></ui-upload-file>
                                         </div>
 

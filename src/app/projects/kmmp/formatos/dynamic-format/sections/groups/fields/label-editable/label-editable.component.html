@@ -2,13 +2,8 @@
   <div
     [disabled]="!editable"
     [hidden]="edit"
-    class="text-gray-900 font-medium cursor-pointer"
-    style="
-      width: 10rem;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      max-height: 5rem;
-    "
+    class="text-gray-900 font-medium cursor-pointer label-container"
+    [ngStyle]="{ width: position === 'h' ? '10rem' : '' }"
     [matTooltip]="label"
   >
     <label

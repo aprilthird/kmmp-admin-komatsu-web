@@ -27,12 +27,7 @@
       </span>
       <div>
         <mat-form-field class="font-semibold w-100" floatLabel="always">
-          <input
-            matInput
-            type="text"
-            placeholder="Ingrese título"
-            [formControl]="title"
-          />
+          <input matInput type="text" [formControl]="title" />
           <mat-icon
             *ngIf="!loadingTitle"
             matTooltip="Guardar título"
