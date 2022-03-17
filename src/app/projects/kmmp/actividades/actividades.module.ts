@@ -28,15 +28,17 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { MatRippleModule } from "@angular/material/core";
+import { MatRippleModule, MAT_DATE_LOCALE } from "@angular/material/core";
 import { MatInputModule } from "@angular/material/input";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatPaginatorModule } from "@angular/material/paginator";
 
 import {
+  NgxMatDateAdapter,
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
+  NGX_MAT_DATE_FORMATS,
 } from "@angular-material-components/datetime-picker";
 
 //FUSE
@@ -49,6 +51,28 @@ import { FilterDialogComponent } from "./filter/filter-dialog/filter-dialog.comp
 import { UploadActivityDialogComponent } from "./dialogs/upload-activity-dialog/upload-activity-dialog.component";
 import { MassiveUploadComponent } from "./dialogs/massive-upload/massive-upload.component";
 import { PostponeComponent } from "./dialogs/postpone/postpone.component";
+import { DateFormatsPipe } from "app/shared/pipes/date-formats.pipe";
+
+const DATE_TIME_FORMAT = {
+  // parse: {
+  //   dateInput: "l, LT",
+  // },
+  // display: {
+  //   dateInput: "l, LT",
+  //   monthYearLabel: "MM yyyy",
+  //   dateA11yLabel: "LL",
+  //   monthYearA11yLabel: "MMMM YYYY",
+  // },
+  // parse: {
+  //   dateInput: "l, LTS",
+  // },
+  // display: {
+  //   dateInput: "DD-MM-YYYY HH:mm:ss",
+  //   monthYearLabel: "MMM YYYY",
+  //   dateA11yLabel: "LL",
+  //   monthYearA11yLabel: "MMMM YYYY",
+  // },
+};
 
 @NgModule({
   declarations: [
@@ -63,6 +87,7 @@ import { PostponeComponent } from "./dialogs/postpone/postpone.component";
     UploadActivityDialogComponent,
     MassiveUploadComponent,
     PostponeComponent,
+    DateFormatsPipe,
   ],
   imports: [
     CommonModule,
@@ -93,5 +118,6 @@ import { PostponeComponent } from "./dialogs/postpone/postpone.component";
     MatPaginatorModule,
     FuseAlertModule,
   ],
+  //providers: [{ provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT }],
 })
 export class ActividadesModule {}
