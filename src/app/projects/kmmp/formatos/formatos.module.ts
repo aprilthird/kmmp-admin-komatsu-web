@@ -58,7 +58,10 @@ import {
   NgxMatDatetimePickerModule,
   NgxMatNativeDateModule,
   NgxMatTimepickerModule,
+  NGX_MAT_DATE_FORMATS,
 } from "@angular-material-components/datetime-picker";
+import { DATE_TIME_FORMAT } from "app/shared/config/date.config";
+import { NgxMatMomentModule } from "@angular-material-components/moment-adapter";
 
 @NgModule({
   declarations: [
@@ -118,7 +121,11 @@ import {
     NgxMatTimepickerModule,
     MatMenuModule,
     SharedModule,
+    //NgxMatMomentModule,
   ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: "es-ES" }],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: "es-ES" },
+    //{ provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT },
+  ],
 })
 export class FormatosModule {}

@@ -63,21 +63,21 @@
                     class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b justify-between"
                   >
                     <!-- Usuario -->
-                    <div class="truncate">
+                    <div class="truncate" [matTooltip]="equipo?.nombre">
                       {{ equipo?.nombre }}
                     </div>
                     <!-- Nombres -->
-                    <div class="truncate">
+                    <div class="truncate" [matTooltip]="equipo?.tag">
                       {{ equipo?.tag }}
                     </div>
                     <!-- Apellidos -->
-                    <div class="truncate">
+                    <div class="truncate" [matTooltip]="equipo?.modelo">
                       {{ equipo?.modelo }}
                     </div>
-                    <div class="truncate">
+                    <div class="truncate" [matTooltip]="equipo?.flota">
                       {{ equipo?.flota }}
                     </div>
-                    <div class="truncate">
+                    <div class="truncate" [matTooltip]="equipo?.cliente">
                       {{ equipo?.cliente }}
                     </div>
 

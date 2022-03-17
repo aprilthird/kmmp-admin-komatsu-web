@@ -40,6 +40,15 @@ import {
   NgxMatTimepickerModule,
   NGX_MAT_DATE_FORMATS,
 } from "@angular-material-components/datetime-picker";
+// import {
+//   MatMomentDateModule,
+//   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+// } from "@angular/material-moment-adapter";
+
+import {
+  NgxMatMomentModule,
+  NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from "@angular-material-components/moment-adapter";
 
 //FUSE
 import { FuseConfirmationModule } from "@fuse/services/confirmation";
@@ -52,27 +61,7 @@ import { UploadActivityDialogComponent } from "./dialogs/upload-activity-dialog/
 import { MassiveUploadComponent } from "./dialogs/massive-upload/massive-upload.component";
 import { PostponeComponent } from "./dialogs/postpone/postpone.component";
 import { DateFormatsPipe } from "app/shared/pipes/date-formats.pipe";
-
-const DATE_TIME_FORMAT = {
-  // parse: {
-  //   dateInput: "l, LT",
-  // },
-  // display: {
-  //   dateInput: "l, LT",
-  //   monthYearLabel: "MM yyyy",
-  //   dateA11yLabel: "LL",
-  //   monthYearA11yLabel: "MMMM YYYY",
-  // },
-  // parse: {
-  //   dateInput: "l, LTS",
-  // },
-  // display: {
-  //   dateInput: "DD-MM-YYYY HH:mm:ss",
-  //   monthYearLabel: "MMM YYYY",
-  //   dateA11yLabel: "LL",
-  //   monthYearA11yLabel: "MMMM YYYY",
-  // },
-};
+import { DATE_TIME_FORMAT } from "app/shared/config/date.config";
 
 @NgModule({
   declarations: [
@@ -117,7 +106,15 @@ const DATE_TIME_FORMAT = {
     FormsModule,
     MatPaginatorModule,
     FuseAlertModule,
+    NgxMatMomentModule,
   ],
-  //providers: [{ provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT }],
+  providers: [
+    // { provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT },
+    // {
+    //   provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+    //   useValue: { useUtc: true },
+    // },
+    { provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT },
+  ],
 })
 export class ActividadesModule {}

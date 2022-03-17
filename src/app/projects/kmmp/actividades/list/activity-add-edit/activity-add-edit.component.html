@@ -340,12 +340,27 @@
               <mat-label class="font-bold"
                 >Fecha y hora real - Inicio</mat-label
               >
-              <input matInput formControlName="fechaHoraIniReal" />
+              <input
+                matInput
+                [value]="
+                  form.controls.fechaHoraIniReal.value
+                    | date: 'dd/MM/yyyy hh:mm'
+                "
+                disabled
+              />
             </mat-form-field>
 
             <mat-form-field class="w-1/4">
               <mat-label class="font-bold">Fecha y hora real - Final</mat-label>
-              <input matInput formControlName="fechaHoraFinReal" />
+              <!-- <input matInput formControlName="fechaHoraFinReal" /> -->
+              <input
+                matInput
+                [value]="
+                  form.controls.fechaHoraFinReal.value
+                    | date: 'dd/MM/yyyy hh:mm'
+                "
+                disabled
+              />
             </mat-form-field>
 
             <mat-form-field class="w-1/4">

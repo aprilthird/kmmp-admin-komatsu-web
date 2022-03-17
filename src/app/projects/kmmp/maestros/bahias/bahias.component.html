@@ -57,11 +57,11 @@
                     class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b justify-between"
                   >
                     <!-- Usuario -->
-                    <div class="truncate">
+                    <div class="truncate" [matTooltip]="bahia?.nombre">
                       {{ bahia?.nombre }}
                     </div>
 
-                    <div class="truncate">
+                    <div class="truncate" [matTooltip]="bahia?.cliente">
                       {{ bahia?.cliente }}
                     </div>
 

@@ -79,18 +79,18 @@
                     class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b justify-between"
                   >
                     <!-- Usuario -->
-                    <div class="truncate">
-                      {{ cliente.nombre }}
+                    <div class="truncate" [matTooltip]="cliente?.nombre">
+                      {{ cliente?.nombre }}
                     </div>
                     <!-- Nombres -->
                     <div class="truncate">
-                      {{ cliente.ruc }}
+                      {{ cliente?.ruc }}
                     </div>
                     <!-- Apellidos -->
-                    <div class="truncate">
+                    <div class="truncate" [matTooltip]="cliente?.razon">
                       {{ cliente?.razon }}
                     </div>
-                    <div class="truncate">
+                    <div class="truncate" [matTooltip]="cliente?.ubicacion">
                       {{ cliente?.ubicacion }}
                     </div>
                     <div class="">

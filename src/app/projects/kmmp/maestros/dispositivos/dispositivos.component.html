@@ -53,10 +53,16 @@
                   <div
                     class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b justify-between"
                   >
-                    <div class="truncate.overflow">
+                    <div
+                      class="truncate.overflow"
+                      [matTooltip]="dispositivo?.nombre"
+                    >
                       {{ dispositivo?.nombre }}
                     </div>
-                    <div class="truncate-overflow">
+                    <div
+                      class="truncate-overflow"
+                      [matTooltip]="dispositivo?.usuario"
+                    >
                       {{ dispositivo?.usuario }}
                     </div>
 

@@ -63,7 +63,10 @@
                     class="inventory-grid grid items-center gap-4 py-3 px-6 md:px-8 border-b justify-between"
                   >
                     <!-- Usuario -->
-                    <div class="truncate">
+                    <div
+                      class="truncate"
+                      [matTooltip]="clase_actividad?.nombre"
+                    >
                       {{ clase_actividad.nombre }}
                     </div>
 
@@ -165,14 +168,20 @@
               >
                 <div class="w-1/4 mb-5 max-w-xs">
                   <div class="mt-4 text-lg font-medium">Código</div>
-                  <div class="mt-0.5 text-secondary truncate overflow-ellipsis">
+                  <div
+                    class="mt-0.5 text-secondary truncate overflow-ellipsis"
+                    [matTooltip]="tipoMtto?.nombre"
+                  >
                     {{ tipoMtto?.nombre }}
                   </div>
                 </div>
 
                 <div class="w-1/4 mb-5 max-w-xs">
                   <div class="mt-4 text-lg font-medium">Descripción</div>
-                  <div class="mt-0.5 text-secondary truncate overflow-ellipsis">
+                  <div
+                    class="mt-0.5 text-secondary truncate overflow-ellipsis"
+                    [matTooltip]="tipoMtto?.descripcion"
+                  >
                     {{ tipoMtto?.descripcion }}
                   </div>
                 </div>

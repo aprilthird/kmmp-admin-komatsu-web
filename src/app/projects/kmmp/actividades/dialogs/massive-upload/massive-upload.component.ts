@@ -37,8 +37,12 @@ export class MassiveUploadComponent implements OnInit {
 
         this.badRecords = resp.body.filter((record) => record?.error);
         this.successRecords = resp.body.filter((record) => !record?.error);
-
-        if (this.successRecords.length === resp.body.length) {
+        if (resp.body.length === 0) {
+          this.alert = {
+            type: "warning",
+            message: `Ningún registro ha sido cargado`,
+          };
+        } else if (this.successRecords.length === resp.body.length) {
           this.alert = {
             type: "success",
             message: `${resp.message ? resp.message : MassiveLoad.ALL_SUCCESS}`,
@@ -54,7 +58,7 @@ export class MassiveUploadComponent implements OnInit {
         this.isLoading = false;
         this.alert = {
           type: "error",
-          message: `${err.message}`,
+          message: `${err?.message || "Error en la carga"}`,
         };
       }
     );

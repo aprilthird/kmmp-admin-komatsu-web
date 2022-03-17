@@ -131,10 +131,12 @@ export class ActivityComponent implements OnInit {
   }
 
   getTimeDiff(): number {
-    return Math.abs(
-      (new Date(this.activityInfo?.fechaHoraFinReal).getTime() -
-        new Date(this.activityInfo?.fechaHoraIniReal).getTime()) /
-        3600000
+    return Math.round(
+      Math.abs(
+        (new Date(this.activityInfo?.fechaHoraFinReal).getTime() -
+          new Date(this.activityInfo?.fechaHoraIniReal).getTime()) /
+          3600000
+      )
     );
   }
 
