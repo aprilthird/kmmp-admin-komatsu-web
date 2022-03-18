@@ -27,6 +27,7 @@ export class VerticalGroupComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   absoluteGroupData: any;
   title: FormControl = new FormControl();
+  bindTitle: string;
 
   constructor(
     private _editarFormatoService: EditarFormatoService,
@@ -35,6 +36,7 @@ export class VerticalGroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setValue(this.groupData.titulo);
+    this.bindTitle = this.groupData.titulo;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -51,7 +53,7 @@ export class VerticalGroupComponent implements OnInit {
 
   saveTitle(): void {
     this.loadingTitle = true;
-    this.setTitle.emit(this.title.value);
+    this.setTitle.emit(this.bindTitle);
   }
 
   async postParam() {

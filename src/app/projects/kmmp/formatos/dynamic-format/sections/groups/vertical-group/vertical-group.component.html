@@ -27,7 +27,13 @@
       </span>
       <div>
         <mat-form-field class="font-semibold w-100" floatLabel="always">
-          <input matInput type="text" [formControl]="title" />
+          <textarea
+            #textarea
+            matInput
+            type="text"
+            [ngModel]="bindTitle"
+            (ngModelChange)="bindTitle = $event"
+          ></textarea>
           <mat-icon
             *ngIf="!loadingTitle"
             matTooltip="Guardar título"

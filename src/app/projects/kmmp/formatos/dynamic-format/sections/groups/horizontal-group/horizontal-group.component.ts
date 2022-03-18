@@ -36,6 +36,7 @@ export class HorizontalGroupComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   highestRow: any;
   title: FormControl = new FormControl();
+  bindTitle: string;
 
   constructor(
     private _editarFormatoService: EditarFormatoService,
@@ -44,6 +45,7 @@ export class HorizontalGroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setValue(this.groupData.titulo);
+    this.bindTitle = this.groupData.titulo;
     this.createGrid();
     this.firstColumnRow();
   }
@@ -57,7 +59,7 @@ export class HorizontalGroupComponent implements OnInit {
 
   saveTitle(): void {
     this.loadingTitle = true;
-    this.setTitle.emit(this.title.value);
+    this.setTitle.emit(this.bindTitle);
   }
 
   firstColumnRow(): void {

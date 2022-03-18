@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -75,6 +75,12 @@ export class ValidationFormatosComponent implements OnInit {
   loadingReport: boolean;
   asignation: any;
   groupTitles: FormGroup = this.fb.group({});
+  @ViewChild("textareainfo") el: ElementRef;
+  titleElHeight: number;
+
+  titleEleHeight: {
+    [key: string]: number;
+  } = {};
 
   constructor(
     private matDialog: MatDialog,
@@ -181,6 +187,7 @@ export class ValidationFormatosComponent implements OnInit {
         this.currentActivity = activity.body.formatos;
         setTimeout(() => {
           this.setCollapsableNav();
+
           //this.loaded = true;
         }, 1500);
 
@@ -213,6 +220,11 @@ export class ValidationFormatosComponent implements OnInit {
       );
 
       section.grupos.forEach((grupo, j) => {
+        setTimeout(() => {
+          this.titleEleHeight[j] = this.el.nativeElement.scrollHeight
+            .toString()
+            .concat("px");
+        });
         this.groups[j] = false;
         grupo.parametros.forEach((parametro, k) => {
           if (this.form.get(`${this.getParametroControl({ i, j, k })}`)) {

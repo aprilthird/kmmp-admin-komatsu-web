@@ -62,6 +62,7 @@ import {
 } from "@angular-material-components/datetime-picker";
 import { DATE_TIME_FORMAT } from "app/shared/config/date.config";
 import { NgxMatMomentModule } from "@angular-material-components/moment-adapter";
+import { LinebreakPipe } from "app/shared/pipes/linebreak.pipe";
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { NgxMatMomentModule } from "@angular-material-components/moment-adapter"
     ChipsSelectionComponent,
     UploadImageComponent,
     LabelEditableComponent,
+    LinebreakPipe,
   ],
   imports: [
     CommonModule,

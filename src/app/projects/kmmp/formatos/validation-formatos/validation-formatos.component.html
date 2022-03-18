@@ -300,12 +300,15 @@
                           >-->
                               <form [formGroup]="groupTitles" novalidate>
                                 <mat-form-field class="w-1/2 font-semibold">
-                                  <input
+                                  <textarea
+                                    [ngStyle]="{ height: titleEleHeight[j] }"
+                                    class="overflow: auto"
+                                    #textareainfo
                                     matInput
                                     type="text"
                                     placeholder="Titulo"
                                     formControlName="{{ getGroupControl({j}) }}"
-                                  />
+                                  ></textarea>
                                 </mat-form-field>
                               </form>
                               <div
