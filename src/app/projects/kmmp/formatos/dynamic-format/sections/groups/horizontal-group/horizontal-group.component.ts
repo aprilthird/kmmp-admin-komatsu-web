@@ -1,12 +1,14 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
   QueryList,
   SimpleChanges,
+  ViewChild,
   ViewChildren,
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
@@ -37,6 +39,8 @@ export class HorizontalGroupComponent implements OnInit {
   highestRow: any;
   title: FormControl = new FormControl();
   bindTitle: string;
+  titleElHeight: number;
+  @ViewChild("textareainfo") el: ElementRef;
 
   constructor(
     private _editarFormatoService: EditarFormatoService,
@@ -48,6 +52,11 @@ export class HorizontalGroupComponent implements OnInit {
     this.bindTitle = this.groupData.titulo;
     this.createGrid();
     this.firstColumnRow();
+    setTimeout(() => {
+      this.titleElHeight = this.el.nativeElement.scrollHeight
+        .toString()
+        .concat("px");
+    });
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.groupData) {

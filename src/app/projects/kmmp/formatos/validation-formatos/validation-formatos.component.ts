@@ -1,4 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -75,8 +82,7 @@ export class ValidationFormatosComponent implements OnInit {
   loadingReport: boolean;
   asignation: any;
   groupTitles: FormGroup = this.fb.group({});
-  @ViewChild("textareainfo") el: ElementRef;
-  titleElHeight: number;
+  @ViewChildren("textareainfo") el: QueryList<ElementRef>;
 
   titleEleHeight: {
     [key: string]: number;
@@ -221,10 +227,12 @@ export class ValidationFormatosComponent implements OnInit {
 
       section.grupos.forEach((grupo, j) => {
         setTimeout(() => {
-          this.titleEleHeight[j] = this.el.nativeElement.scrollHeight
+          this.titleEleHeight[j] = this.el["_results"][
+            j
+          ].nativeElement.scrollHeight
             .toString()
             .concat("px");
-        });
+        }, 100);
         this.groups[j] = false;
         grupo.parametros.forEach((parametro, k) => {
           if (this.form.get(`${this.getParametroControl({ i, j, k })}`)) {

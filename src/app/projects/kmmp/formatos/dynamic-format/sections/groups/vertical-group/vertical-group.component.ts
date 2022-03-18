@@ -1,11 +1,13 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
@@ -28,6 +30,8 @@ export class VerticalGroupComponent implements OnInit {
   absoluteGroupData: any;
   title: FormControl = new FormControl();
   bindTitle: string;
+  titleElHeight: number;
+  @ViewChild("textareainfo") el: ElementRef;
 
   constructor(
     private _editarFormatoService: EditarFormatoService,
@@ -37,6 +41,11 @@ export class VerticalGroupComponent implements OnInit {
   ngOnInit(): void {
     this.title.setValue(this.groupData.titulo);
     this.bindTitle = this.groupData.titulo;
+    setTimeout(() => {
+      this.titleElHeight = this.el.nativeElement.scrollHeight
+        .toString()
+        .concat("px");
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -30,11 +30,12 @@
       <div>
         <mat-form-field class="font-semibold w-100" floatLabel="always">
           <textarea
-            #textarea
+            #textareainfo
             matInput
             type="text"
             [ngModel]="bindTitle"
             (ngModelChange)="bindTitle = $event"
+            [ngStyle]="{ height: titleElHeight }"
           ></textarea>
           <mat-icon
             *ngIf="!loadingTitle"
