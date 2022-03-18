@@ -103,7 +103,7 @@ export class ValidationFormatosComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from all subscriptionss
+    // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
