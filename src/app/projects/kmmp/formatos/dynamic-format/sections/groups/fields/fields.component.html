@@ -10,13 +10,17 @@
               [edit]="edit"
               [visible]="paramData.visible"
               [editable]="paramData.editable"
+              [ngClass]="{
+                'w-96': groupData.pos === 'v',
+                'w-40': !groupData?.pos || groupData.pos === 'h'
+              }"
             ></app-label-editable>
             <mat-form-field
               *ngSwitchCase="1"
               class="font-semibold"
               [ngClass]="{
                 'w-96': groupData.pos === 'v',
-                'w-40': groupData.pos === 'v'
+                'w-40': !groupData?.pos || groupData.pos === 'h'
               }"
               floatLabel="always"
             >
@@ -48,7 +52,7 @@
               floatLabel="always"
               [ngClass]="{
                 'w-96': groupData.pos === 'v',
-                'w-40': groupData.pos === 'v'
+                'w-40': groupData.pos === 'h'
               }"
             >
               <input
@@ -77,7 +81,7 @@
               floatLabel="always"
               [ngClass]="{
                 'w-96': groupData.pos === 'v',
-                'w-40': groupData.pos === 'v'
+                'w-40': groupData.pos === 'h'
               }"
             >
               <textarea
@@ -105,7 +109,7 @@
               floatLabel="always"
               [ngClass]="{
                 'w-96': groupData.pos === 'v',
-                'w-40': groupData.pos === 'v'
+                'w-40': groupData.pos === 'h'
               }"
             >
               <input
@@ -138,7 +142,7 @@
             *ngSwitchCase="8"
             [ngClass]="{
               'w-96': groupData.pos === 'v',
-              'w-40': groupData.pos === 'v'
+              'w-40': groupData.pos === 'h'
             }"
           >
             <app-label-editable
@@ -155,7 +159,7 @@
             *ngSwitchCase="9"
             [ngClass]="{
               'w-96': groupData.pos === 'v',
-              'w-40': groupData.pos === 'v'
+              'w-40': groupData.pos === 'h'
             }"
           >
             <app-label-editable
@@ -189,7 +193,7 @@
             *ngSwitchCase="4"
             [ngClass]="{
               'w-96': groupData.pos === 'v',
-              'w-40': groupData.pos === 'v'
+              'w-40': groupData.pos === 'h'
             }"
           >
             <app-label-editable
@@ -211,7 +215,7 @@
             *ngSwitchCase="6"
             [ngClass]="{
               'w-96': groupData.pos === 'v',
-              'w-40': groupData.pos === 'v'
+              'w-40': groupData.pos === 'h'
             }"
           >
             <app-label-editable
@@ -239,7 +243,7 @@
             *ngSwitchCase="7"
             [ngClass]="{
               'w-96': groupData.pos === 'v',
-              'w-40': groupData.pos === 'v'
+              'w-40': groupData.pos === 'h'
             }"
           >
             <app-label-editable
@@ -261,7 +265,7 @@
             *ngSwitchCase="10"
             [ngClass]="{
               'w-96': groupData.pos === 'v',
-              'w-40': groupData.pos === 'v'
+              'w-40': groupData.pos === 'h'
             }"
           >
             <div class="flex flex-col">

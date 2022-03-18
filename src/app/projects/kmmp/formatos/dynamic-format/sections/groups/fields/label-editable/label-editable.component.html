@@ -3,9 +3,9 @@
     [disabled]="!editable"
     [hidden]="edit"
     class="text-gray-900 font-medium cursor-pointer"
-    [ngStyle]="{ width: position === 'h' ? '10rem' : '' }"
-    [matTooltip]="label"
     style="text-overflow: ellipsis; overflow: hidden; max-height: 5rem"
+    [ngStyle]="{ width: position === 'h' ? '10rem' : ' ' }"
+    [matTooltip]="label"
   >
     <label
       class="label-edit cursor-pointer"
@@ -14,12 +14,16 @@
           ? 'hidden'
           : !label || label === ''
           ? 'hidden'
-          : 'visible'
+          : 'visible',
+        width: position === 'h' ? '10rem' : ' '
       }"
       >{{ !label || label === "" ? "a" : label }}</label
     >
   </div>
-  <div class="flex gap-1" style="width: 10rem">
+  <div
+    class="flex gap-1"
+    [ngStyle]="{ width: position === 'h' ? '10rem' : ' ' }"
+  >
     <input
       [hidden]="!edit"
       #nameInput
