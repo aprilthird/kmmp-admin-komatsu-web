@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { UserService } from "app/core/user/user.service";
 import { User } from "app/core/user/user.types";
 import { setFormatDate } from "app/shared/utils/dates-format";
+import moment from "moment";
 
 import {
   ApexAxisChartSeries,
@@ -52,8 +53,12 @@ export type ChartOptions = {
 })
 export class DashboardComponent implements OnInit {
   dateRange = new FormGroup({
-    startDate: new FormControl({ value: null }),
-    endDate: new FormControl({ value: null }),
+    startDate: new FormControl({
+      value: moment().subtract(14, "days").format("yyyy-MM-DD"),
+    }),
+    endDate: new FormControl({
+      value: moment().format("yyyy-MM-DD"),
+    }),
   });
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
@@ -135,14 +140,25 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  change(): void {
+  change(noEvent?): void {
     const startDate = new Date(this.dateRange.controls["startDate"].value);
     const endDate = new Date(this.dateRange.controls["endDate"].value);
     this.displayStringDate();
 
+    let fechaIni: string;
+    let fechaFin: string;
+
+    if (typeof this.dateRange.controls["endDate"].value?.value === "string") {
+      fechaFin = this.dateRange.controls["endDate"].value?.value;
+      fechaIni = this.dateRange.controls["startDate"].value?.value;
+    } else {
+      fechaIni = setFormatDate(startDate);
+      fechaFin = setFormatDate(endDate);
+    }
+
     this.filter = {
-      fechaIni: setFormatDate(startDate),
-      fechaFin: setFormatDate(endDate),
+      fechaIni: fechaIni,
+      fechaFin: fechaFin,
       idClaseActividad: this.idClaseActividad.value
         ? this.idClaseActividad.value
         : undefined,
@@ -151,7 +167,11 @@ export class DashboardComponent implements OnInit {
         : undefined,
       idCliente: this.idCliente ? this.idCliente : undefined,
     };
-    if (Number(setFormatDate(endDate).split("-")[0]) > 2020) {
+
+    if (
+      Number(setFormatDate(endDate).split("-")[0]) > 2020 ||
+      typeof this.dateRange.controls["endDate"].value?.value === "string"
+    ) {
       this._dashboardService.getStatusFlota(this.filter).subscribe(() => {});
 
       this._dashboardService.getCodigoDemora(this.filter).subscribe(() => {});
@@ -165,7 +185,7 @@ export class DashboardComponent implements OnInit {
   setClient(client): void {
     this.idCliente = client.id;
     this.client = client.nombre;
-    this.change();
+    this.change(true);
   }
 
   changeActivity(e: MatSelectChange): void {

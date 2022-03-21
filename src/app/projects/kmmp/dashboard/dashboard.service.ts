@@ -12,8 +12,8 @@ import { FakeDbService } from "../fake-db/fake-db.service";
 })
 export class DashboardService {
   _rangeDate: BehaviorSubject<any> = new BehaviorSubject({
-    fechaIni: moment().format("yyyy-MM-DD"),
-    fechaFin: moment().subtract(14, "days").format("yyyy-MM-DD"),
+    fechaFin: moment().format("yyyy-MM-DD"),
+    fechaIni: moment().subtract(14, "days").format("yyyy-MM-DD"),
   });
 
   _statusXflota: BehaviorSubject<any> = new BehaviorSubject(null);
