@@ -50,8 +50,8 @@ export class HorizontalGroupComponent implements OnInit {
   ngOnInit(): void {
     this.title.setValue(this.groupData.titulo);
     this.bindTitle = this.groupData.titulo;
-    this.createGrid();
-    this.firstColumnRow();
+    //this.createGrid();
+    //this.firstColumnRow();
     setTimeout(() => {
       this.titleElHeight = this.el.nativeElement.scrollHeight
         .toString()
@@ -61,6 +61,7 @@ export class HorizontalGroupComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.groupData) {
       this.groupData = changes.groupData.currentValue;
+      this.firstColumnRow();
     } else if (changes?.loadingTitle) {
       this.loadingTitle = changes.loadingTitle.currentValue;
     }
@@ -136,11 +137,22 @@ export class HorizontalGroupComponent implements OnInit {
     this.isLoading = true;
     const rows = await this.groupData.parametros.map((data) => data.fila);
     //const highestRow = Math.max.apply(null, rows);
-    const newRow = [...this.rowsOfGrid[this.rowsOfGrid.length - 1]].map((x) => {
+    /**for actives */
+    const rowsActive = [...this.groupData.parametros]
+      .filter((data) => data.activo)
+      .map((x) => x.fila);
+    const highestRowActive = Math.max.apply(null, rowsActive);
+    /**for actives */
+    let lastRow = [];
+
+    [...this.groupData.parametros].map((data) => {
+      if (data.fila === highestRowActive && data.activo) lastRow.push(data);
+    });
+    const newRow = lastRow.map((x) => {
       return {
         ...GeneralParams,
         columna: x.columna,
-        fila: this.highestRow + 1,
+        fila: highestRowActive + 1,
         idGrupo: x.idGrupo,
         idParametro: x.idParametro,
         label: x.label,
@@ -168,25 +180,25 @@ export class HorizontalGroupComponent implements OnInit {
     return this.groupData.parametros.some((x) => x.activo);
   }
 
-  private createGrid(): void {
-    let rawData = [];
-    this.getAllParameters().map((x: any) => {
-      if (x) rawData.push(x.fila);
-    });
-    const allRowsInTable = rawData.filter(
-      (value, index, x) => x.indexOf(value) === index
-    );
+  // private createGrid(): void {
+  //   let rawData = [];
+  //   this.getAllParameters().map((x: any) => {
+  //     if (x) rawData.push(x.fila);
+  //   });
+  //   const allRowsInTable = rawData.filter(
+  //     (value, index, x) => x.indexOf(value) === index
+  //   );
 
-    if (allRowsInTable.length > 0) {
-      allRowsInTable.forEach((x) => {
-        this.rowsOfGrid.push(
-          [...this.groupData.parametros].filter(
-            (param) => param.fila === x && param.activo
-          )
-        );
-      });
-    }
-  }
+  //   if (allRowsInTable.length > 0) {
+  //     allRowsInTable.forEach((x) => {
+  //       this.rowsOfGrid.push(
+  //         [...this.groupData.parametros].filter(
+  //           (param) => param.fila === x && param.activo
+  //         )
+  //       );
+  //     });
+  //   }
+  // }
   private getAllParameters(): number[] {
     let activeParams = [];
     this.groupData.parametros.forEach((x) => {
@@ -218,33 +230,33 @@ export class HorizontalGroupComponent implements OnInit {
       });
   }
 
-  delete(position: number, type: string): void {
-    let positionType;
-    if (type === "row") {
-      this.isColumnAdded.emit(false);
-      positionType = "fila";
-    } else {
-      this.isColumnAdded.emit(true);
-      positionType = "columna";
-    }
-    this.isLoading = true;
-    const posToDelete = this.groupData.parametros.filter((x) => {
-      if (x[positionType] === position) {
-        x.activo = false;
-        return x;
-      }
-    });
-    this._editarFormatoService
-      .createDato({
-        ...this.groupData,
-        parametros: posToDelete,
-      })
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(() => {
-        this.isLoading = false;
-        this._groups.loadGrupos();
-      });
-  }
+  // delete(position: number, type: string): void {
+  //   let positionType;
+  //   if (type === "row") {
+  //     this.isColumnAdded.emit(false);
+  //     positionType = "fila";
+  //   } else {
+  //     this.isColumnAdded.emit(true);
+  //     positionType = "columna";
+  //   }
+  //   this.isLoading = true;
+  //   const posToDelete = this.groupData.parametros.filter((x) => {
+  //     if (x[positionType] === position) {
+  //       x.activo = false;
+  //       return x;
+  //     }
+  //   });
+  //   this._editarFormatoService
+  //     .createDato({
+  //       ...this.groupData,
+  //       parametros: posToDelete,
+  //     })
+  //     .pipe(takeUntil(this._unsubscribeAll))
+  //     .subscribe(() => {
+  //       this.isLoading = false;
+  //       this._groups.loadGrupos();
+  //     });
+  // }
 
   /**ELIMINACION DE COLUMNAS Y RESTAR UNA POSICIÓN A LAS SIGUIENTES COLUMNAS */
   deleteTMP(position: number, type: string): void {
@@ -275,7 +287,7 @@ export class HorizontalGroupComponent implements OnInit {
           (positionType === "columna" ? this.highestColumn : this.highestRow) -
           position;
 
-        if (itineraions === 0) {
+        if (itineraions < 1) {
           this.isLoading = false;
           this._groups.loadGrupos();
         } else {
@@ -285,7 +297,6 @@ export class HorizontalGroupComponent implements OnInit {
                 (y) => y[positionType] === position + i + 1 && y.activo
               );
               elementToMove.map((x) => (x[positionType] = x[positionType] - 1));
-
               this._editarFormatoService
                 .createDato({
                   ...this.groupData,
@@ -308,5 +319,9 @@ export class HorizontalGroupComponent implements OnInit {
           }
         }
       });
+  }
+
+  trackByFn(index: number, item: any): number {
+    return item.id;
   }
 }

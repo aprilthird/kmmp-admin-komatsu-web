@@ -77,8 +77,9 @@
     ></mat-progress-bar>
     <ng-container *ngIf="grupos.length > 0 || isLoading">
       <div cdkDropList class="list-section" (cdkDropListDropped)="drop($event)">
-        <ng-container *ngFor="let group of grupos">
+        <ng-container *ngFor="let group of grupos; trackBy: trackByFn">
           <app-groups
+            id="group{{ group.id }}"
             *ngIf="group.activo"
             class="list-box w-full"
             [groupData]="group"

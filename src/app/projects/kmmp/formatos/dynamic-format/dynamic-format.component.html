@@ -48,6 +48,7 @@
     <div cdkDropList class="list-section" (cdkDropListDropped)="drop($event)">
       <ng-container *ngFor="let section of sections; trackBy: trackByFn">
         <app-sections
+          id="section{{ section.id }}"
           *ngIf="section.activo"
           class="list-box"
           [sectionData]="section"
