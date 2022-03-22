@@ -140,7 +140,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  change(noEvent?): void {
+  change(): void {
     const startDate = new Date(this.dateRange.controls["startDate"].value);
     const endDate = new Date(this.dateRange.controls["endDate"].value);
     this.displayStringDate();
@@ -185,7 +185,7 @@ export class DashboardComponent implements OnInit {
   setClient(client): void {
     this.idCliente = client.id;
     this.client = client.nombre;
-    this.change(true);
+    this.change();
   }
 
   changeActivity(e: MatSelectChange): void {
@@ -199,23 +199,24 @@ export class DashboardComponent implements OnInit {
   }
 
   private displayStringDate(init?: boolean): void {
-    if (this.dateRange.controls["startDate"].value) {
-      this.start = !init
-        ? new Date(
-            this.dateRange.controls["startDate"].value
-          ).toLocaleDateString("en-GB")
-        : new Date(
-            this.dateRange.controls["startDate"].value
-          ).toLocaleDateString("en-GB");
-    }
-    if (this.dateRange.controls["endDate"].value) {
-      this.end = !init
-        ? new Date(this.dateRange.controls["endDate"].value).toLocaleDateString(
-            "en-GB"
-          )
-        : new Date(this.dateRange.controls["endDate"].value).toLocaleDateString(
-            "en-GB"
-          );
+    if (init) {
+      this.start = new Date(
+        this.dateRange.controls["startDate"].value?.value
+      ).toLocaleDateString("en-GB");
+      this.end = new Date(
+        this.dateRange.controls["endDate"].value?.value
+      ).toLocaleDateString("en-GB");
+    } else {
+      if (this.dateRange.controls["startDate"].value) {
+        this.start = new Date(
+          this.dateRange.controls["startDate"].value
+        ).toLocaleDateString("en-GB");
+      }
+      if (this.dateRange.controls["endDate"].value) {
+        this.end = new Date(
+          this.dateRange.controls["endDate"].value
+        ).toLocaleDateString("en-GB");
+      }
     }
   }
 
