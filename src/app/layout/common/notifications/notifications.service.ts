@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { Notification } from "app/layout/common/notifications/notifications.types";
 import { map, switchMap, take, tap } from "rxjs/operators";
+import { environment } from "environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -41,13 +42,17 @@ export class NotificationsService {
     return this._httpClient
 
       .get<Notification[]>(
-        "https://development-kmp.ws.solera.pe/api/Administracion/ObtenerNotificaciones"
+        environment.apiUrl + "/Administracion/ObtenerNotificaciones"
       )
       .pipe(
         tap((notifications) => {
           notifications["body"].map((x) => {
+            console.log("norifications data ", x);
             x["description"] = x.notificacion;
             x["title"] = x.usuario;
+            x[
+              "link"
+            ] = `/admin/actividades/validation/${x?.idActividad}/${x?.idAsignacionFormato}/${x?.idSeccion}`;
           });
           this._notifications.next(notifications["body"]);
         })

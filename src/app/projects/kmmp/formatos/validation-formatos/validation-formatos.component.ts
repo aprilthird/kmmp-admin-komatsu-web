@@ -117,6 +117,7 @@ export class ValidationFormatosComponent implements OnInit {
   /**CAPTURAR ID'S DE LA ACTIVIDAD, FORMATO, SECCION */
   private getActivityId(): void {
     this.routerActive.paramMap.subscribe((params: any) => {
+      console.log(params);
       this.loaded = false;
       this.currentIdActivity = params.params["idActivity"];
       this.sectionId = params.params["idSection"];
