@@ -14,6 +14,7 @@ import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { FormatosService } from "../../formatos.service";
 import { GroupI } from "app/shared/models/formatos";
 import { GroupsComponent } from "./groups/groups.component";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "app-sections",
@@ -73,6 +74,7 @@ export class SectionsComponent implements OnInit {
     this.isLoading = true;
     this._editarFormatoService
       .getGrupos(this.sectionData.id)
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response) => {
         this.isLoading = false;
         this.grupos = response.body;

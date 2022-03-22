@@ -47,7 +47,6 @@ export class NotificationsService {
       .pipe(
         tap((notifications) => {
           notifications["body"].map((x) => {
-            console.log("norifications data ", x);
             x["description"] = x.notificacion;
             x["title"] = x.usuario;
             x[
