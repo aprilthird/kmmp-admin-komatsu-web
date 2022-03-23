@@ -49,15 +49,9 @@ export class NotificationsService {
           notifications["body"].map((x) => {
             x["description"] = x.notificacion;
             x["title"] = x.usuario;
-            if (
-              x?.idAsignacion !== 0 &&
-              x?.idAsignacionFormato !== 0 &&
-              x?.idSeccion !== 0
-            ) {
-              x[
-                "link"
-              ] = `/admin/actividades/validation/${x?.idAsignacion}/${x?.idAsignacionFormato}/${x?.idSeccion}`;
-            }
+            x[
+              "link"
+            ] = `/admin/actividades/validation/${x?.idAsignacion}/${x?.idAsignacionFormato}/${x?.idSeccion}`;
           });
           this._notifications.next(notifications["body"]);
         })

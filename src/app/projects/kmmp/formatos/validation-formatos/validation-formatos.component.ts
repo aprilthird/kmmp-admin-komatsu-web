@@ -13,7 +13,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { AzureService } from "app/core/azure/azure.service";
 import { PermissionService } from "app/core/permission/permission.service";
@@ -98,7 +98,8 @@ export class ValidationFormatosComponent implements OnInit {
     private fb: FormBuilder,
     private _azureService: AzureService,
     private formatosService: FormatosService,
-    public _permissonService: PermissionService
+    public _permissonService: PermissionService,
+    private _route: Router
   ) {
     this.data.secciones = [{}];
     this.getActivityId();
@@ -149,6 +150,20 @@ export class ValidationFormatosComponent implements OnInit {
         );
         this.data = x.body;
         if (this.sections[0].grupos && this.sections[0].grupos.length > 0) {
+          if (this.sectionId && this.sectionId !== "0") {
+            this.currentSectionData = await [...this.sections].find(
+              (section: any) => Number(this.sectionId) === section.id
+            );
+          } else {
+            this.currentSectionData = this.sections[0];
+
+            this._route.navigate([
+              `/admin/actividades/validation/`,
+              String(this.currentIdActivity),
+              String(this.formatoId),
+              String(this.sections[0].id),
+            ]);
+          }
           this.getActivityData();
         } else {
           this.matDialog.open(UiDialogsComponent, {
@@ -162,13 +177,8 @@ export class ValidationFormatosComponent implements OnInit {
           });
         }
 
-        if (this.sectionId) {
-          this.currentSectionData = await [...this.sections].find(
-            (section: any) => Number(this.sectionId) === section.id
-          );
-          this.generateForm();
-          this.sectionName = this.sections[0].nombre;
-        }
+        this.generateForm();
+        this.sectionName = this.sections[0].nombre;
       });
   }
 
