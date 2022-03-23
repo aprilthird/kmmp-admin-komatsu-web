@@ -87,6 +87,7 @@ export class ValidationFormatosComponent implements OnInit {
   titleEleHeight: {
     [key: string]: number;
   } = {};
+  rendered: boolean;
 
   constructor(
     private matDialog: MatDialog,
@@ -117,12 +118,24 @@ export class ValidationFormatosComponent implements OnInit {
   /**CAPTURAR ID'S DE LA ACTIVIDAD, FORMATO, SECCION */
   private getActivityId(): void {
     this.routerActive.paramMap.subscribe((params: any) => {
-      console.log(params);
       this.loaded = false;
       this.currentIdActivity = params.params["idActivity"];
       this.sectionId = params.params["idSection"];
       this.formatoId = params.params["idFormat"];
-      this.getAsignation();
+
+      if (!this.rendered) {
+        this.getAsignation();
+        this.rendered = true;
+      } else {
+        this.currentSectionData = [...this.sections].find(
+          (section: any) => Number(this.sectionId) === section.id
+        );
+        this.generateForm();
+        this.sectionName = this.sections[0].nombre;
+        setTimeout(() => {
+          this.setCollapsableNav();
+        }, 500);
+      }
     });
   }
 
@@ -228,11 +241,13 @@ export class ValidationFormatosComponent implements OnInit {
 
       section.grupos.forEach((grupo, j) => {
         setTimeout(() => {
-          this.titleEleHeight[j] = this.el["_results"][
-            j
-          ].nativeElement.scrollHeight
-            .toString()
-            .concat("px");
+          if (this.el["_results"][j]) {
+            this.titleEleHeight[j] = this.el["_results"][
+              j
+            ].nativeElement.scrollHeight
+              .toString()
+              .concat("px");
+          }
         }, 100);
         this.groups[j] = false;
         grupo.parametros.forEach((parametro, k) => {

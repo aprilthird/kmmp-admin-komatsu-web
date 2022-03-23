@@ -80,6 +80,7 @@ export class FieldsComponent implements OnInit, AfterViewInit {
       .subscribe(() => {
         this._groups.loadGrupos();
         this.isLoading = false;
+        this.edit = false;
       });
   }
 

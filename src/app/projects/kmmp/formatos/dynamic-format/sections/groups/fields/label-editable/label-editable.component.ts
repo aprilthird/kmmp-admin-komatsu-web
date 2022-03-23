@@ -5,8 +5,10 @@ import {
   EventEmitter,
   HostListener,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from "@angular/core";
 
@@ -15,7 +17,9 @@ import {
   templateUrl: "./label-editable.component.html",
   styleUrls: ["./label-editable.component.scss"],
 })
-export class LabelEditableComponent implements OnInit, AfterViewInit {
+export class LabelEditableComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   @Input() edit: boolean;
   @Input() visible: boolean;
   @Input() editable: boolean;
@@ -42,6 +46,12 @@ export class LabelEditableComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.renderTemplate = true;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.edit.currentValue) {
+      this.edit = changes.edit.currentValue;
+    }
   }
 
   ngAfterViewInit(): void {}
