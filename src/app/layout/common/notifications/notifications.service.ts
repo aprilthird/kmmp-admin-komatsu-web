@@ -51,7 +51,7 @@ export class NotificationsService {
             x["title"] = x.usuario;
             x[
               "link"
-            ] = `/admin/actividades/validation/${x?.idActividad}/${x?.idAsignacionFormato}/${x?.idSeccion}`;
+            ] = `/admin/actividades/validation/${x?.idAsignacion}/${x?.idAsignacionFormato}/${x?.idSeccion}`;
           });
           this._notifications.next(notifications["body"]);
         })
