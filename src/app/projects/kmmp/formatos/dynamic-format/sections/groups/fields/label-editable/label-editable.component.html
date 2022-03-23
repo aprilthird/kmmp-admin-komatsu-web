@@ -27,8 +27,14 @@
       [hidden]="!edit"
       #nameInput
       class="sm:text-lg leading-6 truncate"
+      [ngStyle]="{ width: position === 'h' ? '10rem' : '23rem' }"
       [(ngModel)]="label"
     />
+    <mat-progress-spinner
+      *ngIf="loadinglabel"
+      [mode]="'indeterminate'"
+      [diameter]="16"
+    ></mat-progress-spinner>
     <mat-icon
       class="cursor-pointer"
       *ngIf="edit"

@@ -77,11 +77,17 @@ export class FieldsComponent implements OnInit, AfterViewInit {
         ],
       })
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(() => {
-        this._groups.loadGrupos();
-        this.isLoading = false;
-        this.edit = false;
-      });
+      .subscribe(
+        () => {
+          this._groups.loadGrupos();
+          this.isLoading = false;
+          this.edit = false;
+        },
+        (err) => {
+          this.isLoading = false;
+          this.edit = false;
+        }
+      );
   }
 
   saveLabeOutPut(label: string, type: number): void {

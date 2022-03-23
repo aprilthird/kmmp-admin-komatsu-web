@@ -28,6 +28,7 @@ export class LabelEditableComponent
   @Output() saveLabel: EventEmitter<any> = new EventEmitter(null);
   @ViewChild("nameInput") el: ElementRef;
   renderTemplate: boolean = false;
+  loadinglabel: boolean;
 
   constructor() {}
 
@@ -49,8 +50,8 @@ export class LabelEditableComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.edit.currentValue) {
-      this.edit = changes.edit.currentValue;
+    if (changes.edit) {
+      this.edit = this.loadinglabel = changes.edit?.currentValue;
     }
   }
 
@@ -64,6 +65,7 @@ export class LabelEditableComponent
   }
 
   saveLabelFn(): void {
+    this.loadinglabel = true;
     this.saveLabel.emit(this.label);
   }
 }
