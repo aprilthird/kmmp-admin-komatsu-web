@@ -1,11 +1,14 @@
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from "@angular/core";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 
@@ -39,7 +42,7 @@ import {
     ]),
   ],
 })
-export class UploadFileComponent implements OnInit, OnChanges {
+export class UploadFileComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() type: string;
   @Input() loading = false;
   @Input() required: boolean;
@@ -49,11 +52,13 @@ export class UploadFileComponent implements OnInit, OnChanges {
   @Input() editable: boolean;
   @Input() preview: string;
   @Input() position: string;
+  @ViewChild("imgcontainer") imgcontainer: ElementRef;
 
-  _file: string = "";
+  _file: any = "";
   state = "default";
   dynamicFitImage: string = "unset";
   dinamycWidth: string = "100%";
+  heightImgPx: string;
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -69,6 +74,14 @@ export class UploadFileComponent implements OnInit, OnChanges {
 
     if (changes["editable"]) {
       this.editable = changes["editable"].currentValue;
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (this.imgcontainer?.nativeElement?.clientHeight) {
+      this.heightImgPx = "-"
+        .concat(String(this.imgcontainer.nativeElement.clientHeight))
+        .concat("px");
     }
   }
 
