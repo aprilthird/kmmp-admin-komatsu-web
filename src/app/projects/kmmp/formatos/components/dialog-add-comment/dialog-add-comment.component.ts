@@ -49,10 +49,6 @@ export class DialogAddCommentComponent implements OnInit {
   async submit() {
     this.loading = true;
     await this.updateObservedParam();
-    const payload = {
-      secciones: this.data.data,
-      idFormato: this.data.formatoId,
-    };
 
     this._editarFormatoService.saveAssignation(this.data.data).subscribe(
       (resp) => {

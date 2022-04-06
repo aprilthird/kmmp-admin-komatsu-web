@@ -18,11 +18,14 @@ import { FuseConfirmationService } from "@fuse/services/confirmation";
 import { AzureService } from "app/core/azure/azure.service";
 import { PermissionService } from "app/core/permission/permission.service";
 import { TipoParametro } from "app/core/types/formatos.types";
+import { UserService } from "app/core/user/user.service";
+import { User } from "app/core/user/user.types";
 import { Estados } from "app/shared/config/codigos";
 import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { environment } from "environments/environment";
 import { Moment } from "moment";
 import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 import { ActivitiesService } from "../../actividades/activities.service";
 import { DialogAddCommentComponent } from "../components/dialog-add-comment/dialog-add-comment.component";
@@ -88,6 +91,7 @@ export class ValidationFormatosComponent implements OnInit {
     [key: string]: number;
   } = {};
   rendered: boolean;
+  userId: number;
 
   constructor(
     private matDialog: MatDialog,
@@ -99,7 +103,8 @@ export class ValidationFormatosComponent implements OnInit {
     private _azureService: AzureService,
     private formatosService: FormatosService,
     public _permissonService: PermissionService,
-    private _route: Router
+    private _route: Router,
+    private _userService: UserService
   ) {
     this.data.secciones = [{}];
     this.getActivityId();
@@ -108,12 +113,21 @@ export class ValidationFormatosComponent implements OnInit {
   ngOnInit(): void {
     this.drawerMode = "side";
     this.drawerOpened = true;
+    this.getIdUser();
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+
+  getIdUser(): void {
+    this._userService.user$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((user: User) => {
+        this.userId = Number(user.id);
+      });
   }
 
   /**CAPTURAR ID'S DE LA ACTIVIDAD, FORMATO, SECCION */
@@ -549,6 +563,10 @@ export class ValidationFormatosComponent implements OnInit {
 
     const payload = {
       ...this.asignation,
+      idUsuarioReg:
+        !this.asignation.idUsuarioReg || this.asignation.idUsuarioReg === 0
+          ? this.userId
+          : this.asignation.idUsuarioReg,
       secciones: data,
       idFormato: data[0].grupos[0].parametros[0].idFormato,
       idActividadFormato: Number(this.formatoId),
@@ -727,6 +745,10 @@ export class ValidationFormatosComponent implements OnInit {
     const data = {
       data: {
         ...this.data,
+        idUsuarioReg:
+          !this.asignation.idUsuarioReg || this.asignation.idUsuarioReg === 0
+            ? this.userId
+            : this.asignation.idUsuarioReg,
         idActividadFormato: Number(this.formatoId),
         estado: Estados.OBSERVADA,
       },
