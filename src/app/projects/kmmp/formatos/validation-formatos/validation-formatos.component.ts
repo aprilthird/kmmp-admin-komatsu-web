@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import {
   Component,
   ElementRef,
@@ -92,6 +93,7 @@ export class ValidationFormatosComponent implements OnInit {
   } = {};
   rendered: boolean;
   userId: number;
+  initialData: any;
 
   constructor(
     private matDialog: MatDialog,
@@ -104,7 +106,8 @@ export class ValidationFormatosComponent implements OnInit {
     private formatosService: FormatosService,
     public _permissonService: PermissionService,
     private _route: Router,
-    private _userService: UserService
+    private _userService: UserService,
+    private _httpClient: HttpClient
   ) {
     this.data.secciones = [{}];
     this.getActivityId();
@@ -413,6 +416,8 @@ export class ValidationFormatosComponent implements OnInit {
         });
       }
     });
+
+    this.initialData = { ...this.form };
   }
 
   isObserve(j, k) {
@@ -554,19 +559,25 @@ export class ValidationFormatosComponent implements OnInit {
                   );
                 }
               }
+
+              if (
+                this.initialData.value[`${i}-${j}-${k}`].toString() !==
+                parametro.valor.toString()
+              ) {
+                parametro.idUsuarioReg =
+                  !this.asignation.idUsuarioReg ||
+                  this.asignation.idUsuarioReg === 0
+                    ? this.userId
+                    : this.asignation.idUsuarioReg;
+              }
             }
           });
         });
       }
     });
-    //
 
     const payload = {
       ...this.asignation,
-      idUsuarioReg:
-        !this.asignation.idUsuarioReg || this.asignation.idUsuarioReg === 0
-          ? this.userId
-          : this.asignation.idUsuarioReg,
       secciones: data,
       idFormato: data[0].grupos[0].parametros[0].idFormato,
       idActividadFormato: Number(this.formatoId),
@@ -745,10 +756,6 @@ export class ValidationFormatosComponent implements OnInit {
     const data = {
       data: {
         ...this.data,
-        idUsuarioReg:
-          !this.asignation.idUsuarioReg || this.asignation.idUsuarioReg === 0
-            ? this.userId
-            : this.asignation.idUsuarioReg,
         idActividadFormato: Number(this.formatoId),
         estado: Estados.OBSERVADA,
       },
@@ -843,29 +850,35 @@ export class ValidationFormatosComponent implements OnInit {
     return `${time.year}-${time.month}-${time.day}`;
   }
 
-  printPdf(): void {
+  printPdf() {
     this.loadingReport = true;
-    fetch(
-      environment.apiUrl + "/Reportes/GenerarInforme/" + Number(this.formatoId)
-    )
-      .then((resp) => resp.blob())
-      .then((blob) => {
-        let url = window.URL.createObjectURL(blob);
-        let a = document.createElement("a");
-        a.href = url;
-        a.download = "Asignacion_" + this.formatoId + ".pdf";
-        document.body.appendChild(a);
-        this.loadingReport = false;
-        a.click();
-        a.remove();
-      })
-      .catch((e) =>
-        this.matDialog.open(UiDialogsComponent, {
-          data: {
-            title: "Error",
-            message: "No hay contenido para generar reporte",
-          },
-        })
+
+    this._httpClient
+      .get(
+        environment.apiUrl +
+          "/Reportes/GenerarInforme/" +
+          Number(this.formatoId),
+        { responseType: "blob" }
+      )
+      .subscribe(
+        (e) => {
+          let url = window.URL.createObjectURL(e);
+          let a = document.createElement("a");
+          a.href = url;
+          a.download = "Asignacion_" + this.formatoId + ".pdf";
+          document.body.appendChild(a);
+          this.loadingReport = false;
+          a.click();
+          a.remove();
+        },
+        (err) => {
+          this.matDialog.open(UiDialogsComponent, {
+            data: {
+              title: "Error",
+              message: "No hay contenido para generar reporte",
+            },
+          });
+        }
       );
   }
 }
