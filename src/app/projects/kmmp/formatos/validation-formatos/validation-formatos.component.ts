@@ -564,11 +564,15 @@ export class ValidationFormatosComponent implements OnInit {
                 this.initialData.value[`${i}-${j}-${k}`].toString() !==
                 parametro.valor.toString()
               ) {
-                parametro.idUsuarioReg =
-                  !this.asignation.idUsuarioReg ||
-                  this.asignation.idUsuarioReg === 0
+                parametro.idUsuarioMod =
+                  parametro?.idUsuarioReg !== 0
                     ? this.userId
-                    : this.asignation.idUsuarioReg;
+                    : parametro?.idUsuarioMod;
+
+                parametro.idUsuarioReg =
+                  parametro?.idUsuarioReg !== 0
+                    ? parametro?.idUsuarioReg
+                    : this.userId;
               }
             }
           });

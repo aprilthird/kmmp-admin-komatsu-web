@@ -15,7 +15,7 @@ export const dataToAssign = {
   usuarioMod: "string",
   usuarioReg: "string",
   idUsuarioReg: 0,
-  idUsuarioMod: 0,
+  //idUsuarioMod: 0,
   entidad: 0,
   total: 0,
   idBahia: 0,
