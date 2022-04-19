@@ -33,7 +33,7 @@ import { DialogAddAsignarComponent } from "./components/dialog-add-asignar/dialo
 import { FuseAlertModule } from "@fuse/components/alert";
 import { DialogPrevisualizarComponent } from "./components/dialog-previsualizar/dialog-previsualizar.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MAT_DATE_LOCALE } from "@angular/material/core";
+import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
 import { AsignacionesComponent } from "./asignaciones/asignaciones.component";
 import { MatChipsModule } from "@angular/material/chips";
 import { AperturaAsignacionComponent } from "./asignaciones/apertura-asignacion/apertura-asignacion.component";
@@ -63,6 +63,10 @@ import {
 import { DATE_TIME_FORMAT } from "app/shared/config/date.config";
 import { NgxMatMomentModule } from "@angular-material-components/moment-adapter";
 import { LinebreakPipe } from "app/shared/pipes/linebreak.pipe";
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from "@angular/material-moment-adapter";
 
 @NgModule({
   declarations: [
@@ -126,8 +130,13 @@ import { LinebreakPipe } from "app/shared/pipes/linebreak.pipe";
     //NgxMatMomentModule,
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: "es-ES" },
-    //{ provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT },
+    { provide: MAT_DATE_LOCALE, useValue: "en-GB" },
+    { provide: NGX_MAT_DATE_FORMATS, useValue: DATE_TIME_FORMAT },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
   ],
 })
 export class FormatosModule {}
