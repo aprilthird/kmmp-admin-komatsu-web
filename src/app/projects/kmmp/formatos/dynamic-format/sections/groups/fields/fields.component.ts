@@ -185,6 +185,9 @@ export class FieldsComponent implements OnInit, AfterViewInit {
       ...this.paramData,
       [attribute]: value,
     };
+    this.paramData.obligatorio = !this.paramData.editable
+      ? false
+      : this.paramData.obligatorio;
     this.editField(this.paramData.idParametro);
   }
 

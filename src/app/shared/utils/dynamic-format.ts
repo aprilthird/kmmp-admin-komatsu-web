@@ -31,7 +31,6 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         ...paramData,
         idParametro: 2,
         regex: "",
-        placeholder: "Ingrese número",
       };
     case 3:
       return {
