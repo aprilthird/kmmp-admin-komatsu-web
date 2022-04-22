@@ -15,6 +15,7 @@ import { AzureService } from "app/core/azure/azure.service";
 import { EditarFormatoService } from "app/projects/kmmp/formatos/editar-formato/editar-formato.service";
 import { InputValidators } from "app/shared/config/input-validator.config";
 import { GroupI, ParamI } from "app/shared/models/formatos";
+import { UiDialogsComponent } from "app/shared/ui/ui-dialogs/ui-dialogs.component";
 import { paramsInfo } from "app/shared/utils/dynamic-format";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -35,6 +36,7 @@ export class FieldsComponent implements OnInit, AfterViewInit {
   @Input() lowestColumn: number;
   @Output() columnToDelete: EventEmitter<number> = new EventEmitter(null);
   @Output() rowToDelete: EventEmitter<number> = new EventEmitter(null);
+  @ViewChild("mandatoryCheck") mandatoryCheck: ElementRef;
   fieldData = new FormControl("", Validators.required);
   isLoading: boolean;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -108,7 +110,7 @@ export class FieldsComponent implements OnInit, AfterViewInit {
         minCaracteres: values.min,
         maxCaracteres: values.max,
       };
-      this.editField(1);
+      this.editField(13);
       dialogRef.close();
     });
   }
@@ -180,11 +182,29 @@ export class FieldsComponent implements OnInit, AfterViewInit {
     this.editField(this.paramData.idParametro);
   }
 
-  setAttribute(value: boolean, attribute: string): void {
+  setAttribute(value: boolean, attribute: string) {
     this.paramData = {
       ...this.paramData,
       [attribute]: value,
     };
+
+    if (!this.paramData.editable) {
+      this.mandatoryCheck["_checked"] = false;
+      if (attribute === "obligatorio") {
+        this._dialog
+          .open(UiDialogsComponent, {
+            width: "500px",
+            data: {
+              title: "Acción no permitida!",
+              message: "Un campo no puede ser obligatorio sino es editable!",
+            },
+          })
+          .afterOpened()
+          .toPromise()
+          .then(() => (this.mandatoryCheck["_checked"] = false));
+        return;
+      }
+    }
     this.paramData.obligatorio = !this.paramData.editable
       ? false
       : this.paramData.obligatorio;

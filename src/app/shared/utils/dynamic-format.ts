@@ -7,6 +7,8 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         ...paramData,
         idParametro: 1,
         regex: null,
+        minCaracteres: null,
+        maxCaracteres: null,
       };
     case 11:
       return {
@@ -26,17 +28,27 @@ export function paramsInfo(type: number, paramData: ParamI): ParamI {
         minCaracteres: 1,
         maxCaracteres: 100,
       };
+
+    case 13:
+      return {
+        ...paramData,
+        idParametro: 1,
+      };
     case 2:
       return {
         ...paramData,
         idParametro: 2,
         regex: "",
+        minCaracteres: null,
+        maxCaracteres: null,
       };
     case 3:
       return {
         ...paramData,
         idParametro: 3,
         regex: "",
+        minCaracteres: null,
+        maxCaracteres: null,
       };
 
     case 4:
