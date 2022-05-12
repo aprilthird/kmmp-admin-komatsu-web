@@ -165,11 +165,16 @@
             </div>
 
             <button
-              *ngIf="!validateSection()"
               mat-raised-button
               [color]="'secondary'"
               class="text-green-600"
               (click)="validate()"
+              *ngIf="
+                _permissonService.hasPermissonAccion(
+                  '/admin/actividades/list',
+                  'Firmar'
+                ) && !validateSection()
+              "
             >
               <mat-icon svgIcon="heroicons_outline:check-circle"></mat-icon>
               <span class="ml-2 mr-1">Validar sección</span>
