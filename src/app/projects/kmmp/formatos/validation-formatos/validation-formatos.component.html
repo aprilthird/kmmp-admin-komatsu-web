@@ -59,7 +59,10 @@
           class="text-white w-40"
           mat-raised-button
           [color]="'primary'"
-          [disabled]="allSectionValidates.length !== sections.length"
+          [disabled]="
+            allSectionValidates.length !== sections.length ||
+            asignation?.firmado
+          "
           (click)="postValidateFormat()"
         >
           <mat-icon
