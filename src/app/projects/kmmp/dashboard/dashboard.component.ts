@@ -85,6 +85,7 @@ export class DashboardComponent implements OnInit {
     idClaseActividad?: number;
     idTipoSolicitud?: number;
     idCliente?: number;
+    idUsuario?: number;
   };
   isLoadingNoExc: boolean;
   idCliente: any;
@@ -166,6 +167,7 @@ export class DashboardComponent implements OnInit {
         ? this.idTipoSolicitud.value
         : undefined,
       idCliente: this.idCliente ? this.idCliente : undefined,
+      idUsuario: Number(this.user.id),
     };
 
     if (
@@ -244,7 +246,7 @@ export class DashboardComponent implements OnInit {
 
   getClaseActividades(): void {
     this.claseActividadService
-      .getClaseActividad({ pageSize: 999 })
+      .getClaseActividad({ pageSize: 999, filter: { idUsuario: this.user.id } })
       .subscribe((resp) => {
         this.clase_actividades = resp.body.data;
       });

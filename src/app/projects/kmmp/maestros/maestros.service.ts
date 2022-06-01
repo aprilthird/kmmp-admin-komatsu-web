@@ -60,7 +60,7 @@ export class MaestrosService {
   }
 
   getClients(
-    { page, pageSize, nombre }: ParamsPagination | any = {
+    { page, pageSize, nombre, filter }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
@@ -72,7 +72,12 @@ export class MaestrosService {
           ...getInboxParams,
           page,
           pageSize,
-          filter: { ...getInboxParams.filter, nombre, tipo: 1 },
+          filter: {
+            ...getInboxParams.filter,
+            idUsuario: filter.idUsuario,
+            nombre,
+            tipo: 1,
+          },
         }
       )
       .pipe(

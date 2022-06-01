@@ -1,10 +1,12 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { UserService } from "app/core/user/user.service";
+import { User } from "app/core/user/user.types";
 import { Response } from "app/shared/models/general-model";
 import { environment } from "environments/environment";
 import moment from "moment";
-import { BehaviorSubject, Observable } from "rxjs";
-import { tap } from "rxjs/operators";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { takeUntil, tap } from "rxjs/operators";
 import { FakeDbService } from "../fake-db/fake-db.service";
 
 @Injectable({
@@ -32,7 +34,20 @@ export class DashboardService {
   _postponedCauses: BehaviorSubject<any> = new BehaviorSubject(null);
   _noExecutedCauses: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  constructor(private http: HttpClient, private fakeDB: FakeDbService) {}
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
+  idUsuario: number;
+
+  constructor(
+    private http: HttpClient,
+    private fakeDB: FakeDbService,
+    private _userService: UserService
+  ) {
+    this._userService.user$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((user: User) => {
+        this.idUsuario = Number(user.id);
+      });
+  }
 
   get statusFlota$(): Observable<any> {
     return this._statusXflota.asObservable();
@@ -108,7 +123,9 @@ export class DashboardService {
 
   /**REAL SERVICES */
 
-  getStatusFlota(filter = this._rangeDate.getValue()): Observable<Response> {
+  getStatusFlota(
+    filter = { ...this._rangeDate.getValue(), idUsuario: this.idUsuario }
+  ): Observable<Response> {
     const endpoint = environment.apiUrl + "/Reportes/EstatusFlotas";
     return this.http.post<Response>(endpoint, filter).pipe(
       tap((statusFlota: any) => {
@@ -139,7 +156,7 @@ export class DashboardService {
   }
 
   getActividadesNoEjecutadas(
-    filter = this._rangeDate.getValue()
+    filter = { ...this._rangeDate.getValue(), idUsuario: this.idUsuario }
   ): Observable<any> {
     const endpoint = environment.apiUrl + "/Reportes/ActividadesNoCompletadas";
     return this.http.post<any>(endpoint, filter).pipe(
@@ -173,7 +190,7 @@ export class DashboardService {
   }
 
   getNoExecuteActivitiesyState(
-    filter = this._rangeDate.getValue()
+    filter = { ...this._rangeDate.getValue(), idUsuario: this.idUsuario }
   ): Observable<Response> {
     const endpoint =
       environment.apiUrl + "/Reportes/ActividadesNoEjecutadasPorEstado";
@@ -184,7 +201,9 @@ export class DashboardService {
     );
   }
 
-  getCodigoDemora(filter = this._rangeDate.getValue()): Observable<Response> {
+  getCodigoDemora(
+    filter = { ...this._rangeDate.getValue(), idUsuario: this.idUsuario }
+  ): Observable<Response> {
     const endpoint = environment.apiUrl + "/Reportes/CodigosDeDemoras";
     return this.http.post<Response>(endpoint, filter).pipe(
       tap((delayedCode) => {

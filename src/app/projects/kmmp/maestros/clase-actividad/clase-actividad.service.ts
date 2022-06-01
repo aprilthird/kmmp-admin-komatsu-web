@@ -86,7 +86,7 @@ export class ClaseActividadService {
   }
 
   getClaseActividad(
-    { page, pageSize, nombre }: ParamsPagination | any = {
+    { page, pageSize, nombre, filter }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
@@ -102,6 +102,7 @@ export class ClaseActividadService {
             ...getInboxParams.filter,
             nombre,
             tipo: 7,
+            idUsuario: filter.idUsuario,
           },
         }
       )
