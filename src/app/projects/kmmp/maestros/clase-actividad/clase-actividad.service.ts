@@ -102,7 +102,7 @@ export class ClaseActividadService {
             ...getInboxParams.filter,
             nombre,
             tipo: 7,
-            idUsuario: filter.idUsuario,
+            idUsuario: filter != undefined ? filter.idUsuario : 0,
           },
         }
       )
