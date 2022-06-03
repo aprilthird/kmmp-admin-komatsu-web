@@ -60,11 +60,12 @@ export class MaestrosService {
   }
 
   getClients(
-    { page, pageSize, nombre, filter }: ParamsPagination | any = {
+    { page, pageSize, nombre }: ParamsPagination | any = {
       page: 0,
       pageSize: 10,
     }
   ): Observable<PaginationResponse<ClientI[]>> {
+      debugger
     return this.http
       .post<PaginationResponse<any[]>>(
         environment.apiUrl + "/Administracion/BandejaMaestrosPaginado",
@@ -74,7 +75,6 @@ export class MaestrosService {
           pageSize,
           filter: {
             ...getInboxParams.filter,
-            idUsuario: filter.idUsuario,
             nombre,
             tipo: 1,
           },
