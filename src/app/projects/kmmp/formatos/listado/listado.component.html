@@ -73,23 +73,23 @@
                   </div>
 
                   <!-- Cliente -->
-                  <div class="truncate">
+                  <div class="truncate" [matTooltip]="formato?.cliente">
                     {{ formato?.cliente }}
                   </div>
                   <!-- Nombres -->
-                  <div class="truncate">
+                  <div class="truncate" [matTooltip]="formato?.nombre">
                     {{ formato.nombre }}
                   </div>
                   <!-- ID -->
-                  <div class="truncate">
+                  <div class="truncate" [matTooltip]="formato?.modelo">
                     {{ formato?.modelo }}
                   </div>
                   <!-- Actividad -->
-                  <div class="truncate">
+                  <div class="truncate" [matTooltip]="formato?.claseActividad">
                     {{ formato?.claseActividad }}
                   </div>
                   <!-- tipo mtto -->
-                  <div class="truncate">
+                  <div class="truncate" [matTooltip]="formato?.tipoMantenimiento">
                     {{ formato?.tipoMantenimiento }}
                   </div>
 
