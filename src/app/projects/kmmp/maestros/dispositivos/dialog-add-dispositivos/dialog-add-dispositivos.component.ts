@@ -80,8 +80,11 @@ export class DialogAddDispositivosComponent implements OnInit {
       id: selectet.idDispositivoBahia,
       activo: active,
     };
+    
+    event.source.close();
+    this.form.controls["idBahia"].disable();
     this.dispositivoService.assignDeviceToBay(payload).subscribe(() => {
-      this.matdialigRef.close();
+      this.form.controls["idBahia"].enable();
     });
   }
 
