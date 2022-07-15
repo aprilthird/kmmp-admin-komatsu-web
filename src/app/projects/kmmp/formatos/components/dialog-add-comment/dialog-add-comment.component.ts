@@ -38,6 +38,7 @@ export class DialogAddCommentComponent implements OnInit {
               if (index === this.data.paramIndex) {
                 parametro.comentarios = this.comment.value;
                 parametro.observar = true;
+                parametro.corregido = false;
               }
             });
           }

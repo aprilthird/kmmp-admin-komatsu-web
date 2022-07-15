@@ -430,11 +430,18 @@ export class ValidationFormatosComponent implements OnInit {
     return this.obserForm[`${j}-${k}`];
   }
 
-  observeToolTip(j, k) {
-    if (this.obserForm[`${j}-${k}`]) {
+  observeToolTip(j, k, observed = false, fixed = false) {
+    if(fixed) {
+      return "Campo ha sido corregido";
+    } else if(observed) {
       return "Campo ha sido observado";
+    } else {
+      return "Campo no ha sido observado aún";
     }
-    return "Campo no ha sido observado aún";
+    // if (this.obserForm[`${j}-${k}`]) {
+    //   return "Campo ha sido observado";
+    // }
+    // return "Campo no ha sido observado aún";
   }
 
   edit(groupIndex: number): void {

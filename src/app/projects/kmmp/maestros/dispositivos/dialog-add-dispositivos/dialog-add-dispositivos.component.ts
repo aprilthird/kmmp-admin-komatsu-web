@@ -63,14 +63,15 @@ export class DialogAddDispositivosComponent implements OnInit {
       });
     });
 
-    if (this.baysAssigned.length < event.value.length) {
-      active = true;
-      el = event.value.find((x) => !this.baysAssigned.includes(x));
-    }
-
     if (event.value.length === 0) {
       active = false;
       el = this.baysAssigned[0];
+    } else if (this.baysAssigned.length < event.value.length) {
+      active = true;
+      el = event.value.find((x) => !this.baysAssigned.includes(x));
+    } else if(this.baysAssigned.length > event.value.length) {
+      active = false;
+      el = this.baysAssigned.find((x) => !event.value.includes(x));
     }
     const selectet = this.bays.find((bay) => bay.idBahia === el);
     const payload = {
@@ -84,6 +85,12 @@ export class DialogAddDispositivosComponent implements OnInit {
     event.source.close();
     this.form.controls["idBahia"].disable();
     this.dispositivoService.assignDeviceToBay(payload).subscribe(() => {
+      if(active) {
+        this.baysAssigned.push(selectet.idBahia);
+      } else {
+        const index = this.baysAssigned.indexOf(selectet.idBahia);
+        this.baysAssigned.splice(index, 1);
+      }
       this.form.controls["idBahia"].enable();
     });
   }

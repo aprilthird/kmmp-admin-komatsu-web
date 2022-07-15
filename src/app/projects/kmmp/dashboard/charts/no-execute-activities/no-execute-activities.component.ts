@@ -34,10 +34,6 @@ export class NoExecuteActivitiesComponent implements OnInit {
         };
 
         this.noActivitiesExec.plotOptions.bar.colors.ranges = [
-          { from: 0, to: 10, color: "#00A7FF" },
-          { from: 10, to: 50, color: "#7030A0" },
-          { from: 51, to: 100, color: "#CBF266" },
-          { from: 101, to: 2000, color: "#140A9A" },
         ];
       });
   }

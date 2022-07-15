@@ -41,12 +41,7 @@ export class DeleyedCodeComponent implements OnInit {
         if (x) {
           this.delayCode = x;
           this.delayCode.plotOptions.bar.colors = {};
-          this.delayCode.plotOptions.bar.colors.ranges = [
-            { from: 0, to: 10, color: "#140A9A" },
-            { from: 10, to: 50, color: "#140A9A" },
-            { from: 51, to: 100, color: "#CBF266" },
-            { from: 101, to: 2000, color: "#140A9A" },
-          ];
+          this.delayCode.plotOptions.bar.colors.ranges = [];
         }
       });
   }

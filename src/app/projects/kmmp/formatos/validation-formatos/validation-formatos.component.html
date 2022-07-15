@@ -621,16 +621,18 @@
                                             (observation[j] ||
                                               parametro.comentarios)
                                           "
-                                          [matTooltip]="observeToolTip(j, k)"
+                                          [matTooltip]="observeToolTip(j, k, parametro.observar, parametro.corregido)"
                                           [ngClass]="{
                                             'text-red-600':
                                               parametro.comentarios,
                                             'text-red-300':
-                                              !parametro.comentarios
+                                              !parametro.comentarios,
+                                            'text-green-600':
+                                              parametro.corregido
                                           }"
                                           class="ml-2 text-red-300 cursor-pointer"
                                           [svgIcon]="
-                                            !parametro.comentarios
+                                            !parametro.observar
                                               ? 'heroicons_outline:chat'
                                               : 'heroicons_solid:chat'
                                           "

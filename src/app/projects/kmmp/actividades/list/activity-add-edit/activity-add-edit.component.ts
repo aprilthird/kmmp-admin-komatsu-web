@@ -433,7 +433,7 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   addOS(): void {
-    if(this.service_orders.length <= 5) {
+    if(this.service_orders.length <= 10) {
       let controlIndex = this.service_orders.length + 1;
       this.formOS.addControl(controlIndex.toString(), new FormControl());
       this.service_orders.push("");
@@ -450,7 +450,7 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   addPE(): void {
-    if(this.pe_items.length <= 6) {
+    if(this.pe_items.length <= 10) {
       let controlIndex = this.pe_items.length + 1;
       this.formPE.addControl(controlIndex.toString(), new FormControl());
       this.pe_items.push("");
