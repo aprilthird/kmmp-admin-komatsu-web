@@ -433,10 +433,15 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   addOS(): void {
-    if (this.service_orders.length === 1) {
-      this.formOS.addControl("1", new FormControl());
+    if(this.service_orders.length <= 5) {
+      let controlIndex = this.service_orders.length + 1;
+      this.formOS.addControl(controlIndex.toString(), new FormControl());
       this.service_orders.push("");
     }
+    // if (this.service_orders.length === 1) {
+    //   this.formOS.addControl("1", new FormControl());
+    //   this.service_orders.push("");
+    // }
   }
 
   removePE(index: number): void {
@@ -445,10 +450,15 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   addPE(): void {
-    if (this.pe_items.length === 1) {
-      this.formPE.addControl("1", new FormControl());
+    if(this.pe_items.length <= 6) {
+      let controlIndex = this.pe_items.length + 1;
+      this.formPE.addControl(controlIndex.toString(), new FormControl());
       this.pe_items.push("");
     }
+    // if (this.pe_items.length === 1) {
+    //   this.formPE.addControl("1", new FormControl());
+    //   this.pe_items.push("");
+    // }
   }
   dateChange(): void {
     setTimeout(() => {
