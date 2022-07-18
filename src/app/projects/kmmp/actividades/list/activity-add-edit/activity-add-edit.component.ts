@@ -23,6 +23,7 @@ import { Response } from "app/shared/models/general-model";
 import { BayI } from "../../models/bays-model";
 import moment from "moment";
 import { getDateTime } from "app/shared/utils/dates-format";
+import { FORMERR } from "dns";
 
 @Component({
   selector: "activity-add-edit",
@@ -176,20 +177,36 @@ export class ActivityAddEditComponent implements OnInit {
     if (type === TipoFormulario.NOS) form = this.formOS;
     else form = this.formPE;
 
-    form.addControl("0", new FormControl());
+    form.addControl("0", new FormControl());    
     if (this.isEdit) form.controls["0"].disable();
+
     if (this.activityInfo?.[type]) {
-      form.controls["0"].setValue(this.activityInfo?.[type].split(",")[0]);
-      if (this.activityInfo?.[type].split(",")[1]) {
-        form.addControl(
-          "1",
-          new FormControl(this.activityInfo?.[type].split(",")[1])
-        );
-        if (this.isEdit) form.controls["1"].disable();
+      let values = this.activityInfo?.[type].split(",");
+      form.controls["0"].setValue(values[0]);
+
+      for(let i=1; i<values.length; i++) {
+        form.addControl(i.toString(), new FormControl());
+        form.controls[i.toString()].setValue(values[i]);
+        if(this.isEdit) form.controls[i.toString()].disable();
         if (type === TipoFormulario.NOS) this.service_orders.push("");
         else this.pe_items.push("");
       }
     }
+
+    // form.addControl("0", new FormControl());
+    // if (this.isEdit) form.controls["0"].disable();
+    // if (this.activityInfo?.[type]) {
+    //   form.controls["0"].setValue(this.activityInfo?.[type].split(",")[0]);
+    //   if (this.activityInfo?.[type].split(",")[1]) {
+    //     form.addControl(
+    //       "1",
+    //       new FormControl(this.activityInfo?.[type].split(",")[1])
+    //     );
+    //     if (this.isEdit) form.controls["1"].disable();
+    //     if (type === TipoFormulario.NOS) this.service_orders.push("");
+    //     else this.pe_items.push("");
+    //   }
+    // }
   }
 
   private setActivityData(): void {
@@ -433,7 +450,7 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   addOS(): void {
-    if(this.service_orders.length <= 10) {
+    if(this.service_orders.length < 10) {
       let controlIndex = this.service_orders.length + 1;
       this.formOS.addControl(controlIndex.toString(), new FormControl());
       this.service_orders.push("");
@@ -450,7 +467,7 @@ export class ActivityAddEditComponent implements OnInit {
   }
 
   addPE(): void {
-    if(this.pe_items.length <= 10) {
+    if(this.pe_items.length < 10) {
       let controlIndex = this.pe_items.length + 1;
       this.formPE.addControl(controlIndex.toString(), new FormControl());
       this.pe_items.push("");
