@@ -45,6 +45,14 @@ export class ActivityComponent implements OnInit {
   private getActivityData(id: number): void {
     this.activitiesService.getActivity(id).subscribe((resp: any) => {
       this.activityInfo = resp.body;
+      if(this.activityInfo?.nos !== "null") {
+        let tmp = this.activityInfo.nos.replace(/,/gi, ", ");
+        this.activityInfo.nos = tmp;
+      }
+      if(this.activityInfo?.npe !== "null") {
+        let tmp = this.activityInfo.npe.replace(/,/gi, ", ");
+        this.activityInfo.npe = tmp;
+      }
       this.getTimeDiff();
       this.totalAdvance();
     });

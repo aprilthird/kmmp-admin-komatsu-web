@@ -184,7 +184,7 @@ export class ActivityAddEditComponent implements OnInit {
       let values = this.activityInfo?.[type].split(",");
       form.controls["0"].setValue(values[0]);
 
-      for(let i=1; i<values.length; i++) {
+      for(let i=0; i<values.length; i++) {
         form.addControl(i.toString(), new FormControl());
         form.controls[i.toString()].setValue(values[i]);
         if(this.isEdit) form.controls[i.toString()].disable();
