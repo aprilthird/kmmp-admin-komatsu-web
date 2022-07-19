@@ -184,7 +184,7 @@ export class ActivityAddEditComponent implements OnInit {
       let values = this.activityInfo?.[type].split(",");
       form.controls["0"].setValue(values[0]);
 
-      for(let i=0; i<values.length; i++) {
+      for(let i=1; i<values.length; i++) {
         form.addControl(i.toString(), new FormControl());
         form.controls[i.toString()].setValue(values[i]);
         if(this.isEdit) form.controls[i.toString()].disable();
@@ -451,9 +451,10 @@ export class ActivityAddEditComponent implements OnInit {
 
   addOS(): void {
     if(this.service_orders.length < 10) {
-      let controlIndex = this.service_orders.length + 1;
+      let controlIndex = this.service_orders.length;
       this.formOS.addControl(controlIndex.toString(), new FormControl());
       this.service_orders.push("");
+      getValues(this.formOS);
     }
     // if (this.service_orders.length === 1) {
     //   this.formOS.addControl("1", new FormControl());
@@ -468,7 +469,7 @@ export class ActivityAddEditComponent implements OnInit {
 
   addPE(): void {
     if(this.pe_items.length < 10) {
-      let controlIndex = this.pe_items.length + 1;
+      let controlIndex = this.pe_items.length;
       this.formPE.addControl(controlIndex.toString(), new FormControl());
       this.pe_items.push("");
     }
